@@ -6,13 +6,14 @@ const userRousts = require('./routes/userRouts')
 
 
 
+
 //express app
 const app = express()
 app.use(express.json())
 // midleware
 
 app.use((req, res, next) => {
-    console.log(req.path, req.method)
+    console.log(req.path, req.method,req.body)
     next()
 })
 

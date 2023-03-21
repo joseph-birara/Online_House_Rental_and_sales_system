@@ -1,7 +1,7 @@
 const express = require('express')
 
 
-const admin = require('../models/adminModel')
+const Admin = require('../models/adminModel')
 const router = express.Router()
 
 
@@ -9,10 +9,10 @@ router.get('/', (req, res) => {
     res.json({mssg:"it is working fine"})
 })
 router.post('/', async (req, res) => {
-    // const { name, lastName, age } = req.body
+    const { name, lastName, age } = req.body
     
     try {
-        // const admin = await Admin.create({ name, lastName, age })
+        const admin = await Admin.create({ name, lastName, age })
         res.status(200).json(admin)
         console.log(req.body)
         

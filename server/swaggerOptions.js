@@ -1,3 +1,8 @@
+const mongoose = require('mongoose');
+const convertModelToSwagger = require('mongoose-to-swagger');
+const Admin = require('./models/adminModel');
+
+const adminSchemaSwaggerDefinition = convertModelToSwagger(Admin);
 module.exports = {
   swaggerDefinition: {
     openapi: '3.0.0',
@@ -13,21 +18,7 @@ module.exports = {
     ],
     components: {
       schemas: {
-        Admin: {
-          type: "object",
-          properties: {
-            name: {
-              type: "string",
-            },
-            email: {
-              type: "string",
-            },
-            password: {
-              type: "string",
-            },
-          },
-          required: ["name", "email", "password"],
-        },
+        Admin: adminSchemaSwaggerDefinition
       },
     },
   },

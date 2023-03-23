@@ -45,8 +45,6 @@ const addAdmin = async (req, res) => {
     }
 }
 
-
-
 // delet admin
 const deleteAdmin = async (req, res) => {
   const { id } = req.params

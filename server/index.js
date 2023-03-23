@@ -7,7 +7,6 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const YAML = require('yamljs');
 const swaggerOptions = require('./swaggerOptions');
 
-
 //express app
 const app = express()
 app.use(express.json())// midleware
@@ -22,7 +21,7 @@ const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 //use routs 
-app.use('/api/admin', userRouts)
+app.use('/admin', userRouts)
 // conslo swagger
 // console.log(JSON.stringify(swaggerDocument, null, 2));
 

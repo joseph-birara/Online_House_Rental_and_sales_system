@@ -2,9 +2,10 @@ require('dotenv').config({path:'./config/.env'});
 const express = require('express');
 const { default: mongoose } = require('mongoose');
 const userRouts = require('./routes/adminRoutes')
-
-
-
+const swaggerUi = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc');
+const YAML = require('yamljs');
+const swaggerOptions = require('./swaggerOptions');
 
 
 //express app
@@ -15,8 +16,15 @@ app.use((req, res, next) => {
     console.log(req.path, req.method,req.body)
     next()
 })
+
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
+//swagger midlware 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 //use routs 
-app.use('/api/user', userRouts)
+app.use('/api/admin', userRouts)
+// conslo swagger
+// console.log(JSON.stringify(swaggerDocument, null, 2));
 
 // conect to db
 mongoose.connect(process.env.DB_URL)
@@ -32,5 +40,6 @@ app.listen(4000, () => {
         console.log(err)
         
     })
+
 
 

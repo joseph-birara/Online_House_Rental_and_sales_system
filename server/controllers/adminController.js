@@ -35,10 +35,9 @@ const getAdmin = async (req, res) => {
 
 // add admin
 const addAdmin = async (req, res) => {
-    const { name, lastName, age, } = req.body
-    
+         
     try {
-        const admin = await adminModel.create({ name, lastName, age })
+        const admin = await adminModel.create(req.body)
         res.status(200).json(admin)
         console.log(req.body)        
     } catch (err) {

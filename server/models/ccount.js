@@ -9,7 +9,6 @@ const AccountSchema = new Schema({
     subCity: String,
     woreda: String,
     kebele: String,
-    phone: String,
-    
+    phone: String,    
 }, { timestamps: true })
 module.exports = mongoose.model('Account',AccountSchema)

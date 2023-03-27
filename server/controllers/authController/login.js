@@ -1,4 +1,4 @@
-const { generateToken } = require('../auth');
+const { generateToken } = require('./auth');
 const bcrypt = require('bcrypt');
 
 async function login(req, res, userModel) {

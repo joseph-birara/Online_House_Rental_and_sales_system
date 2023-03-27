@@ -26,7 +26,7 @@ async function sendPasswordResetEmail(email,name, resetToken) {
     from: 'house.rental.et@gmail.com',
     to: email,
     subject: 'Password Reset Request',
-    text: `Hello ${name},\n\nYou recently requested to reset your password for your account. Please use the following code to reset your password: ${resetToken}\n\nIf you did not request a password reset, please ignore this email.\n\nThanks,\nYour Company Name`,
+    text: `Hello ${name},\n\nYou recently requested to reset your password for your account. Please use the following code to reset your password:\n\n\n ${resetToken}\n\n\nIf you did not request a password reset, please ignore this email.\n\nThanks,\n\n House Hub`,
   };
 
   // send the email
@@ -36,7 +36,8 @@ async function sendPasswordResetEmail(email,name, resetToken) {
 
 // Function to verify token and retrieve user
 const verifyToken = async (email, token, userModel) => {
-  const userToken = await tokenModel.findOne({
+  // remove the token from the database if aavilable 
+  const userToken = await tokenModel.findOneAndDelete({
     email,
     token: token,
    expiresAt: { $gt: Date.now() },
@@ -49,13 +50,13 @@ const verifyToken = async (email, token, userModel) => {
     throw new Error('User not found');
   }
   // remove the token from the database
-  await userToken.remove();
+  
   return user;
 };
 
 
 
-// Function to initiate password reset process
+
 // Function to initiate password reset process
 const initiatePasswordReset = async (req, res,userModel) => {
     const { email } = req.body;

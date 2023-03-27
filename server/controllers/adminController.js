@@ -1,6 +1,5 @@
 const  mongoose  = require('mongoose')
 const adminModel = require('../models/adminModel')
-const { verifyToken } = require('./auth');
 const login = require('./authController/login')
 const {
   initiatePasswordReset,
@@ -17,7 +16,6 @@ const adminLogin = async (req, res) => {
 const getAllAdmins = async (req, res) => {
   try {
     const admins = await adminModel.find({})
-
     // Add image URLs to each admin object
     const adminsWithImages = admins.map(admin => {
       if (admin.image) {
@@ -62,10 +60,8 @@ const getAdmin = async (req, res) => {
 // add admin
 
 const addAdmin = async (req, res) => {
-  console.log('this is body', req.body.data)
-  
-console.log("file", req.file)
-  
+console.log('this is body', req.body.data)  
+console.log("file", req.file)  
   
 const data = JSON.parse(req.body.data);
 const name = data.name;

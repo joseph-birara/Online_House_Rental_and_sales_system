@@ -249,7 +249,7 @@ const {
     passwordResetRequest,
     resetPasswordProcess
 } = require('../controllers/adminController')
-const upload = require('../controllers/images/singleImage')
+const upload = require('../controllers/imagesHandler/singleImage')
 
 // calling endpoints 
 const router = express.Router()
@@ -264,3 +264,5 @@ router.post('/reset', passwordResetRequest)
 router.post('/newPassword',resetPasswordProcess)
 
 module.exports = router
+
+

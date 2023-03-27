@@ -1,6 +1,8 @@
-const { generateToken } = require('./auth');
+const { generateToken } = require('../auth');
+const bcrypt = require('bcrypt');
 
 async function login(req, res, userModel) {
+  console.log(req.body)
   const { email, password } = req.body;
   try {
     const user = await userModel.findOne({ email });
@@ -18,4 +20,4 @@ async function login(req, res, userModel) {
   }
 }
 
-module.exports = { login };
+module.exports = login ;

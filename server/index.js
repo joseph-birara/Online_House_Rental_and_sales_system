@@ -7,9 +7,13 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const YAML = require('yamljs');
 const swaggerOptions = require('./swaggerOptions');
 
+const bodyParser = require('body-parser')
+
+
 //express app
 const app = express()
 app.use(express.json())// midleware
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
     console.log(req.path, req.method,req.body)

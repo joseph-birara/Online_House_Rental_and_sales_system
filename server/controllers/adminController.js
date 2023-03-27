@@ -1,8 +1,12 @@
 const  mongoose  = require('mongoose')
 const adminModel = require('../models/adminModel')
-const bcrypt = require('bcrypt');
 const { verifyToken } = require('./auth');
-const login = require('./login')
+const login = require('./authController/login')
+const {
+  initiatePasswordReset,
+  resetPassword 
+}= require('./authController/passwordReset');
+const { hashPassword } = require('./authController/passwordHash');
 
 // admin log in
 const adminLogin = async (req, res) => {
@@ -11,13 +15,24 @@ const adminLogin = async (req, res) => {
 
 // get all admins
 const getAllAdmins = async (req, res) => {
-    try {
-        const admins = await adminModel.find({})
-        res.status(200).json(admins)                
-    } catch (err) {
-        res.status(400).json({ error: err.message })        
-    }
+  try {
+    const admins = await adminModel.find({})
+
+    // Add image URLs to each admin object
+    const adminsWithImages = admins.map(admin => {
+      if (admin.image) {
+        const imageUrl = `${req.protocol}://${req.get('host')}/uploads/profile/${admin.image}`
+        admin.image = imageUrl
+      }
+      return admin
+    })
+
+    res.status(200).json(adminsWithImages)
+  } catch (err) {
+    res.status(400).json({ error: err.message })        
+  }
 }
+
 
 // get single admin
 const getAdmin = async (req, res) => {
@@ -33,30 +48,52 @@ const getAdmin = async (req, res) => {
     return res.status(404).json({error: 'No such admin'})
   }
 
-  res.status(200).json(admin)
+   res.status(200).json({
+      id: admin._id,
+      name: admin.name,
+      lastName: admin.lastName,
+      phone: admin.phone,
+      email: admin.email,
+      image: admin==""?"": `${req.protocol}://${req.get('host')}/uploads/profile/${admin.image}`,
+    });
 }
+
 
 // add admin
 
 const addAdmin = async (req, res) => {
-  const {   
-    lastName,
-    image,    
-    superAdmin= false, 
-    name,
-    email,
-    password  ,
-    phone 
-  } = req.body;
+  console.log('this is body', req.body.data)
+  
+console.log("file", req.file)
+  
+  
+const data = JSON.parse(req.body.data);
+const name = data.name;
+const lastName = data.lastName;
+const phone = data.phone;
+const email = data.email;
+  const password = data.password;
+  const isTaken = await adminModel.findOne({email})
+  if (isTaken) {
+   return res.status(401).json({error:"email is taken"})
+  }
+
+  
+  console.log("body", password)
+  if (req.file) {
+    image = req.file.filename
+  } else {
+    image = ''
+  }
 
   // Hash password
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await hashPassword(password);
 
   try {
     const admin = await adminModel.create({
     lastName,
     image,    
-    superAdmin, 
+    superAdmin: false, 
     name,
     email,    
     phone ,      
@@ -77,12 +114,30 @@ const deleteAdmin = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'invalid id'})
   }
-  const admin = await adminModel.findOneAndDelete({_id:id})
-  if (!admin) {
-    return res.status(400).json({error: 'No such admin'})
+
+  try {
+    // Find admin in database
+    const admin = await adminModel.findById(id)
+
+    if (!admin) {
+      return res.status(400).json({error: 'No such admin'})
+    }
+
+    // Delete image from file system if it exists
+    if (admin.image) {
+      const imagePath = path.join(__dirname, '../uploads/profile', admin.image)
+      fs.unlinkSync(imagePath)
+    }
+
+    // Delete admin from database
+    await adminModel.findByIdAndDelete(id)
+
+    res.status(200).json(admin)
+  } catch (err) {
+    res.status(400).json({ error: err.message })        
   }
-  res.status(200).json(admin)
 }
+
 
 //update admin
 
@@ -101,6 +156,27 @@ const updateAdmin = async (req, res) => {
   res.status(200).json(admin)
 }
 
+// change password 
+const updatePassword = async (req, res) => {
+  const { id } = req.params
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({error: 'invalid id'})
+  }
+    const admin = await adminModel.findOneAndUpdate({ _id: id }, {
+      ...req.body
+  })
+  if (!admin) {
+    return res.status(400).json({error: 'No such admin'})
+  }
+  res.status(200).json(admin)
+}
+
+const passwordResetRequest = async (req, res) => {
+  await initiatePasswordReset(req, res, adminModel)
+}
+const resetPasswordProcess = async (req, res) => {
+  await resetPassword(req, res, adminModel)
+}
 
 
 module.exports = {
@@ -108,6 +184,9 @@ module.exports = {
     getAllAdmins,
     getAdmin,
     deleteAdmin,
-  updateAdmin,
-    adminLogin
+   updateAdmin,
+  adminLogin,
+  passwordResetRequest,
+  resetPasswordProcess
+  
 }

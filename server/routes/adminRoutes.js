@@ -75,7 +75,44 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Admin'
- *
+ * /admin/updatePassword:
+ *   put:
+ *     tags: [Admin]
+ *     summary: Update admin password
+ *     description: Update an admin's password with the given information.
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         description: Access token obtained after logging in.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       description: Admin object that needs to be updated with new password.
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               oldPassword:
+ *                 type: string
+ *                 description: Current password of the admin
+ *               newPassword:
+ *                 type: string
+ *                 description: New password to be set for the admin
+ *             example:
+ *               oldPassword: oldpassword123
+ *               newPassword: newpassword456
+ *     responses:
+ *       200:
+ *         description: Password updated successfully
+ *       400:
+ *         description: Invalid request body or password
+ *       401:
+ *         description: Unauthorized access, invalid or expired token
+ *       500:
+ *         description: Internal server error
+ * 
  * /admin/get{id}:
  *   get:
  *     tags: [Admin]
@@ -136,29 +173,94 @@
  *     responses:
  *       204:
  *         description: Admin deleted successfully
- 
+ * /admin/reset:
+ *   POST:
+ *     tags: [Admin]
+ *     summary: Reset admin password via email
+ *     description: Sends an email to the specified admin user with instructions on resetting their password.
+ *     requestBody:
+ *       description: Email address for the admin user to reset their password
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: Email address for the admin user to reset their password
+ *     responses:
+ *       200:
+ *         description: Password reset email sent successfully
+ *       404:
+ *         description: Admin user not found
+ *       500:
+ *         description: Internal server error
+ * /admin/newPassword:
+ *   POST:
+ *     tags: [Admin]
+ *     summary: Update admin password with new password
+ *     description: Updates the password of the specified admin user with the new password.
+ *     requestBody:
+ *       description: Admin object that needs to be updated with new password
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: Email address of the admin user to update password
+ *               token:
+ *                 type: string
+ *                 description: Token received by admin user to update password
+ *               newPassword:
+ *                 type: string
+ *                 description: New password to update
+ *     responses:
+ *       200:
+ *         description: Password updated successfully
+ *       404:
+ *         description: Admin user not found
+ *       500:
+ *         description: Internal server error
  */
+
+
+
+
+
 
 
 
 const express = require('express')
 const Admin = require('../models/adminModel')
-
+const multer = require('multer')
 const {
     addAdmin,
     getAllAdmins,
     getAdmin,
     deleteAdmin,
     updateAdmin,
-    adminLogin 
+    adminLogin,
+    passwordResetRequest,
+    resetPasswordProcess
 } = require('../controllers/adminController')
+const upload = require('../controllers/images/singleImage')
 
+// calling endpoints 
 const router = express.Router()
 router.get('/all', getAllAdmins)
 router.get('/get/:id',getAdmin)
-router.post('/add', addAdmin)
+router.post('/add',upload.single('image'), addAdmin)
 router.delete('/delete/:id', deleteAdmin)
 router.patch('/update/:id', updateAdmin)
 router.post('/login', adminLogin)
+router.put('/password/:id')
+router.post('/reset', passwordResetRequest)
+router.post('/newPassword',resetPasswordProcess)
 
 module.exports = router

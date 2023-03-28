@@ -6,9 +6,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 const YAML = require('yamljs');
 const swaggerOptions = require('./swaggerOptions');
-
 const bodyParser = require('body-parser')
-
 
 //express app
 const app = express()

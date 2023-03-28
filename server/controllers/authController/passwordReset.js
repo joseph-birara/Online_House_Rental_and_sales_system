@@ -17,13 +17,13 @@ async function sendPasswordResetEmail(email,name, resetToken) {
     port: 465,
     secure: true,
     auth: {
-      user: 'house.rental.et@gmail.com',
-      pass: 'zwopnwetlhewdkll',
+      user: process.env.EMAIL,
+      pass:process.env.PASSWORD ,
     },
   });
   // set up the email message
   const mailOptions = {
-    from: 'house.rental.et@gmail.com',
+    from: process.env.EMAIL,
     to: email,
     subject: 'Password Reset Request',
     text: `Hello ${name},\n\nYou recently requested to reset your password for your account. Please use the following code to reset your password:\n\n\n ${resetToken}\n\n\nIf you did not request a password reset, please ignore this email.\n\nThanks,\n\n House Hub`,

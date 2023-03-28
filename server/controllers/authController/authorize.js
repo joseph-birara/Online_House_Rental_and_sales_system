@@ -8,7 +8,9 @@ async function getUser(req, res) {
   const userId = verifyToken(token);
   if (!userId) {
     return res.status(401).json({ error: 'Unauthorized' });
-  }  
+  } 
+  return userId
 }
 
-module.exports = { getUser };
+
+module.exports =  getUser ;

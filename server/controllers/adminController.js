@@ -6,6 +6,8 @@ const {
   resetPassword 
 }= require('./authController/passwordReset');
 const { hashPassword } = require('./authController/passwordHash');
+const getUser = require('./authController/authorize');
+const { changePassword } = require('./authController/changePassword');
 
 // admin log in
 const adminLogin = async (req, res) => {
@@ -19,7 +21,7 @@ const getAllAdmins = async (req, res) => {
     // Add image URLs to each admin object
     const adminsWithImages = admins.map(admin => {
       if (admin.image) {
-        const imageUrl = `${req.protocol}://${req.get('host')}/uploads/profile/${admin.image}`
+        const imageUrl = `${req.protocol}://${req.get('host')}/uploads/admin/${admin.image}`
         admin.image = imageUrl
       }
       return admin
@@ -34,7 +36,7 @@ const getAllAdmins = async (req, res) => {
 
 // get single admin
 const getAdmin = async (req, res) => {
-  const { id } = req.params
+  const id = await getUser(req, res)
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'No such '})
@@ -52,7 +54,7 @@ const getAdmin = async (req, res) => {
       lastName: admin.lastName,
       phone: admin.phone,
       email: admin.email,
-      image: admin==""?"": `${req.protocol}://${req.get('host')}/uploads/profile/${admin.image}`,
+      image: admin==""?"": `${req.protocol}://${req.get('host')}/uploads/admin/${admin.image}`,
     });
 }
 
@@ -68,8 +70,8 @@ const name = data.name;
 const lastName = data.lastName;
 const phone = data.phone;
 const email = data.email;
-  const password = data.password;
-  const isTaken = await adminModel.findOne({email})
+const password = data.password;
+const isTaken = await adminModel.findOne({email})
   if (isTaken) {
    return res.status(401).json({error:"email is taken"})
   }
@@ -138,8 +140,7 @@ const deleteAdmin = async (req, res) => {
 //update admin
 
 const updateAdmin = async (req, res) => {
-  const { id } = req.params
-
+  const id = await getUser(req, res)
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'invalid id'})
   }
@@ -154,18 +155,9 @@ const updateAdmin = async (req, res) => {
 
 // change password 
 const updatePassword = async (req, res) => {
-  const { id } = req.params
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'invalid id'})
-  }
-    const admin = await adminModel.findOneAndUpdate({ _id: id }, {
-      ...req.body
-  })
-  if (!admin) {
-    return res.status(400).json({error: 'No such admin'})
-  }
-  res.status(200).json(admin)
+  await changePassword(req,res, adminModel)  
 }
+
 
 const passwordResetRequest = async (req, res) => {
   await initiatePasswordReset(req, res, adminModel)
@@ -183,6 +175,7 @@ module.exports = {
    updateAdmin,
   adminLogin,
   passwordResetRequest,
-  resetPasswordProcess
+  resetPasswordProcess,
+  updatePassword
   
 }

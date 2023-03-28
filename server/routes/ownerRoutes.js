@@ -1,14 +1,14 @@
 /**
  * @swagger
  * tags:
- *   name: Admin
- *   description: APIs for managing admin accounts
+ *   name: Owner
+ *   description: APIs for managing Owner accounts
  *
- * /admin/login:
+ * /owner/login:
  *   post:
- *     tags: [Admin]
- *     summary: Login an admin
- *     description: Login an admin using email and password to get an access token
+ *     tags: [Owner]
+ *     summary: Login an Owner
+ *     description: Login an Owner using email and password to get an access token
  *     requestBody:
  *       required: true
  *       content:
@@ -18,10 +18,10 @@
  *             properties:
  *               email:
  *                 type: string
- *                 description: Email of the admin
+ *                 description: Email of the Owner
  *               password:
  *                 type: string
- *                 description: Password of the admin
+ *                 description: Password of the Owner
  *             example:
  *               email: john@example.com
  *               password: password123
@@ -43,43 +43,43 @@
  *       500:
  *         description: Internal server error
  * @swagger
- * /admin/all:
+ * /owner/all:
  *   get:
- *     tags: [Admin]
- *     summary: Get all admins
- *     description: Retrieve a list of all admins.
+ *     tags: [Owner]
+ *     summary: Get all Owners
+ *     description: Retrieve a list of all Owners.
  *     responses:
  *       200:
- *         description: A list of admin objects
+ *         description: A list of Owner objects
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Admin'
- * /admin/add: 
+ *                 $ref: '#/components/schemas/Owner'
+ * /owner/register: 
  *   post:
- *     tags: [Admin]
- *     summary: Create a new admin
- *     description: Create a new admin with the given information.
+ *     tags: [Owner]
+ *     summary: Create a new Owner
+ *     description: Create a new Owner with the given information.
  *     requestBody:
- *       description: Admin object that needs to be added
+ *       description: Owner object that needs to be registered
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Admin'
+ *             $ref: '#/components/schemas/Owner'
  *     responses:
  *       201:
- *         description: Admin created successfully
+ *         description: Owner created successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Admin'
- * /admin/updatePassword:
+ *               $ref: '#/components/schemas/Owner'
+ * /owner/updatePassword:
  *   put:
- *     tags: [Admin]
- *     summary: Update admin password
- *     description: Update an admin's password with the given information.
+ *     tags: [Owner]
+ *     summary: Update Owner password
+ *     description: Update an Owner's password with the given information.
  *     parameters:
  *       - in: header
  *         name: Authorization
@@ -88,7 +88,7 @@
  *         schema:
  *           type: string
  *     requestBody:
- *       description: Admin object that needs to be updated with new password.
+ *       description: Owner object that needs to be updated with new password.
  *       content:
  *         application/json:
  *           schema:
@@ -96,10 +96,10 @@
  *             properties:
  *               oldPassword:
  *                 type: string
- *                 description: Current password of the admin
+ *                 description: Current password of the Owner
  *               newPassword:
  *                 type: string
- *                 description: New password to be set for the admin
+ *                 description: New password to be set for the Owner
  *             example:
  *               oldPassword: oldpassword123
  *               newPassword: newpassword456
@@ -112,11 +112,11 @@
  *         description: Unauthorized access, invalid or expired token
  *       500:
  *         description: Internal server error
- * /admin/reset:
+ * /owner/reset:
  *   post:
- *     tags: [Admin]
- *     summary: reset admin password using email
- *     description: Sends an email to the specified admin user with instructions on resetting their password.
+ *     tags: [Owner]
+ *     summary: reset Owner password using email
+ *     description: Sends an email to the specified Owner user with instructions on resetting their password.
  *     parameters:
  *       - in: header
  *         name: Authorization
@@ -135,7 +135,7 @@
  *                 
  *               email:
  *                 type: string
- *                 description: email  for the admin
+ *                 description: email  for the Owner
  *             example:
  *               email: oldpassword123@gmail.com
  *               
@@ -149,78 +149,78 @@
  *       500:
  *         description: Internal server error
  * 
- * /admin/get{id}:
+ * /owner/get{id}:
  *   get:
- *     tags: [Admin]
- *     summary: Get an admin by ID
- *     description: Retrieve an admin with the specified ID.
+ *     tags: [Owner]
+ *     summary: Get an Owner by ID
+ *     description: Retrieve an Owner with the specified ID.
  *     parameters:
  *       - in: path
  *         name: id
- *         description: ID of the admin to retrieve
+ *         description: ID of the Owner to retrieve
  *         required: true
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: An admin object
+ *         description: An Owner object
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Admin'
- * /admin/update:
+ *               $ref: '#/components/schemas/Owner'
+ * /owner/update:
  *   patch:
- *     tags: [Admin]
- *     summary: Update an admin
- *     description: Update an admin with the given information.
+ *     tags: [Owner]
+ *     summary: Update an Owner
+ *     description: Update an Owner with the given information.
  *     parameters:
  *       - in: path
  *         name: id
- *         description: ID of the admin to update
+ *         description: ID of the Owner to update
  *         required: true
  *         schema:
  *           type: string
  *     requestBody:
- *       description: Admin object that needs to be updated
+ *       description: Owner object that needs to be updated
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Admin'
+ *             $ref: '#/components/schemas/Owner'
  *     responses:
  *       200:
- *         description: Admin updated successfully
+ *         description: Owner updated successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Admin'
- * /admin/delete:
+ *               $ref: '#/components/schemas/Owner'
+ * /owner/delete:
  *
  *   delete:
- *     tags: [Admin]
- *     summary: Delete an admin by ID
- *     description: Delete an admin with the specified ID.
+ *     tags: [Owner]
+ *     summary: Delete an Owner by ID
+ *     description: Delete an Owner with the specified ID.
  *     parameters:
  *       - in: path
  *         name: id
- *         description: ID of the admin to delete
+ *         description: ID of the Owner to delete
  *         required: true
  *         schema:
  *           type: string
  *     responses:
  *       204:
- *         description: Admin deleted successfully
+ *         description: Owner deleted successfully
  *       404:
- *         description: Admin user not found
+ *         description: Owner user not found
  *       500:
  *         description: Internal server error 
- * /admin/newPassword:
+ * /owner/newPassword:
  * 
  *   post:
- *     tags: [Admin]
- *     summary: reset admin password with new password
- *     description: Updates the password of the specified admin user with the new password.
+ *     tags: [Owner]
+ *     summary: reset Owner password with new password
+ *     description: Updates the password of the specified Owner user with the new password.
  *     requestBody:
- *       description: Admin object that needs to be updated with new password
+ *       description: Owner object that needs to be updated with new password
  *       required: true
  *       content:
  *         application/json:
@@ -230,10 +230,10 @@
  *               email:
  *                 type: string
  *                 format: email
- *                 description: Email address of the admin user to update password
+ *                 description: Email registerress of the Owner user to update password
  *               token:
  *                 type: string
- *                 description: Token received by admin user to update password
+ *                 description: Token received by Owner user to update password
  *               newPassword:
  *                 type: string
  *                 description: New password to update
@@ -241,7 +241,7 @@
  *       200:
  *         description: Password updated successfully
  *       404:
- *         description: Admin user not found
+ *         description: Owner user not found
  *       500:
  *         description: Internal server error
  */
@@ -253,29 +253,29 @@
 
 
 const express = require('express')
-const Admin = require('../models/adminModel')
+const Owner = require('../models/OwnerModel')
 const multer = require('multer')
 const {
-    addAdmin,
-    getAllAdmins,
-    getAdmin,
-    deleteAdmin,
-    updateAdmin,
-    adminLogin,
+    registerOwner,
+    getAllOwners,
+    getOwner,
+    deleteOwner,
+    updateOwner,
+    OwnerLogin,
     passwordResetRequest,
     resetPasswordProcess,
     updatePassword
-} = require('../controllers/adminController')
+} = require('../controllers/OwnerController')
 const upload = require('../controllers/imagesHandler/singleImage')
 
 // calling endpoints 
 const router = express.Router()
-router.get('/all', getAllAdmins)
-router.get('/get/:id',getAdmin)
-router.post('/add',upload("admin").single('image'), addAdmin)
-router.delete('/delete/:id', deleteAdmin)
-router.patch('/update/:id', updateAdmin)
-router.post('/login', adminLogin)
+router.get('/all', getAllOwners)
+router.get('/get/:id',getOwner)
+router.post('/register',upload("Owner").single('image'), registerOwner)
+router.delete('/delete/:id', deleteOwner)
+router.patch('/update/:id', updateOwner)
+router.post('/login', OwnerLogin)
 router.put('/updatePassword',updatePassword)
 router.post('/reset', passwordResetRequest)
 router.post('/newPassword', resetPasswordProcess)

@@ -56,7 +56,7 @@
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Owner'
+ *                 $ref: '#/components/schemas/Owner1'
  * /owner/register: 
  *   post:
  *     tags: [Owner]
@@ -248,12 +248,8 @@
 
 
 
- 
-
-
-
 const express = require('express')
-const Owner = require('../models/OwnerModel')
+// const Owner = require('../models/OwnerModel')
 const multer = require('multer')
 const {
     registerOwner,

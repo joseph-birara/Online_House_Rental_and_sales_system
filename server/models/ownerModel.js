@@ -5,6 +5,7 @@ const Schema = mongoose.Schema
 const OwnerSchema = new Schema({  
     name: String,
     lastName: String,
+    image:String,
     email: String,
     password: String,
     city: String,
@@ -14,18 +15,15 @@ const OwnerSchema = new Schema({
     phone: String, 
     house: Array,
     aplicantId: {
-        type: Array,
-        default: []
+        type: Array
     }, 
     saleId:{
-        type: Array,
-        default: []
+        type: Array
     }, 
     rentId :{
-        type: Array,
-        default: []
+        type: Array
     }, 
-    
 }, { timestamps: true })
 
-module.exports = mongoose.model('HomeOwner',OwnerSchema)
+
+module.exports = mongoose.model('HomeOwner', OwnerSchema)

@@ -1,14 +1,14 @@
 /**
  * @swagger
  * tags:
- *   name: Admin
- *   description: APIs for managing admin accounts
+ *   name: Tenant
+ *   description: APIs for managing Tenant accounts
  *
- * /admin/login:
+ * /Tenant/login:
  *   post:
- *     tags: [Admin]
- *     summary: Login an admin
- *     description: Login an admin using email and password to get an access token
+ *     tags: [Tenant]
+ *     summary: Login an Tenant
+ *     description: Login an Tenant using email and password to get an access token
  *     requestBody:
  *       required: true
  *       content:
@@ -18,10 +18,10 @@
  *             properties:
  *               email:
  *                 type: string
- *                 description: Email of the admin
+ *                 description: Email of the Tenant
  *               password:
  *                 type: string
- *                 description: Password of the admin
+ *                 description: Password of the Tenant
  *             example:
  *               email: john@example.com
  *               password: password123
@@ -43,43 +43,43 @@
  *       500:
  *         description: Internal server error
  * @swagger
- * /admin/all:
+ * /Tenant/all:
  *   get:
- *     tags: [Admin]
- *     summary: Get all admins
- *     description: Retrieve a list of all admins.
+ *     tags: [Tenant]
+ *     summary: Get all Tenants
+ *     description: Retrieve a list of all Tenants.
  *     responses:
  *       200:
- *         description: A list of admin objects
+ *         description: A list of Tenant objects
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Admin'
- * /admin/add: 
+ *                 $ref: '#/components/schemas/Tenant1'
+ * /Tenant/register: 
  *   post:
- *     tags: [Admin]
- *     summary: Create a new admin
- *     description: Create a new admin with the given information.
+ *     tags: [Tenant]
+ *     summary: Create a new Tenant
+ *     description: Create a new Tenant with the given information.
  *     requestBody:
- *       description: Admin object that needs to be added
+ *       description: Tenant object that needs to be registered
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Admin'
+ *             $ref: '#/components/schemas/Tenant'
  *     responses:
  *       201:
- *         description: Admin created successfully
+ *         description: Tenant created successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Admin'
- * /admin/updatePassword:
+ *               $ref: '#/components/schemas/Tenant'
+ * /Tenant/updatePassword:
  *   put:
- *     tags: [Admin]
- *     summary: Update admin password
- *     description: Update an admin's password with the given information.
+ *     tags: [Tenant]
+ *     summary: Update Tenant password
+ *     description: Update an Tenant's password with the given information.
  *     parameters:
  *       - in: header
  *         name: Authorization
@@ -88,7 +88,7 @@
  *         schema:
  *           type: string
  *     requestBody:
- *       description: Admin object that needs to be updated with new password.
+ *       description: Tenant object that needs to be updated with new password.
  *       content:
  *         application/json:
  *           schema:
@@ -96,10 +96,10 @@
  *             properties:
  *               oldPassword:
  *                 type: string
- *                 description: Current password of the admin
+ *                 description: Current password of the Tenant
  *               newPassword:
  *                 type: string
- *                 description: New password to be set for the admin
+ *                 description: New password to be set for the Tenant
  *             example:
  *               oldPassword: oldpassword123
  *               newPassword: newpassword456
@@ -112,11 +112,11 @@
  *         description: Unauthorized access, invalid or expired token
  *       500:
  *         description: Internal server error
- * /admin/reset:
+ * /Tenant/reset:
  *   post:
- *     tags: [Admin]
- *     summary: reset admin password using email
- *     description: Sends an email to the specified admin user with instructions on resetting their password.
+ *     tags: [Tenant]
+ *     summary: reset Tenant password using email
+ *     description: Sends an email to the specified Tenant user with instructions on resetting their password.
  *     parameters:
  *       - in: header
  *         name: Authorization
@@ -135,7 +135,7 @@
  *                 
  *               email:
  *                 type: string
- *                 description: email  for the admin
+ *                 description: email  for the Tenant
  *             example:
  *               email: oldpassword123@gmail.com
  *               
@@ -149,78 +149,78 @@
  *       500:
  *         description: Internal server error
  * 
- * /admin/get{id}:
+ * /Tenant/get{id}:
  *   get:
- *     tags: [Admin]
- *     summary: Get an admin by ID
- *     description: Retrieve an admin with the specified ID.
+ *     tags: [Tenant]
+ *     summary: Get an Tenant by ID
+ *     description: Retrieve an Tenant with the specified ID.
  *     parameters:
  *       - in: path
  *         name: id
- *         description: ID of the admin to retrieve
+ *         description: ID of the Tenant to retrieve
  *         required: true
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: An admin object
+ *         description: An Tenant object
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Admin'
- * /admin/update:
+ *               $ref: '#/components/schemas/Tenant'
+ * /Tenant/update:
  *   patch:
- *     tags: [Admin]
- *     summary: Update an admin
- *     description: Update an admin with the given information.
+ *     tags: [Tenant]
+ *     summary: Update an Tenant
+ *     description: Update an Tenant with the given information.
  *     parameters:
  *       - in: path
  *         name: id
- *         description: ID of the admin to update
+ *         description: ID of the Tenant to update
  *         required: true
  *         schema:
  *           type: string
  *     requestBody:
- *       description: Admin object that needs to be updated
+ *       description: Tenant object that needs to be updated
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Admin'
+ *             $ref: '#/components/schemas/Tenant'
  *     responses:
  *       200:
- *         description: Admin updated successfully
+ *         description: Tenant updated successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Admin'
- * /admin/delete:
+ *               $ref: '#/components/schemas/Tenant'
+ * /Tenant/delete:
  *
  *   delete:
- *     tags: [Admin]
- *     summary: Delete an admin by ID
- *     description: Delete an admin with the specified ID.
+ *     tags: [Tenant]
+ *     summary: Delete an Tenant by ID
+ *     description: Delete an Tenant with the specified ID.
  *     parameters:
  *       - in: path
  *         name: id
- *         description: ID of the admin to delete
+ *         description: ID of the Tenant to delete
  *         required: true
  *         schema:
  *           type: string
  *     responses:
  *       204:
- *         description: Admin deleted successfully
+ *         description: Tenant deleted successfully
  *       404:
- *         description: Admin user not found
+ *         description: Tenant user not found
  *       500:
  *         description: Internal server error 
- * /admin/newPassword:
+ * /Tenant/newPassword:
  * 
  *   post:
- *     tags: [Admin]
- *     summary: reset admin password with new password
- *     description: Updates the password of the specified admin user with the new password.
+ *     tags: [Tenant]
+ *     summary: reset Tenant password with new password
+ *     description: Updates the password of the specified Tenant user with the new password.
  *     requestBody:
- *       description: Admin object that needs to be updated with new password
+ *       description: Tenant object that needs to be updated with new password
  *       required: true
  *       content:
  *         application/json:
@@ -230,10 +230,10 @@
  *               email:
  *                 type: string
  *                 format: email
- *                 description: Email address of the admin user to update password
+ *                 description: Email registerress of the Tenant user to update password
  *               token:
  *                 type: string
- *                 description: Token received by admin user to update password
+ *                 description: Token received by Tenant user to update password
  *               newPassword:
  *                 type: string
  *                 description: New password to update
@@ -241,41 +241,37 @@
  *       200:
  *         description: Password updated successfully
  *       404:
- *         description: Admin user not found
+ *         description: Tenant user not found
  *       500:
  *         description: Internal server error
  */
 
 
 
- 
-
-
-
 const express = require('express')
-const Admin = require('../models/adminModel')
+// const Tenant = require('../models/TenantModel')
 const multer = require('multer')
 const {
-    addAdmin,
-    getAllAdmins,
-    getAdmin,
-    deleteAdmin,
-    updateAdmin,
-    adminLogin,
+    registerTenant,
+    getAllTenants,
+    getTenant,
+    deleteTenant,
+    updateTenant,
+    TenantLogin,
     passwordResetRequest,
     resetPasswordProcess,
     updatePassword
-} = require('../controllers/adminController')
+} = require('../controllers/TenantController')
 const upload = require('../controllers/imagesHandler/singleImage')
-  
+
 // calling endpoints 
 const router = express.Router()
-router.get('/all', getAllAdmins)
-router.get('/get/:id',getAdmin)
-router.post('/add',upload("admin").single('image'), addAdmin)
-router.delete('/delete/:id', deleteAdmin)
-router.patch('/update/:id', updateAdmin)
-router.post('/login', adminLogin)
+router.get('/all', getAllTenants)
+router.get('/get/:id',getTenant)
+router.post('/register',upload("Tenant").single('image'), registerTenant)
+router.delete('/delete/:id', deleteTenant)
+router.patch('/update/:id', updateTenant)
+router.post('/login', TenantLogin)
 router.put('/updatePassword',updatePassword)
 router.post('/reset', passwordResetRequest)
 router.post('/newPassword', resetPasswordProcess)

@@ -5,7 +5,7 @@ const storage =(folder) =>multer.diskStorage({
         return cb(null, Date.now()+ '_' + file.originalname)
     }
 })
-const upload =(folder)=> multer({
+const upload =(folder)=> multer({ 
     storage:storage(folder),
     limits: { fileSize: 1024*1024*5 },
     fileFilter: (req, file, cb) => {

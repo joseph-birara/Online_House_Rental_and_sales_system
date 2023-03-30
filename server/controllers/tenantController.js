@@ -1,5 +1,5 @@
 const  mongoose  = require('mongoose')
-const ownerModel = require('../models/ownerModel')
+const tenantModel = require('../models/tenantModel')
 const login = require('./authController/login')
 const {
   initiatePasswordReset,
@@ -9,63 +9,59 @@ const { hashPassword } = require('./authController/passwordHash');
 const getUser = require('./authController/authorize');
 const { changePassword } = require('./authController/changePassword');
 
-// Owner log in
-const OwnerLogin = async (req, res) => {
-  await login(req, res, ownerModel)
+// tenant log in
+const tenantLogin = async (req, res) => {
+  await login(req, res, tenantModel)
 }
 
-// get all Owners
-const getAllOwners = async (req, res) => {
+// get all tenants
+const getAllTenants = async (req, res) => {
   try {
-    const Owners = await ownerModel.find({})
-    // register image URLs to each Owner object
-    const OwnersWithImages = Owners.map(Owner => {
-      if (Owner.image) {
-        const imageUrl = `${req.protocol}://${req.get('host')}/uploads/Owner/${Owner.image}`
-        Owner.image = imageUrl
+    const tenants = await tenantModel.find({})
+    // register image URLs to each tenant object
+    const tenantsWithImages = tenants.map(tenant => {
+      if (tenant.image) {
+        const imageUrl = `${req.protocol}://${req.get('host')}/uploads/tenant/${tenant.image}`
+        tenant.image = imageUrl
       }
-      return Owner
+      return tenant
     })
 
-    res.status(200).json(OwnersWithImages)
+    res.status(200).json(tenantsWithImages)
   } catch (err) {
     res.status(400).json({ error: err.message })        
   }
 }
 
 
-// get single Owner
-const getOwner = async (req, res) => {
+// get single tenant
+const getTenant = async (req, res) => {
   const id = await getUser(req, res)
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'No such '})
   }
 
-  const Owner = await ownerModel.findById(id)
+  const tenant = await tenantModel.findById(id)
 
-  if (!Owner) {
-    return res.status(404).json({error: 'No such Owner'})
+  if (!tenant) {
+    return res.status(404).json({error: 'No such tenant'})
   }
 
    res.status(200).json({
-      id: Owner._id,
-      name: Owner.name,
-      lastName: Owner.lastName,
-      phone: Owner.phone,
-     email: Owner.email,
-     city: Owner.city,
-     subCity: Owner.subCity,
-     kebele: Owner.kebele,
-      
-      image: Owner==""?"": `${req.protocol}://${req.get('host')}/uploads/Owner/${Owner.image}`,
+      id: tenant._id,
+      name: tenant.name,
+      lastName: tenant.lastName,
+      phone: tenant.phone,
+      email: tenant.email,
+      image: tenant==""?"": `${req.protocol}://${req.get('host')}/uploads/tenant/${tenant.image}`,
     });
 }
 
 
-// register Owner
+// register tenant
 
-const registerOwner = async (req, res) => {
+const registerTenant = async (req, res) => {
 console.log('this is body', req.body.data)  
 console.log("file", req.file)    
 const data = JSON.parse(req.body.data);
@@ -81,7 +77,7 @@ const saleId = [];
 const aplicantId = [];
 const rentId = [];
 
-const isTaken = await ownerModel.findOne({email})
+const isTaken = await tenantModel.findOne({email})
   if (isTaken) {
    return res.status(401).json({error:"email is taken"})
   }
@@ -98,10 +94,10 @@ const isTaken = await ownerModel.findOne({email})
   const hashedPassword = await hashPassword(password);
 
   try {
-    const Owner = await ownerModel.create({
+    const tenant = await tenantModel.create({
     lastName,
-    image,    
-    superOwner: false, 
+    image,   
+    
     name,
     email,    
     phone ,      
@@ -114,15 +110,15 @@ const isTaken = await ownerModel.findOne({email})
       aplicantId,
     saleId
     });
-    res.status(200).json(Owner);
+    res.status(200).json(tenant);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
 
 
-// delet Owner
-const deleteOwner = async (req, res) => {
+// delet tenant
+const deleteTenant = async (req, res) => {
   const { id } = req.params
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -130,66 +126,66 @@ const deleteOwner = async (req, res) => {
   }
 
   try {
-    // Find Owner in database
-    const Owner = await ownerModel.findById(id)
+    // Find tenant in database
+    const tenant = await tenantModel.findById(id)
 
-    if (!Owner) {
-      return res.status(400).json({error: 'No such Owner'})
+    if (!tenant) {
+      return res.status(400).json({error: 'No such tenant'})
     }
 
     // Delete image from file system if it exists
-    if (Owner.image) {
-      const imagePath = path.join(__dirname, '../uploads/profile', Owner.image)
+    if (tenant.image) {
+      const imagePath = path.join(__dirname, '../uploads/profile', tenant.image)
       fs.unlinkSync(imagePath)
     }
 
-    // Delete Owner from database
-    await ownerModel.findByIdAndDelete(id)
+    // Delete tenant from database
+    await tenantModel.findByIdAndDelete(id)
 
-    res.status(200).json(Owner)
+    res.status(200).json(tenant)
   } catch (err) {
     res.status(400).json({ error: err.message })        
   }
 }
 
 
-//update Owner
+//update tenant
 
-const updateOwner = async (req, res) => {
+const updateTenant = async (req, res) => {
   const id = await getUser(req, res)
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'invalid id'})
   }
-    const Owner = await ownerModel.findOneAndUpdate({ _id: id }, {
+    const tenant = await tenantModel.findOneAndUpdate({ _id: id }, {
       ...req.body
   })
-  if (!Owner) {
-    return res.status(400).json({error: 'No such Owner'})
+  if (!tenant) {
+    return res.status(400).json({error: 'No such tenant'})
   }
-  res.status(200).json(Owner)
+  res.status(200).json(tenant)
 }
 
 // change password 
 const updatePassword = async (req, res) => {
-  await changePassword(req,res, ownerModel)  
+  await changePassword(req,res, tenantModel)  
 }
 
 
 const passwordResetRequest = async (req, res) => {
-  await initiatePasswordReset(req, res, ownerModel)
+  await initiatePasswordReset(req, res, tenantModel)
 }
 const resetPasswordProcess = async (req, res) => {
-  await resetPassword(req, res, ownerModel)
+  await resetPassword(req, res, tenantModel)
 }
 
 
 module.exports = {
-    registerOwner,
-    getAllOwners,
-    getOwner,
-    deleteOwner,
-   updateOwner,
-  OwnerLogin,
+    registerTenant,
+    getAllTenants,
+    getTenant,
+    deleteTenant,
+   updateTenant,
+  tenantLogin,
   passwordResetRequest,
   resetPasswordProcess,
   updatePassword

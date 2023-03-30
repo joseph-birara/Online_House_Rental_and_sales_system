@@ -78,19 +78,13 @@ const isTaken = await adminModel.findOne({email})
 
   
   console.log("body", password)
-  if (req.file) {
-    image = req.file.filename
-  } else {
-    image = ''
-  }
-
-  // Hash password
+    // Hash password
   const hashedPassword = await hashPassword(password);
 
   try {
     const admin = await adminModel.create({
     lastName,
-    image,    
+    image:"",    
     superAdmin: false, 
     name,
     email,    
@@ -98,6 +92,11 @@ const isTaken = await adminModel.findOne({email})
     password: hashedPassword,     
     phone
     });
+    if (req.file) {
+      image = req.file.filename
+      admin.image = image;
+      await admin.save();
+  } 
     res.status(200).json(admin);
   } catch (err) {
     res.status(400).json({ error: err.message });

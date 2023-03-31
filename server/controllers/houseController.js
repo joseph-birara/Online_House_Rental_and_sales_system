@@ -90,7 +90,7 @@ const addHouse = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
-// delet House
+// delete House
 const deleteHouse = async (req, res) => {
   const { id } = req.body
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -162,8 +162,6 @@ const deletImage = async (req, res) => {
     res.status(400).json({ error: err.message })        
   }
 }
-
-
 
 module.exports = {
     addHouse,

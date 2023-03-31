@@ -1,13 +1,13 @@
 const  mongoose  = require('mongoose')
 const ownerModel = require('../models/ownerModel')
-const login = require('./authController/login')
+const login = require('../authController/login')
 const {
   initiatePasswordReset,
   resetPassword 
-}= require('./authController/passwordReset');
-const { hashPassword } = require('./authController/passwordHash');
-const getUser = require('./authController/authorize');
-const { changePassword } = require('./authController/changePassword');
+}= require('../authController/passwordReset');
+const { hashPassword } = require('../authController/passwordHash');
+const getUser = require('../authController/authorize');
+const { changePassword } = require('../authController/changePassword');
 
 // Owner log in
 const OwnerLogin = async (req, res) => {

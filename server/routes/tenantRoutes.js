@@ -257,12 +257,12 @@ const {
     getTenant,
     deleteTenant,
     updateTenant,
-    TenantLogin,
+    tenantLogin,
     passwordResetRequest,
     resetPasswordProcess,
     updatePassword
-} = require('../controllers/TenantController')
-const upload = require('../controllers/imagesHandler/singleImage')
+} = require('./controllers/tenantController')
+const upload = require('../imagesHandler/singleImage')
 
 // calling endpoints 
 const router = express.Router()
@@ -271,7 +271,7 @@ router.get('/get/:id',getTenant)
 router.post('/register',upload("Tenant").single('image'), registerTenant)
 router.delete('/delete/:id', deleteTenant)
 router.patch('/update/:id', updateTenant)
-router.post('/login', TenantLogin)
+router.post('/login', tenantLogin)
 router.put('/updatePassword',updatePassword)
 router.post('/reset', passwordResetRequest)
 router.post('/newPassword', resetPasswordProcess)

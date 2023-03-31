@@ -266,7 +266,7 @@ const {
     resetPasswordProcess,
     updatePassword
 } = require('../controllers/adminController')
-const upload = require('../controllers/imagesHandler/singleImage')
+const upload = require('../imagesHandler/singleImage')
   
 // calling endpoints 
 const router = express.Router()

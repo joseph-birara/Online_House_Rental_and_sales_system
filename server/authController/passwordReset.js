@@ -1,6 +1,6 @@
 
 const nodemailer = require('nodemailer');
-const tokenModel = require('../../models/authModel');
+const tokenModel = require('../models/authModel');
 const { hashPassword } = require('./passwordHash');
 
 // Function to generate a random token

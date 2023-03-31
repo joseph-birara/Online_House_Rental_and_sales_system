@@ -11,9 +11,16 @@ ownerID: ObjectId,
     subCity: String,
     woreda: String,
     kebele: String,
-    price: Float,
-    homeStatus : String
+    price: Number,
+    homeStatus: String,
+    verified: Boolean,
+    suspended: Boolean,
+    area: Number,
+    descreption: String,
+    HomeType: String,
+    bedRoom: Number,
+    bathRoom: Number,    
 }, { timestamps: true })
 
 
-module.exports = mongoose.model('Home', HomeSchema)
+module.exports = mongoose.model('Houses', HomeSchema)

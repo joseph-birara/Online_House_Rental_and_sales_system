@@ -4,7 +4,7 @@
  *   name: Tenant
  *   description: APIs for managing Tenant accounts
  *
- * /Tenant/login:
+ * /tenant/login:
  *   post:
  *     tags: [Tenant]
  *     summary: Login an Tenant
@@ -43,7 +43,7 @@
  *       500:
  *         description: Internal server error
  * @swagger
- * /Tenant/all:
+ * /tenant/all:
  *   get:
  *     tags: [Tenant]
  *     summary: Get all Tenants
@@ -57,7 +57,7 @@
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Tenant1'
- * /Tenant/register: 
+ * /tenant/register: 
  *   post:
  *     tags: [Tenant]
  *     summary: Create a new Tenant
@@ -75,7 +75,7 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Tenant'
- * /Tenant/updatePassword:
+ * /tenant/updatePassword:
  *   put:
  *     tags: [Tenant]
  *     summary: Update Tenant password
@@ -112,7 +112,7 @@
  *         description: Unauthorized access, invalid or expired token
  *       500:
  *         description: Internal server error
- * /Tenant/reset:
+ * /tenant/reset:
  *   post:
  *     tags: [Tenant]
  *     summary: reset Tenant password using email
@@ -149,7 +149,7 @@
  *       500:
  *         description: Internal server error
  * 
- * /Tenant/get{id}:
+ * /tenant/get{id}:
  *   get:
  *     tags: [Tenant]
  *     summary: Get an Tenant by ID
@@ -168,7 +168,7 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Tenant'
- * /Tenant/update:
+ * /tenant/update:
  *   patch:
  *     tags: [Tenant]
  *     summary: Update an Tenant
@@ -193,7 +193,7 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Tenant'
- * /Tenant/delete:
+ * /tenant/delete:
  *
  *   delete:
  *     tags: [Tenant]
@@ -213,7 +213,7 @@
  *         description: Tenant user not found
  *       500:
  *         description: Internal server error 
- * /Tenant/newPassword:
+ * /tenant/newPassword:
  * 
  *   post:
  *     tags: [Tenant]
@@ -261,7 +261,7 @@ const {
     passwordResetRequest,
     resetPasswordProcess,
     updatePassword
-} = require('./controllers/tenantController')
+} = require('../controllers/tenantController')
 const upload = require('../imagesHandler/singleImage')
 
 // calling endpoints 

@@ -3,6 +3,10 @@ const express = require('express');
 const { default: mongoose } = require('mongoose');
 const adminRouts = require('./routes/adminRoutes')
 const ownerRouts = require('./routes/ownerRoutes')
+const commentRoutes = require('./routes/commentRoutes')
+const amenitiesRoutes = require('./routes/amenitiesRoutes')
+const houseRoutes = require('./routes/houseRoutes')
+const tenantRoutes = require('./routes/tenantRoutes')
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 const YAML = require('yamljs');
@@ -26,6 +30,11 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 //use routs 
 app.use('/admin', adminRouts)
 app.use('/owner', ownerRouts)
+app.use('/comment', commentRoutes)
+app.use('/amenities', amenitiesRoutes)
+app.use('/houses', houseRoutes)
+app.use('/tenant',tenantRoutes)
+
 
 
 // conslo swagger

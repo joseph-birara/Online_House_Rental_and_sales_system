@@ -1,5 +1,5 @@
 const  mongoose  = require('mongoose')
-const houseModel = require('../models/houseModel')
+const houseModel = require('../models/homeModel')
 const getUser = require('../authController/authorize');
 
 // get all Houses
@@ -168,5 +168,7 @@ module.exports = {
     getAllHouses,
     getHouse,
     deleteHouse,
-   updateHouse,  
+  updateHouse, 
+  deletImage,
+   getHousesByOwner
 }

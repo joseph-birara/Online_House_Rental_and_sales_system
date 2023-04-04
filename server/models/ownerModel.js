@@ -14,15 +14,22 @@ const OwnerSchema = new Schema({
     kebele: String,
     phone: String, 
     house: Array,
-    aplicantId: {
-        type: Array
-    }, 
-    saleId:{
-        type: Array
-    }, 
-    rentId :{
-        type: Array
-    }, 
+    house: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Houses'
+    }],
+    aplicantId: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Applicant'
+    }], 
+    saleId:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Sale'
+    }], 
+    rentId :[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Rent'
+    }], 
 }, { timestamps: true })
 
 

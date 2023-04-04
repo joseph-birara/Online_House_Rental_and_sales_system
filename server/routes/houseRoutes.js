@@ -19,7 +19,7 @@
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/HouseWithImages'
+ *                 $ref: '#/components/schemas/House'
  *       500:
  *         description: An error occurred while trying to retrieve the houses.
  *         content:
@@ -87,7 +87,7 @@
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/HouseWithImages'
+ *               $ref: '#/components/schemas/House'
  *       404:
  *         description: Invalid ID or House not found
  *         content:
@@ -124,6 +124,8 @@
  *         description: House data in JSON format 
  *         required: true
  *         type: string
+ *         schema:
+ *           $ref: '#/components/schemas/House'
  *       - in: formData
  *         name: images
  *         description: House images to be uploaded.
@@ -134,10 +136,7 @@
  *       '200':
  *         description: New house has been added successfully.
  *       '400':
- *         description: Error occurred while adding the house.
- *
-
-
+ *         description: Error occurred while adding the house. *     
  * 
  * /houses/delete:
  *   delete: 
@@ -189,31 +188,34 @@
  *         description: Error updating house
  *       '404':
  *         description: House not found 
- * /houses/deleteImage
-*   delete:
-  *     tags: [Houses]
-  *     summary: Delete an image from a house 
-  *     parameters:
-  *       - name: id
-  *         description: ID of the house
-  *         in: path
-  *         required: true
-  *         type: string
-  *         format: ObjectId
-  *       - name: index
-  *         description: Index of the image to delete
-  *         in: query
-  *         required: true
-  *         type: integer
-  *         minimum: 0
-  *     responses:
-  *       '200':
-  *         description: Image deleted successfully
-  *       '400':
-  *         description: Error deleting image
-  *       '404':
-  *         description: House not found
-  */
+ *
+ * @swagger
+ * /houses/deleteImage:
+ *   delete:
+ *     tags: [Houses]
+ *     summary: Delete an image from a house 
+ *     parameters:
+ *       - name: id
+ *         description: ID of the house
+ *         in: path
+ *         required: true
+ *         type: string
+ *         format: ObjectId
+ *       - name: index
+ *         description: Index of the image to delete
+ *         in: path
+ *         required: true
+ *         type: integer
+ *         minimum: 0
+ *     responses:
+ *       '200':
+ *         description: Image deleted successfully
+ *       '400':
+ *         description: Error deleting image
+ *       '404':
+ *         description: House not found
+ */
+
 
 
 
@@ -245,7 +247,7 @@ const {
    getHousesByOwner
 } = require('../controllers/houseController');
 
-router.post('/add', upload('House'), addHouse);
+router.post('/add', upload('House', 5).array('image', 5), addHouse);
 router.get('/all', getAllHouses)
 router.get('/byowner', getHousesByOwner)
 router.delete('/delete', deleteHouse)

@@ -12,17 +12,20 @@ const tenantSchema = new Schema({
     subCity: String,
     woreda: String,
     kebele: String,
-    phone: String, 
-    house: Array,
-    aplicationId: {
-        type: Array
-    }, 
-    boughtID:{
-        type: Array
-    }, 
-    rentId :{
-        type: Array
-    }, 
+    phone: String,
+    
+    aplicantId: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Applicant'
+    }], 
+    saleId:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Sale'
+    }], 
+    rentId :[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Rent'
+    }], 
 }, { timestamps: true })
 
 

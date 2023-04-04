@@ -1,6 +1,7 @@
 const  mongoose  = require('mongoose')
 const houseModel = require('../models/homeModel')
 const getUser = require('../authController/authorize');
+const util = require('util');
 
 // get all Houses
 const getAllHouses = async (req, res) => {
@@ -78,18 +79,20 @@ const getHouse = async (req, res) => {
 };
 // add houses
 const addHouse = async (req, res) => {
-  const data = req.body
+  const data = JSON.parse(req.body.data); // parse the data string
+  console.log(data)
   try {
-    const uploadFiles = util.promisify(upload('myFolder')); // change folder name as per your requirement
-    await uploadFiles(req, res);
     const files = req.files; // get the uploaded files
     const fileNames = files.map(file => file.filename); // get the file names
-    const house = await houseModel.create({ data, images: fileNames }); // add the file names to the house data
+    const house = await houseModel.create({...data, images: fileNames});
+ // add the file names to the house data
     res.status(200).json({ message: 'You have added House' });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
+
+
 // delete House
 const deleteHouse = async (req, res) => {
   const { id } = req.body

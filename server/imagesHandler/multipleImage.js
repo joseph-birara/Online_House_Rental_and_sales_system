@@ -18,6 +18,6 @@ const upload = (folder) => multer({
       return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
     }
   }
-}).array('images', 5); // change the field name and maximum number of files as per your requirement
+}); 
 
 module.exports = upload

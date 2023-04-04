@@ -19,7 +19,7 @@ app.use(express.json())// midleware
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-    console.log(req.path, req.method,req.body)
+    console.log(req.path, req.method,req.file, req.body) 
     next()
 })
 

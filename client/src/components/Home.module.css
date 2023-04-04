@@ -1,0 +1,39 @@
+
+.navLink{
+    text-decoration: none;
+    color: #091240;
+}
+.mainContainer{
+    text-decoration: none;
+    width: 20%;
+    margin-left: 5rem;
+}
+.shorten {
+    overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis; 
+    text-decoration: none;
+    margin: 0.2rem 0;
+  }
+  #title{
+    font-weight: 500;
+    font-size: large;
+  }
+  #location{
+    font-weight: 200;
+  }
+  .icons{
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #bed{
+    position: relative;
+    top: 2px;
+  }
+  #shower{
+    position: relative;
+    top: 2px;
+  }
+  

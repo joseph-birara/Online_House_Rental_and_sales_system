@@ -1,0 +1,11 @@
+main{
+    display: flex;
+    flex-direction: column;
+}
+
+.moto{
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    font-size: large;
+    text-align: center;
+}

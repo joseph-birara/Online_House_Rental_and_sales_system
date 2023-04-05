@@ -14,6 +14,7 @@ const OwnerSchema = new Schema({
     kebele: String,
     phone: String, 
     house: Array,
+    accountStatus:String,
     house: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Houses'

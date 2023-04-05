@@ -1,6 +1,7 @@
 const  mongoose  = require('mongoose')
 const ownerModel = require('../models/ownerModel')
 const login = require('../authController/login')
+const sendVerificationEmail = require('../authController/sendEmial')
 const {
   initiatePasswordReset,
   resetPassword 
@@ -64,57 +65,62 @@ const getOwner = async (req, res) => {
 
 
 // register Owner
-
 const registerOwner = async (req, res) => {
-console.log('this is body', req.body.data)  
-console.log("file", req.file)    
-const data = JSON.parse(req.body.data);
-const name = data.name;
-const lastName = data.lastName;
-const phone = data.phone;
-const email = data.email;
-const password = data.password;
-const city = data.city;
-const subCity = data.subCity;
-const kebele = data.kebele;
-const saleId = [];
-const aplicantId = [];
-const rentId = [];
+  console.log('this is body', req.body.data);
+  console.log('file', req.file);
+  const data = JSON.parse(req.body.data);
+  const name = data.name;
+  const lastName = data.lastName;
+  const phone = data.phone;
+  const email = data.email;
+  const password = data.password;
+  const city = data.city;
+  const subCity = data.subCity;
+  const kebele = data.kebele;
+  const saleId = [];
+  const aplicantId = [];
+  const rentId = [];
 
-const isTaken = await ownerModel.findOne({email})
+  // Check if email is already taken
+  const isTaken = await ownerModel.findOne({ email });
   if (isTaken) {
-   return res.status(401).json({error:"email is taken"})
-  }
-
-  
-  console.log("body", password)
-  if (req.file) {
-    image = req.file.filename
-  } else {
-    image = ''
+    return res.status(401).json({ error: 'email is taken' });
   }
 
   // Hash password
   const hashedPassword = await hashPassword(password);
-
+  // Generate email verification token
+  const verificationToken =  Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  
   try {
-    const Owner = await ownerModel.create({
-    lastName,
-    image,    
-    superOwner: false, 
-    name,
-    email,    
-    phone ,      
-    password: hashedPassword,     
+    const owner = await ownerModel.create({
+      lastName,
+      image: req.file?.filename || '',
+      superOwner: false,
+      name,
+      email,
+      phone,
+      password: hashedPassword,
       phone,
       city,
       subCity,
       kebele,
       rentId,
       aplicantId,
-    saleId
+      accountStatus: 'inactive',
+      saleId,
+      verificationToken, // add verification token to owner document
     });
-    res.status(200).json(Owner);
+
+    // Send email verification email to the newly registered user
+    let subject = "Account activation"
+    text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/verify-email/${verificationToken}`
+    await sendVerificationEmail(email, name, verificationToken);
+
+    res.status(200).json({
+      message: 'owner registered successfully. Please check your email for verification.',
+      owner,
+    });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

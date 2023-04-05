@@ -6,7 +6,6 @@
 .mainContainer{
     text-decoration: none;
     width: 20%;
-    margin-left: 5rem;
 }
 .shorten {
     overflow: hidden; 
@@ -36,4 +35,25 @@
     position: relative;
     top: 2px;
   }
+  
+  #price{
+    font-weight: 500;
+  }
+  #like{
+    text-align: end;
+    margin-top: -2.7rem;
+  }
+  .likebtn{
+    border-width: 0;
+    font-size: 23px;
+    background-color: white;
+    position: relative;
+    top: 5px;
+    margin-right: -1rem;
+  }
+  .icons, #price{
+    margin-top: -0.5rem;
+  }
+ 
+  
   

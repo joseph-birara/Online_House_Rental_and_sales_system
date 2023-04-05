@@ -4,6 +4,8 @@ import ImageSlider from "./ImageSlider";
 import { IoBedOutline } from "react-icons/io5";
 import { FaShower } from "react-icons/fa";
 import { TfiRulerAlt2 } from "react-icons/tfi";
+import { AiOutlineHeart } from "react-icons/ai";
+import Button from "../UI/Button";
 
 const Home = () => {
   const homePics = [
@@ -32,9 +34,9 @@ const Home = () => {
   const sliderContainer = {
     width: "100%",
   };
-  
+
   return (
-    <NavLink className={styles.navLink} to="#">
+    <NavLink className={styles.navLink} to="/homeDetails">
       <div className={styles.mainContainer}>
         <ImageSlider
           images={homePics}
@@ -50,10 +52,23 @@ const Home = () => {
           Ababa, 182609, Ethiopia
         </p>
         <div className={styles.icons}>
-          <p><IoBedOutline id={styles.bed} /> 3</p>
-          <p><FaShower id={styles.shower} />  2</p>
-          <p><TfiRulerAlt2 />  600 m<sup>2</sup></p>
+          <p>
+            <IoBedOutline id={styles.bed} /> 3
+          </p>
+          <p>
+            <FaShower id={styles.shower} /> 2
+          </p>
+          <p>
+            <TfiRulerAlt2 /> 600 m<sup>2</sup>
+          </p>
         </div>
+        <p id={styles.price}>ETB20000/mo</p>
+        <p id={styles.like}>
+          <Button className={styles.likebtn}>
+            <AiOutlineHeart />
+          </Button>
+          <span>33</span>
+        </p>
       </div>
     </NavLink>
   );

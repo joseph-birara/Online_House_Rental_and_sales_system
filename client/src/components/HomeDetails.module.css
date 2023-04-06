@@ -1,9 +1,11 @@
 .mainContainer {
   margin-inline: auto;
+  max-width: 800px;
 }
 @media only screen and (max-width: 800px) {
   .mainContainer {
     width: 100%;
+    padding-inline: 1rem;
   }
 }
 .reviewsAndOwnerContainer {
@@ -20,13 +22,21 @@
   margin-left: 0.5rem;
 }
 .innerContainer {
-  max-width: 800px;
   padding-left: 0rem;
   margin-bottom: 1.5rem;
 }
 .innerContainer h1 {
   margin-bottom: -0.5rem;
 }
-.galleryContainer {
-  max-width: 800px;
+
+.description{
+  margin: 5rem 0;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 8px #091240;
+  border-radius: 5px;
 }
+.descriptionTitle{
+border-bottom: 1px solid #dce0e0;
+padding-bottom: 1rem;
+}
+

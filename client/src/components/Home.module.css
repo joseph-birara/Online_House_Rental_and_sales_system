@@ -2,10 +2,15 @@
 .navLink{
     text-decoration: none;
     color: #091240;
+    
 }
 .mainContainer{
     text-decoration: none;
     width: 20%;
+    transition: all 0.3s ease;
+}
+.mainContainer:hover {
+  transform: scale(1.05);
 }
 .shorten {
     overflow: hidden; 

@@ -2,6 +2,9 @@ import ImageGalleryDisplayer from "./ImageGalleryDisplayer";
 import { CiLocationOn } from "react-icons/ci";
 import { IoPersonOutline } from "react-icons/io5";
 import styles from "./HomeDetails.module.css";
+import HomeProperties from "./HomeProperties";
+import AmenitiesDisplayer from "./AmenitiesDisplayer";
+import Input from "../UI/Input";
 
 const HomeDetails = () => {
   const homePics = [
@@ -47,12 +50,32 @@ const HomeDetails = () => {
         <div className={styles.reviewsAndOwnerContainer}>
           <a href="#">6 reviews</a>
           <div id={styles.owner}>
-            <span><IoPersonOutline  /> Posted by:</span>
+            <span>
+              <IoPersonOutline /> Posted by:
+            </span>
             <a href="#">Haile Kebede</a>
           </div>
         </div>
       </div>
-      <ImageGalleryDisplayer className={styles.galleryContainer} images={homePics} />
+      <ImageGalleryDisplayer
+        className={styles.galleryContainer}
+        images={homePics}
+      />
+      <div className={styles.description}>
+        <div className={styles.descriptionTitle}>
+          <h2>Description</h2>
+        </div>
+        <p>
+          Bole, House or Office for Rent, Addis Ababa. The total area is 500
+          square meters. It has living and dining room with working fire-place,
+          kitchen, master bedroom with it’s own bathroom, and two bedrooms with
+          common shower room. There are four service rooms with shower room,
+          garden and parking for 3 cars. The rate is 2,500 USD for residential
+          rent and 3,000 USD for office rent per month and fixed.
+        </p>
+      </div>
+      <HomeProperties />
+      <AmenitiesDisplayer />
     </div>
   );
 };

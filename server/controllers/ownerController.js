@@ -9,6 +9,10 @@ const {
 const { hashPassword } = require('../authController/passwordHash');
 const getUser = require('../authController/authorize');
 const { changePassword } = require('../authController/changePassword');
+const verifyEmail = require('../authController/accountActivation');
+const { text } = require('body-parser');
+
+const {generateVerificationToken }= require('../authController/saveToken')
 
 // Owner log in
 const OwnerLogin = async (req, res) => {
@@ -89,8 +93,6 @@ const registerOwner = async (req, res) => {
 
   // Hash password
   const hashedPassword = await hashPassword(password);
-  // Generate email verification token
-  const verificationToken =  Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   
   try {
     const owner = await ownerModel.create({
@@ -108,14 +110,16 @@ const registerOwner = async (req, res) => {
       rentId,
       aplicantId,
       accountStatus: 'inactive',
-      saleId,
-      verificationToken, // add verification token to owner document
+      saleId,      
     });
+
+   // generate and save token to verify email and activate account
+    const verificationToken = await generateVerificationToken(email)
 
     // Send email verification email to the newly registered user
     let subject = "Account activation"
-    text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/verify-email/${verificationToken}`
-    await sendVerificationEmail(email, name, verificationToken);
+    let text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/owner/verify-email/${verificationToken}`
+    await sendVerificationEmail(email,subject, `Please click the following link to verify your email address: ${process.env.BASE_URL}/owner/verify-email/${verificationToken}`);
 
     res.status(200).json({
       message: 'owner registered successfully. Please check your email for verification.',
@@ -125,6 +129,11 @@ const registerOwner = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+// activate account
+
+const activateAccount = async (req, res) => {
+  await verifyEmail(req,res,ownerModel)
+}
 
 
 // delet Owner
@@ -198,6 +207,7 @@ module.exports = {
   OwnerLogin,
   passwordResetRequest,
   resetPasswordProcess,
-  updatePassword
+  updatePassword,
+  activateAccount
   
 }

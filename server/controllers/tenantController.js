@@ -8,6 +8,8 @@ const {
 const { hashPassword } = require('../authController/passwordHash');
 const getUser = require('../authController/authorize');
 const { changePassword } = require('../authController/changePassword');
+const verifyEmail = require('../authController/accountActivation');
+const { generateVerificationToken } = require('../authController/saveToken');
 
 // tenant log in
 const tenantLogin = async (req, res) => {
@@ -60,7 +62,6 @@ const getTenant = async (req, res) => {
 
 
 // register tenant
-
 const registerTenant = async (req, res) => {
 console.log('this is body', req.body.data)  
 console.log("file", req.file)    
@@ -110,11 +111,24 @@ const isTaken = await tenantModel.findOne({email})
       aplicantId,
     saleId
     });
+    // generate and save token to verify email and activate account
+    const verificationToken = await generateVerificationToken(email);
+
+    // Send email verification email to the newly registered user
+    let subject = 'Account activation';
+    let text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/tenant/verify-email/${verificationToken}`;
+    await sendVerificationEmail(email, subject, text);
     res.status(200).json(tenant);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
+
+// activat account by verifying email
+const activateAccount = async (req, res) => {
+  await verifyEmail(req,res,tenantModel)
+}
+
 
 
 // delet tenant
@@ -188,6 +202,7 @@ module.exports = {
   tenantLogin,
   passwordResetRequest,
   resetPasswordProcess,
-  updatePassword
+  updatePassword,
+  activateAccount
   
 }

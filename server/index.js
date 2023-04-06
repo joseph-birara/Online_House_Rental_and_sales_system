@@ -7,6 +7,7 @@ const commentRoutes = require('./routes/commentRoutes')
 const amenitiesRoutes = require('./routes/amenitiesRoutes')
 const houseRoutes = require('./routes/houseRoutes')
 const tenantRoutes = require('./routes/tenantRoutes')
+const maintenanceRoutes = require('./routes/maintenanceRoutes')
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 const YAML = require('yamljs');
@@ -33,7 +34,8 @@ app.use('/owner', ownerRouts)
 app.use('/comment', commentRoutes)
 app.use('/amenities', amenitiesRoutes)
 app.use('/houses', houseRoutes)
-app.use('/tenant',tenantRoutes)
+app.use('/tenant', tenantRoutes)
+app.use('/maintenance',maintenanceRoutes)
 
 
 

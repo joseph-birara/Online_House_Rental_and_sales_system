@@ -95,40 +95,57 @@ const registerOwner = async (req, res) => {
   const hashedPassword = await hashPassword(password);
   
   try {
-    const owner = await ownerModel.create({
-      lastName,
-      image: req.file?.filename || '',
-      superOwner: false,
-      name,
-      email,
-      phone,
-      password: hashedPassword,
-      phone,
-      city,
-      subCity,
-      kebele,
-      rentId,
-      aplicantId,
-      accountStatus: 'inactive',
-      saleId,      
-    });
+    const session = await ownerModel.startSession(); // start a transaction
+    session.startTransaction();
+    
+    const owner = await ownerModel.create(
+      {
+        lastName,
+        image: req.file?.filename || '',
+        superOwner: false,
+        name,
+        email,
+        phone,
+        password: hashedPassword,
+        phone,
+        city,
+        subCity,
+        kebele,
+        rentId,
+        aplicantId,
+        accountStatus: 'inactive',
+        saleId,
+      },
+      { session } // pass the session to the create method
+    );
 
-   // generate and save token to verify email and activate account
-    const verificationToken = await generateVerificationToken(email)
+    // generate and save token to verify email and activate account
+    const verificationToken = await generateVerificationToken(email);
 
     // Send email verification email to the newly registered user
-    let subject = "Account activation"
-    let text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/owner/verify-email/${verificationToken}`
-    await sendVerificationEmail(email,subject, `Please click the following link to verify your email address: ${process.env.BASE_URL}/owner/verify-email/${verificationToken}`);
+    let subject = 'Account activation';
+    let text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/owner/verify-email/${verificationToken}`;
+    await sendVerificationEmail(email, subject, text);
+
+    await session.commitTransaction(); // commit the transaction
 
     res.status(200).json({
       message: 'owner registered successfully. Please check your email for verification.',
       owner,
     });
   } catch (err) {
+    await session.abortTransaction(); // rollback the transaction if an error occurs
     res.status(400).json({ error: err.message });
+  } finally {
+    session.endSession(); // end the session
   }
 };
+
+
+
+
+
+
 // activate account
 
 const activateAccount = async (req, res) => {

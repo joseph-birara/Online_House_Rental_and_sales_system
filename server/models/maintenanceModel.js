@@ -16,9 +16,10 @@ const MaintenanceSchema = new mongoose.Schema(
         ref: 'Tenant'
         },
         message: String,
+        fixStatus : String,
         
 
     },{Timestamp: true}
 )
 
-module.exports = mongoose.model("Mainenance",MaintenanceSchema)
+module.exports = mongoose.model("Maintenance",MaintenanceSchema)

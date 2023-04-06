@@ -14,7 +14,7 @@ const tenantSchema = new Schema({
     kebele: String,
     phone: String,
     
-    aplicantId: [{
+    aplicantionId: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Applicant'
     }], 

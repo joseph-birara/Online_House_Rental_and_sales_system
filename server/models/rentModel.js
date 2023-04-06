@@ -7,16 +7,16 @@ const rentSchema = new mongoose.Schema({
     paymentAmount: Number,
     paymentStatus:String,
     
-    tenantID: [{
+    tenantID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Tenant'
-    }], 
-    ownerID:[{
+    }, 
+    ownerID:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'HomeOwner'
-    }], 
-    homeID:[{
+    }, 
+    homeID:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Houses'
-    }], 
+    }, 
 })

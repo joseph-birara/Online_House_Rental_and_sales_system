@@ -31,6 +31,10 @@ const OwnerSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Rent'
     }], 
+    requestId :[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Maintenance'
+    }],
 }, { timestamps: true })
 
 

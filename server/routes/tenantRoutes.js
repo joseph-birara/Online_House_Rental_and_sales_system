@@ -260,7 +260,8 @@ const {
     tenantLogin,
     passwordResetRequest,
     resetPasswordProcess,
-    updatePassword
+    updatePassword,
+    activateAccount
 } = require('../controllers/tenantController')
 const upload = require('../imagesHandler/singleImage')
 
@@ -275,6 +276,7 @@ router.post('/login', tenantLogin)
 router.put('/updatePassword',updatePassword)
 router.post('/reset', passwordResetRequest)
 router.post('/newPassword', resetPasswordProcess)
+router.get('/verify-email/:verificationToken',activateAccount)
 
 
 module.exports = router

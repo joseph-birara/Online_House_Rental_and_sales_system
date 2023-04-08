@@ -5,11 +5,16 @@ const HomeOwner = require('./models/ownerModel');
 const Tenant = require('./models/tenantModel');
 const Comment = require('./models/commentModel');
 const House = require('./models/homeModel');
+const Maintenance = require('./models/maintenanceModel');
+const Rent = require('./models/rentModel');
+
 const adminSchemaSwaggerDefinition = convertModelToSwagger(Admin);
- const homeOwnerSchemaSwaggerDefinition = convertModelToSwagger(HomeOwner);
+const homeOwnerSchemaSwaggerDefinition = convertModelToSwagger(HomeOwner);
 const tenantSchemaSwaggerDefinition = convertModelToSwagger(Tenant);
 const commentSchemaSwaggerDefinition = convertModelToSwagger(Comment);
 const houseSchemaSwaggerDefinition = convertModelToSwagger(House);
+const maintenanceSchemaSwaggerDefinition = convertModelToSwagger(Maintenance);
+const rentSchemaSwaggerDefinition = convertModelToSwagger(Rent);
 
 const imageSchemaSwaggerDefinition = {
   type: 'array',
@@ -42,14 +47,14 @@ module.exports = {
     components: {
       schemas: {
         Admin: adminSchemaSwaggerDefinition,
-         HomeOwner: homeOwnerSchemaSwaggerDefinition,
+        HomeOwner: homeOwnerSchemaSwaggerDefinition,
         Tenant: tenantSchemaSwaggerDefinition,
         Comment: commentSchemaSwaggerDefinition,
-        House: houseSchemaSwaggerDefinition 
-        
+        House: houseSchemaSwaggerDefinition,
+        Maintenance: maintenanceSchemaSwaggerDefinition,
+        Rent: rentSchemaSwaggerDefinition
       }
     }
   },
   apis: ['./routes/*.js']
 };
- 

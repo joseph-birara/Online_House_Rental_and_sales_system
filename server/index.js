@@ -1,6 +1,8 @@
 require('dotenv').config({path:'./config/.env'});
 const express = require('express');
 const { default: mongoose } = require('mongoose');
+
+// import routes one by one
 const adminRouts = require('./routes/adminRoutes')
 const ownerRouts = require('./routes/ownerRoutes')
 const commentRoutes = require('./routes/commentRoutes')
@@ -8,11 +10,14 @@ const amenitiesRoutes = require('./routes/amenitiesRoutes')
 const houseRoutes = require('./routes/houseRoutes')
 const tenantRoutes = require('./routes/tenantRoutes')
 const maintenanceRoutes = require('./routes/maintenanceRoutes')
+const rentRoutes = require('./routes/rentRoutes')
+const applicationRoutes = require('./routes/applicationRoutes')
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 const YAML = require('yamljs');
 const swaggerOptions = require('./swaggerOptions');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const { getTenantApplications } = require('./controllers/applicationController');
 
 //express app
 const app = express()
@@ -35,8 +40,9 @@ app.use('/comment', commentRoutes)
 app.use('/amenities', amenitiesRoutes)
 app.use('/houses', houseRoutes)
 app.use('/tenant', tenantRoutes)
-app.use('/maintenance',maintenanceRoutes)
-
+app.use('/maintenance', maintenanceRoutes)
+app.use('/rent', rentRoutes)
+app.use('/application',applicationRoutes)
 
 
 // conslo swagger

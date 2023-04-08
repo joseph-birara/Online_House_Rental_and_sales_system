@@ -19,9 +19,9 @@ const OwnerSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Houses'
     }],
-    aplicantId: [{
+    applicationId: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Applicant'
+        ref: 'Application'
     }], 
     saleId:[{
         type: mongoose.Schema.Types.ObjectId,

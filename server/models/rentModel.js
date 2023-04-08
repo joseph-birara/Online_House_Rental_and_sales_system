@@ -20,3 +20,5 @@ const rentSchema = new mongoose.Schema({
         ref: 'Houses'
     }, 
 })
+
+module.exports = mongoose.model("Rent",rentSchema)

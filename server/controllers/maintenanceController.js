@@ -46,8 +46,7 @@ const editMaintenace = async (req, res) => {
     }
     
 }
-// get maintenance
-
+// get all maintenance
 const getMaintenance = async (req, res) => {
     try {
         const allRequest = await maintenanceModel.find()
@@ -65,7 +64,7 @@ const getMaintenance = async (req, res) => {
 
 const getSingleMaintenance = async (req, res) => {
     try {
-        const id = req.body
+        const id = req.qurey
         const singleRequest = await maintenanceModel.findOne(id)
         if (!allRequest) {
             return res.status(200).json({message:"empty requests list"})

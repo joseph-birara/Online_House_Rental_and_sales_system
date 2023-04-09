@@ -29,7 +29,6 @@ const addApplicationRequest = async (req, res) => {
          return res.status(404).json({message:error})
     }
 }
-
 // get all applications in database
 const getAllApplictions = async (req, res) => {
     try
@@ -43,9 +42,7 @@ const getAllApplictions = async (req, res) => {
       return res.status(404).json({message:error})  
     }
 }
-
 // get applications that blongs to a tenant
-
 const getTenantApplications = async (req, res) => {
     const id = req.query
 
@@ -62,20 +59,20 @@ const getTenantApplications = async (req, res) => {
 }
 // get all applications that belongs to a single home owner
 const getOwnerApplications = async (req, res) => {
-    const id = req.query
+    const ownerId = req.query.ownerId;
 
     try {
-        const applications = await applicationModel.findById(id)
+        const applications = await applicationModel.find({ownerId});
         if (!applications) {
             return res.status(404).json({message:"empty list"})
         }
         return res.status(200).json(applications)
         
     } catch (error) {
-      return res.status(404).json({message:error})  
+        return res.status(404).json({message:error})  
     }
 }
-// get all applications that belongs to a single house
+//get all applications that belongs to a single house
 const getHouseApplications = async (req, res) => {
     const id = req.query
 
@@ -127,7 +124,6 @@ const deleteApplication = async (req, res) => {
 
 
 // update an appliction
-
 const updateAppliction = async(req, res) => {
     const id = req.body.id 
     try {

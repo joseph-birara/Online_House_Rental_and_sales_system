@@ -1,10 +1,10 @@
-import ImageGalleryDisplayer from "./ImageGalleryDisplayer";
+import ImageGalleryDisplayer from "../ImageGalleryDisplayer";
 import { CiLocationOn } from "react-icons/ci";
 import { IoPersonOutline } from "react-icons/io5";
 import styles from "./HomeDetails.module.css";
 import HomeProperties from "./HomeProperties";
 import AmenitiesDisplayer from "./AmenitiesDisplayer";
-import Input from "../UI/Input";
+import Comments from '../comments/Comments';
 
 const HomeDetails = () => {
   const homePics = [
@@ -48,7 +48,7 @@ const HomeDetails = () => {
           Ababa, 7966, Ethiopia
         </p>
         <div className={styles.reviewsAndOwnerContainer}>
-          <a href="#">6 reviews</a>
+          <div><a href="#">6 reviews</a></div>
           <div id={styles.owner}>
             <span>
               <IoPersonOutline /> Posted by:
@@ -76,6 +76,7 @@ const HomeDetails = () => {
       </div>
       <HomeProperties />
       <AmenitiesDisplayer />
+      <Comments currentUserId="1" />
     </div>
   );
 };

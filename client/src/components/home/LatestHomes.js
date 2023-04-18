@@ -1,9 +1,9 @@
 import classes from "./LatestHomes.module.css";
-import f1 from "./featured1.jpg";
-import f2 from "./featured2.jpg";
-import f3 from "./featured3.jpg";
-import f4 from "./featured4.jpg";
-import Button from "../UI/Button";
+import f1 from "./images/featured1.jpg";
+import f2 from "./images/featured2.jpg";
+import f3 from "./images/featured3.jpg";
+import f4 from "./images/featured4.jpg";
+import Button from "../../UI/Button";
 
 const LatestHomes = ({ forRent }) => {
   const exploreHandler = () => {};
@@ -20,18 +20,18 @@ const LatestHomes = ({ forRent }) => {
 
       <div className={classes.imagesContainer}>
         <div className={classes.img}>
-          <img src={f1} className={classes.homePic} />
+          <img src={f1} className={classes.homePic} alt="" />
         </div>
 
         <div className={classes.img}>
-          <img src={f2} className={classes.homePic} />
+          <img src={f2} className={classes.homePic} alt="" />
         </div>
 
         <div className={classes.img}>
-          <img src={f3} className={classes.homePic} />
+          <img src={f3} className={classes.homePic} alt="" />
         </div>
         <div className={classes.img}>
-          <img src={f4} className={classes.homePic} />
+          <img src={f4} className={classes.homePic} alt="" />
         </div>
       </div>
 

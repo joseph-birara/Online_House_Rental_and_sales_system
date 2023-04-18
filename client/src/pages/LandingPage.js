@@ -5,7 +5,7 @@ import img3 from "./images/hp4.webp";
 import img4 from "./images/hp6.jpg";
 import img5 from "./images/hp5.webp";
 import img6 from "./images/hp3.webp";
-import LatestHomes from "../components/LatestHomes";
+import LatestHomes from "../components/home/LatestHomes";
 import ImageSlider from "../components/ImageSlider";
 
 const LandingPage = () => {

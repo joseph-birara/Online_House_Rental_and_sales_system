@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
 import styles from "./Home.module.css";
-import ImageSlider from "./ImageSlider";
+import ImageSlider from "../ImageSlider";
 import { IoBedOutline } from "react-icons/io5";
 import { FaShower } from "react-icons/fa";
 import { TfiRulerAlt2 } from "react-icons/tfi";
 import { AiOutlineHeart } from "react-icons/ai";
-import Button from "../UI/Button";
+import Button from "../..//UI/Button";
 
 const Home = () => {
   const homePics = [

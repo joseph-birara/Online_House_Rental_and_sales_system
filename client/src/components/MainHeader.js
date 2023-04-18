@@ -29,6 +29,11 @@ const MainHeader = () => {
             </NavLink>
           </li>
           <li>
+            <NavLink className={({isActive}) => isActive ? classes.active : classes.navLink}  to="/admin">
+              Admin
+            </NavLink>
+          </li>
+          <li>
           <NavLink className={classes.loginSignup}  to="#">
               Login/Signup
             </NavLink>

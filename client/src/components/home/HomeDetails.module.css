@@ -1,3 +1,4 @@
+
 .mainContainer {
   margin-inline: auto;
   max-width: 800px;
@@ -10,10 +11,12 @@
 }
 .reviewsAndOwnerContainer {
   display: flex;
+  align-items: baseline;
 }
 .reviewsAndOwnerContainer a {
   color: #091240;
   font-weight: bold;
+  text-decoration: underline;
 }
 #owner {
   margin-left: 3rem;
@@ -25,8 +28,8 @@
   padding-left: 0rem;
   margin-bottom: 1.5rem;
 }
-.innerContainer h1 {
-  margin-bottom: -0.5rem;
+.innerContainer p {
+  margin: 0.3rem 0 0.75rem 0;
 }
 
 .description{

@@ -7,6 +7,7 @@
 .innerContainer {
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
 }
 .col1 {
   margin-inline-end: 7.5rem;
@@ -15,6 +16,8 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #dce0e0;
+  padding-bottom: 0.3rem;
+  margin-block: 1rem;
 }
 .prop {
   margin-inline-end: 3rem;

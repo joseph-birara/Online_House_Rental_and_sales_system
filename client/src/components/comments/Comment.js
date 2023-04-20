@@ -36,7 +36,7 @@ const Comment = ({
   return (
     <div key={comment.id} className={styles.comment}>
       <div className={styles["comment-image-container"]}>
-        <img className="rounded-full w-8 h-8" src={avatar} alt="user-profile" />
+        <img className="rounded-full w-9 h-9" src={avatar} alt="user-profile" />
       </div>
       <div className={styles["comment-right-part"]}>
         <div className={styles["comment-content"]}>

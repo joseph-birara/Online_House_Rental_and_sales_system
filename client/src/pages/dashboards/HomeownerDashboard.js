@@ -1,5 +1,5 @@
 import React from "react";
-import Dashboard from "../components/dashboard/Dashboard";
+import Dashboard from "../../components/dashboard/Dashboard";
 import userProfPic from "./avatar.jpg";
 import { BsCurrencyDollar, BsShield } from "react-icons/bs";
 import { FiShoppingBag, FiCreditCard } from "react-icons/fi";

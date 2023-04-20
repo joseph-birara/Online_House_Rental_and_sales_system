@@ -42,7 +42,9 @@ const Dashboard = ({
             />
           </div>
 
-          <Outlet />
+          <div className="p-7">
+            <Outlet />
+          </div>
 
           <Footer />
         </div>

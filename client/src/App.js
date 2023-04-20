@@ -7,8 +7,10 @@ import Test from "./pages/Test";
 import Home from "./components/home/Home";
 import HomeDetails from "./components/home/HomeDetails";
 import { DashboardContextProvider } from "./contexts/DashboardContextProvider";
-import HomeownerDashboard from "./pages/HomeownerDashboard";
-import AdminDashboard from "./pages/AdminDashboard";
+import HomeownerDashboard from "./pages/dashboards/HomeownerDashboard";
+import PlacesFormPage from "./pages/home/PlacesFormPage";
+import AdminDashboard from "./pages/dashboards/AdminDashboard";
+import HomesListForOwner from "./pages/home/HomesListForOwner";
 
 //blue-black: #091240 ,  light-blue: #1890db
 
@@ -30,9 +32,12 @@ function App() {
             }
           >
             <Route path="homes">
-              <Route path="onListing" element={<Test />} />
-              <Route path="rented" element={<Test />} />
-              <Route path="new" element={<Test />} />
+              <Route path="onListing" element={<HomesListForOwner />} />
+              <Route
+                path="rented"
+                element={<HomesListForOwner rented={true} />}
+              />
+              <Route path="new" element={<PlacesFormPage />} />
             </Route>
             <Route path="applicants" element={<Test />} />
             <Route path="tenants" element={<Test />} />

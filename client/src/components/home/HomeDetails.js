@@ -76,6 +76,7 @@ const HomeDetails = () => {
       </div>
       <HomeProperties />
       <AmenitiesDisplayer />
+      <input type="number"/>
       <Comments currentUserId="1" />
     </div>
   );

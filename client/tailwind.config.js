@@ -6,6 +6,14 @@ module.exports = {
       display: ['Open Sans', 'sans-serif'],
       body: ['Open Sans', 'sans-serif'],
     },
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      'white': '#ffffff',
+      'lightBlue': '#1786fa',
+      'lbHover' : '#1890db',
+      'blueBlack': '#091240',
+    },
     extend: {
       fontSize: {
         14: '14px',

@@ -12,15 +12,14 @@
 .reviewsAndOwnerContainer {
   display: flex;
   align-items: baseline;
+  gap: 2rem;
 }
 .reviewsAndOwnerContainer a {
   color: #091240;
   font-weight: bold;
   text-decoration: underline;
 }
-#owner {
-  margin-left: 3rem;
-}
+
 #owner a {
   margin-left: 0.5rem;
 }

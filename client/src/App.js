@@ -5,12 +5,15 @@ import LandingPage from "./pages/LandingPage";
 import Rent from "./pages/Rent";
 import Test from "./pages/Test";
 import Home from "./components/home/Home";
-import HomeDetails from "./components/home/HomeDetails";
+import HomeDetails from "./pages/HomeDetails";
 import { DashboardContextProvider } from "./contexts/DashboardContextProvider";
 import HomeownerDashboard from "./pages/dashboards/HomeownerDashboard";
-import PlacesFormPage from "./pages/home/PlacesFormPage";
+import PlacesFormPage from "./pages/PlacesFormPage";
 import AdminDashboard from "./pages/dashboards/AdminDashboard";
-import HomesListForOwner from "./pages/home/HomesListForOwner";
+import HomesList from "./pages/HomesList";
+import styles from "./App.module.css";
+import DetailsPage from "./pages/DetailsPage";
+import UsersersList from "./pages/UsersList";
 
 //blue-black: #091240 ,  light-blue: #1890db
 
@@ -32,15 +35,12 @@ function App() {
             }
           >
             <Route path="homes">
-              <Route path="onListing" element={<HomesListForOwner />} />
-              <Route
-                path="rented"
-                element={<HomesListForOwner rented={true} />}
-              />
+              <Route path="onListing" element={<HomesList />} />
+              <Route path="rented" element={<HomesList rented={true} />} />
               <Route path="new" element={<PlacesFormPage />} />
             </Route>
-            <Route path="applicants" element={<Test />} />
-            <Route path="tenants" element={<Test />} />
+            <Route path="applicants" element={<UsersersList userType="applicant" />} />
+            <Route path="tenants" element={<UsersersList userType="tenant/plain" removeDropdown={true} />} />
             <Route path="maintenanceRequests" element={<Test />} />
           </Route>
 
@@ -53,13 +53,24 @@ function App() {
             }
           >
             <Route path="homes">
-              <Route path="onListing" element={<Test />} />
-              <Route path="rented" element={<Test />} />
+              <Route path="onListing" element={<HomesList forAdmin={true} />} />
+              <Route
+                path="rented"
+                element={<HomesList forAdmin={true} rented={true} />}
+              />
+              <Route path="home" element={<HomeDetails forAdmin={true} />} />
             </Route>
             <Route path="users">
-              <Route path="homeOwners" element={<Test />} />
-              <Route path="tenants" element={<Test />} />
-              <Route path="buyers" element={<Test />} />
+              <Route path="homeOwners" element={<UsersersList />} />
+              <Route path="homeOwners/homeOwner" element={<DetailsPage />} />
+              <Route
+                path="tenants"
+                element={<UsersersList userType="tenant" />}
+              />
+              <Route
+                path="buyers"
+                element={<UsersersList userType="buyer" />}
+              />
             </Route>
             <Route path="reports" element={<Test />} />
           </Route>

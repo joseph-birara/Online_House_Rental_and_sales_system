@@ -1,12 +1,13 @@
-import ImageGalleryDisplayer from "../ImageGalleryDisplayer";
+import ImageGalleryDisplayer from "../components/ImageGalleryDisplayer";
 import { CiLocationOn } from "react-icons/ci";
 import { IoPersonOutline } from "react-icons/io5";
 import styles from "./HomeDetails.module.css";
-import HomeProperties from "./HomeProperties";
-import AmenitiesDisplayer from "./AmenitiesDisplayer";
-import Comments from '../comments/Comments';
+import HomeProperties from "../components/home/HomeProperties";
+import AmenitiesDisplayer from "../components/home/AmenitiesDisplayer";
+import Comments from "../components/comments/Comments";
+import Dropdown from "../components/Dropdown";
 
-const HomeDetails = () => {
+const HomeDetails = ({ forAdmin }) => {
   const homePics = [
     {
       original:
@@ -39,8 +40,27 @@ const HomeDetails = () => {
         "https://a0.muscache.com/im/pictures/bc6be349-11ab-4b34-a208-569b3e8bd1e5.jpg?im_w=720",
     },
   ];
+  const dropdownSelectHandler = (action, placeId) => {
+    console.log(action, placeId);
+  };
+  const actionOptions = [
+    "Activate",
+    "Deactivate",
+    "Delete",
+    "Verify",
+    "Refute",
+  ];
   return (
     <div className={styles.mainContainer}>
+      {forAdmin && (
+        <div className="flex justify-end">
+          <Dropdown
+            actions={actionOptions}
+            onSelect={dropdownSelectHandler}
+            //itemId={place._id}
+          />
+        </div>
+      )}
       <div className={styles.innerContainer}>
         <h1>Modern comfort and convenience elegantly appointed</h1>
         <p>
@@ -48,7 +68,9 @@ const HomeDetails = () => {
           Ababa, 7966, Ethiopia
         </p>
         <div className={styles.reviewsAndOwnerContainer}>
-          <div><a href="#">6 reviews</a></div>
+          <div>
+            <a href="#">6 reviews</a>
+          </div>
           <div id={styles.owner}>
             <span>
               <IoPersonOutline /> Posted by:
@@ -76,8 +98,7 @@ const HomeDetails = () => {
       </div>
       <HomeProperties />
       <AmenitiesDisplayer />
-      <input type="number"/>
-      <Comments currentUserId="1" />
+      {!forAdmin && <Comments currentUserId="1" />}
     </div>
   );
 };

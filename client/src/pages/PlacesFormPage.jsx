@@ -1,5 +1,5 @@
-import PhotosUploader from "../../components/PhotosUploader";
-import AmenitiesInput from "../../components/AmenitiesInput";
+import PhotosUploader from "../components/PhotosUploader";
+import AmenitiesInput from "../components/AmenitiesInput";
 import { useEffect, useRef, useState } from "react";
 //import axios from "axios";
 //import AccountNav from "../AccountNav";
@@ -21,7 +21,6 @@ export default function PlacesFormPage() {
   const [perks, setPerks] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [homeType, setHomeType] = useState("regularRent");
-
 
   const priceRef = useRef();
   const checkInRef = useRef();
@@ -71,26 +70,15 @@ export default function PlacesFormPage() {
         <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
           <div>
             <h3 className="mt-2 -mb-1">Check in time</h3>
-            <input
-              type="number"
-              ref={checkInRef}
-              placeholder="14"
-            />
+            <input type="number" ref={checkInRef} placeholder="14" />
           </div>
           <div>
             <h3 className="mt-2 -mb-1">Check out time</h3>
-            <input
-              type="number"
-              ref={checkOutRef}
-              placeholder="11"
-            />
+            <input type="number" ref={checkOutRef} placeholder="11" />
           </div>
           <div>
             <h3 className="mt-2 -mb-1">Max number of guests</h3>
-            <input
-              type="number"
-              ref={maxGuestsRef}
-            />
+            <input type="number" ref={maxGuestsRef} />
           </div>
           <div>
             <h3 className="mt-2 -mb-1">Price per night</h3>
@@ -130,8 +118,6 @@ export default function PlacesFormPage() {
       </>
     );
   };
-
-  
 
   async function savePlace(ev) {
     // ev.preventDefault();
@@ -177,19 +163,27 @@ export default function PlacesFormPage() {
         <p>Please choose the home type:</p>
         <div className="flex gap-6">
           <button
-            className={homeType === "regularRent" ? selectedBtnStyle : unselectedBtnStyle}
+            className={
+              homeType === "regularRent" ? selectedBtnStyle : unselectedBtnStyle
+            }
             onClick={() => homeTypeHandler("regularRent")}
           >
             Regular rent
           </button>
           <button
-            className={homeType === "shortTermRent" ? selectedBtnStyle : unselectedBtnStyle}
+            className={
+              homeType === "shortTermRent"
+                ? selectedBtnStyle
+                : unselectedBtnStyle
+            }
             onClick={() => homeTypeHandler("shortTermRent")}
           >
             Short-term rent
           </button>
           <button
-            className={homeType === "sale" ? selectedBtnStyle : unselectedBtnStyle}
+            className={
+              homeType === "sale" ? selectedBtnStyle : unselectedBtnStyle
+            }
             onClick={() => homeTypeHandler("sale")}
           >
             Sale
@@ -276,7 +270,9 @@ export default function PlacesFormPage() {
         {homeType === "regularRent" && <RegularRent />}
         {homeType === "shortTermRent" && <ShortTerm />}
         {homeType === "sale" && <Sale />}
-        <button className="primary bg-lightBlue my-4 hover:bg-lbHover">Save</button>
+        <button className="primary bg-lightBlue my-4 hover:bg-lbHover">
+          Save
+        </button>
       </form>
     </div>
   );

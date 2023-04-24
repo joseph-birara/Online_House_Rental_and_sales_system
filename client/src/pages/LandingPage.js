@@ -38,7 +38,6 @@ const LandingPage = () => {
 
       <LatestHomes forRent={true}/>
       <LatestHomes />
-      
     </>
   );
 };

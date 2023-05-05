@@ -4,7 +4,6 @@ import Buy from "./pages/Buy";
 import LandingPage from "./pages/LandingPage";
 import Rent from "./pages/Rent";
 import Test from "./pages/Test";
-import Home from "./components/home/Home";
 import HomeDetails from "./pages/HomeDetails";
 import { DashboardContextProvider } from "./contexts/DashboardContextProvider";
 import HomeownerDashboard from "./pages/dashboards/HomeownerDashboard";
@@ -14,6 +13,8 @@ import HomesList from "./pages/HomesList";
 import styles from "./App.module.css";
 import DetailsPage from "./pages/DetailsPage";
 import UsersersList from "./pages/UsersList";
+import RequestsPage from "./pages/RequestsPage";
+import HomesListing from "./pages/HomesListing";
 
 //blue-black: #091240 ,  light-blue: #1890db
 
@@ -25,7 +26,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/buy" element={<Buy />} />
-          <Route path="/rent" element={<Home />} />
+          <Route path="/rent" element={<HomesListing />} />
           <Route
             path="/homeOwner"
             element={
@@ -39,9 +40,17 @@ function App() {
               <Route path="rented" element={<HomesList rented={true} />} />
               <Route path="new" element={<PlacesFormPage />} />
             </Route>
-            <Route path="applicants" element={<UsersersList userType="applicant" />} />
-            <Route path="tenants" element={<UsersersList userType="tenant/plain" removeDropdown={true} />} />
-            <Route path="maintenanceRequests" element={<Test />} />
+            <Route
+              path="applicants"
+              element={<UsersersList userType="applicant" />}
+            />
+            <Route
+              path="tenants"
+              element={
+                <UsersersList userType="tenant/plain" removeDropdown={true} />
+              }
+            />
+            <Route path="maintenanceRequests" element={<RequestsPage />} />
           </Route>
 
           <Route

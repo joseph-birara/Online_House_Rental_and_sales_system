@@ -1,6 +1,7 @@
 const applicationModel = require('../models/applicantModel')
 const tenantModel = require('../models/tenantModel')
 const ownerModel = require('../models/ownerModel')
+const sendEmail = require('../authController/sendEmial')
 
 // send application request
 
@@ -23,7 +24,11 @@ const addApplicationRequest = async (req, res) => {
         applicant.applicationId.push(application._id)
         await owner.save()
         await applicant.save()
-         return res.status(201).json({message:"application sent!"})
+        let to = owner.email
+        let subject = " New home rental application"
+        let text = `You have new home rental application , pleas check your portal`
+        await sendEmail(to,subject,text)
+        return res.status(201).json({message:"application sent!"})
         
     } catch (error) {
          return res.status(404).json({message:error})

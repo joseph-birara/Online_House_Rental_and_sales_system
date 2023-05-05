@@ -1,4 +1,3 @@
-
 //swagger defintion
 /**
  * @swagger
@@ -216,45 +215,25 @@
  *         description: House not found
  */
 
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
- 
-
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const upload = require('../imagesHandler/multipleImage');
+const upload = require("../imagesHandler/multipleImage");
 const {
-    addHouse,
-    getAllHouses,
-    getHouse,
-    deleteHouse,
-  updateHouse, 
+  addHouse,
+  getAllHouses,
+  getHouse,
+  deleteHouse,
+  updateHouse,
   deletImage,
-   getHousesByOwner
-} = require('../controllers/houseController');
+  getHousesByOwner,
+} = require("../controllers/houseController");
 
-router.post('/add', upload('House', 5).array('image', 5), addHouse);
-router.get('/all', getAllHouses)
-router.get('/byowner', getHousesByOwner)
-router.delete('/delete', deleteHouse)
-router.put('/update', updateHouse)
-router.delete('/deleteImage', deletImage)
-router.get('/single', getHouse)
-
-
+router.post("/add", upload("House", 5).array("image", 5), addHouse);
+router.get("/all", getAllHouses);
+router.get("/byowner", getHousesByOwner);
+router.delete("/delete", deleteHouse);
+router.put("/update", updateHouse);
+router.delete("/deleteImage", deletImage);
+router.get("/single", getHouse);
 
 module.exports = router;

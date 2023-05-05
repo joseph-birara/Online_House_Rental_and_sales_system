@@ -1,24 +1,25 @@
-const  mongoose  = require('mongoose')
-const houseModel = require('../models/homeModel')
-const getUser = require('../authController/authorize');
-const util = require('util');
+const mongoose = require("mongoose");
+const houseModel = require("../models/homeModel");
+const getUser = require("../authController/authorize");
+const util = require("util");
 
 // get all Houses
 const getAllHouses = async (req, res) => {
+  console.log(req);
   try {
     const houses = await houseModel.find();
     const housesWithImages = [];
 
-    for (const house of houses) {
-      const images = [];
-      for (const imageName of house.images) {
-        const imagePath = path.join(__dirname, 'uploads', 'House', imageName);
-        images.push({ name: imageName, path: imagePath });
-      }
-      housesWithImages.push({ ...house.toJSON(), images });
-    }
+    // for (const house of houses) {
+    //   const images = [];
+    //   for (const imageName of house.images) {
+    //     const imagePath = path.join(__dirname, "uploads", "House", imageName);
+    //     images.push({ name: imageName, path: imagePath });
+    //   }
+    //   housesWithImages.push({ ...house.toJSON(), images });
+    // }
 
-    res.status(200).json(housesWithImages);
+    res.status(200).json(houses);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -27,20 +28,20 @@ const getAllHouses = async (req, res) => {
 const getHousesByOwner = async (req, res) => {
   const ownerID = req.body.ownerID;
   if (!mongoose.Types.ObjectId.isValid(ownerID)) {
-    return res.status(404).json({ error: 'Invalid ownerID' });
+    return res.status(404).json({ error: "Invalid ownerID" });
   }
 
   try {
     const houses = await houseModel.find({ ownerID: ownerID });
     if (!houses || houses.length === 0) {
-      return res.status(404).json({ error: 'No houses found for ownerID' });
+      return res.status(404).json({ error: "No houses found for ownerID" });
     }
 
     const housesWithImages = [];
     for (const house of houses) {
       const images = [];
       for (const imageName of house.images) {
-        const imagePath = path.join(__dirname, 'uploads', 'House', imageName);
+        const imagePath = path.join(__dirname, "uploads", "House", imageName);
         images.push({ name: imageName, path: imagePath });
       }
       const houseWithImages = { ...house.toJSON(), images };
@@ -56,18 +57,18 @@ const getHousesByOwner = async (req, res) => {
 const getHouse = async (req, res) => {
   const houseID = req.body.id;
   if (!mongoose.Types.ObjectId.isValid(houseID)) {
-    return res.status(404).json({ error: 'Invalid ID' });
+    return res.status(404).json({ error: "Invalid ID" });
   }
 
   try {
     const house = await houseModel.findById(houseID);
     if (!house) {
-      return res.status(404).json({ error: 'House not found' });
+      return res.status(404).json({ error: "House not found" });
     }
 
     const images = [];
     for (const imageName of house.images) {
-      const imagePath = path.join(__dirname, 'uploads', 'House', imageName);
+      const imagePath = path.join(__dirname, "uploads", "House", imageName);
       images.push({ name: imageName, path: imagePath });
     }
 
@@ -80,31 +81,29 @@ const getHouse = async (req, res) => {
 // add houses
 const addHouse = async (req, res) => {
   const data = JSON.parse(req.body.data); // parse the data string
-  console.log(data)
+  console.log(data);
   try {
     const files = req.files; // get the uploaded files
-    const fileNames = files.map(file => file.filename); // get the file names
-    const house = await houseModel.create({...data, images: fileNames});
- // add the file names to the house data
-    res.status(200).json({ message: 'You have added House' });
+    const fileNames = files.map((file) => file.filename); // get the file names
+    const house = await houseModel.create({ ...data, images: fileNames });
+    // add the file names to the house data
+    res.status(200).json({ message: "You have added House" });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
 
-
 // delete House
 const deleteHouse = async (req, res) => {
-  const { id } = req.body
+  const { id } = req.body;
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'invalid id'})
+    return res.status(404).json({ error: "invalid id" });
   }
-  try { 
-
+  try {
     // Delete House from database
-    const House= await houseModel.findByIdAndDelete(id)
+    const House = await houseModel.findByIdAndDelete(id);
     if (!House) {
-      return res.status(400).json({error: 'No such House'})
+      return res.status(400).json({ error: "No such House" });
     }
 
     // Delete images from disk
@@ -117,61 +116,63 @@ const deleteHouse = async (req, res) => {
       });
     });
 
-    res.status(200).json(House)
+    res.status(200).json(House);
   } catch (err) {
-    res.status(400).json({ error: err.message })        
+    res.status(400).json({ error: err.message });
   }
-}
+};
 //update House
 const updateHouse = async (req, res) => {
-  const id = await getUser(req, res)
+  const id = await getUser(req, res);
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'invalid id'})
+    return res.status(404).json({ error: "invalid id" });
   }
-    const House = await houseModel.findOneAndUpdate({ _id: id }, {
-      ...req.body
-  })
+  const House = await houseModel.findOneAndUpdate(
+    { _id: id },
+    {
+      ...req.body,
+    }
+  );
   if (!House) {
-    return res.status(400).json({error: 'No such House'})
+    return res.status(400).json({ error: "No such House" });
   }
-  res.status(200).json(House)
-}
+  res.status(200).json(House);
+};
 const deletImage = async (req, res) => {
-  const { id, index } = req.body
+  const { id, index } = req.body;
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'invalid id'})
+    return res.status(404).json({ error: "invalid id" });
   }
-  try { 
-
+  try {
     // retrive House from database
-    const House= await houseModel.findById(id)
+    const House = await houseModel.findById(id);
     if (!House) {
-      return res.status(400).json({error: 'No such House'})
+      return res.status(400).json({ error: "No such House" });
     }
     // Delete image from disk
     const imageName = House.images[index];
     fs.unlink(`./uploads/House/${imageName}`, (err) => {
-        if (err) {
-          console.error(err);
-        }
+      if (err) {
+        console.error(err);
+      }
     });
 
     // Remove image name from images array
     House.images.splice(index, 1);
     await House.save();
 
-    res.status(200).json(House)
+    res.status(200).json(House);
   } catch (err) {
-    res.status(400).json({ error: err.message })        
+    res.status(400).json({ error: err.message });
   }
-}
+};
 
 module.exports = {
-    addHouse,
-    getAllHouses,
-    getHouse,
-    deleteHouse,
-  updateHouse, 
+  addHouse,
+  getAllHouses,
+  getHouse,
+  deleteHouse,
+  updateHouse,
   deletImage,
-   getHousesByOwner
-}
+  getHousesByOwner,
+};

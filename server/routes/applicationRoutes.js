@@ -260,10 +260,6 @@
  */
 
 
-
-
-
-
 const {
     addApplicationRequest,
     getAllApplictions,

@@ -8,8 +8,6 @@ const getAllHouses = async (req, res) => {
   console.log(req);
   try {
     const houses = await houseModel.find();
-    const housesWithImages = [];
-
     // for (const house of houses) {
     //   const images = [];
     //   for (const imageName of house.images) {
@@ -18,7 +16,6 @@ const getAllHouses = async (req, res) => {
     //   }
     //   housesWithImages.push({ ...house.toJSON(), images });
     // }
-
     res.status(200).json(houses);
   } catch (err) {
     res.status(500).json({ error: err.message });

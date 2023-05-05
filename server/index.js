@@ -1,8 +1,9 @@
 require("dotenv").config({ path: "./config/.env" });
 const express = require("express");
 const { default: mongoose } = require("mongoose");
+const cors = require("cors");
 
-// import routes one by one
+//import routes one by one
 const adminRouts = require("./routes/adminRoutes");
 const ownerRouts = require("./routes/ownerRoutes");
 const commentRoutes = require("./routes/commentRoutes");
@@ -25,6 +26,7 @@ const {
 const app = express();
 app.use(express.json()); // midleware
 app.use(bodyParser.json());
+app.use(cors());
 
 app.use((req, res, next) => {
   console.log(req.path, req.method, req.file, req.body);

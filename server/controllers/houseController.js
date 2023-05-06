@@ -53,7 +53,7 @@ const addHouse = async (req, res) => {
   const data = JSON.parse(req.body); // parse the data string
   console.log(data);
   try {
-    const house = await houseModel.create({ ...data, images: fileNames });
+    const house = await houseModel.create({ ...data });
     // add the file names to the house data
     res.status(200).json({ message: "You have added House" });
   } catch (err) {

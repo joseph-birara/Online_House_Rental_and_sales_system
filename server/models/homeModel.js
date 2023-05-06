@@ -29,6 +29,19 @@ const HomeSchema = new Schema(
     bathRoom: Number,
     description: String,
     title: String,
+    ameneniteis: {
+      washer: Boolean,
+      wifi: Boolean,
+      airConditioning: Boolean,
+      freezer: Boolean,
+      dryer: Boolean,
+      workSpace: Boolean,
+      gym: Boolean,
+      heater: Boolean,
+      pool: Boolean,
+      terrace: Boolean,
+      parking: Boolean,
+    },
   },
   { timestamps: true }
 );

@@ -7,7 +7,6 @@ const cors = require("cors");
 const adminRouts = require("./routes/adminRoutes");
 const ownerRouts = require("./routes/ownerRoutes");
 const commentRoutes = require("./routes/commentRoutes");
-const amenitiesRoutes = require("./routes/amenitiesRoutes");
 const houseRoutes = require("./routes/houseRoutes");
 const tenantRoutes = require("./routes/tenantRoutes");
 const maintenanceRoutes = require("./routes/maintenanceRoutes");
@@ -41,7 +40,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use("/admin", adminRouts);
 app.use("/owner", ownerRouts);
 app.use("/comment", commentRoutes);
-app.use("/amenities", amenitiesRoutes);
+
 app.use("/houses", houseRoutes);
 app.use("/tenant", tenantRoutes);
 app.use("/maintenance", maintenanceRoutes);

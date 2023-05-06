@@ -49,7 +49,7 @@ const getOwner = async (req, res) => {
 // register Owner
 const registerOwner = async (req, res) => {
   console.log("this is body", req.body);
-  const data = JSON.parse(req.body);
+  const data = req.body;
   const name = data.name;
   const lastName = data.lastName;
   const phone = data.phone;

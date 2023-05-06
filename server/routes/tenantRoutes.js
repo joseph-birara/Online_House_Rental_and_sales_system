@@ -57,7 +57,7 @@
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Tenant1'
- * /tenant/register: 
+ * /tenant/register:
  *   post:
  *     tags: [Tenant]
  *     summary: Create a new Tenant
@@ -130,15 +130,15 @@
  *         application/json:
  *           schema:
  *             type: object
- *             properties:               
- *                 
- *                 
+ *             properties:
+ *
+ *
  *               email:
  *                 type: string
  *                 description: email  for the Tenant
  *             example:
  *               email: oldpassword123@gmail.com
- *               
+ *
  *     responses:
  *       200:
  *         description: Password updated successfully
@@ -148,7 +148,7 @@
  *         description: Unauthorized access, invalid or expired token
  *       500:
  *         description: Internal server error
- * 
+ *
  * /tenant/get{id}:
  *   get:
  *     tags: [Tenant]
@@ -212,9 +212,9 @@
  *       404:
  *         description: Tenant user not found
  *       500:
- *         description: Internal server error 
+ *         description: Internal server error
  * /tenant/newPassword:
- * 
+ *
  *   post:
  *     tags: [Tenant]
  *     summary: reset Tenant password with new password
@@ -246,39 +246,34 @@
  *         description: Internal server error
  */
 
-
-
-const express = require('express')
+const express = require("express");
 // const Tenant = require('../models/TenantModel')
-const multer = require('multer')
+const multer = require("multer");
 const {
-    registerTenant,
-    getAllTenants,
-    getTenant,
-    deleteTenant,
-    updateTenant,
-    tenantLogin,
-    passwordResetRequest,
-    resetPasswordProcess,
-    updatePassword,
-    activateAccount
-} = require('../controllers/tenantController')
-const upload = require('../imagesHandler/singleImage')
+  registerTenant,
+  getAllTenants,
+  getTenant,
+  deleteTenant,
+  updateTenant,
+  tenantLogin,
+  passwordResetRequest,
+  resetPasswordProcess,
+  updatePassword,
+  activateAccount,
+} = require("../controllers/tenantController");
+const upload = require("../imagesHandler/singleImage");
 
-// calling endpoints 
-const router = express.Router()
-router.get('/all', getAllTenants)
-router.get('/get/:id',getTenant)
-router.post('/register',upload("Tenant").single('image'), registerTenant)
-router.delete('/delete/:id', deleteTenant)
-router.patch('/update/:id', updateTenant)
-router.post('/login', tenantLogin)
-router.put('/updatePassword',updatePassword)
-router.post('/reset', passwordResetRequest)
-router.post('/newPassword', resetPasswordProcess)
-router.get('/verify-email/:verificationToken',activateAccount)
+// calling endpoints
+const router = express.Router();
+router.get("/all", getAllTenants);
+router.get("/get/:id", getTenant);
+router.post("/register", registerTenant);
+router.delete("/delete/:id", deleteTenant);
+router.patch("/update/:id", updateTenant);
+router.post("/login", tenantLogin);
+router.put("/updatePassword", updatePassword);
+router.post("/reset", passwordResetRequest);
+router.post("/newPassword", resetPasswordProcess);
+router.get("/verify-email/:verificationToken", activateAccount);
 
-
-module.exports = router
-
-
+module.exports = router;

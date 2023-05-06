@@ -228,7 +228,7 @@ const {
   getHousesByOwner,
 } = require("../controllers/houseController");
 
-router.post("/add", upload("House", 5).array("image", 5), addHouse);
+router.post("/add", addHouse);
 router.get("/all", getAllHouses);
 router.get("/byowner", getHousesByOwner);
 router.delete("/delete", deleteHouse);

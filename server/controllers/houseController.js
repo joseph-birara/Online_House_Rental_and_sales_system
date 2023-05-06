@@ -8,14 +8,6 @@ const getAllHouses = async (req, res) => {
   console.log(req);
   try {
     const houses = await houseModel.find();
-    // for (const house of houses) {
-    //   const images = [];
-    //   for (const imageName of house.images) {
-    //     const imagePath = path.join(__dirname, "uploads", "House", imageName);
-    //     images.push({ name: imageName, path: imagePath });
-    //   }
-    //   housesWithImages.push({ ...house.toJSON(), images });
-    // }
     res.status(200).json(houses);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -33,19 +25,7 @@ const getHousesByOwner = async (req, res) => {
     if (!houses || houses.length === 0) {
       return res.status(404).json({ error: "No houses found for ownerID" });
     }
-
-    const housesWithImages = [];
-    for (const house of houses) {
-      const images = [];
-      for (const imageName of house.images) {
-        const imagePath = path.join(__dirname, "uploads", "House", imageName);
-        images.push({ name: imageName, path: imagePath });
-      }
-      const houseWithImages = { ...house.toJSON(), images };
-      housesWithImages.push(houseWithImages);
-    }
-
-    res.status(200).json(housesWithImages);
+    res.status(200).json(houses);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -63,25 +43,16 @@ const getHouse = async (req, res) => {
       return res.status(404).json({ error: "House not found" });
     }
 
-    const images = [];
-    for (const imageName of house.images) {
-      const imagePath = path.join(__dirname, "uploads", "House", imageName);
-      images.push({ name: imageName, path: imagePath });
-    }
-
-    const houseWithImages = { ...house.toJSON(), images };
-    res.status(200).json(houseWithImages);
+    res.status(200).json(house);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 // add houses
 const addHouse = async (req, res) => {
-  const data = JSON.parse(req.body.data); // parse the data string
+  const data = JSON.parse(req.body); // parse the data string
   console.log(data);
   try {
-    const files = req.files; // get the uploaded files
-    const fileNames = files.map((file) => file.filename); // get the file names
     const house = await houseModel.create({ ...data, images: fileNames });
     // add the file names to the house data
     res.status(200).json({ message: "You have added House" });
@@ -102,16 +73,6 @@ const deleteHouse = async (req, res) => {
     if (!House) {
       return res.status(400).json({ error: "No such House" });
     }
-
-    // Delete images from disk
-    const imageNames = House.images;
-    imageNames.forEach((imageName) => {
-      fs.unlink(`./uploads/myFolder/${imageName}`, (err) => {
-        if (err) {
-          console.error(err);
-        }
-      });
-    });
 
     res.status(200).json(House);
   } catch (err) {
@@ -146,13 +107,6 @@ const deletImage = async (req, res) => {
     if (!House) {
       return res.status(400).json({ error: "No such House" });
     }
-    // Delete image from disk
-    const imageName = House.images[index];
-    fs.unlink(`./uploads/House/${imageName}`, (err) => {
-      if (err) {
-        console.error(err);
-      }
-    });
 
     // Remove image name from images array
     House.images.splice(index, 1);

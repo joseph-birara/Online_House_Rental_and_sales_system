@@ -10,7 +10,7 @@ const HomeSchema = new Schema(
         type: String,
       },
     ],
-    password: String,
+
     city: String,
     subCity: String,
     woreda: String,
@@ -27,6 +27,8 @@ const HomeSchema = new Schema(
     HomeType: String,
     bedRoom: Number,
     bathRoom: Number,
+    description: String,
+    title: String,
   },
   { timestamps: true }
 );

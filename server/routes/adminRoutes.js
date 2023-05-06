@@ -57,7 +57,7 @@
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Admin'
- * /admin/add: 
+ * /admin/add:
  *   post:
  *     tags: [Admin]
  *     summary: Create a new admin
@@ -130,15 +130,15 @@
  *         application/json:
  *           schema:
  *             type: object
- *             properties:               
- *                 
- *                 
+ *             properties:
+ *
+ *
  *               email:
  *                 type: string
  *                 description: email  for the admin
  *             example:
  *               email: oldpassword123@gmail.com
- *               
+ *
  *     responses:
  *       200:
  *         description: Password updated successfully
@@ -148,7 +148,7 @@
  *         description: Unauthorized access, invalid or expired token
  *       500:
  *         description: Internal server error
- * 
+ *
  * /admin/get{id}:
  *   get:
  *     tags: [Admin]
@@ -212,9 +212,9 @@
  *       404:
  *         description: Admin user not found
  *       500:
- *         description: Internal server error 
+ *         description: Internal server error
  * /admin/newPassword:
- * 
+ *
  *   post:
  *     tags: [Admin]
  *     summary: reset admin password with new password
@@ -246,41 +246,30 @@
  *         description: Internal server error
  */
 
+const express = require("express");
 
-
- 
-
-
-
-const express = require('express')
-const Admin = require('../models/adminModel')
-const multer = require('multer')
 const {
-    addAdmin,
-    getAllAdmins,
-    getAdmin,
-    deleteAdmin,
-    updateAdmin,
-    adminLogin,
-    passwordResetRequest,
-    resetPasswordProcess,
-    updatePassword
-} = require('../controllers/adminController')
-const upload = require('../imagesHandler/singleImage')
-  
-// calling endpoints 
-const router = express.Router()
-router.get('/all', getAllAdmins)
-router.get('/get/:id',getAdmin)
-router.post('/add',upload("admin").single('image'), addAdmin)
-router.delete('/delete/:id', deleteAdmin)
-router.patch('/update/:id', updateAdmin)
-router.post('/login', adminLogin)
-router.put('/updatePassword',updatePassword)
-router.post('/reset', passwordResetRequest)
-router.post('/newPassword', resetPasswordProcess)
+  addAdmin,
+  getAllAdmins,
+  getAdmin,
+  deleteAdmin,
+  updateAdmin,
+  adminLogin,
+  passwordResetRequest,
+  resetPasswordProcess,
+  updatePassword,
+} = require("../controllers/adminController");
 
+// calling endpoints
+const router = express.Router();
+router.get("/all", getAllAdmins);
+router.get("/get/:id", getAdmin);
+router.post("/add", addAdmin);
+router.delete("/delete/:id", deleteAdmin);
+router.patch("/update/:id", updateAdmin);
+router.post("/login", adminLogin);
+router.put("/updatePassword", updatePassword);
+router.post("/reset", passwordResetRequest);
+router.post("/newPassword", resetPasswordProcess);
 
-module.exports = router
-
-
+module.exports = router;

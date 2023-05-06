@@ -57,7 +57,7 @@
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Owner1'
- * /owner/register: 
+ * /owner/register:
  *   post:
  *     tags: [Owner]
  *     summary: Create a new Owner
@@ -130,15 +130,15 @@
  *         application/json:
  *           schema:
  *             type: object
- *             properties:               
- *                 
- *                 
+ *             properties:
+ *
+ *
  *               email:
  *                 type: string
  *                 description: email  for the Owner
  *             example:
  *               email: oldpassword123@gmail.com
- *               
+ *
  *     responses:
  *       200:
  *         description: Password updated successfully
@@ -148,7 +148,7 @@
  *         description: Unauthorized access, invalid or expired token
  *       500:
  *         description: Internal server error
- * 
+ *
  * /owner/get{id}:
  *   get:
  *     tags: [Owner]
@@ -212,9 +212,9 @@
  *       404:
  *         description: Owner user not found
  *       500:
- *         description: Internal server error 
+ *         description: Internal server error
  * /owner/newPassword:
- * 
+ *
  *   post:
  *     tags: [Owner]
  *     summary: reset Owner password with new password
@@ -246,39 +246,34 @@
  *         description: Internal server error
  */
 
-
-
-const express = require('express')
+const express = require("express");
 // const Owner = require('../models/OwnerModel')
-const multer = require('multer')
+const multer = require("multer");
 const {
-    registerOwner,
-    getAllOwners,
-    getOwner,
-    deleteOwner,
-    updateOwner,
-    OwnerLogin,
-    passwordResetRequest,
-    resetPasswordProcess,
-    updatePassword,
-    activateAccount
-} = require('../controllers/ownerController')
-const upload = require('../imagesHandler/singleImage')
+  registerOwner,
+  getAllOwners,
+  getOwner,
+  deleteOwner,
+  updateOwner,
+  OwnerLogin,
+  passwordResetRequest,
+  resetPasswordProcess,
+  updatePassword,
+  activateAccount,
+} = require("../controllers/ownerController");
+const upload = require("../imagesHandler/singleImage");
 
-// calling endpoints 
-const router = express.Router()
-router.get('/all', getAllOwners)
-router.get('/get/:id',getOwner)
-router.post('/register',upload("Owner").single('image'), registerOwner)
-router.delete('/delete/:id', deleteOwner)
-router.patch('/update/:id', updateOwner)
-router.post('/login', OwnerLogin)
-router.put('/updatePassword',updatePassword)
-router.post('/reset', passwordResetRequest)
-router.post('/newPassword', resetPasswordProcess)
-router.get('/verify-email/:verificationToken',activateAccount)
+// calling endpoints
+const router = express.Router();
+router.get("/all", getAllOwners);
+router.get("/get/:id", getOwner);
+router.post("/register", registerOwner);
+router.delete("/delete/:id", deleteOwner);
+router.patch("/update/:id", updateOwner);
+router.post("/login", OwnerLogin);
+router.put("/updatePassword", updatePassword);
+router.post("/reset", passwordResetRequest);
+router.post("/newPassword", resetPasswordProcess);
+router.get("/verify-email/:verificationToken", activateAccount);
 
-
-module.exports = router
-
-
+module.exports = router;

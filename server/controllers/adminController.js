@@ -71,7 +71,7 @@ const addAdmin = async (req, res) => {
     });
     await admin.save();
     const token = generateToken(admin._id);
-    res.status(200).json({ admin: admin, token: token });
+    res.status(200).json({ user: admin, token: token });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

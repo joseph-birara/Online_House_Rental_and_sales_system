@@ -96,7 +96,7 @@ const registerTenant = async (req, res) => {
     let text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/tenant/verify-email/${verificationToken}`;
     await sendVerificationEmail(email, subject, text);
     const token = generateToken(tenant._id);
-    res.status(200).json({ token, tenant });
+    res.status(200).json({ token, user: tenant });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

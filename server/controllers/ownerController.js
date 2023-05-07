@@ -72,28 +72,31 @@ const registerOwner = async (req, res) => {
   // Hash password
   const hashedPassword = await hashPassword(password);
 
+  let session;
   try {
-    const session = await ownerModel.startSession(); // start a transaction
+    session = await ownerModel.startSession(); // start a transaction
     session.startTransaction();
 
     const owner = await ownerModel.create(
-      {
-        lastName,
-        image,
-        superOwner: false,
-        name,
-        email,
-        phone,
-        password: hashedPassword,
-        phone,
-        city,
-        subCity,
-        kebele,
-        rentId,
-        aplicantId,
-        accountStatus: "inactive",
-        saleId,
-      },
+      [
+        {
+          lastName,
+          image,
+          superOwner: false,
+          name,
+          email,
+          phone,
+          password: hashedPassword,
+          phone,
+          city,
+          subCity,
+          kebele,
+          rentId,
+          aplicantId,
+          accountStatus: "inactive",
+          saleId,
+        },
+      ],
       { session } // pass the session to the create method
     );
 
@@ -113,10 +116,15 @@ const registerOwner = async (req, res) => {
       owner,
     });
   } catch (err) {
-    await session.abortTransaction(); // rollback the transaction if an error occurs
+    if (session) {
+      await session.abortTransaction(); // rollback the transaction if an error occurs
+      session.endSession(); // end the session
+    }
     res.status(400).json({ error: err.message });
   } finally {
-    session.endSession(); // end the session
+    if (session) {
+      session.endSession(); // end the session
+    }
   }
 };
 

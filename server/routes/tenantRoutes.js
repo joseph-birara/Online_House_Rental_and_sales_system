@@ -266,10 +266,10 @@ const upload = require("../imagesHandler/singleImage");
 // calling endpoints
 const router = express.Router();
 router.get("/all", getAllTenants);
-router.get("/get/:id", getTenant);
+router.get("/profile/:id", getTenant);
 router.post("/register", registerTenant);
 router.delete("/delete/:id", deleteTenant);
-router.patch("/update/:id", updateTenant);
+router.patch("/update", updateTenant);
 router.post("/login", tenantLogin);
 router.put("/updatePassword", updatePassword);
 router.post("/reset", passwordResetRequest);

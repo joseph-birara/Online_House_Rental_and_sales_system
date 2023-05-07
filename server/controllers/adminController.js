@@ -26,7 +26,8 @@ const getAllAdmins = async (req, res) => {
 
 // get single admin
 const getAdmin = async (req, res) => {
-  const id = await getUser(req, res);
+  const { id } = req.params;
+  console.log(id);
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such " });
@@ -37,12 +38,10 @@ const getAdmin = async (req, res) => {
   }
   res.status(200).json(admin);
 };
-
 // add admin
-
 const addAdmin = async (req, res) => {
   console.log("this is body", req.body);
-  const data = JSON.parse(req.body);
+  const data = req.body;
   const name = data.name;
   const lastName = data.lastName;
   const phone = data.phone;

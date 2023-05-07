@@ -32,7 +32,7 @@ const getAllOwners = async (req, res) => {
 
 // get single Owner
 const getOwner = async (req, res) => {
-  const id = await getUser(req, res);
+  const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such " });
@@ -44,7 +44,7 @@ const getOwner = async (req, res) => {
     return res.status(404).json({ error: "No such Owner" });
   }
 
-  res.status(200).json({ owner });
+  res.status(200).json({ Owner });
 };
 // register Owner
 const registerOwner = async (req, res) => {

@@ -149,7 +149,7 @@
  *       500:
  *         description: Internal server error
  *
- * /admin/get{id}:
+ * /admin/profile{id}:
  *   get:
  *     tags: [Admin]
  *     summary: Get an admin by ID
@@ -263,10 +263,10 @@ const {
 // calling endpoints
 const router = express.Router();
 router.get("/all", getAllAdmins);
-router.get("/get/:id", getAdmin);
+router.get("/profile/:id", getAdmin);
 router.post("/add", addAdmin);
 router.delete("/delete/:id", deleteAdmin);
-router.patch("/update/:id", updateAdmin);
+router.patch("/update", updateAdmin);
 router.post("/login", adminLogin);
 router.put("/updatePassword", updatePassword);
 router.post("/reset", passwordResetRequest);

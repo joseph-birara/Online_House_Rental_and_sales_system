@@ -10,6 +10,7 @@ const getUser = require("../authController/authorize");
 const { changePassword } = require("../authController/changePassword");
 const verifyEmail = require("../authController/accountActivation");
 const { generateVerificationToken } = require("../authController/saveToken");
+const sendVerificationEmail = require("../authController/sendEmial");
 
 // tenant log in
 const tenantLogin = async (req, res) => {
@@ -29,7 +30,7 @@ const getAllTenants = async (req, res) => {
 
 // get single tenant
 const getTenant = async (req, res) => {
-  const id = await getUser(req, res);
+  const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such " });
@@ -47,7 +48,7 @@ const getTenant = async (req, res) => {
 // register tenant
 const registerTenant = async (req, res) => {
   console.log("this is body", req.body);
-  const data = JSON.parse(req.body);
+  const data = req.body;
   const name = data.name;
   const lastName = data.lastName;
   const phone = data.phone;
@@ -57,7 +58,7 @@ const registerTenant = async (req, res) => {
   const subCity = data.subCity;
   const kebele = data.kebele;
   const saleId = [];
-  const aplicantId = [];
+  const aplicationId = [];
   const rentId = [];
   const image = data.image;
   const isTaken = await tenantModel.findOne({ email });
@@ -83,7 +84,7 @@ const registerTenant = async (req, res) => {
       subCity,
       kebele,
       rentId,
-      aplicantId,
+      aplicationId,
       saleId,
     });
     // generate and save token to verify email and activate account

@@ -149,7 +149,7 @@
  *       500:
  *         description: Internal server error
  *
- * /owner/get{id}:
+ * /owner/profile:
  *   get:
  *     tags: [Owner]
  *     summary: Get an Owner by ID
@@ -266,10 +266,10 @@ const upload = require("../imagesHandler/singleImage");
 // calling endpoints
 const router = express.Router();
 router.get("/all", getAllOwners);
-router.get("/get/:id", getOwner);
+router.get("/profile/:id", getOwner);
 router.post("/register", registerOwner);
 router.delete("/delete/:id", deleteOwner);
-router.patch("/update/:id", updateOwner);
+router.patch("/update", updateOwner);
 router.post("/login", OwnerLogin);
 router.put("/updatePassword", updatePassword);
 router.post("/reset", passwordResetRequest);

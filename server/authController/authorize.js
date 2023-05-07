@@ -1,16 +1,16 @@
-const { verifyToken } = require('./auth');
+const { verifyToken } = require("./auth");
 
 async function getUser(req, res) {
   const token = req.headers.authorization;
+  console.log("token", token);
   if (!token) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    throw new Error("Unauthorized");
   }
   const userId = verifyToken(token);
   if (!userId) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  } 
-  return userId
+    throw new Error("Unauthorized");
+  }
+  return userId;
 }
 
-
-module.exports =  getUser ;
+module.exports = getUser;

@@ -153,20 +153,28 @@ const deleteOwner = async (req, res) => {
 //update Owner
 
 const updateOwner = async (req, res) => {
-  const id = await getUser(req, res);
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "invalid id" });
-  }
-  const Owner = await ownerModel.findOneAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
+  try {
+    const id = await getUser(req, res);
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: "Invalid ID" });
     }
-  );
-  if (!Owner) {
-    return res.status(400).json({ error: "No such Owner" });
+    const owner = await ownerModel.findOneAndUpdate(
+      { _id: id },
+      { ...req.body },
+      { new: true }
+    );
+    if (!owner) {
+      return res.status(400).json({ error: "No such owner" });
+    }
+    res.status(200).json(owner);
+  } catch (error) {
+    if (error.message === "Unauthorized") {
+      res.status(401).json({ error: "Unauthorized" });
+    } else {
+      console.error(error);
+      res.status(500).json({ error: "Server error" });
+    }
   }
-  res.status(200).json(Owner);
 };
 
 // change password

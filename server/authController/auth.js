@@ -1,5 +1,4 @@
-const jwt = require('jsonwebtoken');
-
+const jwt = require("jsonwebtoken");
 
 function generateToken(userId) {
   return jwt.sign({ userId }, process.env.SECRET);
@@ -7,7 +6,7 @@ function generateToken(userId) {
 
 function verifyToken(token) {
   try {
-    const decoded = jwt.verify(token, secret);
+    const decoded = jwt.verify(token, process.env.SECRET);
     return decoded.userId;
   } catch (error) {
     return null;

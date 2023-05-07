@@ -13,6 +13,7 @@ const verifyEmail = require("../authController/accountActivation");
 const { text } = require("body-parser");
 
 const { generateVerificationToken } = require("../authController/saveToken");
+const { generateToken } = require("../authController/auth");
 
 // Owner log in
 const OwnerLogin = async (req, res) => {
@@ -109,8 +110,10 @@ const registerOwner = async (req, res) => {
     await sendVerificationEmail(email, subject, text);
 
     await session.commitTransaction(); // commit the transaction
+    const token = generateToken(owner._id);
 
     res.status(200).json({
+      token: token,
       message:
         "owner registered successfully. Please check your email for verification.",
       owner,

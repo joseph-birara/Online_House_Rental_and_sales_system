@@ -11,6 +11,7 @@ const { changePassword } = require("../authController/changePassword");
 const verifyEmail = require("../authController/accountActivation");
 const { generateVerificationToken } = require("../authController/saveToken");
 const sendVerificationEmail = require("../authController/sendEmial");
+const { generateToken } = require("../authController/auth");
 
 // tenant log in
 const tenantLogin = async (req, res) => {
@@ -94,7 +95,8 @@ const registerTenant = async (req, res) => {
     let subject = "Account activation";
     let text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/tenant/verify-email/${verificationToken}`;
     await sendVerificationEmail(email, subject, text);
-    res.status(200).json(tenant);
+    const token = generateToken(tenant._id);
+    res.status(200).json({ token, tenant });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

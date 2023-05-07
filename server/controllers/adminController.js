@@ -8,6 +8,7 @@ const {
 const { hashPassword } = require("../authController/passwordHash");
 const getUser = require("../authController/authorize");
 const { changePassword } = require("../authController/changePassword");
+const { generateToken } = require("../authController/auth");
 
 // admin log in
 const adminLogin = async (req, res) => {
@@ -69,7 +70,8 @@ const addAdmin = async (req, res) => {
       phone,
     });
     await admin.save();
-    res.status(200).json(admin);
+    const token = generateToken(admin._id);
+    res.status(200).json({ admin: admin, token: token });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

@@ -2,7 +2,6 @@ import { Link, useParams } from "react-router-dom";
 // import AccountNav from "../AccountNav";
 import { useEffect, useState } from "react";
 // import axios from "axios";
-import PlaceImg from "./PlaceImg";
 import Dropdown from "./Dropdown";
 import { IoBedOutline } from "react-icons/io5";
 import { FaShower } from "react-icons/fa";
@@ -31,7 +30,7 @@ export const _Home = ({ place, forAdmin }) => {
       style={{boxShadow: "0 0 1px #091240"}}
     >
       <div className="flex w-32 h-32 bg-gray-300 shrink-0 mr-4">
-        <PlaceImg place={place} />
+      <img src={place.photos[0]} alt="" />
       </div>
       <div className="grow-0 shrink">
         <h2 className="text-xl">{place.title}</h2>

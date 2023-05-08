@@ -1,11 +1,15 @@
 import PhotosUploader from "../components/PhotosUploader";
 import AmenitiesInput from "../components/AmenitiesInput";
-import { useEffect, useRef, useState } from "react";
+import { useEffect,useContext, useRef, useState } from "react";
 //import axios from "axios";
 //import AccountNav from "../AccountNav";
 import { Navigate, useParams } from "react-router-dom";
+import { UserContext } from "../contexts/UserContextProvider";
+
 
 export default function PlacesFormPage() {
+  const {user, token } = useContext(UserContext)
+
   const { id } = useParams();
   const [title, setTitle] = useState("");
   const [city, setCity] = useState("");
@@ -15,12 +19,13 @@ export default function PlacesFormPage() {
   const [area, setArea] = useState("");
   const [bedrooms, setBedrooms] = useState("");
   const [bathrooms, setBathrooms] = useState("");
-  const [status, setStatus] = useState("");
+  // const [status, setStatus] = useState("");
   const [addedPhotos, setAddedPhotos] = useState([]);
   const [description, setDescription] = useState("");
   const [perks, setPerks] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [homeType, setHomeType] = useState("regularRent");
+  const [houseImages, setHouseImages] = useState()
 
   const priceRef = useRef();
   const checkInRef = useRef();
@@ -120,19 +125,31 @@ export default function PlacesFormPage() {
   };
 
   async function savePlace(ev) {
-    // ev.preventDefault();
-    // const placeData = {
-    //   title,
-    //   address,
-    //   addedPhotos,
-    //   description,
-    //   perks,
-    //   extraInfo,
-    //   checkIn,
-    //   checkOut,
-    //   maxGuests,
-    //   price,
-    // };
+    ev.preventDefault();
+    const placeData = {
+      "ownerID": user._id,
+      title,
+      city, 
+      subcity, 
+      woreda,
+      kebele,
+      "price": priceRef.current.value,
+      area,
+      description,
+      homeType,
+      bedrooms,
+      bathrooms,
+      "ameninites": perks,
+      "shortTerm":{
+        "checkin": checkInRef.current.value,
+        "checkout": checkOutRef.current.value,
+        "maxGuest": maxGuestsRef.current.value,
+      }
+    };
+
+    console.log("the data is ");
+    console.log(placeData);
+    
     // if (id) {
     //   // update
     //   await axios.put("/places", {
@@ -248,15 +265,13 @@ export default function PlacesFormPage() {
             onChange={(ev) => setBathrooms(ev.target.value)}
             placeholder="bathrooms"
           />
-          <input
-            type="text"
-            value={status}
-            onChange={(ev) => setStatus(ev.target.value)}
-            placeholder="home status"
-          />
+          
         </div>
         {preInput("Photos", "more = better")}
-        <PhotosUploader addedPhotos={addedPhotos} onChange={setAddedPhotos} />
+          
+          {/* to upload house  images */}
+        <PhotosUploader houseImages={houseImages} setHouseImages={setHouseImages} />
+
         {preInput("Description", "description of your house")}
         <textarea
           value={description}

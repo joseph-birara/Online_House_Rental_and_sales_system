@@ -1,8 +1,13 @@
 import { NavLink } from "react-router-dom";
 import classes from "./MainHeader.module.css";
 import logo from "../homiee_logo.png";
+import { Fragment, useContext } from "react";
+import { UserContext } from "../contexts/UserContextProvider";
 
 const MainHeader = () => {
+
+  const { token , user } = useContext(UserContext)
+
   return (
     <header className={classes.header}>
       <div className={classes.logo}>
@@ -11,31 +16,33 @@ const MainHeader = () => {
         </NavLink>
       </div>
 
-      <nav>
+      <nav >
         <ul>
           <li>
-            <NavLink className={({isActive}) => isActive ? classes.active : classes.navLink} to="/rent">
+            <NavLink className={({ isActive }) => isActive ? classes.active : classes.navLink} to="/rent">
               Rent
             </NavLink>
           </li>
           <li>
-            <NavLink className={({isActive}) => isActive ? classes.active : classes.navLink}  to="/buy">
+            <NavLink className={({ isActive }) => isActive ? classes.active : classes.navLink} to="/buy">
               Buy
             </NavLink>
           </li>
           <li>
-            <NavLink className={({isActive}) => isActive ? classes.active : classes.navLink}  to="/homeOwner">
+            <NavLink className={({ isActive }) => isActive ? classes.active : classes.navLink} to="/homeOwner">
               For home-owners
             </NavLink>
           </li>
+
+          
           <li>
-            <NavLink className={({isActive}) => isActive ? classes.active : classes.navLink}  to="/admin">
+            <NavLink className={({ isActive }) => isActive ? classes.active : classes.navLink} to="/admin">
               Admin
             </NavLink>
           </li>
           <li>
-          <NavLink className={classes.loginSignup}  to="#">
-              Login/Signup
+            <NavLink className={classes.loginSignup} to="/login">
+            { token ? (<Fragment> {user.name} </Fragment> ) :(<Fragment> Login/Signup </Fragment> ) }
             </NavLink>
           </li>
         </ul>

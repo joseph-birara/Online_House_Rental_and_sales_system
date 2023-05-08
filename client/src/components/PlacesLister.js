@@ -31,7 +31,7 @@ export const _Home = ({ place, forAdmin }) => {
       style={{boxShadow: "0 0 1px #091240"}}
     >
       <div className="flex w-32 h-32 bg-gray-300 shrink-0 mr-4">
-        <PlaceImg place={place} />
+        <img src={place.photos[0]} />
       </div>
       <div className="grow-0 shrink">
         <h2 className="text-xl">{place.title}</h2>

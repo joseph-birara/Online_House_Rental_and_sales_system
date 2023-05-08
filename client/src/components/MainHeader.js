@@ -34,7 +34,7 @@ const MainHeader = () => {
             </NavLink>
           </li>
           <li>
-          <NavLink className={classes.loginSignup}  to="#">
+          <NavLink className={classes.loginSignup}  to="/login">
               Login/Signup
             </NavLink>
           </li>

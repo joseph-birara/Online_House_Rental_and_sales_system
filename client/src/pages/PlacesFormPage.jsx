@@ -40,9 +40,10 @@ export default function PlacesFormPage() {
   //     setPerks(data.perks);
   //     setExtraInfo(data.extraInfo);
   //     setCheckIn(data.checkIn);
-  //     setCheckOut(data.checkOut);
+  //     setCheckOut(data.checkOut); 
   //     setMaxGuests(data.maxGuests);
   //     setPrice(data.price);
+        // setHomeType(data.homeType);
   //   });
   // }, [id]);
   function inputHeader(text) {
@@ -120,7 +121,8 @@ export default function PlacesFormPage() {
   };
 
   async function savePlace(ev) {
-    // ev.preventDefault();
+    ev.preventDefault();
+    console.log(perks);
     // const placeData = {
     //   title,
     //   address,

@@ -12,9 +12,11 @@ import AdminDashboard from "./pages/dashboards/AdminDashboard";
 import HomesList from "./pages/HomesList";
 import styles from "./App.module.css";
 import DetailsPage from "./pages/DetailsPage";
-import UsersersList from "./pages/UsersList";
+import UsersList from "./pages/UsersList";
 import RequestsPage from "./pages/RequestsPage";
 import HomesListing from "./pages/HomesListing";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 //blue-black: #091240 ,  light-blue: #1890db
 
@@ -27,6 +29,8 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/buy" element={<Buy />} />
           <Route path="/rent" element={<HomesListing />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route
             path="/homeOwner"
             element={
@@ -42,12 +46,12 @@ function App() {
             </Route>
             <Route
               path="applicants"
-              element={<UsersersList userType="applicant" />}
+              element={<UsersList userType="applicant" />}
             />
             <Route
               path="tenants"
               element={
-                <UsersersList userType="tenant/plain" removeDropdown={true} />
+                <UsersList userType="tenant/plain" removeDropdown={true} />
               }
             />
             <Route path="maintenanceRequests" element={<RequestsPage />} />
@@ -70,15 +74,15 @@ function App() {
               <Route path="home" element={<HomeDetails forAdmin={true} />} />
             </Route>
             <Route path="users">
-              <Route path="homeOwners" element={<UsersersList />} />
+              <Route path="homeOwners" element={<UsersList />} />
               <Route path="homeOwners/homeOwner" element={<DetailsPage />} />
               <Route
                 path="tenants"
-                element={<UsersersList userType="tenant" />}
+                element={<UsersList userType="tenant" />}
               />
               <Route
                 path="buyers"
-                element={<UsersersList userType="buyer" />}
+                element={<UsersList userType="buyer" />}
               />
             </Route>
             <Route path="reports" element={<Test />} />

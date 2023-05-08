@@ -6,6 +6,7 @@ import HomeProperties from "../components/home/HomeProperties";
 import AmenitiesDisplayer from "../components/home/AmenitiesDisplayer";
 import Comments from "../components/comments/Comments";
 import Dropdown from "../components/Dropdown";
+import BookingWidget from "../components/BookingWidget";
 
 const HomeDetails = ({ forAdmin }) => {
   const homePics = [
@@ -50,6 +51,20 @@ const HomeDetails = ({ forAdmin }) => {
     "Verify",
     "Refute",
   ];
+
+  const place = {
+    title: "Modern comfort and convenience elegantly appointed",
+    location:
+      "Atlas, Ghana Street, Ghiliffalegn Stream, Bole, AddisAbaba, 7966, Ethiopia",
+    description:
+      "Bole, House or Office for Rent, Addis Ababa. The total area is 500\
+    square meters. It has living and dining room with working fire-place,\
+    kitchen, master bedroom with it’s own bathroom, and two bedrooms with\
+    common shower room. There are four service rooms with shower room,\
+    garden and parking for 3 cars. The rate is 2,500 USD for residential\
+    rent and 3,000 USD for office rent per month and fixed.",
+    price: 250,
+  };
   return (
     <div className={styles.mainContainer}>
       {forAdmin && (
@@ -62,10 +77,10 @@ const HomeDetails = ({ forAdmin }) => {
         </div>
       )}
       <div className={styles.innerContainer}>
-        <h1>Modern comfort and convenience elegantly appointed</h1>
+        <h1>{place.title}</h1>
         <p>
-          <CiLocationOn /> Atlas, Ghana Street, Ghiliffalegn Stream, Bole, Addis
-          Ababa, 7966, Ethiopia
+          <CiLocationOn />
+          {place.location}
         </p>
         <div className={styles.reviewsAndOwnerContainer}>
           <div>
@@ -83,18 +98,14 @@ const HomeDetails = ({ forAdmin }) => {
         className={styles.galleryContainer}
         images={homePics}
       />
-      <div className={styles.description}>
-        <div className={styles.descriptionTitle}>
-          <h2>Description</h2>
+      <div className="flex items-baseline gap-2 mt-16">
+        <div className={styles.description}>
+          <div className={styles.descriptionTitle}>
+            <h2>Description</h2>
+          </div>
+          <p>{place.description}</p>
         </div>
-        <p>
-          Bole, House or Office for Rent, Addis Ababa. The total area is 500
-          square meters. It has living and dining room with working fire-place,
-          kitchen, master bedroom with it’s own bathroom, and two bedrooms with
-          common shower room. There are four service rooms with shower room,
-          garden and parking for 3 cars. The rate is 2,500 USD for residential
-          rent and 3,000 USD for office rent per month and fixed.
-        </p>
+        <BookingWidget place={place} />
       </div>
       <HomeProperties />
       <AmenitiesDisplayer />

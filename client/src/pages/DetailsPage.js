@@ -1,5 +1,5 @@
 import React from "react";
-import PlaceImg from "../components/PlaceImg";
+// import PlaceImg from "../components/PlaceImg";
 import { Link } from "react-router-dom";
 import Dropdown from "../components/Dropdown";
 import PlacesLister from "../components/PlacesLister";

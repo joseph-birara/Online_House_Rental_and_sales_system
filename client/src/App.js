@@ -15,9 +15,11 @@ import DetailsPage from "./pages/DetailsPage";
 import UsersList from "./pages/UsersList";
 import RequestsPage from "./pages/RequestsPage";
 import HomesListing from "./pages/HomesListing";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-
+import { UserContextProvider } from "./contexts/UserContextProvider";
+import Login from "./pages/Auth/Login";
+import LoginPage from "./pages/Auth/LoginPage";
+import RegisterPage from "./pages/Auth/Register";
+import UtilityContextProvider from "./contexts/UtilityContextProvide";
 //blue-black: #091240 ,  light-blue: #1890db
 
 function App() {
@@ -29,8 +31,6 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/buy" element={<Buy />} />
           <Route path="/rent" element={<HomesListing />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
           <Route
             path="/homeOwner"
             element={
@@ -46,12 +46,12 @@ function App() {
             </Route>
             <Route
               path="applicants"
-              element={<UsersList userType="applicant" />}
+              element={<UsersersList userType="applicant" />}
             />
             <Route
               path="tenants"
               element={
-                <UsersList userType="tenant/plain" removeDropdown={true} />
+                <UsersersList userType="tenant/plain" removeDropdown={true} />
               }
             />
             <Route path="maintenanceRequests" element={<RequestsPage />} />
@@ -74,15 +74,15 @@ function App() {
               <Route path="home" element={<HomeDetails forAdmin={true} />} />
             </Route>
             <Route path="users">
-              <Route path="homeOwners" element={<UsersList />} />
+              <Route path="homeOwners" element={<UsersersList />} />
               <Route path="homeOwners/homeOwner" element={<DetailsPage />} />
               <Route
                 path="tenants"
-                element={<UsersList userType="tenant" />}
+                element={<UsersersList userType="tenant" />}
               />
               <Route
                 path="buyers"
-                element={<UsersList userType="buyer" />}
+                element={<UsersersList userType="buyer" />}
               />
             </Route>
             <Route path="reports" element={<Test />} />

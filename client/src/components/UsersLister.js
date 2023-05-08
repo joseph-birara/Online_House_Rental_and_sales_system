@@ -2,7 +2,6 @@ import { Link, useParams } from "react-router-dom";
 // import AccountNav from "../AccountNav";
 import { useEffect, useState } from "react";
 // import axios from "axios";
-import Image from "./Image";
 import Dropdown from "./Dropdown";
 
 export const User = ({
@@ -23,7 +22,7 @@ export const User = ({
       style={{ boxShadow: "0 0 1px #091240" }}
     >
       <div className="flex w-32 h-32 bg-gray-300 shrink-0">
-        <Image src={user.image} />
+        <img src={user.image} alt="" />
       </div>
       <div className="grow shrink w-fit">
         <p>

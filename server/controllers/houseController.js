@@ -50,7 +50,7 @@ const getHouse = async (req, res) => {
 };
 // add houses
 const addHouse = async (req, res) => {
-  const data = JSON.parse(req.body); // parse the data string
+  const data = req.body; // parse the data string
   console.log(data);
   try {
     const house = await houseModel.create({ ...data });

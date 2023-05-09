@@ -22,6 +22,7 @@ const HomeSchema = new Schema(
       default: false,
     },
     suspended: Boolean,
+    isRented: Boolean,
     area: Number,
     description: String,
     HomeType: String,

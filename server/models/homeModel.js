@@ -29,6 +29,11 @@ const HomeSchema = new Schema(
     bathRoom: Number,
     description: String,
     title: String,
+    shortTerm: {
+      checkin: String,
+      checkout: String,
+      maxGuest: String
+    },
     ameneniteis: {
       washer: Boolean,
       wifi: Boolean,

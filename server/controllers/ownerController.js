@@ -116,7 +116,7 @@ const registerOwner = async (req, res) => {
       token: token,
       message:
         "owner registered successfully. Please check your email for verification.",
-      user: owner,
+      user: owner[0],
     });
   } catch (err) {
     if (session) {

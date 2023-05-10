@@ -7,8 +7,8 @@ const sendEmail = require("../authController/sendEmial");
 
 const addApplicationRequest = async (req, res) => {
   try {
-    const applicantId = req.body.applicantId;
-    const ownerId = req.body.ownerId;
+    const applicantId = req.body.applicantID;
+    const ownerId = req.body.ownerID;
     const applicant = await tenantModel.findById(applicantId);
     const owner = await ownerModel.findById(ownerId);
     if (!applicant) {

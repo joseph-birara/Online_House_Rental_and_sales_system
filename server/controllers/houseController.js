@@ -67,7 +67,7 @@ const addHouse = async (req, res) => {
     // save the owner
     await owner.save();
 
-    res.status(200).json({ message: "You have added House" });
+    res.status(200).json({ message: "You have added House", house: house });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -93,22 +93,22 @@ const deleteHouse = async (req, res) => {
 };
 //update House
 const updateHouse = async (req, res) => {
-  const id = await getUser(req, res);
   const { houseID } = req.body.id;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "invalid id" });
-  }
+  console.log("body", req.body);
+
   const House = await houseModel.findOneAndUpdate(
     { _id: houseID },
-    {
-      ...req.body,
-    }
+    { ...req.body },
+    { new: true } // add this option
   );
-  if (!House) {
+  const updated = await houseModel.findById(houseID);
+  if (!updated) {
     return res.status(400).json({ error: "No such House" });
   }
-  res.status(200).json(House);
+
+  res.status(200).json(updated);
 };
+
 const deletImage = async (req, res) => {
   const { id, index } = req.body;
   if (!mongoose.Types.ObjectId.isValid(id)) {

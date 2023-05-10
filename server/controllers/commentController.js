@@ -2,7 +2,6 @@ const getUser = require('../authController/authorize')
 const commentModel = require('../models/commentModel')
 
 const mongoose = require('mongoose')
-
 const getByOwner = async(req, res) => {
     const { id } = req.body
     const comments = await commentModel.find({ ownerID: id })

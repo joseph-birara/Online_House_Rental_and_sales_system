@@ -1,12 +1,13 @@
-const mongoose = require('mongoose');
-const convertModelToSwagger = require('mongoose-to-swagger');
-const Admin = require('./models/adminModel');
-const HomeOwner = require('./models/ownerModel');
-const Tenant = require('./models/tenantModel');
-const Comment = require('./models/commentModel');
-const House = require('./models/homeModel');
-const Maintenance = require('./models/maintenanceModel');
-const Rent = require('./models/rentModel');
+const mongoose = require("mongoose");
+const convertModelToSwagger = require("mongoose-to-swagger");
+const Admin = require("./models/adminModel");
+const HomeOwner = require("./models/ownerModel");
+const Tenant = require("./models/tenantModel");
+const Comment = require("./models/commentModel");
+const House = require("./models/homeModel");
+const Maintenance = require("./models/maintenanceModel");
+const Rent = require("./models/rentModel");
+const Application = require("./models/applicantModel");
 
 const adminSchemaSwaggerDefinition = convertModelToSwagger(Admin);
 const homeOwnerSchemaSwaggerDefinition = convertModelToSwagger(HomeOwner);
@@ -15,35 +16,36 @@ const commentSchemaSwaggerDefinition = convertModelToSwagger(Comment);
 const houseSchemaSwaggerDefinition = convertModelToSwagger(House);
 const maintenanceSchemaSwaggerDefinition = convertModelToSwagger(Maintenance);
 const rentSchemaSwaggerDefinition = convertModelToSwagger(Rent);
+const ApplicationSchemaSwaggerDefinition = convertModelToSwagger(Application);
 
 const imageSchemaSwaggerDefinition = {
-  type: 'array',
+  type: "array",
   items: {
-    type: 'object',
+    type: "object",
     properties: {
       url: {
-        type: 'string'
+        type: "string",
       },
       description: {
-        type: 'string'
-      }
-    }
-  }
+        type: "string",
+      },
+    },
+  },
 };
 
 module.exports = {
   swaggerDefinition: {
-    openapi: '3.0.0',
+    openapi: "3.0.0",
     info: {
-      title: 'Rest API',
-      version: '1.0.0',
-      description: 'All APIs of online home rental and sales system'
+      title: "Rest API",
+      version: "1.0.0",
+      description: "All APIs of online home rental and sales system",
     },
     servers: [
       {
-        url: 'http://localhost:4000'
-      }
-    ],    
+        url: "http://localhost:4000",
+      },
+    ],
     components: {
       schemas: {
         Admin: adminSchemaSwaggerDefinition,
@@ -52,9 +54,10 @@ module.exports = {
         Comment: commentSchemaSwaggerDefinition,
         House: houseSchemaSwaggerDefinition,
         Maintenance: maintenanceSchemaSwaggerDefinition,
-        Rent: rentSchemaSwaggerDefinition
-      }
-    }
+        Rent: rentSchemaSwaggerDefinition,
+        Application: ApplicationSchemaSwaggerDefinition,
+      },
+    },
   },
-  apis: ['./routes/*.js']
+  apis: ["./routes/*.js"],
 };

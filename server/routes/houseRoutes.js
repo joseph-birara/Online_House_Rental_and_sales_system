@@ -167,19 +167,7 @@
  * /houses/update:
  *   put:
  *     summary: Update a house
- *     tags: [Houses]
- *     parameters:
- *       - name: id
- *         description: ID of the house to update
- *         in: path
- *         required: true
- *         type: string
- *         format: ObjectId
- *       - name: data
- *         description: House data
- *         in: body
- *         type: object
- *         required: true
+ *     tags: [Houses]     
  *     responses:
  *       '200':
  *         description: House updated successfully

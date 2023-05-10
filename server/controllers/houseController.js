@@ -1,18 +1,20 @@
 const mongoose = require("mongoose");
 const houseModel = require("../models/homeModel");
 const getUser = require("../authController/authorize");
+const ownerModel = require("../models/ownerModel");
 const util = require("util");
 
 // get all Houses
 const getAllHouses = async (req, res) => {
   console.log(req);
   try {
-    const houses = await houseModel.find();
+    const houses = await houseModel.find().populate("ownerID");
     res.status(200).json(houses);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 // get houses that belowng to same person
 const getHousesByOwner = async (req, res) => {
   const ownerID = req.body.ownerID;
@@ -21,7 +23,9 @@ const getHousesByOwner = async (req, res) => {
   }
 
   try {
-    const houses = await houseModel.find({ ownerID: ownerID });
+    const houses = await houseModel
+      .find({ ownerID: ownerID })
+      .populate("ownerID");
     if (!houses || houses.length === 0) {
       return res.status(404).json({ error: "No houses found for ownerID" });
     }
@@ -38,7 +42,7 @@ const getHouse = async (req, res) => {
   }
 
   try {
-    const house = await houseModel.findById(houseID);
+    const house = await houseModel.findById(houseID).populate("ownerID");
     if (!house) {
       return res.status(404).json({ error: "House not found" });
     }
@@ -54,7 +58,15 @@ const addHouse = async (req, res) => {
   console.log(data);
   try {
     const house = await houseModel.create({ ...data });
-    // add the file names to the house data
+    // add the house id to its owenr
+    const owner = await ownerModel.findOneAndUpdate(
+      { _id: house.ownerID },
+      { $push: { house: house._id } }, // push the ID of the new house to the 'houses' array attribute
+      { new: true } // return the updated owner document
+    );
+    // save the owner
+    await owner.save();
+
     res.status(200).json({ message: "You have added House" });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -82,11 +94,12 @@ const deleteHouse = async (req, res) => {
 //update House
 const updateHouse = async (req, res) => {
   const id = await getUser(req, res);
+  const { houseID } = req.body.id;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "invalid id" });
   }
   const House = await houseModel.findOneAndUpdate(
-    { _id: id },
+    { _id: houseID },
     {
       ...req.body,
     }

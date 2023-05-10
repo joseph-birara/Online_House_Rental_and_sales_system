@@ -1,41 +1,51 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-
-const OwnerSchema = new Schema({  
+const OwnerSchema = new Schema(
+  {
     name: String,
     lastName: String,
-    image:String,
+    image: String,
     email: String,
     password: String,
     city: String,
     subCity: String,
     woreda: String,
     kebele: String,
-    phone: String, 
-    house: Array,
-    accountStatus:String,
-    house: [{
+    phone: String,
+    accountStatus: String,
+    house: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Houses'
-    }],
-    applicationId: [{
+        ref: "Houses",
+      },
+    ],
+    applicationId: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Application'
-    }], 
-    saleId:[{
+        ref: "Application",
+      },
+    ],
+    saleId: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Sale'
-    }], 
-    rentId :[{
+        ref: "Sale",
+      },
+    ],
+    rentId: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Rent'
-    }], 
-    requestId :[{
+        ref: "Rent",
+      },
+    ],
+    requestId: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Maintenance'
-    }],
-}, { timestamps: true })
+        ref: "Maintenance",
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-
-module.exports = mongoose.model('HomeOwner', OwnerSchema)
+module.exports = mongoose.model("HomeOwner", OwnerSchema);

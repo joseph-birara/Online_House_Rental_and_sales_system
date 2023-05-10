@@ -4,12 +4,11 @@ const Schema = mongoose.Schema;
 
 const HomeSchema = new Schema(
   {
-    ownerID: ObjectId,
-    images: [
-      {
-        type: String,
-      },
-    ],
+    ownerID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "HomeOwner",
+    },
+    images: [String],
 
     city: String,
     subCity: String,
@@ -33,7 +32,7 @@ const HomeSchema = new Schema(
     shortTerm: {
       checkin: String,
       checkout: String,
-      maxGuest: String
+      maxGuest: String,
     },
     ameneniteis: {
       washer: Boolean,

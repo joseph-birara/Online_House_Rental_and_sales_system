@@ -86,27 +86,30 @@ const deleteHouse = async (req, res) => {
       return res.status(400).json({ error: "No such House" });
     }
 
-    res.status(200).json(House);
+    res.status(200).json({ messege: "delition sucesss", deletedHouse: House });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
 //update House
 const updateHouse = async (req, res) => {
-  const { houseID } = req.body.id;
+  const houseID = req.body.id;
   console.log("body", req.body);
 
-  const House = await houseModel.findOneAndUpdate(
-    { _id: houseID },
-    { ...req.body },
-    { new: true } // add this option
-  );
-  const updated = await houseModel.findById(houseID);
-  if (!updated) {
-    return res.status(400).json({ error: "No such House" });
-  }
+  try {
+    const updated = await houseModel.findOneAndUpdate(
+      { _id: houseID },
+      { ...req.body },
+      { new: true, runValidators: true } // set `runValidators` to true to validate the updated data
+    );
+    if (!updated) {
+      return res.status(400).json({ error: "No such House" });
+    }
 
-  res.status(200).json(updated);
+    res.status(200).json(updated);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
 const deletImage = async (req, res) => {

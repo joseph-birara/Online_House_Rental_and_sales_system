@@ -11,9 +11,9 @@ const addApplicationRequest = async (req, res) => {
     const ownerId = req.body.ownerID;
     const applicant = await tenantModel.findById(applicantId);
     const owner = await ownerModel.findById(ownerId);
-    if (!applicant) {
-      return res.status(404).json({ message: "applicant file doesn't exist" });
-    }
+    // if (!applicant) {
+    //   return res.status(404).json({ message: "applicant file doesn't exist" });
+    // }
     if (!owner) {
       return res.status(404).json({ message: "owner file doesn't exist" });
     }

@@ -33,19 +33,7 @@ const HomeSchema = new Schema(
       checkout: String,
       maxGuest: String,
     },
-    amenity: {
-      washer: Boolean,
-      wifi: Boolean,
-      airConditioning: Boolean,
-      freezer: Boolean,
-      dryer: Boolean,
-      workSpace: Boolean,
-      gym: Boolean,
-      heater: Boolean,
-      pool: Boolean,
-      terrace: Boolean,
-      parking: Boolean,
-    },
+    amenity: [String],
   },
   { timestamps: true }
 );

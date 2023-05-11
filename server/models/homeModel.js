@@ -23,7 +23,7 @@ const HomeSchema = new Schema(
     suspended: Boolean,
     isRented: Boolean,
     area: Number,
-    HomeType: String,
+    homeType: String,
     bedRoom: Number,
     bathRoom: Number,
     description: String,

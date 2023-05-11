@@ -15,23 +15,23 @@ const { text } = require("body-parser");
 const { generateVerificationToken } = require("../authController/saveToken");
 const { generateToken } = require("../authController/auth");
 
-// Owner log in
-const OwnerLogin = async (req, res) => {
+// owner log in
+const ownerLogin = async (req, res) => {
   await login(req, res, ownerModel);
 };
 
-// get all Owners
+// get all owners
 const getAllOwners = async (req, res) => {
   try {
-    const Owners = await ownerModel.find({});
+    const owners = await ownerModel.find({});
 
-    res.status(200).json(Owners);
+    res.status(200).json(owners);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
 
-// get single Owner
+// get single owner
 const getOwner = async (req, res) => {
   const { id } = req.params;
 
@@ -39,15 +39,15 @@ const getOwner = async (req, res) => {
     return res.status(404).json({ error: "No such " });
   }
 
-  const Owner = await ownerModel.findById(id);
+  const owner = await ownerModel.findById(id);
 
-  if (!Owner) {
-    return res.status(404).json({ error: "No such Owner" });
+  if (!owner) {
+    return res.status(404).json({ error: "No such owner" });
   }
 
-  res.status(200).json({ Owner });
+  res.status(200).json({ owner });
 };
-// register Owner
+// register owner
 const registerOwner = async (req, res) => {
   console.log("this is body", req.body);
   const data = req.body;
@@ -83,7 +83,7 @@ const registerOwner = async (req, res) => {
         {
           lastName,
           image,
-          superOwner: false,
+          superowner: false,
           name,
           email,
           phone,
@@ -138,7 +138,7 @@ const activateAccount = async (req, res) => {
   await verifyEmail(req, res, ownerModel);
 };
 
-// delet Owner
+// delet owner
 const deleteOwner = async (req, res) => {
   const { id } = req.params;
 
@@ -147,22 +147,22 @@ const deleteOwner = async (req, res) => {
   }
 
   try {
-    // Find Owner in database
-    const Owner = await ownerModel.findById(id);
+    // Find owner in database
+    const owner = await ownerModel.findById(id);
 
-    if (!Owner) {
-      return res.status(400).json({ error: "No such Owner" });
+    if (!owner) {
+      return res.status(400).json({ error: "No such owner" });
     }
-    // Delete Owner from database
+    // Delete owner from database
     await ownerModel.findByIdAndDelete(id);
 
-    res.status(200).json(Owner);
+    res.status(200).json(owner);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
 
-//update Owner
+//update owner
 
 const updateOwner = async (req, res) => {
   try {
@@ -207,7 +207,7 @@ module.exports = {
   getOwner,
   deleteOwner,
   updateOwner,
-  OwnerLogin,
+  ownerLogin,
   passwordResetRequest,
   resetPasswordProcess,
   updatePassword,

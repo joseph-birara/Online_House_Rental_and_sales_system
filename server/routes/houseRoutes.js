@@ -34,7 +34,7 @@
  *       
  *     parameters:
  *       - in: path
- *         name: ownerID
+ *         name: ownerId
  *         required: true
  *         description: The ID of the owner whose houses should be retrieved
  *         schema:
@@ -49,7 +49,7 @@
  *               items:
  *                 $ref: '#/components/schemas/House'
  *       '404':
- *         description: No houses found for ownerID
+ *         description: No houses found for ownerId
  *         content:
  *           application/json:
  *             schema:

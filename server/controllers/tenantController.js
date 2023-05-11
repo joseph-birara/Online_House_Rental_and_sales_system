@@ -31,7 +31,7 @@ const getAllTenants = async (req, res) => {
 
 // get single tenant
 const getTenant = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such " });
@@ -109,7 +109,7 @@ const activateAccount = async (req, res) => {
 
 // delet tenant
 const deleteTenant = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "invalid id" });

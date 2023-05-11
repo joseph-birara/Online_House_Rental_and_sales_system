@@ -115,16 +115,16 @@
  *               text:
  *                 type: string
  *                 description: The text content of the comment
- *               ownerID:
+ *               ownerId:
  *                 type: string
  *                 description: The ID of the owner associated with the comment
- *               houseID:
+ *               houseId:
  *                 type: string
  *                 description: The ID of the house associated with the comment
  *             example:
  *               text: "This is a comment."
- *               ownerID: "12345"
- *               houseID: "67890"
+ *               ownerId: "12345"
+ *               houseId: "67890"
  *     responses:
  *       '200':
  *         description: Comment added successfully
@@ -212,7 +212,7 @@
  *               properties:
  *                 message:
  *                   type: string
- *                   description: 
+ *                   description:
  */
 /**
  * @swagger
@@ -276,23 +276,22 @@
  *                   example: Internal server error occurred while trying to delete the comment.
  */
 
+// routes
 
-// routes 
-
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 const {
-    getByHouse,
-    getByOwner,
-    deleteComment,
-    editComment,
-    addComment
-} = require('../controllers/commentController')
+  getByHouse,
+  getByOwner,
+  deleteComment,
+  editComment,
+  addComment,
+} = require("../controllers/commentController");
 
-router.post('/add', addComment)
-router.get('/getByhouse', getByHouse)
-router.get('/getByowner', getByOwner)
-router.delete('/delete', deleteComment)
-router.put('/edit', editComment)
+router.post("/add", addComment);
+router.get("/getByhouse", getByHouse);
+router.get("/getByowner", getByOwner);
+router.delete("/delete", deleteComment);
+router.put("/edit", editComment);
 
-module.exports = router
+module.exports = router;

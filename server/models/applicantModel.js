@@ -23,14 +23,14 @@ const applicationSchema = new mongoose.Schema({
   },
   ownerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "HouseOwner",
+    ref: "HomeOwner",
   },
   homeId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Houses",
   },
   visitRequest: Date,
-  ApplicationType: String,
+  applicationType: String,
 });
 
 module.exports = mongoose.model("Application", applicationSchema);

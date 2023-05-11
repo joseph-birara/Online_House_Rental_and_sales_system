@@ -1,25 +1,24 @@
-const { ObjectId, Timestamp } = require('mongodb')
-const mongoose = require('mongoose')
+const { ObjectId, Timestamp } = require("mongodb");
+const mongoose = require("mongoose");
 
 const MaintenanceSchema = new mongoose.Schema(
-    {
-        homeID: {
-            type: mongoose.Schema.Types.ObjectId,
-        ref: 'Houses'
-        },
-        ownerID: {
-            type: mongoose.Schema.Types.ObjectId,
-        ref: 'HomeOwner'
-        },
-        tenantID: {
-            type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tenant'
-        },
-        message: String,
-        fixStatus : String,
-        
+  {
+    homeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Houses",
+    },
+    ownerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "HomeOwner",
+    },
+    tenantId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tenant",
+    },
+    message: String,
+    fixStatus: String,
+  },
+  { Timestamp: true }
+);
 
-    },{Timestamp: true}
-)
-
-module.exports = mongoose.model("Maintenance",MaintenanceSchema)
+module.exports = mongoose.model("Maintenance", MaintenanceSchema);

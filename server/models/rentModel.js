@@ -1,24 +1,24 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const rentSchema = new mongoose.Schema({
-    duration: String,
-    startDate: Date,
-    endDate: Date,
-    paymentAmount: Number,
-    paymentStatus:String,
-    
-    tenantID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tenant'
-    }, 
-    ownerID:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'HomeOwner'
-    }, 
-    homeID:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Houses'
-    }, 
-})
+  duration: String,
+  startDate: Date,
+  endDate: Date,
+  paymentAmount: Number,
+  paymentStatus: String,
 
-module.exports = mongoose.model("Rent",rentSchema)
+  tenantId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Tenant",
+  },
+  ownerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "HomeOwner",
+  },
+  homeId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Houses",
+  },
+});
+
+module.exports = mongoose.model("Rent", rentSchema);

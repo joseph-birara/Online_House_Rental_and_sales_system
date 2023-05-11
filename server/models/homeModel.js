@@ -33,7 +33,7 @@ const HomeSchema = new Schema(
       checkout: String,
       maxGuest: String,
     },
-    ameneniteis: {
+    amenity: {
       washer: Boolean,
       wifi: Boolean,
       airConditioning: Boolean,

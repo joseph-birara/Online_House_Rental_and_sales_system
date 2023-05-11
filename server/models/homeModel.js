@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const HomeSchema = new Schema(
   {
-    ownerID: {
+    ownerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "HomeOwner",
     },
@@ -23,7 +23,6 @@ const HomeSchema = new Schema(
     suspended: Boolean,
     isRented: Boolean,
     area: Number,
-    description: String,
     HomeType: String,
     bedRoom: Number,
     bathRoom: Number,

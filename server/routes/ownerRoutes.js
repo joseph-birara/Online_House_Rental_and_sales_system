@@ -255,7 +255,7 @@ const {
   getOwner,
   deleteOwner,
   updateOwner,
-  OwnerLogin,
+  ownerLogin,
   passwordResetRequest,
   resetPasswordProcess,
   updatePassword,
@@ -270,7 +270,7 @@ router.get("/profile/:id", getOwner);
 router.post("/register", registerOwner);
 router.delete("/delete/:id", deleteOwner);
 router.patch("/update", updateOwner);
-router.post("/login", OwnerLogin);
+router.post("/login", ownerLogin);
 router.put("/updatePassword", updatePassword);
 router.post("/reset", passwordResetRequest);
 router.post("/newPassword", resetPasswordProcess);

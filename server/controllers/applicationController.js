@@ -2,15 +2,18 @@ const applicationModel = require("../models/applicantModel");
 const tenantModel = require("../models/tenantModel");
 const ownerModel = require("../models/ownerModel");
 const sendEmail = require("../authController/sendEmial");
+const { default: mongoose } = require("mongoose");
 
 // send application request
 
 const addApplicationRequest = async (req, res) => {
   try {
-    const applicantId = req.body.applicantID;
-    const ownerId = req.body.ownerID;
+    console.log("befor distracturin", req.body);
+    const applicantId = req.body.applicantId;
+    const ownerId = req.body.ownerId;
     const applicant = await tenantModel.findById(applicantId);
     const owner = await ownerModel.findById(ownerId);
+    console.log("after distracturin", req.body);
     if (!applicant) {
       return res.status(404).json({ message: "applicant file doesn't exist" });
     }
@@ -28,7 +31,10 @@ const addApplicationRequest = async (req, res) => {
     let subject = " New home rental application";
     let text = `You have new home rental application , pleas check your portal`;
     await sendEmail(to, subject, text);
-    return res.status(201).json({ message: "application sent!" });
+    return res.status(201).json({
+      message: "application sent!",
+      applicationInformation: application,
+    });
   } catch (error) {
     return res.status(404).json({ message: error });
   }
@@ -36,27 +42,30 @@ const addApplicationRequest = async (req, res) => {
 // get all applications in database
 const getAllApplictions = async (req, res) => {
   try {
-    const applications = (await applicationModel.find().populate("ownerID"))
+    const applications = await applicationModel
+      .find()
+      .populate("ownerId")
       .populate("applicantId")
-      .populate("homeID");
+      .populate("homeId");
     if (!applications) {
       return res.status(404).json({ message: "empty list" });
     }
     return res.status(200).json(applications);
   } catch (error) {
+    console.log(error);
     return res.status(404).json({ message: error });
   }
 };
 // get applications that blongs to a tenant
 const getTenantApplications = async (req, res) => {
-  const id = req.query;
+  const id = req.body.id;
 
   try {
     const applications = await applicationModel
-      .findById(id)
-      .populate("ownerID")
+      .find({ applicantId: id })
+      .populate("ownerId")
       .populate("applicantId")
-      .populate("homeID");
+      .populate("homeId");
     if (!applications) {
       return res.status(404).json({ message: "empty list" });
     }
@@ -67,14 +76,14 @@ const getTenantApplications = async (req, res) => {
 };
 // get all applications that belongs to a single home owner
 const getOwnerApplications = async (req, res) => {
-  const ownerId = req.query.ownerId;
+  const ownerId = req.body.ownerId;
 
   try {
     const applications = await applicationModel
-      .find({ ownerId })
-      .populate("ownerID")
+      .find({ ownerId: ownerId })
+      .populate("ownerId")
       .populate("applicantId")
-      .populate("homeID");
+      .populate("homeId");
     if (!applications) {
       return res.status(404).json({ message: "empty list" });
     }
@@ -85,14 +94,14 @@ const getOwnerApplications = async (req, res) => {
 };
 //get all applications that belongs to a single house
 const getHouseApplications = async (req, res) => {
-  const id = req.query;
+  const id = req.body.id;
 
   try {
     const applications = await applicationModel
-      .findById(id)
-      .populate("ownerID")
+      .find({ homeId: id })
+      .populate("ownerId")
       .populate("applicantId")
-      .populate("homeID");
+      .populate("homeId");
     if (!applications) {
       return res.status(404).json({ message: "empty list" });
     }
@@ -103,14 +112,14 @@ const getHouseApplications = async (req, res) => {
 };
 // get one application details
 const getSingleApplication = async (req, res) => {
-  const id = req.query;
+  const id = req.body.id;
 
   try {
     const applications = await applicationModel
       .findById(id)
-      .populate("ownerID")
+      .populate("ownerId")
       .populate("applicantId")
-      .populate("homeID");
+      .populate("homeId");
     if (!applications) {
       return res.status(404).json({ message: "empty list" });
     }
@@ -122,12 +131,15 @@ const getSingleApplication = async (req, res) => {
 // delete application
 const deleteApplication = async (req, res) => {
   try {
-    const id = req.query.id;
-    const application = await applicationModel.findByIdAndDelete(id);
-
+    const { id } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ message: "invalid id " });
+    }
+    const application = await applicationModel.findById(id);
     if (!application) {
       return res.status(404).json({ message: "Application not found" });
     }
+
     // Remove the ID of the deleted application from the houseowner and applicant documents
     const { ownerId, applicantId } = application;
     await ownerModel.findByIdAndUpdate(ownerId, {
@@ -136,6 +148,8 @@ const deleteApplication = async (req, res) => {
     await tenantModel.findByIdAndUpdate(applicantId, {
       $pull: { applicationId: id },
     });
+
+    await applicationModel.findByIdAndDelete(id);
 
     return res
       .status(200)
@@ -156,7 +170,9 @@ const updateAppliction = async (req, res) => {
       }
     );
 
-    return res.status(200).json({ message: "updated!" });
+    return res
+      .status(200)
+      .json({ message: "updated!", application: application });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

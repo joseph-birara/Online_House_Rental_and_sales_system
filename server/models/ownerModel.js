@@ -3,17 +3,50 @@ const Schema = mongoose.Schema;
 
 const OwnerSchema = new Schema(
   {
-    name: String,
-    lastName: String,
-    image: String,
-    email: String,
-    password: String,
-    city: String,
-    subCity: String,
-    woreda: String,
-    kebele: String,
-    phone: String,
-    accountStatus: String,
+    name: {
+      type: String,
+      default: "",
+    },
+    lastName: {
+      type: String,
+      default: "",
+    },
+    image: {
+      type: String,
+      default: "",
+    },
+    email: {
+      type: String,
+      default: "",
+    },
+    password: {
+      type: String,
+      Required: true,
+    },
+    city: {
+      type: String,
+      default: "",
+    },
+    subCity: {
+      type: String,
+      default: "",
+    },
+    woreda: {
+      type: String,
+      default: "",
+    },
+    kebele: {
+      type: String,
+      default: "",
+    },
+    phone: {
+      type: String,
+      default: "",
+    },
+    accountStatus: {
+      type: String,
+      default: "inactive",
+    },
     house: [
       {
         type: mongoose.Schema.Types.ObjectId,

@@ -169,26 +169,22 @@
 
  */
 
-
-
 // import the controller functions
 const {
-    sendMaintenance,
-    editMaintenace,
-    deleteMaintenace,
-    getMaintenance,
-    getSingleMaintenance
-} = require('../controllers/maintenanceController')
+  sendMaintenance,
+  editMaintenace,
+  deleteMaintenace,
+  getMaintenance,
+  getSingleMaintenance,
+} = require("../controllers/maintenanceController");
 
+const express = require("express");
+const router = express.Router();
 
-const express = require('express')
-const router = express.Router()
+router.post("/send", sendMaintenance);
+router.put("/edit", editMaintenace);
+router.delete("/delete/:id", deleteMaintenace);
+router.get("/single", getSingleMaintenance);
+router.get("/all", getMaintenance);
 
-router.post('/send', sendMaintenance)
-router.put('/edit', editMaintenace)
-router.delete('/delete', deleteMaintenace)
-router.get('/single', getSingleMaintenance)
-router.get('/all',getMaintenance)
-
-
-module.exports= router
+module.exports = router;

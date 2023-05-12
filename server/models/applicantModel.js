@@ -30,7 +30,10 @@ const applicationSchema = new mongoose.Schema({
     ref: "Houses",
   },
   visitRequest: Date,
-  applicationType: String,
+  applicationType: {
+    type: String,
+    default: "",
+  },
 });
 
 module.exports = mongoose.model("Application", applicationSchema);

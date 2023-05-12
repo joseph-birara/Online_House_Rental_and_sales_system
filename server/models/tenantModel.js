@@ -1,32 +1,66 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema 
+const tenantSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    image: String,
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      defaut: "",
+    },
+    subCity: {
+      type: String,
+      defaut: "",
+    },
+    woreda: {
+      type: String,
+      defaut: "",
+    },
+    kebele: {
+      type: String,
+      defaut: "",
+    },
+    phone: {
+      type: String,
+      defaut: "",
+    },
 
-const tenantSchema = new Schema({  
-    name: String,
-    lastName: String,
-    image:String,
-    email: String,
-    password: String,
-    city: String,
-    subCity: String,
-    woreda: String,
-    kebele: String,
-    phone: String,
-    
-    applicationId: [{
+    applicationId: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Applicant'
-    }], 
-    saleId:[{
+        ref: "Applicant",
+      },
+    ],
+    saleId: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Sale'
-    }], 
-    rentId :[{
+        ref: "Sale",
+      },
+    ],
+    rentId: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Rent'
-    }], 
-}, { timestamps: true })
+        ref: "Rent",
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-
-module.exports = mongoose.model('Tenant', tenantSchema)
+module.exports = mongoose.model("Tenant", tenantSchema);

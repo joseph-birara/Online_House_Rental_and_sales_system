@@ -73,7 +73,7 @@ const getSingleMaintenance = async (req, res) => {
 
 const deleteMaintenace = async (req, res) => {
   try {
-    const id = req.body.id;
+    const { id } = req.params;
     const maintenace = await maintenanceModel.findOneAndDelete(id);
     if (!maintenace) {
       return res.status(200).json({ message: "not request found" });

@@ -15,8 +15,14 @@ const MaintenanceSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Tenant",
     },
-    message: String,
-    fixStatus: String,
+    message: {
+      type: String,
+      default: "",
+    },
+    fixStatus: {
+      type: String,
+      default: "pending",
+    },
   },
   { Timestamp: true }
 );

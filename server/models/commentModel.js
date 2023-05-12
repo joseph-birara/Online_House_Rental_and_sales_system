@@ -7,8 +7,14 @@ const commentSchema = new Schema(
     houseId: ObjectId,
     ownerId: ObjectId,
     reviewerId: ObjectId,
-    like: Number,
-    message: String,
+    like: {
+      type: Number,
+      default: 0,
+    },
+    message: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );

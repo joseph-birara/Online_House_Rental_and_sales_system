@@ -131,7 +131,7 @@ const getSingleApplication = async (req, res) => {
 // delete application
 const deleteApplication = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ message: "invalid id " });
     }

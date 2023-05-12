@@ -269,7 +269,7 @@ router.get("/all", getAllOwners);
 router.get("/profile", getOwner);
 router.post("/register", registerOwner);
 router.delete("/delete", deleteOwner);
-router.patch("/update", updateOwner);
+router.patch("/update/:id", updateOwner);
 router.post("/login", ownerLogin);
 router.put("/updatePassword", updatePassword);
 router.post("/reset", passwordResetRequest);

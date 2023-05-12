@@ -291,7 +291,7 @@ const {
 router.post("/add", addComment);
 router.get("/getByhouse", getByHouse);
 router.get("/getByowner", getByOwner);
-router.delete("/delete", deleteComment);
+router.delete("/delete/:id", deleteComment);
 router.put("/edit", editComment);
 
 module.exports = router;

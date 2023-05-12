@@ -32,7 +32,8 @@ const addRentInformation = async (req, res) => {
 //delete rent information
 const deleteRentInformation = async (req, res) => {
   try {
-    const rentInfo = await rentModel.findOneAndDelete();
+    const { id } = req.params;
+    const rentInfo = await rentModel.findOneAndDelete(id);
     if (!rentInfo) {
       return res.status(400).json("no information found");
     }

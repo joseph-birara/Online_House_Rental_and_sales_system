@@ -114,7 +114,7 @@ const router = express.Router()
 router.get('/getById', getRentInformationByID)
 router.get('/all', getAllRent)
 router.post('/add', addRentInformation)
-router.delete('/delete',deleteRentInformation)
+router.delete('/delete/:id',deleteRentInformation)
 
 
 module.exports = router

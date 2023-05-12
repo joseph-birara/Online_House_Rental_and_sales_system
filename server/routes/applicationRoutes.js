@@ -16,7 +16,7 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/AddApplicationRequest'
+ *             $ref: '#/components/schemas/Application'
  *     responses:
  *       201:
  *         description: Success
@@ -277,7 +277,7 @@ router.get("/byHouse", getHouseApplications);
 router.get("/single", getSingleApplication);
 router.post("/send", addApplicationRequest);
 router.get("/all", getAllApplictions);
-router.delete("/delete", deleteApplication);
+router.delete("/delete/:id", deleteApplication);
 router.put("/update", updateAppliction);
 
 module.exports = router;

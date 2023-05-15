@@ -30,7 +30,8 @@ function App() {
           <main>
             <Routes>
               <Route path="/" element={<LandingPage />} />
-              <Route path="/login" element={<LoginPage />} />
+              <Route path="/adminlogin" element={<LoginPage isAdmin={true} />} />
+              <Route path="/login" element={<LoginPage isAdmin={false}/>} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/buy" element={<Buy />} />
               <Route path="/rent" element={<HomesListing />} />
@@ -43,7 +44,8 @@ function App() {
                 }
               >
                 <Route path="homes">
-                  <Route path="onListing" element={<HomesList />} />
+                  <Route path="onListing" element={<HomesList rented={false} />} />
+                  <Route path="onListing/:id" element={<PlacesFormPage />} />
                   <Route path="rented" element={<HomesList rented={true} />} />
                   <Route path="new" element={<PlacesFormPage />} />
                 </Route>

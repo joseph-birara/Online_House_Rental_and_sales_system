@@ -116,6 +116,8 @@ const HomesListing = () => {
 
     axios.get('http://localhost:4000/houses/all')
       .then((response) => {
+        console.log("her is the home data");
+        console.log(response.data);
         setHousesList(response.data)
       })
       .catch((error) => {
@@ -124,10 +126,6 @@ const HomesListing = () => {
 
   }, [setHousesList]);
 
-  // console.log(HousesList);
-  // HousesList.forEach((obj) => {
-  //   console.log(obj.images[0]);
-  // });
 
   return (
     <div className="flex gap-8 justify-start flex-wrap">
@@ -139,24 +137,3 @@ const HomesListing = () => {
 };
 
 export default HomesListing;
-
-
-
-// [{"_id":"6454e406f675697038772377",
-// "ownerID":"6425d6f31994e934861c41c9",
-// "images":["1683284998172_Fotor_AI（2）.png"],
-// "password":"String",
-// "city":"String",
-// "subCity":"String",
-// "woreda":"String",
-// "kebele":"String",
-// "price":79878,
-// "homeStatus":"String",
-// "verified":false,
-// "area":90,
-// "HomeType":"String",
-// "bedRoom":60,
-// "bathRoom":90,
-// "createdAt":"2023-05-05T11:09:58.400Z",
-// "updatedAt":"2023-05-05T11:09:58.400Z",
-// "__v":0}]

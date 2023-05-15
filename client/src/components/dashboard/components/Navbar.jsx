@@ -21,7 +21,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   </button>
 );
 
-const Navbar = ({notificationData,userProfileData, userProfPic}) => {
+const Navbar = ({ notificationData, userProfileData, userProfPic }) => {
   const {
     activeMenu,
     setActiveMenu,

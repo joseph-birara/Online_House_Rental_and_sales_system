@@ -4,7 +4,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import { Button } from ".";
 import { useStateContext } from "../../../contexts/DashboardContextProvider";
 
-const UserProfile = ({userProfileData, userProfPic}) => {
+const UserProfile = ({ userProfileData, userProfPic }) => {
   const { currentColor } = useStateContext();
 
   return (
@@ -28,7 +28,7 @@ const UserProfile = ({userProfileData, userProfPic}) => {
         <div>
           <p className="font-semibold text-xl dark:text-gray-200">
             {" "}
-            Michael Roberts{" "}
+            Michael Dawit {" "}
           </p>
           <p className="text-gray-500 text-sm dark:text-gray-400">
             {" "}

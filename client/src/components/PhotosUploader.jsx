@@ -1,27 +1,37 @@
 import { useState } from "react";
 
-export default function HouesPhotosManager({ houseImages, setHouseImages }) {
-  const [imageFiles, setImageFile] = useState([]);
+export default function HouesPhotosManager({ houseImageFiles, setHouseImageFiles, houseId, imageLinks }) {
+
+  const [localImageReference, setLocalImageReferece] = useState([]);
+  const [uniqeNum, setuniqueNum] = useState(0); // it is used as an id when image is added, so easy to remove image
 
   const houseImageHandler = (ev) => {
     const files = ev.target.files;
 
-    let imgobj = [];
+    let imgobj = []; // storing image link for local rendering
+    let imgFiles = []; // storing image binary file for uploadig
+
     for (let i = 0; i < files.length; i++) {
-      imgobj.push(URL.createObjectURL(files[i]));
+      imgFiles.push({ id: i + uniqeNum, value: files[i] })
+      imgobj.push({ id: i + uniqeNum, value: URL.createObjectURL(files[i]) });
     }
-    setImageFile([...imageFiles, ...imgobj]);
+    setuniqueNum(prev => prev + 100) // addding 100 make sure it is unique
+    setLocalImageReferece([...localImageReference, ...imgobj]);
+    setHouseImageFiles(pre => [...pre, ...imgFiles])
+
   };
 
-  const removeImage = (img) => {
-    const newimgObj = imageFiles.filter((images) => images !== img);
-    setImageFile(newimgObj);
+  const removeImage = (id) => {
+    const newimgObj = localImageReference.filter((img) => img.id !== id);
+    setLocalImageReferece(newimgObj);
+    const newImgFiles = houseImageFiles.filter((img) => img.id !== id)
+    setHouseImageFiles(newImgFiles)
   };
 
   return (
     <>
       <div className="mt-2 grid gap-2 grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-        <label className="outline h-32 cursor-pointer flex items-center gap-1 justify-center border bg-transparent rounded-2xl p-2 text-2xl text-gray-600">
+        {!houseId && <label className="outline h-32 cursor-pointer flex items-center gap-1 justify-center border bg-transparent rounded-2xl p-2 text-2xl text-gray-600">
           <input
             type="file"
             multiple
@@ -43,29 +53,47 @@ export default function HouesPhotosManager({ houseImages, setHouseImages }) {
             />
           </svg>
           Upload
-        </label>
+        </label>}
 
-        {imageFiles.length > 0 &&
-          imageFiles.map((img) => {
+        {localImageReference.length > 0 &&
+          localImageReference.map((img) => {
             return (
-              <div className="h-32 flex relative">
+              <div key={img.id} className="h-32 flex relative">
+                <img
+                  className="rounded-2xl w-full object-cover"
+                  src={img.value}
+                  alt=""
+                />
+                {houseId && <button
+                  className="absolute top-0 right-0 bg-lightBlue  text-white rounded"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    removeImage(img.id);
+                  }}
+                >
+                  Cancel
+                </button>}
+              </div>
+            );
+          })}
+
+        {/* to show images onlu */}
+        {imageLinks.length > 0 &&
+          imageLinks.map((img) => {
+            return (
+              <div key={img} className="h-32 flex relative">
                 <img
                   className="rounded-2xl w-full object-cover"
                   src={img}
                   alt=""
                 />
-                <button
-                  className="absolute top-0 right-0 bg-lightBlue  text-white rounded"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    removeImage(img);
-                  }}
-                >
-                  Cancel
-                </button>
               </div>
             );
           })}
+
+
+
+
       </div>
     </>
   );

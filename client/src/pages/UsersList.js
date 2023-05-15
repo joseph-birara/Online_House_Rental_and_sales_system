@@ -53,6 +53,8 @@ const UsersersList = ({ userType, removeDropdown }) => {
       _userType = "Applicants";
   }
 
+
+
   return (
     <>
       <p className="text-xl font-semibold mx-4 mb-8 pb-4 border-b-1 border-[#7dd3fc]">

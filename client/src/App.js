@@ -19,6 +19,7 @@ import { UserContextProvider } from "./contexts/UserContextProvider";
 import LoginPage from "./pages/Auth/LoginPage";
 import RegisterPage from "./pages/Auth/Register";
 import UtilityContextProvider from "./contexts/UtilityContextProvide";
+import Applicants from "./pages/Applicants";
 //blue-black: #091240 ,  light-blue: #1890db
 
 function App() {
@@ -51,7 +52,7 @@ function App() {
                 </Route>
                 <Route
                   path="applicants"
-                  element={<UsersList userType="applicant" />}
+                  element={<Applicants />}
                 />
                 <Route
                   path="tenants"
@@ -102,6 +103,9 @@ function App() {
                 <Route path="reports" element={<Test />} />
               </Route>
               <Route path="/homeDetails" element={<HomeDetails />} />
+              <Route path="tenant">
+                <Route path="applications" element={<Test />} />
+              </Route>
             </Routes>
           </main>
         </div>

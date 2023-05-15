@@ -116,7 +116,6 @@ const HomesListing = () => {
 
     axios.get('http://localhost:4000/houses/all')
       .then((response) => {
-        console.log("her is the home data");
         console.log(response.data);
         setHousesList(response.data)
       })

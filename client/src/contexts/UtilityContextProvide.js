@@ -7,12 +7,14 @@ export function UtilityContextProvider ({children}){
     const [HousesList, setHousesList ] = useState([])
     const [OwnersList, setOwnersList ] = useState([])
     const [BuyersList, setBuyerList] = useState()
+    const [applications, setApplications] = useState([])
+
 
 
 
 
     return(
-        <UtilityContext.Provider value ={{HousesList, setHousesList}} >
+        <UtilityContext.Provider value ={{HousesList, setHousesList, applications, setApplications}} >
 
             {children}
         </UtilityContext.Provider>

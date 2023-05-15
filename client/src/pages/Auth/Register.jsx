@@ -188,8 +188,8 @@ export default function RegisterPage() {
                 <input
                   type="radio"
                   name="tenant"
-                  checked={userData.userType === "tenant"}
-                  onChange={(e) => setUserData({ ...userData, userType: "tenant" })}
+                  checked={userData.userType === "buyer"}
+                  onChange={(e) => setUserData({ ...userData, userType: "buyer" })}
                 />
                 <span>Buyer</span>
               </label>

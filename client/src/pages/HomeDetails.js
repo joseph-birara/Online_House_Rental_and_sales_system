@@ -53,6 +53,7 @@ const HomeDetails = ({ forAdmin }) => {
   ];
 
   const place = {
+    _id: "0011",
     title: "Modern comfort and convenience elegantly appointed",
     location:
       "Atlas, Ghana Street, Ghiliffalegn Stream, Bole, AddisAbaba, 7966, Ethiopia",
@@ -64,6 +65,7 @@ const HomeDetails = ({ forAdmin }) => {
     garden and parking for 3 cars. The rate is 2,500 USD for residential\
     rent and 3,000 USD for office rent per month and fixed.",
     price: 250,
+    homeType: "shortTerm"
   };
   return (
     <div className={styles.mainContainer}>

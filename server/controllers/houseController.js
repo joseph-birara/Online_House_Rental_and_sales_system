@@ -74,24 +74,44 @@ const addHouse = async (req, res) => {
   }
 };
 
-// delete House
 const deleteHouse = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "invalid id" });
+    return res.status(404).json({ error: "Invalid ID" });
   }
+
   try {
-    // Delete House from database
-    const House = await houseModel.findByIdAndDelete(id);
-    if (!House) {
-      return res.status(400).json({ error: "No such House" });
+    // Find the house and retrieve the ownerId
+    const house = await houseModel.findById(id);
+    if (!house) {
+      return res.status(404).json({ error: "No such house" });
+    }
+    const ownerId = house.ownerId;
+
+    // Delete house from database
+    const deletedHouse = await houseModel.findByIdAndDelete(id);
+    if (!deletedHouse) {
+      return res.status(400).json({ error: "Failed to delete the house" });
     }
 
-    res.status(200).json({ messege: "delition sucesss", deletedHouse: House });
+    // Remove houseId from ownerModel
+    const owner = await ownerModel.findById(ownerId);
+    if (owner) {
+      const houseIndex = owner.house.indexOf(id);
+      if (houseIndex !== -1) {
+        owner.house.splice(houseIndex, 1);
+        await owner.save();
+      }
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Deletion successful", deletedHouse });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    return res.status(400).json({ error: err.message });
   }
 };
+
 //update House
 const updateHouse = async (req, res) => {
   const houseId = req.body.id;
@@ -114,7 +134,7 @@ const updateHouse = async (req, res) => {
 };
 
 const deletImage = async (req, res) => {
-  const { id, index } = req.body;
+  const { id, index } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "invalid id" });
   }

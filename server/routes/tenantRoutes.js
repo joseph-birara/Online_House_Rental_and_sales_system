@@ -169,7 +169,7 @@
  *             schema:
  *               $ref: '#/components/schemas/Tenant'
  * /tenant/update:
- *   patch:
+ *   put:
  *     tags: [Tenant]
  *     summary: Update an Tenant
  *     description: Update an Tenant with the given information.
@@ -269,7 +269,7 @@ router.get("/all", getAllTenants);
 router.get("/profile/:id", getTenant);
 router.post("/register", registerTenant);
 router.delete("/delete/:id", deleteTenant);
-router.patch("/update", updateTenant);
+router.put("/update", updateTenant);
 router.post("/login", tenantLogin);
 router.put("/updatePassword", updatePassword);
 router.post("/reset", passwordResetRequest);

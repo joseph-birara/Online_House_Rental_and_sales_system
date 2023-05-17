@@ -33,7 +33,7 @@ const getAllOwners = async (req, res) => {
 
 // get single owner
 const getOwner = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such " });
@@ -156,7 +156,7 @@ const deleteOwner = async (req, res) => {
     // Delete owner from database
     await ownerModel.findByIdAndDelete(id);
 
-    res.status(200).json(owner);
+    res.status(200).json({ message: "deleted!", owner });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

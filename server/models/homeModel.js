@@ -10,42 +10,69 @@ const HomeSchema = new Schema(
     },
     images: [String],
 
-    city: String,
-    subCity: String,
-    woreda: String,
-    kebele: String,
+    city: {
+      type: String,
+      default: "",
+    },
+    subCity: {
+      type: String,
+      default: "",
+    },
+    woreda: {
+      type: String,
+      default: "",
+    },
+    kebele: {
+      type: String,
+      default: "",
+    },
     price: Number,
-    homeStatus: String,
+    homeStatus: {
+      type: String,
+      default: "",
+    },
     verified: {
       type: Boolean,
       default: false,
     },
-    suspended: Boolean,
-    isRented: Boolean,
-    area: Number,
-    HomeType: String,
-    bedRoom: Number,
-    bathRoom: Number,
-    description: String,
-    title: String,
+    suspended: {
+      type: Boolean,
+      default: false,
+    },
+    isRented: {
+      type: Boolean,
+      default: false,
+    },
+    area: {
+      type: Number,
+      default: 0,
+    },
+    homeType: {
+      type: String,
+      default: "",
+    },
+    bedRoom: {
+      type: Number,
+      default: 0,
+    },
+    bathRoom: {
+      type: Number,
+      default: 0,
+    },
+    description: {
+      type: String,
+      default: "",
+    },
+    title: {
+      type: String,
+      default: "",
+    },
     shortTerm: {
       checkin: String,
       checkout: String,
       maxGuest: String,
     },
-    amenity: {
-      washer: Boolean,
-      wifi: Boolean,
-      airConditioning: Boolean,
-      freezer: Boolean,
-      dryer: Boolean,
-      workSpace: Boolean,
-      gym: Boolean,
-      heater: Boolean,
-      pool: Boolean,
-      terrace: Boolean,
-      parking: Boolean,
-    },
+    amenity: [String],
   },
   { timestamps: true }
 );

@@ -219,7 +219,7 @@ const {
 router.post("/add", addHouse);
 router.get("/all", getAllHouses);
 router.get("/byowner", getHousesByOwner);
-router.delete("/delete", deleteHouse);
+router.delete("/delete/:id", deleteHouse);
 router.put("/update", updateHouse);
 router.delete("/deleteImage", deletImage);
 router.get("/single", getHouse);

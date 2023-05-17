@@ -16,7 +16,7 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/AddApplicationRequest'
+ *             $ref: '#/components/schemas/Application'
  *     responses:
  *       201:
  *         description: Success
@@ -265,7 +265,7 @@ const {
   getTenantApplications,
   getHouseApplications,
   getSingleApplication,
-  updateAppliction,
+  updateApplication,
   deleteApplication,
 } = require("../controllers/applicationController");
 
@@ -277,7 +277,7 @@ router.get("/byHouse", getHouseApplications);
 router.get("/single", getSingleApplication);
 router.post("/send", addApplicationRequest);
 router.get("/all", getAllApplictions);
-router.delete("/delete", deleteApplication);
-router.put("/update", updateAppliction);
+router.delete("/delete/:id", deleteApplication);
+router.put("/update", updateApplication);
 
 module.exports = router;

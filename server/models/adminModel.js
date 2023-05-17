@@ -1,17 +1,38 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const AdminSchema = new Schema({  
-    name: String,
-    lastName: String, 
-    phone: String,
-    email: String,
-    image: String,
-    password: String,
+const AdminSchema = new Schema(
+  {
+    name: {
+      type: String,
+      default: "",
+    },
+    lastName: {
+      type: String,
+      default: "",
+    },
+    phone: {
+      type: String,
+      default: "",
+    },
+    email: {
+      type: String,
+      default: "",
+    },
+    image: {
+      type: String,
+      default: "",
+    },
+    password: {
+      type: String,
+      default: "",
+    },
     superAdmin: {
-    type: Boolean,
-    default: false
-  }
-}, { timestamps: true })
+      type: Boolean,
+      default: false,
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('Admin',AdminSchema)
+module.exports = mongoose.model("Admin", AdminSchema);

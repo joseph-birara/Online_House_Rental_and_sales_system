@@ -59,8 +59,9 @@ const addHouse = async (req, res) => {
   try {
     const house = await houseModel.create({ ...data });
     // add the house id to its owenr
+    console.log("id owner", req.body.ownerId);
     const owner = await ownerModel.findOneAndUpdate(
-      { _id: house.ownerId },
+      { _id: req.body.ownerId },
       { $push: { house: house._id } }, // push the ID of the new house to the 'houses' array attribute
       { new: true } // return the updated owner document
     );
@@ -75,7 +76,7 @@ const addHouse = async (req, res) => {
 
 // delete House
 const deleteHouse = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "invalid id" });
   }

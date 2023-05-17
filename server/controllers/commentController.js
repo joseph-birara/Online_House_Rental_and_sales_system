@@ -49,7 +49,7 @@ const editComment = async (req, res) => {
 };
 
 const deleteComment = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   try {
     const comment = await commentModel.findByIdAndDelete(id);
     if (!comment) {

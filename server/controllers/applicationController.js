@@ -131,7 +131,7 @@ const getSingleApplication = async (req, res) => {
 // delete application
 const deleteApplication = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ message: "invalid id " });
     }
@@ -160,19 +160,22 @@ const deleteApplication = async (req, res) => {
 };
 
 // update an appliction
-const updateAppliction = async (req, res) => {
+const updateApplication = async (req, res) => {
   const id = req.body.id;
   try {
     const application = await applicationModel.findOneAndUpdate(
       { _id: id },
-      {
-        ...req.body,
-      }
+      { ...req.body },
+      { new: true } // Return the updated document
     );
+
+    if (!application) {
+      return res.status(404).json({ message: "Application not found" });
+    }
 
     return res
       .status(200)
-      .json({ message: "updated!", application: application });
+      .json({ message: "Application updated", application });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -185,6 +188,6 @@ module.exports = {
   getTenantApplications,
   getHouseApplications,
   getSingleApplication,
-  updateAppliction,
+  updateApplication,
   deleteApplication,
 };

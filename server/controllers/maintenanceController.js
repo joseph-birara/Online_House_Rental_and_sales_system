@@ -1,5 +1,5 @@
-const { findById, find } = require("../models/authModel");
 const maintenanceModel = require("../models/maintenanceModel");
+const ownerModel = require("../models/ownerModel");
 
 //send request
 
@@ -13,12 +13,13 @@ const sendMaintenance = async (req, res) => {
       return res.status(400).json({ message: "unable to send request" });
     }
 
-    const owner = await findById(maintenance.ownerId);
+    const owner = await ownerModel.findById(maintenance.ownerId);
     owner.requestId.push(maintenance._id);
     await owner.save();
     return res.status(201).json({ message: "request sent!" });
   } catch (error) {
-    return res.status(400).json({ message: error });
+    console.error(error); // Log the error message to the console
+    return res.status(400).json({ message: "An error occurred" });
   }
 };
 
@@ -58,13 +59,14 @@ const getMaintenance = async (req, res) => {
 
 const getSingleMaintenance = async (req, res) => {
   try {
-    const id = req.qurey;
-    const singleRequest = await maintenanceModel.findOne(id);
-    if (!allRequest) {
-      return res.status(200).json({ message: "empty requests list" });
+    const { id } = req.body;
+    const singleRequest = await maintenanceModel.findOne({ _id: id });
+    if (!singleRequest) {
+      return res.status(200).json({ message: "Empty requests list" });
     }
     return res.status(200).json(singleRequest);
   } catch (error) {
+    console.log(error);
     return res.status(404).json({ message: error });
   }
 };

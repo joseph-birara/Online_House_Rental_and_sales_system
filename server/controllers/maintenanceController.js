@@ -1,5 +1,6 @@
 const maintenanceModel = require("../models/maintenanceModel");
 const ownerModel = require("../models/ownerModel");
+const tenantModel = require("../models/tenantModel");
 
 //send request
 
@@ -14,8 +15,11 @@ const sendMaintenance = async (req, res) => {
     }
 
     const owner = await ownerModel.findById(maintenance.ownerId);
+    const applicant = await tenantModel.findById(maintenance.applicantId);
     owner.requestId.push(maintenance._id);
+    applicant.applicationId.push(maintenance._id);
     await owner.save();
+    await applicant.save();
     return res.status(201).json({ message: "request sent!" });
   } catch (error) {
     console.error(error); // Log the error message to the console
@@ -73,23 +77,37 @@ const getSingleMaintenance = async (req, res) => {
 
 // delet maintenance request
 
-const deleteMaintenace = async (req, res) => {
+const deleteMaintenance = async (req, res) => {
   try {
+    console.log(req.body);
     const { id } = req.params;
-    const maintenace = await maintenanceModel.findOneAndDelete(id);
-    if (!maintenace) {
-      return res.status(200).json({ message: "not request found" });
+
+    // Find and delete the maintenance request
+    const maintenance = await maintenanceModel.findOneAndDelete({ _id: id });
+    if (!maintenance) {
+      return res.status(404).json({ message: "No request found" });
     }
-    return res.status(200).json({ message: "deleted effectively" });
+
+    // Remove the request ID from the ownerModel
+    const owner = await ownerModel.findById(maintenance.ownerId);
+    owner.applicationId.pull(maintenance._id);
+    await owner.save();
+
+    // Remove the request ID from the tenantModel
+    const tenant = await tenantModel.findById(maintenance.tenantId);
+    tenant.applicationId.pull(maintenance._id);
+    await tenant.save();
+
+    return res.status(200).json({ message: "Deleted effectively" });
   } catch (error) {
-    return res.status(404).json({ message: error });
+    return res.status(500).json({ message: error });
   }
 };
 
 module.exports = {
   sendMaintenance,
   editMaintenace,
-  deleteMaintenace,
+  deleteMaintenance,
   getMaintenance,
   getSingleMaintenance,
 };

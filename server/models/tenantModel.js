@@ -20,6 +20,10 @@ const tenantSchema = new Schema(
       type: String,
       required: true,
     },
+    userType: {
+      type: String,
+      default: "tenant",
+    },
     city: {
       type: String,
       defaut: "",

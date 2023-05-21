@@ -61,6 +61,7 @@ const registerTenant = async (req, res) => {
   const saleId = [];
   const aplicationId = [];
   const rentId = [];
+  const userType = data.userType
   const image = data.image;
   const isTaken = await tenantModel.findOne({ email });
   if (isTaken) {
@@ -75,7 +76,7 @@ const registerTenant = async (req, res) => {
     const tenant = await tenantModel.create({
       lastName,
       image,
-
+      userType,
       name,
       email,
       phone,

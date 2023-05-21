@@ -138,12 +138,11 @@ const activateAccount = async (req, res) => {
   await verifyEmail(req, res, ownerModel);
 };
 
-// delet owner
 const deleteOwner = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "invalid id" });
+    return res.status(404).json({ error: "Invalid ID" });
   }
 
   try {
@@ -153,14 +152,19 @@ const deleteOwner = async (req, res) => {
     if (!owner) {
       return res.status(400).json({ error: "No such owner" });
     }
+
+    // Delete houses associated with the owner
+    await houseModel.deleteMany({ ownerId: id });
+
     // Delete owner from database
     await ownerModel.findByIdAndDelete(id);
 
-    res.status(200).json({ message: "deleted!", owner });
+    res.status(200).json({ message: "Deletion successful", owner });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
+
 
 //update owner
 

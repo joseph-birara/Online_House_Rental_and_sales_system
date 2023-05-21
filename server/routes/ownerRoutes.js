@@ -169,7 +169,7 @@
  *             schema:
  *               $ref: '#/components/schemas/Owner'
  * /owner/update:
- *   patch:
+ *   put:
  *     tags: [Owner]
  *     summary: Update an Owner
  *     description: Update an Owner with the given information.
@@ -269,7 +269,7 @@ router.get("/all", getAllOwners);
 router.get("/profile", getOwner);
 router.post("/register", registerOwner);
 router.delete("/delete", deleteOwner);
-router.patch("/update/:id", updateOwner);
+router.put("/update/:id", updateOwner);
 router.post("/login", ownerLogin);
 router.put("/updatePassword", updatePassword);
 router.post("/reset", passwordResetRequest);

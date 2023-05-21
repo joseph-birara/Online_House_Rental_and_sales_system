@@ -4,7 +4,7 @@
  * tags:
  *   name: Rent
  *   description: APIs for managing rental information
- * 
+ *
  * /rent/delete:
  *   delete:
  *     tags: [Rent]
@@ -78,7 +78,7 @@
  *   post:
  *     tags:
  *       -  Rent
- *         
+ *
  *     summary: Add a new rent information
  *     description: Adds a new rent information to the database and updates the corresponding tenant and owner records with the new rent id.
  *     requestBody:
@@ -95,26 +95,29 @@
  *         description: Failed to add rent information
  */
 
-
-
-
-
-
-
 //import all controller functions
 const {
-    addRentInformation, getRentInformationByID, getAllRent, deleteRentInformation,
-    
-} = require('../controllers/rentController')
+  addRentInformation,
+  deleteRentInformation,
+  getRentInformationByID,
+  getAllRent,
+  updateRent,
+  getRentInformationByHome,
+  getRentInformationByTenant,
+  getRentInformationByOwner,
+} = require("../controllers/rentController");
 
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-//define the routes 
-router.get('/getById', getRentInformationByID)
-router.get('/all', getAllRent)
-router.post('/add', addRentInformation)
-router.delete('/delete/:id',deleteRentInformation)
+//define the routes
+router.get("/single", getRentInformationByID);
+router.get("/all", getAllRent);
+router.post("/add", addRentInformation);
+router.delete("/delete/:id", deleteRentInformation);
+router.put("/update", updateRent);
+router.get("/getByOwner", getRentInformationByOwner);
+router.get("/getByHome", getRentInformationByHome);
+router.get("/getByTenant", getRentInformationByTenant);
 
-
-module.exports = router
+module.exports = router;

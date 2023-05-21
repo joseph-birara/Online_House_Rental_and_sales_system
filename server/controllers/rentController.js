@@ -46,13 +46,14 @@ const deleteRentInformation = async (req, res) => {
 
 const getRentInformationByID = async (req, res) => {
   try {
-    const id = req.body.id;
-    const information = await rentModel.findByID(id);
+    const { id } = req.body;
+    const information = await rentModel.findById(id);
     if (!information) {
       return res.status(400).json({ message: "empty list" });
     }
     return res.status(200).json(information);
   } catch (error) {
+    console.log(error);
     return res.status(404).json({ message: error });
   }
 };
@@ -69,10 +70,54 @@ const getAllRent = async (req, res) => {
     return res.status(404).json({ message: error });
   }
 };
+const updateRent = async (req, res) => {
+  const { id } = req.body;
+  try {
+    const rent = await rentModel.findByIdAndUpdate(id, { ...req.body });
+    return res.status(201).send("Updated successfully");
+  } catch (error) {
+    console.log(error);
+    return res.status(501).json({ message: "Error occurred" });
+  }
+};
+const getRentInformationByOwner = async (req, res) => {
+  try {
+    const { ownerId } = req.params;
+    const rent = await rentModel.find({ ownerId });
+    return res.status(200).json(rent);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error occurred" });
+  }
+};
+const getRentInformationByTenant = async (req, res) => {
+  try {
+    const { tenantId } = req.params;
+    const rent = await rentModel.find({ tenantId });
+    return res.status(200).json(rent);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error occurred" });
+  }
+};
+const getRentInformationByHome = async (req, res) => {
+  try {
+    const { homeId } = req.params;
+    const rent = await rentModel.find({ homeId });
+    return res.status(200).json(rent);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error occurred" });
+  }
+};
 
 module.exports = {
   addRentInformation,
   deleteRentInformation,
   getRentInformationByID,
   getAllRent,
+  updateRent,
+  getRentInformationByHome,
+  getRentInformationByTenant,
+  getRentInformationByOwner,
 };

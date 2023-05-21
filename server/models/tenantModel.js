@@ -7,6 +7,10 @@ const tenantSchema = new Schema(
       type: String,
       required: true,
     },
+    suspended: {
+      type: Boolean,
+      default: false,
+    },
     lastName: {
       type: String,
       required: true,

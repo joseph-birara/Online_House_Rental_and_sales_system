@@ -59,6 +59,7 @@ const registerTenant = async (req, res) => {
   const subCity = data.subCity;
   const kebele = data.kebele;
   const saleId = [];
+  const suspended = data.suspended;
   const aplicationId = [];
   const rentId = [];
   const userType = data.userType
@@ -80,6 +81,7 @@ const registerTenant = async (req, res) => {
       name,
       email,
       phone,
+      suspended,
       password: hashedPassword,
       phone,
       city,

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const ownerModel = require("../models/ownerModel");
+const houseModel = require("../models/homeModel");
 const login = require("../authController/login");
 const sendVerificationEmail = require("../authController/sendEmial");
 const {
@@ -55,7 +56,7 @@ const registerOwner = async (req, res) => {
   const lastName = data.lastName;
   const phone = data.phone;
   const email = data.email;
-  const suspended = data.suspended
+  const suspended = data.suspended;
   const password = data.password;
   const city = data.city;
   const subCity = data.subCity;
@@ -166,7 +167,6 @@ const deleteOwner = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
-
 
 //update owner
 

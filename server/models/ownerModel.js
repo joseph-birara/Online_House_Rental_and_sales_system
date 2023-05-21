@@ -43,6 +43,10 @@ const OwnerSchema = new Schema(
       type: String,
       default: "",
     },
+    suspended: {
+      type: Boolean,
+      default: false,
+    },
     accountStatus: {
       type: String,
       default: "inactive",

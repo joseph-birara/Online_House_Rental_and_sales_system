@@ -169,7 +169,7 @@
  *             schema:
  *               $ref: '#/components/schemas/Admin'
  * /admin/update:
- *   patch:
+ *   put:
  *     tags: [Admin]
  *     summary: Update an admin
  *     description: Update an admin with the given information.
@@ -266,7 +266,7 @@ router.get("/all", getAllAdmins);
 router.get("/profile/:id", getAdmin);
 router.post("/add", addAdmin);
 router.delete("/delete/:id", deleteAdmin);
-router.patch("/update", updateAdmin);
+router.put("/update", updateAdmin);
 router.post("/login", adminLogin);
 router.put("/updatePassword", updatePassword);
 router.post("/reset", passwordResetRequest);

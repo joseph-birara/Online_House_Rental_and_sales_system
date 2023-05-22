@@ -59,8 +59,10 @@ const registerTenant = async (req, res) => {
   const subCity = data.subCity;
   const kebele = data.kebele;
   const saleId = [];
+  const suspended = data.suspended;
   const aplicationId = [];
   const rentId = [];
+  const userType = data.userType
   const image = data.image;
   const isTaken = await tenantModel.findOne({ email });
   if (isTaken) {
@@ -75,10 +77,11 @@ const registerTenant = async (req, res) => {
     const tenant = await tenantModel.create({
       lastName,
       image,
-
+      userType,
       name,
       email,
       phone,
+      suspended,
       password: hashedPassword,
       phone,
       city,
@@ -135,7 +138,8 @@ const deleteTenant = async (req, res) => {
 //update tenant
 
 const updateTenant = async (req, res) => {
-  const id = await getUser(req, res);
+  // const id = await getUser(req, res);
+  const { id } = req.body;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "invalid id" });
   }

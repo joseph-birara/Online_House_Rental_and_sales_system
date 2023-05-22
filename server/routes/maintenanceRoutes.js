@@ -173,7 +173,7 @@
 const {
   sendMaintenance,
   editMaintenace,
-  deleteMaintenace,
+  deleteMaintenance,
   getMaintenance,
   getSingleMaintenance,
 } = require("../controllers/maintenanceController");
@@ -183,7 +183,7 @@ const router = express.Router();
 
 router.post("/send", sendMaintenance);
 router.put("/edit", editMaintenace);
-router.delete("/delete/:id", deleteMaintenace);
+router.delete("/delete/:id", deleteMaintenance);
 router.get("/single", getSingleMaintenance);
 router.get("/all", getMaintenance);
 

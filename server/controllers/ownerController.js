@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const ownerModel = require("../models/ownerModel");
+const houseModel = require("../models/homeModel");
 const login = require("../authController/login");
 const sendVerificationEmail = require("../authController/sendEmial");
 const {
@@ -55,6 +56,7 @@ const registerOwner = async (req, res) => {
   const lastName = data.lastName;
   const phone = data.phone;
   const email = data.email;
+  const suspended = data.suspended;
   const password = data.password;
   const city = data.city;
   const subCity = data.subCity;
@@ -87,6 +89,7 @@ const registerOwner = async (req, res) => {
           name,
           email,
           phone,
+          suspended,
           password: hashedPassword,
           phone,
           city,
@@ -138,12 +141,11 @@ const activateAccount = async (req, res) => {
   await verifyEmail(req, res, ownerModel);
 };
 
-// delet owner
 const deleteOwner = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "invalid id" });
+    return res.status(404).json({ error: "Invalid ID" });
   }
 
   try {
@@ -153,10 +155,14 @@ const deleteOwner = async (req, res) => {
     if (!owner) {
       return res.status(400).json({ error: "No such owner" });
     }
+
+    // Delete houses associated with the owner
+    await houseModel.deleteMany({ ownerId: id });
+
     // Delete owner from database
     await ownerModel.findByIdAndDelete(id);
 
-    res.status(200).json({ message: "deleted!", owner });
+    res.status(200).json({ message: "Deletion successful", owner });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -166,7 +172,9 @@ const deleteOwner = async (req, res) => {
 
 const updateOwner = async (req, res) => {
   try {
-    const id = await getUser(req, res);
+    // const id = await getUser(req, res);
+
+    const { id } = req.body;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ error: "Invalid ID" });
     }

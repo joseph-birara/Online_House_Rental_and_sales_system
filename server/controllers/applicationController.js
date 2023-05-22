@@ -33,7 +33,7 @@ const addApplicationRequest = async (req, res) => {
     await sendEmail(to, subject, text);
     return res.status(201).json({
       message: "application sent!",
-      applicationInformation: application,
+      application,
     });
   } catch (error) {
     return res.status(404).json({ message: error });

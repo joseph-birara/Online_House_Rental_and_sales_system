@@ -41,6 +41,11 @@ const getAdmin = async (req, res) => {
 };
 // add admin
 const addAdmin = async (req, res) => {
+  // const { id } = await getUser(req, res);
+  // const admin = await adminModel.findById(id)
+  // if (!admin || admin.superAdmin == false) {
+  //   return res.status(401).json({ error: "Unauthorized" });
+  // }
   console.log("this is body", req.body);
   const data = req.body;
   const name = data.name;
@@ -105,7 +110,8 @@ const deleteAdmin = async (req, res) => {
 //update admin
 
 const updateAdmin = async (req, res) => {
-  const id = await getUser(req, res);
+  // const id = await getUser(req, res);
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "invalid id" });
   }

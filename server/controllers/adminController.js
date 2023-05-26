@@ -70,6 +70,8 @@ const addAdmin = async (req, res) => {
       superAdmin: false,
       name,
       email,
+      // suspended,
+      // accountStatus,
       phone,
       password: hashedPassword,
       phone,

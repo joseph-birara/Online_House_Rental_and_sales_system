@@ -23,6 +23,14 @@ const AdminSchema = new Schema(
       type: String,
       default: "",
     },
+    suspended: {
+      type: Boolean,
+      default: false,
+    },
+    accountStatus: {
+      type: Boolean,
+      default: true,
+    },
     password: {
       type: String,
       default: "",

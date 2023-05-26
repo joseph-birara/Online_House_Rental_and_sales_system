@@ -11,6 +11,10 @@ const tenantSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    accountStatus: {
+      type: Boolean,
+      default: true,
+    },
     lastName: {
       type: String,
       required: true,

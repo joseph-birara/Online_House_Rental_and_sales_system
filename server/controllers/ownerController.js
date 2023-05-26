@@ -56,7 +56,8 @@ const registerOwner = async (req, res) => {
   const lastName = data.lastName;
   const phone = data.phone;
   const email = data.email;
-  const suspended = data.suspended;
+  // const suspended = data.suspended;
+  // const accountStatus = data.accountStatus;
   const password = data.password;
   const city = data.city;
   const subCity = data.subCity;
@@ -89,7 +90,8 @@ const registerOwner = async (req, res) => {
           name,
           email,
           phone,
-          suspended,
+          // suspended,
+          // accountStatus,
           password: hashedPassword,
           phone,
           city,
@@ -97,7 +99,6 @@ const registerOwner = async (req, res) => {
           kebele,
           rentId,
           aplicantId,
-          accountStatus: "inactive",
           saleId,
         },
       ],

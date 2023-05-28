@@ -112,6 +112,8 @@ const deleteAdmin = async (req, res) => {
 const updateAdmin = async (req, res) => {
   // const id = await getUser(req, res);
 
+  const { id } = req.body;
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "invalid id" });
   }

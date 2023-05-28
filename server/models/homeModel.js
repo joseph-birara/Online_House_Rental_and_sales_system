@@ -29,19 +29,19 @@ const HomeSchema = new Schema(
     price: Number,
     homeStatus: {
       type: String,
-      default: "",
+      default: "", /// holds ?????????????
     },
     verified: {
       type: Boolean,
-      default: false,
+      default: false, // verified or not
     },
     suspended: {
       type: Boolean,
-      default: false,
+      default: false, // suspended or ont
     },
     isRented: {
       type: Boolean,
-      default: false,
+      default: false, // boolean value rented or not
     },
     area: {
       type: Number,
@@ -49,7 +49,7 @@ const HomeSchema = new Schema(
     },
     homeType: {
       type: String,
-      default: "",
+      default: "",// can be either forRent, forSell, ....
     },
     bedRoom: {
       type: Number,

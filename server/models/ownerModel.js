@@ -48,8 +48,8 @@ const OwnerSchema = new Schema(
       default: false,
     },
     accountStatus: {
-      type: String,
-      default: "inactive",
+      type: Boolean,
+      default: true,
     },
     house: [
       {

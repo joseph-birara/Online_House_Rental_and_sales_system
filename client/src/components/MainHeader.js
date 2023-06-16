@@ -33,6 +33,11 @@ const MainHeader = () => {
               For home-owners
             </NavLink>
           </li>
+          <li>
+            <NavLink className={({ isActive }) => isActive ? classes.active : classes.navLink} to="/tenant">
+              Tenants
+            </NavLink>
+          </li>
 
           
           <li>

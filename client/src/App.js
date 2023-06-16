@@ -20,6 +20,8 @@ import LoginPage from "./pages/Auth/LoginPage";
 import RegisterPage from "./pages/Auth/Register";
 import UtilityContextProvider from "./contexts/UtilityContextProvide";
 import Applicants from "./pages/Applicants";
+import TenantDashboard from "./pages/dashboards/TenantDashboard";
+import TenantApplications from "./pages/TenantApplications";
 //blue-black: #091240 ,  light-blue: #1890db
 
 function App() {
@@ -50,16 +52,8 @@ function App() {
                   <Route path="rented" element={<HomesList rented={true} />} />
                   <Route path="new" element={<PlacesFormPage />} />
                 </Route>
-                <Route
-                  path="applicants"
-                  element={<Applicants />}
-                />
-                <Route
-                  path="tenants"
-                  element={
-                    <UsersList userType="tenant/plain" removeDropdown={true} />
-                  }
-                />
+                <Route path="applicants" element={<Applicants />} />
+
                 <Route path="maintenanceRequests" element={<RequestsPage />} />
               </Route>
 
@@ -102,9 +96,16 @@ function App() {
                 </Route>
                 <Route path="reports" element={<Test />} />
               </Route>
-              <Route path="/homeDetails" element={<HomeDetails />} />
-              <Route path="tenant">
-                <Route path="applications" element={<Test />} />
+              <Route path="/homeDetails/:id" element={<HomeDetails />} />
+              <Route
+                path="/tenant"
+                element={
+                  <DashboardContextProvider>
+                    <TenantDashboard />
+                  </DashboardContextProvider>
+                }
+              >
+                <Route path="applications" element={<TenantApplications />} />
               </Route>
             </Routes>
           </main>

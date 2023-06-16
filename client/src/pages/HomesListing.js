@@ -22,27 +22,16 @@ export const Home = ({ home }) => {
     width: "100%",
   };
 
+  let homeImgUrls = [];
+  for(let i=0; i < home.images.length; i++){
+    homeImgUrls.push({url: home.images[i]})
+  }
+
   return (
-    <NavLink className={styles.navLink} to="/homeDetails">
+    <NavLink className={styles.navLink} to={"/homeDetails/" + home._id}>
       <div className={styles.mainContainer}>
         <ImageSlider
-          images={[
-            {
-              url: "https://a0.muscache.com/im/pictures/miso/Hosting-724143817754329250/original/90676927-d56e-4b14-9282-05bf84ec2a76.jpeg?im_w=720",
-            },
-            {
-              url: "https://a0.muscache.com/im/pictures/miso/Hosting-724143817754329250/original/54ad4ca5-ee98-4a90-aca9-b03126501d7d.jpeg?im_w=720",
-            },
-            {
-              url: "https://a0.muscache.com/im/pictures/miso/Hosting-724143817754329250/original/754318ab-175b-4433-83e8-32da9d3c0e1c.jpeg?im_w=720",
-            },
-            {
-              url: "https://a0.muscache.com/im/pictures/3b2c7005-423f-4057-84dc-2e4d3893762e.jpg?im_w=720",
-            },
-            {
-              url: "https://a0.muscache.com/im/pictures/bc6be349-11ab-4b34-a208-569b3e8bd1e5.jpg?im_w=720",
-            },
-          ]}
+          images={homeImgUrls}
           autoplay={false}
           sliderContainer={sliderContainer}
           imgDim={img}

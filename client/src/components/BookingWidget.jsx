@@ -4,6 +4,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { Navigate } from "react-router-dom";
 // import {UserContext} from "./UserContext.jsx";
 import { UserContext } from "../contexts/UserContextProvider";
+import { UtilityContext } from "../contexts/UtilityContextProvide";
 import axios from "axios";
 
 export default function BookingWidget({ place }) {
@@ -15,6 +16,7 @@ export default function BookingWidget({ place }) {
   // const [phone, setPhone] = useState("");
   const [redirect, setRedirect] = useState("");
   const {user, token} = useContext(UserContext);
+  const {setApplications} = useContext(UtilityContext);
 
   // useEffect(() => {
   //   if (user) {
@@ -33,8 +35,8 @@ export default function BookingWidget({ place }) {
   async function applyHandler() {
     const applicationData = {
       applicantId: user._id,
-      homeId: "645cc71e4ab6c84c210142f3",
-      ownerId: "64568d5d626412f38d49ffd9",
+      homeId: place._id,
+      ownerId: place.ownerId._id,
       applicationType: place.homeType,
       checkin: checkIn,
     }
@@ -58,6 +60,7 @@ export default function BookingWidget({ place }) {
       .then((response) => {
         console.log(response.data.message)
         console.log(response)
+        // setApplications((prev) => [])
         setRedirect(`/tenant/applications`);
         // setHousesList(response.data)
       })

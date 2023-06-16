@@ -14,6 +14,9 @@ export const DashboardContextProvider = ({ children }) => {
   const [activeMenu, setActiveMenu] = useState(true);
   const [isClicked, setIsClicked] = useState(initialState);
 
+
+  
+
   const handleClick = (clicked) =>
     setIsClicked({ ...initialState, [clicked]: true });
 

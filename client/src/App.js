@@ -20,6 +20,12 @@ import LoginPage from "./pages/Auth/LoginPage";
 import RegisterPage from "./pages/Auth/Register";
 import UtilityContextProvider from "./contexts/UtilityContextProvide";
 import Applicants from "./pages/Applicants";
+import OwnerListerPage from "./Admin_Related_Pages/OwnerListerPage";
+import BuyerListerPage from "./Admin_Related_Pages/BuyerListerPage";
+import TenantListerPage from "./Admin_Related_Pages/TenantListerPage";
+import AdminListerPage from "./Admin_Related_Pages/AdminListPage";
+import HomesListPage from "./Admin_Related_Pages/HomesListPage";
+import AddAdminPage from "./Admin_Related_Pages/AddAdminPage";
 import TenantDashboard from "./pages/dashboards/TenantDashboard";
 import TenantApplications from "./pages/TenantApplications";
 //blue-black: #091240 ,  light-blue: #1890db
@@ -28,76 +34,81 @@ function App() {
   return (
     <UserContextProvider>
       <UtilityContextProvider>
-        <div>
-          <MainHeader />
-          <main>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/adminlogin" element={<LoginPage isAdmin={true} />} />
-              <Route path="/login" element={<LoginPage isAdmin={false}/>} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/buy" element={<Buy />} />
-              <Route path="/rent" element={<HomesListing />} />
-              <Route
-                path="/homeOwner"
-                element={
-                  <DashboardContextProvider>
+        <DashboardContextProvider>
+          <div>
+            <MainHeader />
+            <main>
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/adminlogin" element={<LoginPage isAdmin={true} />} />
+                <Route path="/login" element={<LoginPage isAdmin={false} />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/buy" element={<Buy />} />
+                <Route path="/rent" element={<HomesListing />} />
+                <Route
+                  path="/homeOwner"
+                  element={
+                    // <DashboardContextProvider>
                     <HomeownerDashboard />
-                  </DashboardContextProvider>
-                }
-              >
-                <Route path="homes">
-                  <Route path="onListing" element={<HomesList rented={false} />} />
-                  <Route path="onListing/:id" element={<PlacesFormPage />} />
-                  <Route path="rented" element={<HomesList rented={true} />} />
-                  <Route path="new" element={<PlacesFormPage />} />
-                </Route>
-                <Route path="applicants" element={<Applicants />} />
-
-                <Route path="maintenanceRequests" element={<RequestsPage />} />
-              </Route>
-
-              <Route
-                path="/admin"
-                element={
-                  <DashboardContextProvider>
-                    <AdminDashboard />
-                  </DashboardContextProvider>
-                }
-              >
-                <Route path="homes">
+                    // </DashboardContextProvider>
+                  }
+                >
+                  <Route path="homes">
+                    <Route path="onListing" element={<HomesList rented={false} />} />
+                    <Route path="onListing/:id" element={<PlacesFormPage />} />
+                    <Route path="rented" element={<HomesList rented={true} />} />
+                    <Route path="new" element={<PlacesFormPage />} />
+                  </Route>
                   <Route
-                    path="onListing"
-                    element={<HomesList forAdmin={true} />}
-                  />
-                  <Route
-                    path="rented"
-                    element={<HomesList forAdmin={true} rented={true} />}
-                  />
-                  <Route
-                    path="home"
-                    element={<HomeDetails forAdmin={true} />}
-                  />
-                </Route>
-                <Route path="users">
-                  <Route path="homeOwners" element={<UsersList />} />
-                  <Route
-                    path="homeOwners/homeOwner"
-                    element={<DetailsPage />}
+                    path="applicants"
+                    element={<Applicants />}
                   />
                   <Route
                     path="tenants"
-                    element={<UsersList userType="tenant" />}
+                    element={
+                      <UsersList userType="tenant/plain" removeDropdown={true} />
+                    }
                   />
-                  <Route
-                    path="buyers"
-                    element={<UsersList userType="buyer" />}
-                  />
+                  <Route path="maintenanceRequests" element={<RequestsPage />} />
                 </Route>
-                <Route path="reports" element={<Test />} />
-              </Route>
-              <Route path="/homeDetails/:id" element={<HomeDetails />} />
-              <Route
+
+                <Route
+                  path="/admin"
+                  element={
+                    // <DashboardContextProvider>
+                    <AdminDashboard />
+                    //  </DashboardContextProvider>
+                  }
+                >
+                  <Route path="homes">
+                    <Route
+                      path="onListing"
+                      element={<HomesListPage />}
+                    />
+                    <Route
+                      path="rented"
+                      // element={<HomesList forAdmin={true} rented={true} />}
+                      element={<HomesListPage DisplayRented={true} />}
+                    />
+                    <Route
+                      path="home"
+                      element={<HomeDetails forAdmin={true} />}
+                    />
+                  </Route>
+                  <Route path="users">
+                    <Route path="homeOwners" element={<OwnerListerPage />} />
+                    <Route path="homeOwners/homeOwner" element={<DetailsPage />} />
+                    <Route path="tenants" element={<TenantListerPage />} />
+                    <Route path="buyers" element={<BuyerListerPage />} />
+                    <Route path="admins" element={<AdminListerPage />} />
+                    <Route path="addAdmin" element={<AddAdminPage />} />
+                  </Route>
+
+                  <Route path="reports" element={<Test />} />
+                </Route>
+
+                <Route path="/homeDetails/:id" element={<HomeDetails />} />
+                <Route
                 path="/tenant"
                 element={
                   <DashboardContextProvider>
@@ -107,9 +118,12 @@ function App() {
               >
                 <Route path="applications" element={<TenantApplications />} />
               </Route>
-            </Routes>
-          </main>
-        </div>
+              </Routes>
+            </main>
+          </div>
+
+        </DashboardContextProvider>
+
       </UtilityContextProvider>
     </UserContextProvider>
   );

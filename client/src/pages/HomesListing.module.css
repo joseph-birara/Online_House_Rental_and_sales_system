@@ -1,64 +1,60 @@
-
-.navLink{
-    text-decoration: none;
-    color: #091240;
-    display: block;
-  width: 20rem;    
+.navLink {
+  text-decoration: none;
+  color: #091240;
+  display: block;
+  width: 20rem;
 }
-.mainContainer{
-    text-decoration: none;
-    width: 100%;
-    transition: all 0.3s ease;
+.mainContainer {
+  text-decoration: none;
+  width: 100%;
+  transition: all 0.3s ease;
 }
 .mainContainer:hover {
   transform: scale(1.05);
 }
 .shorten {
-    overflow: hidden; 
-    white-space: nowrap; 
-    text-overflow: ellipsis; 
-    text-decoration: none;
-    margin: 0.2rem 0;
-  }
-  #title{
-    font-weight: 500;
-    font-size: large;
-  }
-  #location{
-    font-weight: 200;
-  }
-  .icons{
-    width: 60%;
-    margin-block: 0.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  #bed{
-    position: relative;
-    top: 2px;
-  }
-  #shower{
-    position: relative;
-    top: 2px;
-  }
-  
-  #price{
-    font-weight: 500;
-  }
-  #like{
-    text-align: end;
-    margin-top: -2.0rem;
-  }
-  .likebtn{
-    border-width: 0;
-    font-size: 23px;
-    background-color: white;
-    margin-right: -0.9rem;
-  }
-  /* .icons, #price{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  margin: 0.2rem 0;
+}
+#title {
+  font-weight: 500;
+  font-size: large;
+}
+#location {
+  font-weight: 200;
+}
+.icons {
+  width: 60%;
+  margin-block: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#bed {
+  position: relative;
+  top: 2px;
+}
+#shower {
+  position: relative;
+  top: 2px;
+}
+
+#price {
+  font-weight: 500;
+}
+#like {
+  text-align: end;
+  margin-top: -2rem;
+}
+.likebtn {
+  border-width: 0;
+  font-size: 23px;
+  background-color: white;
+  margin-right: -0.9rem;
+}
+/* .icons, #price{
     margin-top: -0.5rem;
   } */
- 
-  
-  

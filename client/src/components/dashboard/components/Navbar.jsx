@@ -11,7 +11,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
     type="button"
     onClick={() => customFunc()}
     style={{ color }}
-    className="relative text-xl rounded-full p-3 hover:bg-light-gray"
+    className={`relative text-xl rounded-full p-3 hover:bg-light-gray ${title === 'Menu'?'':'hidden'}`}
   >
     <span
       style={{ background: dotColor }}
@@ -74,23 +74,24 @@ const Navbar = ({ notificationData, userProfileData, userProfPic }) => {
           color="#1890db"
           icon={<RiNotification3Line />}
         />
-        <div
+        {/* <div
           className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
           onClick={() => handleClick("userProfile")}
         >
           <img
             className="rounded-full w-8 h-8"
-            src={userProfPic}
+            src={"https://cdn.stocksnap.io/img-thumbs/960w/woman-portrait_HVMC9QETXW.jpg"}
             alt="user-profile"
           />
-        </div>
+        </div> */}
 
         {isClicked.chat && <Chat chatData={notificationData} />}
         {isClicked.notification && <Notification notificationData={notificationData} />}
-        {isClicked.userProfile && <UserProfile userProfileData={userProfileData} userProfPic={userProfPic} />}
+        {/* {isClicked.userProfile && <UserProfile userProfileData={userProfileData} userProfPic={userProfPic} />} */}
       </div>
     </div>
   );
 };
 
 export default Navbar;
+

@@ -11,9 +11,8 @@ import axios from "axios";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 
 export const H_HOME = ({ house, forAdmin }) => {
-
-  const { user, token } = useContext(UserContext)
-  const { HousesList, setHousesList } = useContext(UtilityContext)
+  const { user, token } = useContext(UserContext);
+  const { HousesList, setHousesList } = useContext(UtilityContext);
   const actionOptions = [
     "Activate",
     "Deactivate",
@@ -27,9 +26,8 @@ export const H_HOME = ({ house, forAdmin }) => {
   };
   let linkUrl = "/homeOwner/homes/onListing/" + house._id;
   if (forAdmin) {
-    linkUrl = "/admin/homes/home" + house._id;
+    linkUrl = "/homes/home" + house._id;
   }
-
 
   return (
     <Link
@@ -66,46 +64,54 @@ export const H_HOME = ({ house, forAdmin }) => {
         </div>
       )}
 
-
-      {user.userType === 'owner' && (
-        <button className="grow shrink-0 bg-[red] text-lg p-1 rounded"
+      {user.userType === "owner" && (
+        <button
+          className="grow shrink-0 bg-[red] text-lg text-white p-1 rounded"
           onClick={(e) => {
-            e.preventDefault()
-            console.log('the id to be delted is ');
+            e.preventDefault();
+            console.log("the id to be delted is ");
             console.log(house._id);
-            axios.delete(`${process.env.REACT_APP_baseURL}/houses/delete`, { "id": house._id }, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              }
-            })
-              .then(response => {
-                const filteredHomes = HousesList.filter((h) => h._id !== house._id)
+            axios
+              .delete(
+                `${process.env.REACT_APP_baseURL}/houses/delete/${house._id}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              )
+              .then((response) => {
+                const filteredHomes = HousesList.filter(
+                  (h) => h._id !== house._id
+                );
                 setHousesList(filteredHomes);
-                console.log('home deleted succesfuly');
+                console.log("home deleted succesfuly");
                 return <Navigate to={"/homeOwner/homes/onListing"} />;
               })
-              .catch(error => {
+              .catch((error) => {
                 console.log("Error on deleting house");
                 console.log(error.message);
               });
-
-          }}>
+          }}
+        >
           Delete Home
         </button>
-      )
-
-      }
+      )}
     </Link>
   );
 };
 
 function PlacesLister({ houses }) {
-  const { user } = useContext(UserContext)
+  const { user } = useContext(UserContext);
   return (
     <div className="mt-4">
       {houses.length > 0 &&
         houses.map((house) => (
-          <H_HOME key={houses._id} house={house} forAdmin={user.userType === 'admin'} />
+          <H_HOME
+            key={houses._id}
+            house={house}
+            forAdmin={user.userType === "admin"}
+          />
         ))}
     </div>
   );

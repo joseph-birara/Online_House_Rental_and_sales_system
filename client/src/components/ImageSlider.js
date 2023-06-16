@@ -12,7 +12,7 @@ const ImageSlider = ({images, sliderContainer, imgDim, autoplay, duration}) => {
       <Slide autoplay={autoplay} duration={duration} >
         {images.map((slideImage, index) => (
           <div key={index} style={imgContainer}>
-            <img src={slideImage.url} style={imgDim} />
+            <img src={slideImage.url} style={imgDim} alt="" />
           </div>
         ))}
       </Slide>

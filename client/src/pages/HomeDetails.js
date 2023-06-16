@@ -1,66 +1,70 @@
-import React, { useState, useEffect, useContext } from "react";
 import ImageGalleryDisplayer from "../components/ImageGalleryDisplayer";
+import { useParams } from 'react-router-dom';
+
 import { CiLocationOn } from "react-icons/ci";
 import { IoPersonOutline } from "react-icons/io5";
 import styles from "./HomeDetails.module.css";
 import HomeProperties from "../components/home/HomeProperties";
 import AmenitiesDisplayer from "../components/home/AmenitiesDisplayer";
 import Comments from "../components/comments/Comments";
-import Dropdown from "../components/Dropdown";
+// import Dropdown from "../components/Dropdown";
 import BookingWidget from "../components/BookingWidget";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { useContext } from "react";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 
 const HomeDetails = ({ forAdmin }) => {
   const { id } = useParams();
-  const [place, setPlace] = useState(null);
-  const { HousesList } = useContext(UtilityContext);
+  const { HousesList } = useContext(UtilityContext)
 
-  useEffect(() => {
-    if (!id) {
-      return;
-    }
-    const house = HousesList.filter((h) => h._id === id)[0];
-    setPlace(house);
-  }, [id, HousesList]);
 
-  if (!place) return "";
-  console.log(place);
-
-  let homePics = [];
-  for (let i = 0; i < place.images.length; i++) {
-    homePics.push({ original: place.images[i], thumbnail: place.images[i] });
-  }
-
-  const dropdownSelectHandler = (action, placeId) => {
-    console.log(action, placeId);
+  const getHouseById = (h_id) => {
+    return HousesList.find((house) => house._id === h_id);
   };
-  const actionOptions = [
-    "Activate",
-    "Deactivate",
-    "Delete",
-    "Verify",
-    "Refute",
-  ];
 
+  // Usage example
+  const specificHouse = getHouseById(id); // Replace 
+  const houseImages = specificHouse.images
+  const homePics = houseImages.map((image) => {
+    return {
+      original: image,
+      thumbnail: image,
+    };
+  });
+  // const dropdownSelectHandler = (action, placeId) => {
+  //   console.log(action, placeId);
+  // };
+  // const actionOptions = [
+  //   "Activate",
+  //   "Deactivate",
+  //   "Delete",
+  //   "Verify",
+  //   "Refute",
+  // ];
+
+  const place = {
+    _id: "0011",
+    title: "Modern comfort and convenience elegantly appointed",
+    location: "Atlas, Ghana Street, Ghiliffalegn Stream, Bole, AddisAbaba, 7966, Ethiopia",
+    description: "Bole, House or Office for Rent, Addis Ababa. The total area is 500 square meters. It has living and dining room with working fire-place, kitchen, master bedroom with it’s own bathroom, and two bedrooms with common shower room. There are four service rooms with shower room, garden and parking for 3 cars. The rate is 2,500 USD for residential rent and 3,000 USD for office rent per month and fixed.",
+    price: 250,
+    homeType: "shortTerm"
+  };
   return (
     <div className={styles.mainContainer}>
-      {forAdmin && (
+      {/* {forAdmin && (
         <div className="flex justify-end">
           <Dropdown
             actions={actionOptions}
             onSelect={dropdownSelectHandler}
-            //itemId={place._id}
+          //itemId={place._id}
           />
         </div>
-      )}
+      )} */}
       <div className={styles.innerContainer}>
         <h1>{place.title}</h1>
         <p>
           <CiLocationOn />
-          {place.city} city, {place.subCity} subcity, {place.woreda} woreda,{" "}
-          {place.kebele} kebele
+          {place.location}
         </p>
         <div className={styles.reviewsAndOwnerContainer}>
           <div>
@@ -70,9 +74,7 @@ const HomeDetails = ({ forAdmin }) => {
             <span>
               <IoPersonOutline /> Posted by:
             </span>
-            <a href="#">
-              {place.ownerId.name} {place.ownerId.lastName}
-            </a>
+            <a href="#">Haile Kebede</a>
           </div>
         </div>
       </div>
@@ -89,8 +91,8 @@ const HomeDetails = ({ forAdmin }) => {
         </div>
         <BookingWidget place={place} />
       </div>
-      <HomeProperties place={place} />
-      <AmenitiesDisplayer amenities={place.amenity} />
+      <HomeProperties />
+      <AmenitiesDisplayer />
       {!forAdmin && <Comments currentUserId="1" />}
     </div>
   );

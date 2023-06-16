@@ -45,6 +45,21 @@ const AdminDashboard = () => {
       ],
     },
     {
+      title: "Manage Admins",
+      links: [
+        {
+          name: "Admins",
+          link: "admin/users/admins",
+          icon: <RiContactsLine />,
+        },
+        {
+          name: "Add Admin",
+          link: "admin/users/addAdmin",
+          icon: <RiContactsLine />,
+        },
+      ],
+    },
+    {
       title: "Reports",
       links: [
         {
@@ -116,3 +131,4 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+

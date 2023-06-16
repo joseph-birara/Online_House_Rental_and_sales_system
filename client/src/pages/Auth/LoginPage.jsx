@@ -1,14 +1,83 @@
 import { Link, Navigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../../contexts/UserContextProvider";
+import { UtilityContext } from "../../contexts/UtilityContextProvide";
 
 export default function LoginPage({ isAdmin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-  const [userType, setUserType] = useState("");
-  const { setUser, setToken } = useContext(UserContext);
+  const [userrType, setUserType] = useState("");
+  const { userType, setUser, setToken, token, user } = useContext(UserContext);
+
+
+
+  // save user info on local storage
+  useEffect(() => {
+    window.localStorage.setItem('user-token', JSON.stringify(token))
+    window.localStorage.setItem('user-profile-data', JSON.stringify(user))
+  }, [token])
+
+
+  // for admin purpose
+  const { setOwnersList, setTenatList, setHousesList, setBuyerList, AdminsList, setAdminList } = useContext(UtilityContext)
+  useEffect(() => {
+
+    // get all tenants
+    axios.get('http://localhost:4000/tenant/all')
+      .then((response) => {
+        console.log(' admin is logged in and tenant is ');
+        const both = response.data;
+
+        // set tenant
+        const tenant = both.filter((te) => te.userType === 'tenant')
+        setTenatList(tenant)
+
+        // set buyer
+        const buyer = both.filter((te) => te.userType === 'buyer')
+        setBuyerList(buyer)
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // get all ADMINS
+    axios.get('http://localhost:4000/admin/all')
+      .then((response) => {
+        console.log(' list of admins ');
+        console.log(response.data);
+        setAdminList(response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // get all owners
+    axios.get('http://localhost:4000/owner/all')
+      .then((response) => {
+        console.log(' admin is logged in and owner is ');
+        console.log(response.data);
+        setOwnersList(response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    /// load home data what ever the user is
+    axios.get('http://localhost:4000/houses/all')
+      .then((response) => {
+        console.log(' admin is logged in and houses is ');
+        console.log(response.data);
+        setHousesList(response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+
 
   async function handleLoginSubmit(ev) {
 
@@ -19,13 +88,14 @@ export default function LoginPage({ isAdmin }) {
     }
     console.log(" email : " + email);
     console.log(" password : " + password);
-    console.log(" userType : " + userType);
+    console.log(" userType : " + userrType);
     axios
-      .post(`http://localhost:4000/${userType}/login`, { email, password })
+      .post(`http://localhost:4000/${userrType}/login`, { email, password })
       .then((response) => {
-        console.log("success logged in");
         let userData = response.data.user
-        userData.userType = userType
+        userData.userType = userrType
+
+        console.log("success logged in");
         console.log(userData);
         console.log('token is ' + response.data.token);
 
@@ -77,7 +147,7 @@ export default function LoginPage({ isAdmin }) {
 
                   type="radio"
                   name="owner"
-                  checked={userType === "owner"}
+                  checked={userrType === "owner"}
                   onChange={handleSelect}
                 />
                 <span>Homeowner</span>
@@ -86,7 +156,7 @@ export default function LoginPage({ isAdmin }) {
                 <input
                   type="radio"
                   name="tenant"
-                  checked={userType === "tenant"}
+                  checked={userrType === "tenant"}
                   onChange={handleSelect}
                 />
                 <span>Tenant</span>
@@ -95,7 +165,7 @@ export default function LoginPage({ isAdmin }) {
                 <input
                   type="radio"
                   name="buyer"
-                  checked={userType === "buyer"}
+                  checked={userrType === "buyer"}
                   onChange={handleSelect}
                 />
                 <span>Buyer</span>

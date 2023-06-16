@@ -4,7 +4,7 @@ import { MdOutlineCancel } from "react-icons/md";
 
 import { useStateContext } from "../../../contexts/DashboardContextProvider";
 
-const Sidebar = ({links}) => {
+const Sidebar = ({ links }) => {
   const { activeMenu, setActiveMenu, screenSize } =
     useStateContext();
 
@@ -20,7 +20,7 @@ const Sidebar = ({links}) => {
     "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2";
 
   return (
-    <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
+    <div className="ml-3 mt-1 w-72 outline outline-lightBlue overflow-auto md:hover:overflow-auto mb-10">
       {activeMenu && (
         <>
           <div className="flex justify-between items-center">
@@ -52,7 +52,7 @@ const Sidebar = ({links}) => {
                     to={`/${link.link}`}
                     key={link.name}
                     onClick={handleCloseSideBar}
-                    
+
                     className={({ isActive }) =>
                       isActive ? activeLink : normalLink
                     }

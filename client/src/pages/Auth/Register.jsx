@@ -23,7 +23,7 @@ export default function RegisterPage() {
   const [imageFile, setImageFile] = useState(null)
   const [redirect, setRedirect] = useState(false);
 
-  const { user,setToken, setUser } = useContext(UserContext)
+  const { user, setToken, setUser } = useContext(UserContext)
 
   const imageHanlder = (e) => {
     setImageFile(e.target.files[0])// grab image file
@@ -33,17 +33,12 @@ export default function RegisterPage() {
     // console.log(profileImage);
   }
 
-  // const 
-
   async function registerUser(e) {
     e.preventDefault();
     // console.log("user data is here");
     // console.log(userData);
     // console.log(profileImage);
     // console.log(imageFile);
-
-    // console.log("\nimag file aprt");
-    // upload image to cloudinary and grab the url
 
     if (imageFile != null) {
       const formdata = new FormData()
@@ -63,7 +58,8 @@ export default function RegisterPage() {
 
 
     // register the user to the backend
-    axios.post(`${process.env.REACT_APP_baseURL}/${userData.userType}/register`, userData)
+    const userRoute = userData.userType === 'buyer' ? 'tenant' : userData.userType;
+    axios.post(`${process.env.REACT_APP_baseURL}/${userRoute}/register`, userData)
       .then((response) => {
         console.log("user register successfully ********************");
         console.log(response.data.user)
@@ -76,15 +72,15 @@ export default function RegisterPage() {
         console.log("user registion Error-----------------");
         console.log(error);
       });
-    
-      
-    }
-    
-    if (redirect) {
-      console.log('on the navigate part user info: ');
-      console.log(user);
-      return <Navigate to={"/"} />;
-    }
+
+
+  }
+
+  if (redirect) {
+    console.log('on the navigate part user info: ');
+    console.log(user);
+    return <Navigate to={"/"} />;
+  }
   return (
     <div className="mt-4 grow flex items-center justify-around">
       <div className="mb-64">
@@ -105,7 +101,6 @@ export default function RegisterPage() {
           <input type="file" id="image-input" className="hidden" onChange={imageHanlder} />
 
         </div>
-
 
 
         <form className="max-w-md mx-auto" onSubmit={registerUser}>
@@ -187,7 +182,7 @@ export default function RegisterPage() {
               <label>
                 <input
                   type="radio"
-                  name="tenant"
+                  name="buyer"
                   checked={userData.userType === "buyer"}
                   onChange={(e) => setUserData({ ...userData, userType: "buyer" })}
                 />

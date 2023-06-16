@@ -7,8 +7,20 @@ import img5 from "./images/hp5.webp";
 import img6 from "./images/hp3.webp";
 import LatestHomes from "../components/home/LatestHomes";
 import ImageSlider from "../components/ImageSlider";
+import { useContext, useEffect } from "react";
+import { UserContext } from "../contexts/UserContextProvider";
+import RetriveLocallyStoredData from "./Auth/RetriveLocallyStoredData";
 
 const LandingPage = () => {
+  const { setToken, setUser } = useContext(UserContext)
+
+  // retrive locally stored user data 
+  useEffect(() => {
+    const { user_token, user_profile_data } = RetriveLocallyStoredData();
+    setToken(JSON.parse(user_token))
+    setUser(JSON.parse(user_profile_data))
+
+  }, [])
 
   const img = {
     width: "100%",
@@ -21,7 +33,7 @@ const LandingPage = () => {
   };
 
   const images = [
-    { url:  img1},
+    { url: img1 },
     { url: img2 },
     { url: img3 },
     { url: img4 },
@@ -30,13 +42,13 @@ const LandingPage = () => {
   ];
   return (
     <>
-      <ImageSlider images={images} sliderContainer={sliderContainer} imgDim={img} autoplay={true} duration={2000}/>
+      <ImageSlider images={images} sliderContainer={sliderContainer} imgDim={img} autoplay={true} duration={2000} />
       <div className={classes.moto}>
         <h1>Find your perfect home with Homiee!</h1>
         <p>We provide a complete service for sale, purchase, or rental of homes in Ethiopia!</p>
       </div>
 
-      <LatestHomes forRent={true}/>
+      <LatestHomes forRent={true} />
       <LatestHomes />
     </>
   );

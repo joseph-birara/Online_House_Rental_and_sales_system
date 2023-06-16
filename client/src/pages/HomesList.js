@@ -7,7 +7,7 @@ import { UserContext } from "../contexts/UserContextProvider";
 
 const HomesList = ({ rented }) => {
 
-  /// use this list of homes and take these to display these 
+  /// use this list of homes and take these to display these
   const { HousesList } = useContext(UtilityContext)
   const { user } = useContext(UserContext)
 

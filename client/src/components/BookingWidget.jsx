@@ -12,6 +12,8 @@ export default function BookingWidget({ place }) {
   const [checkOut, setCheckOut] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState("");
   const [visitRequest, setVisitRequest] = useState("");
+  const [numberOfGuests, setNumberOfGuests] = useState("");
+  const [visitRequest, setVisitRequest] = useState("");
   // const [name, setName] = useState("");
   // const [phone, setPhone] = useState("");
   const [redirect, setRedirect] = useState("");
@@ -73,6 +75,8 @@ export default function BookingWidget({ place }) {
 
   const priceRate = place.homeType === "sale" ? "total" : place.homeType === "regular" ? "per month" : "per night";
 
+  const priceRate = place.homeType === "sale" ? "total" : place.homeType === "regular" ? "per month" : "per night";
+
   if (redirect) {
     return <Navigate to={redirect} />;
   }
@@ -85,6 +89,7 @@ export default function BookingWidget({ place }) {
       }}
     >
       <div className="text-2xl text-center">
+        Price: ${place.price} / {priceRate}
         Price: ${place.price} / {priceRate}
       </div>
       <div className="border rounded-2xl mt-4">
@@ -100,7 +105,9 @@ export default function BookingWidget({ place }) {
           <div className="py-3 px-4 border-l">
             <label>Check out:</label>
             <input className="disabled:bg-[dimgrey] disabled:text-[linen] disabled:opacity-100"
+            <input className="disabled:bg-[dimgrey] disabled:text-[linen] disabled:opacity-100"
               type="date"
+              disabled={place.homeType !== "shortTerm"}
               disabled={place.homeType !== "shortTerm"}
               value={checkOut}
               onChange={(ev) => setCheckOut(ev.target.value)}
@@ -110,7 +117,9 @@ export default function BookingWidget({ place }) {
         <div className="py-3 px-4 border-t">
           <label>Number of guests:</label>
           <input className="disabled:bg-[dimgrey] disabled:text-[linen] disabled:opacity-100"
+          <input className="disabled:bg-[dimgrey] disabled:text-[linen] disabled:opacity-100"
             type="number"
+            disabled={place.homeType === "sale"}
             disabled={place.homeType === "sale"}
             value={numberOfGuests}
             onChange={(ev) => setNumberOfGuests(ev.target.value)}
@@ -124,11 +133,21 @@ export default function BookingWidget({ place }) {
             onChange={(ev) => setVisitRequest(ev.target.value)}
           />
         </div>
+        <div className="py-3 px-4 border-t">
+          <label>Pick a date for visit request(Optional):</label>
+          <input 
+            type="date"
+            value={visitRequest}
+            onChange={(ev) => setVisitRequest(ev.target.value)}
+          />
+        </div>
       </div>
       <button
         onClick={applyHandler}
+        onClick={applyHandler}
         className="primary  bg-lightBlue hover:bg-lbHover mt-4"
       >
+        Apply to {place.homeType === "sale" ? 'buy' : 'rent'}
         Apply to {place.homeType === "sale" ? 'buy' : 'rent'}
         {numberOfNights > 0 && <span> ${numberOfNights * place.price}</span>}
       </button>

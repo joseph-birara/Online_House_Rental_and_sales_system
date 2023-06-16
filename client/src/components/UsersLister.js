@@ -1,102 +1,146 @@
-import { Link, useParams } from "react-router-dom";
-// import AccountNav from "../AccountNav";
-import { useEffect, useState } from "react";
-// import axios from "axios";
-import Dropdown from "./Dropdown";
+import React, { useContext, useEffect, useId } from 'react';
+import { UserContext } from '../contexts/UserContextProvider';
+import { UtilityContext } from '../contexts/UtilityContextProvide';
+import axios from 'axios';
 
-export const User = ({
-  user,
-  userType,
-  dropdownSelectHandler,
-  removeDropdown,
-}) => {
-  let actionOptions = ["Activate", "Deactivate", "Delete"];
-  if (userType === "applicant") {
-    actionOptions = ["Accept", "Reject"];
+const UserLister = ({ AccountListType }) => {
+
+  const { token } = useContext(UserContext)
+  const { TenantList, setTenatList, OwnersList, setOwnersList, BuyersList, setBuyerList } = useContext(UtilityContext)
+  var users = [];
+  if (AccountListType === 'owner')
+    users = OwnersList
+  else if (AccountListType === 'buyer')
+    users = BuyersList
+  else if (AccountListType === 'tenant')
+    users = TenantList
+
+  function handleActionChange(userId, action) {
+
+    let userType = ''
+    if (AccountListType === 'owner')
+      userType = 'owner'
+    else if (AccountListType === 'buyer')
+      userType = 'buyer'
+    else if (AccountListType === 'tenant')
+      userType = 'tenant'
+
+
+    if (action === 'delete') {
+
+      axios
+        .delete(
+          `${process.env.REACT_APP_baseURL}/${userType}/delete/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+
+
+          if (userType === 'owner') {
+            const fileredOwners = OwnersList.filter(
+              (owner) => owner._id !== userId
+            );
+            setOwnersList(fileredOwners);
+            console.log("Owner with " + useId + " is deleted");
+
+          }
+          else if (userType === 'tenant') {
+
+            const filteredTenant = TenantList.filter(
+              (tenant) => tenant._id !== userId
+            );
+            setTenatList(filteredTenant);
+            console.log('TENATNT WITH ' + userId + "  is deleted");
+          }
+
+          else if (userType === 'buyer') {
+            const filteredBuyer = BuyersList.filter(
+              (tenant) => tenant._id !== userId
+            );
+            setBuyerList(filteredBuyer);
+            console.log('buyer WITH ' + userId + "  is deleted");
+
+          }
+          // return <Navigate to={"/homeOwner/homes/onListing"} />;
+        })
+        .catch((error) => {
+          console.log("Error on deleting house");
+          console.log(error.message);
+        });
+
+    }
   }
 
+
   return (
-    <Link
-      to={"/admin/users/homeOwners/homeOwner"}
-      className="flex justify-between items-center cursor-pointer gap-1 p-4 rounded-lg m-4"
-      style={{ boxShadow: "0 0 1px #091240" }}
-    >
-      <div className="flex w-32 h-32 bg-gray-300 shrink-0">
-        <img src={user.image} alt="" />
-      </div>
-      <div className="grow shrink w-fit">
-        <p>
-          First Name:{" "}
-          <span className="text-base font-semibold">{user.name}</span>
-        </p>
-        <p>
-          Last Name:{" "}
-          <span className="text-base font-semibold">{user.lastName}</span>
-        </p>
-      </div>
-      <div className="grow shrink w-fit">
-        <p>
-          Email: <span className="text-base font-semibold">{user.email}</span>
-        </p>
-        <p>
-          Acc. Status:{" "}
-          <span className="text-base font-semibold">{user.accountStatus}</span>
-        </p>
-      </div>
-      <div className="grow shrink w-fit">
-        <p>
-          City: <span className="text-base font-semibold">{user.name}</span>
-        </p>
-        <p>
-          Subcity:{" "}
-          <span className="text-base font-semibold">{user.lastName}</span>
-        </p>
-      </div>
-      <div className="grow shrink w-fit">
-        <p>
-          Kebele: <span className="text-base font-semibold">{user.email}</span>
-        </p>
-        <p>
-          Phone:{" "}
-          <span className="text-base font-semibold">{user.accountStatus}</span>
-        </p>
-      </div>
-      {!removeDropdown && (
-        <div>
-          <Dropdown
-            actions={actionOptions}
-            onSelect={dropdownSelectHandler}
-            itemId={user._id}
-            itemType={userType}
-          />
+    <div>
+      {users.length > 0 && users.map((user) => (
+        <div key={user.id} className=" outline 11/12 mx-auto  rounded flex flex-row items-center mb-3">
+          <div className="outline bg-gray-300">
+            <img
+              src={"https://img.freepik.com/free-photo/handsome-bearded-guy-posing-against-white-wall_273609-20597.jpg?size=626&ext=jpg"}
+              alt={user.name}
+              className="w-36 h-auto object-cover"
+            />
+          </div>
+
+          <div className="outline ml-2 flex justify-evenly gap-x-1 ">
+            <div className=''>
+              <p>First Name: <span className="ml-1 text-base font-semibold">{user.name}</span></p>
+              <p>
+                Last Name: <span className="ml-1 text-base font-semibold">{user.lastName}</span>
+              </p>
+            </div>
+
+            <div className='outline ml-2'>
+              <p>
+                Email: <span className=" outline ml-1 text-base font-semibold">{user.email}</span>
+              </p>
+              <p>
+                Acc. Status: <span className=" ml-1 text-base font-semibold"> {user.accountStatus} </span>
+              </p>
+            </div>
+
+            <div className='outline ml-2'>
+              <p>
+                City:<span className="ml-1 text-base font-semibold">{user.city}</span>
+              </p>
+              <p>
+                Subcity: <span className="ml-1 text-base font-semibold">{user.subcity}</span>
+              </p>
+            </div>
+
+
+            <div className='mx-2'>
+              <p>
+                Kebele: <span className="ml-1 text-base font-semibold">{user.kebele}</span>
+              </p>
+              <p>
+                Phone: <span className="ml-1 text-base font-semibold">{user.phone}</span>
+              </p>
+            </div>
+
+          </div>
+
+          <select
+            className="mx-auto bg-lightBlue hover:bg-lbHover text-white py-2 px-1 rounded"
+            onChange={(e) => handleActionChange(user.id, e.target.value)}
+          >
+            <option value="">Select Action</option>
+            <option value="delete">Delete</option>
+            <option value="verify">Verify </option>
+            <option value="suspend">Suspend</option>
+
+          </select>
         </div>
-      )}
-    </Link>
+      ))}
+    </div>
+
   );
 };
 
-function UsersLister({ userType, users, removeDropdown, dropdownSelectHandler }) {
-  // const [places, setPlaces] = useState([]);
-  //   useEffect(() => {
-  //     axios.get("/user-places").then(({ data }) => {
-  //       setPlaces(data);
-  //     });
-  //   }, []);
-
-  return (
-    <div className="mt-4">
-      {users.length > 0 &&
-        users.map((user) => (
-          <User
-            key={user._id}
-            userType={userType}
-            user={user}
-            dropdownSelectHandler={dropdownSelectHandler}
-            removeDropdown={removeDropdown}
-          />
-        ))}
-    </div>
-  );
-}
-
-export default UsersLister;
+export default UserLister;

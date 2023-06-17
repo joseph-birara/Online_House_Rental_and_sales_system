@@ -26,7 +26,7 @@ const HomeProperties = ({ className, specificHouse }) => {
 
           {/* for admin */}
 
-          <p> show for admin other attbitues like vefied, suspended, isRented</p>
+          {/* <p> show for admin other attbitues like vefied, suspended, isRented</p> */}
 
         </div>
 

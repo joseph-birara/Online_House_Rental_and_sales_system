@@ -71,13 +71,6 @@ const tenantSchema = new Schema(
         ref: "Rent",
       },
     ],
-    RentedHomes: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Houses",
-        defaut: [],
-      },
-    ],
   },
   { timestamps: true }
 );

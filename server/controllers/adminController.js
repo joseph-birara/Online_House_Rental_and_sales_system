@@ -70,6 +70,8 @@ const addAdmin = async (req, res) => {
       superAdmin: false,
       name,
       email,
+      // suspended,
+      // accountStatus,
       phone,
       password: hashedPassword,
       phone,
@@ -111,6 +113,8 @@ const deleteAdmin = async (req, res) => {
 
 const updateAdmin = async (req, res) => {
   // const id = await getUser(req, res);
+
+  const { id } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "invalid id" });

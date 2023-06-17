@@ -111,7 +111,7 @@ const UserProfile = () => {
 
             <div>
               <p className=" font-semibold dark:text-gray-200 ">{item.title}</p>
-              {item.title === 'Log Out' && 'me and mine'}
+              {item.title === 'Log Out'}
               <p className="text-gray-500 text-sm dark:text-gray-400">
                 {" "}
                 {item.desc}{" "}

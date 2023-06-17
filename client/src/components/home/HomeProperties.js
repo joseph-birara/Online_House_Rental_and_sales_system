@@ -1,6 +1,6 @@
 import styles from "./HomeProperties.module.css";
 
-const HomeProperties = ({ className, place }) => {
+const HomeProperties = ({ className, specificHouse }) => {
   return (
     <div className={`${styles.mainContainer} ${className}`}>
       <div className={styles.detailsTitle}>
@@ -9,37 +9,50 @@ const HomeProperties = ({ className, place }) => {
       <div className={styles.innerContainer}>
         <div className={styles.col1}>
           <div className={styles.houseProp}>
-            <p className={styles.prop}>City: </p> <p>{place.city}</p>
+            <p className={styles.prop}>City: </p> <p>{specificHouse.city}</p>
           </div>
           <div className={styles.houseProp}>
-            <p className={styles.prop}>Subcity: </p> <p>{place.subCity}</p>
+            <p className={styles.prop}>Subcity: </p> <p>{specificHouse.subCity}</p>
           </div>
           <div className={styles.houseProp}>
-            <p className={styles.prop}>Woreda: </p> <p>{place.woreda}</p>
+            <p className={styles.prop}>Woreda: </p> <p>{specificHouse.woreda}</p>
           </div>
           <div className={styles.houseProp}>
-            <p className={styles.prop}>Kebele: </p> <p>{place.kebele}</p>
+            <p className={styles.prop}>Kebele: </p> <p>{specificHouse.kebele}</p>
           </div>
           <div className={styles.houseProp}>
-            <p className={styles.prop}>Area: </p> <p>{place.area}</p>
+            <p className={styles.prop}>Area: </p> <p> {specificHouse.area} </p>
           </div>
+
+          {/* for admin */}
+
+          <p> show for admin other attbitues like vefied, suspended, isRented</p>
+
         </div>
+
         <div className={styles.col2}>
           <div className={styles.houseProp}>
-            <p className={styles.prop}>Price: </p> <p>{place.price}</p>
+            <p className={styles.prop}>Price: </p> <p>{specificHouse.price}</p>
           </div>
           <div className={styles.houseProp}>
-            <p className={styles.prop}>Bedrooms: </p> <p>{place.bedRoom}</p>
+            <p className={styles.prop}>Bedrooms: </p> <p>{specificHouse.bedRoom}</p>
           </div>
           <div className={styles.houseProp}>
-            <p className={styles.prop}>Bathrooms: </p> <p>{place.bathRoom}</p>
+            <p className={styles.prop}>Bathrooms: </p> <p>{specificHouse.bathRoom}</p>
           </div>
           <div className={styles.houseProp}>
-            <p className={styles.prop}>Verified </p>{place.verified === true}<p></p>
+            <p className={styles.prop}>Home Status: </p> <p>{specificHouse.homeStatus}</p>
           </div>
+
           <div className={styles.houseProp}>
-            <p className={styles.prop}>House type: </p> <p>{place.homeType}</p>
+            <p className={styles.prop}>Home Type: </p> <p>{specificHouse.homeType}</p>
           </div>
+
+
+          {/* for admin*/}
+
+
+
         </div>
       </div>
     </div>

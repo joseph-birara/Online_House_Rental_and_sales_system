@@ -21,7 +21,6 @@ const HomeDetails = ({ forAdmin }) => {
     return HousesList.find((house) => house._id === h_id);
   };
 
-  // Usage example
   const specificHouse = getHouseById(id); // Replace 
   const houseImages = specificHouse.images
   const homePics = houseImages.map((image) => {
@@ -30,41 +29,14 @@ const HomeDetails = ({ forAdmin }) => {
       thumbnail: image,
     };
   });
-  // const dropdownSelectHandler = (action, placeId) => {
-  //   console.log(action, placeId);
-  // };
-  // const actionOptions = [
-  //   "Activate",
-  //   "Deactivate",
-  //   "Delete",
-  //   "Verify",
-  //   "Refute",
-  // ];
 
-  const place = {
-    _id: "0011",
-    title: "Modern comfort and convenience elegantly appointed",
-    location: "Atlas, Ghana Street, Ghiliffalegn Stream, Bole, AddisAbaba, 7966, Ethiopia",
-    description: "Bole, House or Office for Rent, Addis Ababa. The total area is 500 square meters. It has living and dining room with working fire-place, kitchen, master bedroom with it’s own bathroom, and two bedrooms with common shower room. There are four service rooms with shower room, garden and parking for 3 cars. The rate is 2,500 USD for residential rent and 3,000 USD for office rent per month and fixed.",
-    price: 250,
-    homeType: "shortTerm"
-  };
   return (
     <div className={styles.mainContainer}>
-      {/* {forAdmin && (
-        <div className="flex justify-end">
-          <Dropdown
-            actions={actionOptions}
-            onSelect={dropdownSelectHandler}
-          //itemId={place._id}
-          />
-        </div>
-      )} */}
       <div className={styles.innerContainer}>
-        <h1>{place.title}</h1>
+        <h1>{specificHouse.title}</h1>
         <p>
           <CiLocationOn />
-          {place.location}
+          {specificHouse.woreda} {specificHouse.subCity} {specificHouse.city} {' Ethiopia'}
         </p>
         <div className={styles.reviewsAndOwnerContainer}>
           <div>
@@ -74,7 +46,7 @@ const HomeDetails = ({ forAdmin }) => {
             <span>
               <IoPersonOutline /> Posted by:
             </span>
-            <a href="#">Haile Kebede</a>
+            <a href="#"> {specificHouse.ownerId.name} {specificHouse.ownerId.lastName}  </a>
           </div>
         </div>
       </div>
@@ -87,11 +59,11 @@ const HomeDetails = ({ forAdmin }) => {
           <div className={styles.descriptionTitle}>
             <h2>Description</h2>
           </div>
-          <p>{place.description}</p>
+          <p>{specificHouse.description}</p>
         </div>
-        <BookingWidget place={place} />
+        <BookingWidget place={specificHouse} />
       </div>
-      <HomeProperties />
+      <HomeProperties specificHouse={specificHouse} />
       <AmenitiesDisplayer />
       {!forAdmin && <Comments currentUserId="1" />}
     </div>

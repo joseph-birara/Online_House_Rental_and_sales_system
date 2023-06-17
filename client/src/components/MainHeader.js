@@ -15,9 +15,11 @@ const MainHeader = () => {
 
   // retrive locally stored user data 
   useEffect(() => {
-    const { user_token, user_profile_data } = RetriveLocallyStoredData();
+    const { user_token, user_data } = RetriveLocallyStoredData();
+    console.log('locally stored data is ');
+    console.log('--- user_data', JSON.parse(user_data));
     setToken(JSON.parse(user_token))
-    setUser(JSON.parse(user_profile_data))
+    setUser(JSON.parse(user_data))
 
   }, [])
 

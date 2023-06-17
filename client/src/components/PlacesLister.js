@@ -106,9 +106,9 @@ function PlacesLister({ houses }) {
   return (
     <div className="mt-4">
       {houses.length > 0 &&
-        houses.map((house) => (
+        houses.map((house, index) => (
           <H_HOME
-            key={houses._id}
+            key={index}
             house={house}
             forAdmin={user.userType === "admin"}
           />

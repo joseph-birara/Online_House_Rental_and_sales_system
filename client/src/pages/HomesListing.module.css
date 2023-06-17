@@ -8,6 +8,9 @@
   text-decoration: none;
   width: 100%;
   transition: all 0.3s ease;
+  outline: 2px solid red;
+  border: 2px solid black;
+  padding-bottom: 5px;
 }
 .mainContainer:hover {
   transform: scale(1.05);
@@ -18,10 +21,12 @@
   text-overflow: ellipsis;
   text-decoration: none;
   margin: 0.2rem 0;
+  padding-left: 8px;
 }
 #title {
   font-weight: 500;
   font-size: large;
+  padding-left: 8px;
 }
 #location {
   font-weight: 200;
@@ -32,6 +37,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-left: 8px;
 }
 #bed {
   position: relative;
@@ -44,6 +50,7 @@
 
 #price {
   font-weight: 500;
+  outline: 2px solid red;
 }
 #like {
   text-align: end;

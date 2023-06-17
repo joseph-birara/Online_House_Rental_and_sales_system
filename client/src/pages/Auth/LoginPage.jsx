@@ -12,12 +12,13 @@ export default function LoginPage({ isAdmin }) {
   const { userType, setUser, setToken, token, user } = useContext(UserContext);
 
 
-
   // save user info on local storage
   useEffect(() => {
-    window.localStorage.setItem('user-token', JSON.stringify(token))
-    window.localStorage.setItem('user-profile-data', JSON.stringify(user))
-  }, [token])
+    if (token)
+      window.localStorage.setItem('user-token', JSON.stringify(token))
+    if (user)
+      window.localStorage.setItem('user-data', JSON.stringify(user))
+  }, [token, user])
 
 
   // for admin purpose

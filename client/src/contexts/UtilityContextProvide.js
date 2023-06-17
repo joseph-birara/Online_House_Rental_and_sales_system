@@ -8,8 +8,8 @@ export function UtilityContextProvider({ children }) {
     const [OwnersList, setOwnersList] = useState([])
     const [TenantList, setTenatList] = useState([])
     const [BuyersList, setBuyerList] = useState()
-    const [applications, setApplications] = useState([])
     const [AdminsList, setAdminList] = useState([])
+    const [applications, setApplications] = useState([])
     // const [both_Tenant_and_Buyer, set_both_Tenant_and_Buyer] = useState([])
 
     return (

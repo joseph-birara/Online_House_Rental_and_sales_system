@@ -26,8 +26,6 @@ import TenantListerPage from "./Admin_Related_Pages/TenantListerPage";
 import AdminListerPage from "./Admin_Related_Pages/AdminListPage";
 import HomesListPage from "./Admin_Related_Pages/HomesListPage";
 import AddAdminPage from "./Admin_Related_Pages/AddAdminPage";
-import TenantDashboard from "./pages/dashboards/TenantDashboard";
-import TenantApplications from "./pages/TenantApplications";
 //blue-black: #091240 ,  light-blue: #1890db
 
 function App() {
@@ -59,7 +57,7 @@ function App() {
                     <Route path="rented" element={<HomesList rented={true} />} />
                     <Route path="new" element={<PlacesFormPage />} />
                   </Route>
-                  <Route
+                  <Route 
                     path="applicants"
                     element={<Applicants />}
                   />
@@ -108,16 +106,9 @@ function App() {
                 </Route>
 
                 <Route path="/homeDetails/:id" element={<HomeDetails />} />
-                <Route
-                path="/tenant"
-                element={
-                  <DashboardContextProvider>
-                    <TenantDashboard />
-                  </DashboardContextProvider>
-                }
-              >
-                <Route path="applications" element={<TenantApplications />} />
-              </Route>
+                <Route path="tenant">
+                  <Route path="applications" element={<Test />} />
+                </Route>
               </Routes>
             </main>
           </div>

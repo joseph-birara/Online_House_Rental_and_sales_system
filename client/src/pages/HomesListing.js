@@ -36,10 +36,10 @@ export const Home = ({ home }) => {
         imgDim={img}
       />
       <p className={styles.shorten} id={styles.title}>
-        House Title is placed here
+        {home.title}
       </p>
       <p className={styles.shorten} id={styles.location}>
-        Kebele {home.kebele} Woreda {home.woreda}, {home.subCity}, {home.city}
+        {home.kebele}, {home.woreda}, {home.subCity}, {home.city}
       </p>
       <div className={styles.icons}>
         <p>
@@ -52,13 +52,17 @@ export const Home = ({ home }) => {
           <TfiRulerAlt2 /> {home.area} m<sup>2</sup>
         </p>
       </div>
-      <p id={styles.price}>ETB{home.price}/mo</p>
-      <p id={styles.like}>
-        <Button className={styles.likebtn}>
-          <AiOutlineHeart />
-        </Button>
-        <span> No of Likes </span>
-      </p>
+      <div className="font-semibold mx-3 border border-[lightgray] flex justify-between gap-1 items-center p-0.5 ">
+        <p className=""> ETB {home.price}/month</p>
+
+        <p className="border border-[red] px-1">
+          <Button className="transform scale-150 " >
+            <AiOutlineHeart />
+          </Button>
+          <span> Likes</span>
+        </p>
+      </div>
+
     </div>
   );
 };

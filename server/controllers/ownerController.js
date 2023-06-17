@@ -18,7 +18,8 @@ const { generateToken } = require("../authController/auth");
 
 // owner log in
 const ownerLogin = async (req, res) => {
-  await login(req, res, ownerModel);
+  const userType = "owner";
+  await login(req, res, ownerModel, userType);
 };
 
 // get all owners

@@ -13,7 +13,7 @@ const tenantSchema = new Schema(
     },
     accountStatus: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     lastName: {
       type: String,

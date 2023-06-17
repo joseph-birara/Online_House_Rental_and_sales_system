@@ -214,6 +214,7 @@ const {
   updateHouse,
   deletImage,
   getHousesByOwner,
+  getAnalysis,
 } = require("../controllers/houseController");
 
 router.post("/add", addHouse);
@@ -223,5 +224,6 @@ router.delete("/delete/:id", deleteHouse);
 router.put("/update", updateHouse);
 router.delete("/deleteImage", deletImage);
 router.get("/single", getHouse);
+router.post("/getSimilar", getAnalysis);
 
 module.exports = router;

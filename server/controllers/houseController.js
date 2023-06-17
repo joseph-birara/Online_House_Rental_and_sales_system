@@ -3,6 +3,45 @@ const houseModel = require("../models/homeModel");
 const getUser = require("../authController/authorize");
 const ownerModel = require("../models/ownerModel");
 const util = require("util");
+const homeModel = require("../models/homeModel");
+
+// get all houses and filter by the given parametr for analaysis
+// recive number of bed rooms and location and search from home collection
+// calculate avarage price , maximun and mininum price
+const getAnalysis = async (req, res) => {
+  const { bedRoom, subCity } = req.body;
+
+  try {
+    // Filter homes based on the provided parameters
+    const filter = {};
+    if (bedRoom) {
+      filter.bedRoom = bedRoom;
+    }
+    if (subCity) {
+      filter.subCity = subCity;
+    }
+
+    // Retrieve homes from the home collection based on the filter
+    const homes = await homeModel.find(filter);
+
+    if (homes.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "No homes found with the given parameters" });
+    }
+
+    // Calculate average, maximum, and minimum prices
+    const prices = homes.map((home) => home.price);
+    const averagePrice =
+      prices.reduce((total, price) => total + price, 0) / prices.length;
+    const maximumPrice = Math.max(...prices);
+    const minimumPrice = Math.min(...prices);
+
+    res.json({ averagePrice, maximumPrice, minimumPrice, homes });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 // get all Houses
 const getAllHouses = async (req, res) => {
@@ -163,4 +202,5 @@ module.exports = {
   updateHouse,
   deletImage,
   getHousesByOwner,
+  getAnalysis,
 };

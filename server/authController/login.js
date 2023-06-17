@@ -1,7 +1,10 @@
 const { generateToken } = require("./auth");
 const bcrypt = require("bcrypt");
 
-async function login(req, res, userModel) {
+const sendEmail = require("./sendEmial");
+const { generateVerificationToken } = require("./saveToken");
+
+async function login(req, res, userModel, useType) {
   console.log(req.body);
   const { email, password } = req.body;
   try {
@@ -13,8 +16,17 @@ async function login(req, res, userModel) {
     if (!isMatch) {
       return res.status(400).json({ error: "Invalid email or password" });
     }
+    if (!user.accountStatus) {
+      //resend the mail to verify account
+      const verificationToken = await generateVerificationToken(user.email);
+      // Send email verification email to the newly registered user
+      let subject = "Account activation";
+      let text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/${useType}/verify-email/${verificationToken}`;
+      await sendEmail(email, subject, text);
+      return res.json({ message: "please activate account" });
+    }
     const token = generateToken(user._id);
-    res.json({ token: token, user: user });
+    return res.json({ token: token, user: user });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

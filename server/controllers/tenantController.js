@@ -15,7 +15,8 @@ const { generateToken } = require("../authController/auth");
 
 // tenant log in
 const tenantLogin = async (req, res) => {
-  await login(req, res, tenantModel);
+  const useType = "tenant";
+  await login(req, res, tenantModel, useType);
 };
 
 // get all tenants
@@ -63,7 +64,7 @@ const registerTenant = async (req, res) => {
   // const accountStatus = data.accountStatus;
   const aplicationId = [];
   const rentId = [];
-  const userType = data.userType
+  const userType = data.userType;
   const image = data.image;
   const isTaken = await tenantModel.findOne({ email });
   if (isTaken) {

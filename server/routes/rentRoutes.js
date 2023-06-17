@@ -94,6 +94,28 @@
  *       404:
  *         description: Failed to add rent information
  */
+/**
+ * @swagger
+ * /rent/getByTenant:
+ *   get:
+ *     tags:
+ *       -  Rent
+ *
+ *     summary: retrive rent information
+ *     description: get rent information from the database given the id of the tenant.
+ *     requestBody:
+ *       description: id
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Rent'
+ *     responses:
+ *       201:
+ *         description: Rent information added successfully
+ *       404:
+ *         description: Failed to add rent information
+ */
 
 //import all controller functions
 const {

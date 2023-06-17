@@ -44,6 +44,8 @@ const UserProfile = () => {
     accountDescription = 'Super Administrator'
   else if (user.userType === 'owner')
     accountDescription = "Home Owner"
+  else if (user.userType === 'tenant')
+    accountDescription = "Tenant"
 
   const HandleClick = (title) => {
 

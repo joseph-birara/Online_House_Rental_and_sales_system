@@ -49,7 +49,7 @@ const HomeSchema = new Schema(
     },
     homeType: {
       type: String,
-      default: "",// can be either forRent, forSell, ....
+      default: "",// can be either regularRent, ShorteTerm ...
     },
     bedRoom: {
       type: Number,

@@ -219,11 +219,11 @@ const {
 
 router.post("/add", addHouse);
 router.get("/all", getAllHouses);
-router.get("/byowner", getHousesByOwner);
+router.get("/byowner/:id", getHousesByOwner);
 router.delete("/delete/:id", deleteHouse);
 router.put("/update", updateHouse);
 router.delete("/deleteImage", deletImage);
-router.get("/single", getHouse);
+router.get("/single/:id", getHouse);
 router.post("/getSimilar", getAnalysis);
 
 module.exports = router;

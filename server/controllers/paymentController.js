@@ -27,7 +27,7 @@ const deletePayment = async (req, res) => {
   }
 };
 const editPayment = async (req, res) => {
-  let id = body.id;
+  let id = req.body.id;
   try {
     const updateResult = await paymentModel.updateOne(
       { _id: id },
@@ -44,7 +44,7 @@ const editPayment = async (req, res) => {
 //retrive payment information
 
 const getSingle = async (req, res) => {
-  const id = body.id;
+  const id = req.params;
   try {
     const payment = await paymentModel.findById(id);
     if (!payment) {
@@ -57,4 +57,5 @@ module.exports = {
   pay,
   deletePayment,
   editPayment,
+  getSingle,
 };

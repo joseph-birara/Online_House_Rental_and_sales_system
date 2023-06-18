@@ -184,7 +184,7 @@ const router = express.Router();
 router.post("/send", sendMaintenance);
 router.put("/edit", editMaintenace);
 router.delete("/delete/:id", deleteMaintenance);
-router.get("/single", getSingleMaintenance);
+router.get("/single/:id", getSingleMaintenance);
 router.get("/all", getMaintenance);
 
 module.exports = router;

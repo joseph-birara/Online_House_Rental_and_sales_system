@@ -3,7 +3,7 @@ const commentModel = require("../models/commentModel");
 
 const mongoose = require("mongoose");
 const getByOwner = async (req, res) => {
-  const { id } = req.body;
+  const id = req.params;
   const comments = await commentModel.find({ ownerId: id });
   if (!comments) {
     return res
@@ -13,7 +13,7 @@ const getByOwner = async (req, res) => {
   return comments;
 };
 const getByHouse = async (req, res) => {
-  const { id } = req.body;
+  const id = req.params;
   const comments = await commentModel.find({ ownerId: id });
   if (!comments) {
     return res

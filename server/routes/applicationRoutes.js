@@ -271,10 +271,10 @@ const {
 
 const express = require("express");
 const router = express.Router();
-router.get("/byOwner", getOwnerApplications);
-router.get("/byTenant", getTenantApplications);
-router.get("/byHouse", getHouseApplications);
-router.get("/single", getSingleApplication);
+router.get("/byOwner/:id", getOwnerApplications);
+router.get("/byTenant/:id", getTenantApplications);
+router.get("/byHouse/:id", getHouseApplications);
+router.get("/single/:id", getSingleApplication);
 router.post("/send", addApplicationRequest);
 router.get("/all", getAllApplictions);
 router.delete("/delete/:id", deleteApplication);

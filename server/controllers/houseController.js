@@ -56,7 +56,7 @@ const getAllHouses = async (req, res) => {
 
 // get houses that belowng to same person
 const getHousesByOwner = async (req, res) => {
-  const ownerId = req.body.ownerId;
+  const ownerId = req.params;
   if (!mongoose.Types.ObjectId.isValid(ownerId)) {
     return res.status(404).json({ error: "Invalid ownerId" });
   }
@@ -75,7 +75,7 @@ const getHousesByOwner = async (req, res) => {
 };
 
 const getHouse = async (req, res) => {
-  const houseId = req.body.id;
+  const houseId = req.params;
   if (!mongoose.Types.ObjectId.isValid(houseId)) {
     return res.status(404).json({ error: "Invalid ID" });
   }

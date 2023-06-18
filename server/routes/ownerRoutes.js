@@ -266,7 +266,7 @@ const upload = require("../imagesHandler/singleImage");
 // calling endpoints
 const router = express.Router();
 router.get("/all", getAllOwners);
-router.get("/profile", getOwner);
+router.get("/profile/:id", getOwner);
 router.post("/register", registerOwner);
 router.delete("/delete/:id", deleteOwner);
 router.put("/update/", updateOwner);

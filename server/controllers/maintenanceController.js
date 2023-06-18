@@ -64,7 +64,7 @@ const getMaintenance = async (req, res) => {
 
 const getSingleMaintenance = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const singleRequest = await maintenanceModel.findOne({ _id: id });
     if (!singleRequest) {
       return res.status(200).json({ message: "Empty requests list" });

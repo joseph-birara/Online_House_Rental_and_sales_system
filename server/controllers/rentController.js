@@ -49,7 +49,7 @@ const deleteRentInformation = async (req, res) => {
 
 const getRentInformationByID = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const information = await rentModel.findById(id);
     if (!information) {
       return res.status(400).json({ message: "empty list" });
@@ -85,7 +85,7 @@ const updateRent = async (req, res) => {
 };
 const getRentInformationByOwner = async (req, res) => {
   try {
-    const { ownerId } = req.body;
+    const { ownerId } = req.params;
     const rent = await rentModel.find({ ownerId }).populate("homeId");
     return res.status(200).json(rent);
   } catch (error) {
@@ -95,7 +95,7 @@ const getRentInformationByOwner = async (req, res) => {
 };
 const getRentInformationByTenant = async (req, res) => {
   try {
-    const { tenantId } = req.body;
+    const { tenantId } = req.params;
     const rent = await rentModel.find({ tenantId }).populate("homeId");
     return res.status(200).json(rent);
   } catch (error) {
@@ -105,7 +105,7 @@ const getRentInformationByTenant = async (req, res) => {
 };
 const getRentInformationByHome = async (req, res) => {
   try {
-    const { homeId } = req.body;
+    const { homeId } = req.params;
     const rent = await rentModel.find({ homeId }).populate("homeId");
     return res.status(200).json(rent);
   } catch (error) {

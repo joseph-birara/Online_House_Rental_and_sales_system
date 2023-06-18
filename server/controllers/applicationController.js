@@ -58,7 +58,7 @@ const getAllApplictions = async (req, res) => {
 };
 // get applications that blongs to a tenant
 const getTenantApplications = async (req, res) => {
-  const id = req.body.id;
+  const id = req.params;
 
   try {
     const applications = await applicationModel
@@ -76,7 +76,7 @@ const getTenantApplications = async (req, res) => {
 };
 // get all applications that belongs to a single home owner
 const getOwnerApplications = async (req, res) => {
-  const ownerId = req.body.ownerId;
+  const ownerId = req.params;
 
   try {
     const applications = await applicationModel
@@ -94,7 +94,7 @@ const getOwnerApplications = async (req, res) => {
 };
 //get all applications that belongs to a single house
 const getHouseApplications = async (req, res) => {
-  const id = req.body.id;
+  const id = req.params;
 
   try {
     const applications = await applicationModel
@@ -112,7 +112,7 @@ const getHouseApplications = async (req, res) => {
 };
 // get one application details
 const getSingleApplication = async (req, res) => {
-  const id = req.body.id;
+  const id = req.params;
 
   try {
     const applications = await applicationModel

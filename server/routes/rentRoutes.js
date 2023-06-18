@@ -116,6 +116,50 @@
  *       404:
  *         description: Failed to add rent information
  */
+/**
+ * @swagger
+ * /rent/getByOwner:
+ *   get:
+ *     tags:
+ *       -  Rent
+ *
+ *     summary: retrive rent information
+ *     description: get rent information from the database given the id of the owner.
+ *     requestBody:
+ *       description: id
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Rent'
+ *     responses:
+ *       201:
+ *         description: Rent information retrived
+ *       404:
+ *         description: Failed to get rent information
+ */
+/**
+ * @swagger
+ * /rent/getByHome:
+ *   get:
+ *     tags:
+ *       -  Rent
+ *
+ *     summary: retrive rent information
+ *     description: get rent information from the database given the id of the home.
+ *     requestBody:
+ *       description: id
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Rent'
+ *     responses:
+ *       201:
+ *         description: Rent information rtrived successfully
+ *       404:
+ *         description: Failed to get rent information
+ */
 
 //import all controller functions
 const {

@@ -16,6 +16,8 @@ const addRentInformation = async (req, res) => {
     //retrive owner and tenant and add the id of the rent
     const tenant = await tenantModel.findOne(rentInfo.tenantId);
     const owner = await ownerModel.findOne(rentInfo.ownerId);
+    console.log(tenant);
+    // console.log(owner);
 
     // update with rent id
     tenant.rentId.push(rentInfo._id);
@@ -25,6 +27,7 @@ const addRentInformation = async (req, res) => {
     await owner.save();
     return res.status(201).json({ message: "rent information added !" });
   } catch (error) {
+    console.log(error);
     return res.status(404).json({ message: error });
   }
 };
@@ -82,8 +85,8 @@ const updateRent = async (req, res) => {
 };
 const getRentInformationByOwner = async (req, res) => {
   try {
-    const { ownerId } = req.params;
-    const rent = await rentModel.find({ ownerId });
+    const { ownerId } = req.body;
+    const rent = await rentModel.find({ ownerId }).populate("homeId");
     return res.status(200).json(rent);
   } catch (error) {
     console.log(error);
@@ -92,8 +95,8 @@ const getRentInformationByOwner = async (req, res) => {
 };
 const getRentInformationByTenant = async (req, res) => {
   try {
-    const { tenantId } = req.params;
-    const rent = await rentModel.find({ tenantId });
+    const { tenantId } = req.body;
+    const rent = await rentModel.find({ tenantId }).populate("homeId");
     return res.status(200).json(rent);
   } catch (error) {
     console.log(error);
@@ -102,8 +105,8 @@ const getRentInformationByTenant = async (req, res) => {
 };
 const getRentInformationByHome = async (req, res) => {
   try {
-    const { homeId } = req.params;
-    const rent = await rentModel.find({ homeId });
+    const { homeId } = req.body;
+    const rent = await rentModel.find({ homeId }).populate("homeId");
     return res.status(200).json(rent);
   } catch (error) {
     console.log(error);

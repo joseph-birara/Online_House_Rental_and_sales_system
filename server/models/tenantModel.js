@@ -56,7 +56,7 @@ const tenantSchema = new Schema(
     applicationId: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Applicant",
+        ref: "Maintenance",
       },
     ],
     saleId: [

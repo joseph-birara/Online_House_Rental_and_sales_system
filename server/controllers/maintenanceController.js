@@ -15,7 +15,8 @@ const sendMaintenance = async (req, res) => {
     }
 
     const owner = await ownerModel.findById(maintenance.ownerId);
-    const applicant = await tenantModel.findById(maintenance.applicantId);
+    const applicant = await tenantModel.findById(maintenance.tenantId);
+    console.log(applicant);
     owner.requestId.push(maintenance._id);
     applicant.applicationId.push(maintenance._id);
     await owner.save();

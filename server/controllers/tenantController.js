@@ -148,10 +148,10 @@ const updateTenant = async (req, res) => {
   }
   const tenant = await tenantModel.findOneAndUpdate(
     { _id: id },
-    {
-      ...req.body,
-    }
+    { ...req.body },
+    { new: true }
   );
+
   if (!tenant) {
     return res.status(400).json({ error: "No such tenant" });
   }

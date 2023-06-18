@@ -16,6 +16,7 @@ async function generateVerificationToken(email) {
   await newToken.save();
   return verificationToken;
 }
+
 // Function to verify token and retrieve user
 const verifyToken = async (email, token, userModel) => {
   // remove the token from the database if aavilable

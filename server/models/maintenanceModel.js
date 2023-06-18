@@ -7,6 +7,9 @@ const MaintenanceSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Houses",
     },
+    title: {
+      type: String,
+    },
     ownerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "HomeOwner",
@@ -24,7 +27,7 @@ const MaintenanceSchema = new mongoose.Schema(
       default: "pending",
     },
   },
-  { Timestamp: true }
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("Maintenance", MaintenanceSchema);

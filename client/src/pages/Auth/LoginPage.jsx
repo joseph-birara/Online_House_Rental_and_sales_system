@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../../contexts/UserContextProvider";
@@ -7,9 +7,9 @@ import { UtilityContext } from "../../contexts/UtilityContextProvide";
 export default function LoginPage({ isAdmin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [redirect, setRedirect] = useState(false);
-  const [userrType, setUserType] = useState("");
-  const { userType, setUser, setToken, token, user } = useContext(UserContext);
+  const [currentUserChoice, setUserType] = useState("");
+  const { setUser, setToken, token, user } = useContext(UserContext);
+  const navigate = useNavigate();
 
 
   // save user info on local storage
@@ -81,20 +81,19 @@ export default function LoginPage({ isAdmin }) {
 
 
   async function handleLoginSubmit(ev) {
-
     ev.preventDefault();
 
     if (isAdmin) {
-      setUserType(prev => 'admin')
+      setUserType('admin')
     }
     console.log(" email : " + email);
     console.log(" password : " + password);
-    console.log(" userType : " + userrType);
+    console.log(" userType : " + currentUserChoice);
     axios
-      .post(`http://localhost:4000/${userrType}/login`, { email, password })
+      .post(`http://localhost:4000/${currentUserChoice}/login`, { email, password })
       .then((response) => {
         let userData = response.data.user
-        userData.userType = userrType
+        userData.userType = currentUserChoice
 
         console.log("success logged in");
         console.log(userData);
@@ -102,7 +101,12 @@ export default function LoginPage({ isAdmin }) {
 
         setToken(response.data.token)
         setUser(userData)
-        setRedirect('/')
+
+        // save the data locally
+        window.localStorage.setItem('user-token', JSON.stringify(response.data.token))
+        window.localStorage.setItem('user-data', JSON.stringify(userData))
+        navigate('/')
+        console.log('directed the page');
 
       })
       .catch((error) => {
@@ -112,9 +116,6 @@ export default function LoginPage({ isAdmin }) {
 
   }
 
-  if (redirect) {
-    return <Navigate to={redirect} />;
-  }
   function handleSelect(e) {
     setUserType(e.target.name);
   }
@@ -148,7 +149,7 @@ export default function LoginPage({ isAdmin }) {
 
                   type="radio"
                   name="owner"
-                  checked={userrType === "owner"}
+                  checked={currentUserChoice === "owner"}
                   onChange={handleSelect}
                 />
                 <span>Homeowner</span>
@@ -157,7 +158,7 @@ export default function LoginPage({ isAdmin }) {
                 <input
                   type="radio"
                   name="tenant"
-                  checked={userrType === "tenant"}
+                  checked={currentUserChoice === "tenant"}
                   onChange={handleSelect}
                 />
                 <span>Tenant</span>
@@ -166,7 +167,7 @@ export default function LoginPage({ isAdmin }) {
                 <input
                   type="radio"
                   name="buyer"
-                  checked={userrType === "buyer"}
+                  checked={currentUserChoice === "buyer"}
                   onChange={handleSelect}
                 />
                 <span>Buyer</span>
@@ -174,7 +175,7 @@ export default function LoginPage({ isAdmin }) {
             </div>
           </div>)}
 
-          <button className="primary bg-lightBlue hover:bg-lbHover Hover mt-4">
+          <button type="submit" onClick={handleLoginSubmit} className="primary bg-lightBlue hover:bg-lbHover Hover mt-4">
             Login
           </button>
 

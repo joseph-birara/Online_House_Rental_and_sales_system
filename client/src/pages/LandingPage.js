@@ -8,21 +8,53 @@ import img6 from "./images/hp3.webp";
 import LatestHomes from "../components/home/LatestHomes";
 import ImageSlider from "../components/ImageSlider";
 import { useContext, useEffect } from "react";
-import { UserContext } from "../contexts/UserContextProvider";
 import RetriveLocallyStoredData from "./Auth/RetriveLocallyStoredData";
+import { UserContext } from "../contexts/UserContextProvider";
 
 const LandingPage = () => {
-  const { setToken, setUser } = useContext(UserContext)
 
-  // retrive locally stored user data 
+  const { setToken, setUser } = useContext(UserContext)
   useEffect(() => {
     const { user_token, user_data } = RetriveLocallyStoredData();
     console.log('locally stored data is ');
-    console.log('--- user_data', user_data);
+    console.log('--- user_data', JSON.parse(user_data));
     setToken(JSON.parse(user_token))
     setUser(JSON.parse(user_data))
 
   }, [])
+
+  // retrive locally stored user data 
+  // useEffect(() => {
+  //   let { user_token, user_data } = RetriveLocallyStoredData();
+  //   setToken(JSON.parse(user_token))
+
+  //   // console.log('--- user_data', JSON.parse(user_data));
+  //   if (user_data._id) {
+  //     // send request to the server
+  //     let endpoint = ''
+  //     if (user_data.userType === 'admin') {
+  //       endpoint = 'admin'
+  //     }
+  //     else if (user_data.userType === 'owner') {
+  //       endpoint = 'owner'
+  //     } else {
+  //       endpoint = 'tenant'
+  //     }
+
+  //     axios.get(`http://localhost:4000/${endpoint}/profile/:${user_data._id}`)
+  //       .then((response) => {
+  //         console.log('fetching user data on refresh is successful');
+  //         console.log(response.data);
+  //         setUser(response.data)
+  //         window.localStorage.setItem("user-data", JSON.stringify(response.data));
+  //       })
+  //       .catch((error) => {
+  //         console.log('error on fetching user specific data');
+  //         console.log(error);
+  //       });
+  //   }
+
+  // }, [])
 
   const img = {
     width: "100%",

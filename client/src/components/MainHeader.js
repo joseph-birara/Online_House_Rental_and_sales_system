@@ -29,11 +29,14 @@ const MainHeader = () => {
         className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg transform scale-125"
         onClick={() => handleClick("userProfile")}
       >
-        <img
-          className="rounded-full w-11 h-11"
-          src={"https://cdn.stocksnap.io/img-thumbs/960w/woman-portrait_HVMC9QETXW.jpg"}
-          alt="user-profile"
-        />
+          <img
+            className="rounded-full w-11 h-11"
+            src={user && user.image}
+            onError={(e) => {
+              e.target.src = 'https://media.gettyimages.com/id/1227618807/vector/human-face-avatar-icon-profile-for-social-network-man-vector-illustration.jpg?s=1024x1024&w=gi&k=20&c=-Iz47dY99Hx3S8JAkVLKvzQN65Qn8m7UPFAMbJvfd1Y=';
+            }}
+            alt="user-profile"
+          />
       </div>
       {isClicked.userProfile && <UserProfile />}
     </div>)

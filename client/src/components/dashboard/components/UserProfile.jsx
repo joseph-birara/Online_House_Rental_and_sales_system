@@ -57,12 +57,14 @@ const UserProfile = () => {
       // clear the states saved before
       setToken('')
       setUser('')
-
+    } else if (title === 'My Profile') {
+      navigate('/updateProfile')
+      setIsClicked(initialState) // remove the profile icon menu
     }
   }
 
   return (
-    <div className="nav-item absolute right-1 top-3 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
+    <div className="shadow-xl rounded-xl nav-item absolute right-1 top-3 bg-white dark:bg-[#42464D] p-8 w-96">
       <div className="flex justify-between items-center">
         <p className="font-semibold text-lg dark:text-gray-200">User Profile</p>
 
@@ -78,7 +80,10 @@ const UserProfile = () => {
       <div className="flex gap-5 items-center mt-6 border-color border-b-1 pb-6">
         <img
           className="rounded h-auto w-24"
-          src={user.image}
+          src={user && user.image}
+          onError={(e) => {
+            e.target.src = 'https://media.gettyimages.com/id/1227618807/vector/human-face-avatar-icon-profile-for-social-network-man-vector-illustration.jpg?s=1024x1024&w=gi&k=20&c=-Iz47dY99Hx3S8JAkVLKvzQN65Qn8m7UPFAMbJvfd1Y=';
+          }}
           alt="user-profile"
         />
         <div>
@@ -101,12 +106,10 @@ const UserProfile = () => {
             onClick={() => HandleClick(item.title)}
             className=" flex gap-5 border-b-1 border-color p-4 hover:bg-light-gray cursor-pointer  dark:hover:bg-[#42464D]"
           >
-
             <button
               type="button"
               style={{ color: item.iconColor, backgroundColor: item.iconBg }}
               className="outline text-xl rounded-lg p-3 hover:bg-light-gray"
-
             >
               {item.icon}
             </button>
@@ -115,13 +118,9 @@ const UserProfile = () => {
               <p className=" font-semibold dark:text-gray-200 ">{item.title}</p>
               {item.title === 'Log Out'}
               <p className="text-gray-500 text-sm dark:text-gray-400">
-                {" "}
-                {item.desc}{" "}
+                {item.desc}
               </p>
             </div>
-
-
-
           </div>
         ))}
       </div>
@@ -130,4 +129,3 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
-

@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../../contexts/UserContextProvider";
@@ -21,9 +21,8 @@ export default function RegisterPage() {
   })
   const [profileImage, setProfileImage] = useState('https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector-PNG.png')
   const [imageFile, setImageFile] = useState(null)
-  const [redirect, setRedirect] = useState(false);
-
-  const { user, setToken, setUser } = useContext(UserContext)
+  const navigate = useNavigate();
+  const { setToken, setUser } = useContext(UserContext)
 
   const imageHanlder = (e) => {
     setImageFile(e.target.files[0])// grab image file
@@ -35,7 +34,6 @@ export default function RegisterPage() {
 
   async function registerUser(e) {
     e.preventDefault();
-    // console.log("user data is here");
     // console.log(userData);
     // console.log(profileImage);
     // console.log(imageFile);
@@ -56,31 +54,29 @@ export default function RegisterPage() {
         })
     }
 
-
     // register the user to the backend
     const userRoute = userData.userType === 'buyer' ? 'tenant' : userData.userType;
     axios.post(`${process.env.REACT_APP_baseURL}/${userRoute}/register`, userData)
       .then((response) => {
         console.log("user register successfully ********************");
         console.log(response.data.user)
+
+        // save the data on the context
         setUser(response.data.user)
         setToken(response.data.token)
-        setRedirect('/')
-        // console.log(response.data);
-        // setToken()
+
+        // save the data locally on the broswer
+        window.localStorage.setItem('user-data', JSON.stringify(response.data.user))
+        window.localStorage.setItem('user-token', JSON.stringify(response.data.token))
+        navigate('/')
+
       }).catch((error) => {
         console.log("user registion Error-----------------");
         console.log(error);
       });
 
-
   }
 
-  if (redirect) {
-    console.log('on the navigate part user info: ');
-    console.log(user);
-    return <Navigate to={"/"} />;
-  }
   return (
     <div className="mt-4 grow flex items-center justify-around">
       <div className="mb-64">

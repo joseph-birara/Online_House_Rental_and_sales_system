@@ -30,6 +30,7 @@ import TenantApplications from "./pages/TenantApplications";
 import TenantDashboard from "./pages/dashboards/TenantDashboard";
 import MaintenanceRequests from "./pages/MaintenanceRequests";
 import NewMRequest from "./pages/NewMRequest";
+import UpdateProfilePage from "./pages/Auth/UpdateProfile";
 //blue-black: #091240 ,  light-blue: #1890db
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/buy" element={<Buy />} />
                 <Route path="/rent" element={<HomesListing />} />
+                <Route path="/updateProfile" element={<UpdateProfilePage />} />
                 <Route
                   path="/homeOwner"
                   element={
@@ -61,7 +63,7 @@ function App() {
                     <Route path="rented" element={<HomesList rented={true} />} />
                     <Route path="new" element={<PlacesFormPage />} />
                   </Route>
-                  <Route 
+                  <Route
                     path="applicants"
                     element={<Applicants />}
                   />

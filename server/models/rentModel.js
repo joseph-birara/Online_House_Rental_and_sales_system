@@ -17,7 +17,7 @@ const rentSchema = new mongoose.Schema(
     paymentAmount: Number,
     paymentStatus: {
       type: Boolean,
-      default: fasle
+      default: false
     },
 
     tenantId: {

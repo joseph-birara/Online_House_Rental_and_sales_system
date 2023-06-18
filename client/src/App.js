@@ -26,6 +26,10 @@ import TenantListerPage from "./Admin_Related_Pages/TenantListerPage";
 import AdminListerPage from "./Admin_Related_Pages/AdminListPage";
 import HomesListPage from "./Admin_Related_Pages/HomesListPage";
 import AddAdminPage from "./Admin_Related_Pages/AddAdminPage";
+import TenantApplications from "./pages/TenantApplications";
+import TenantDashboard from "./pages/dashboards/TenantDashboard";
+import MaintenanceRequests from "./pages/MaintenanceRequests";
+import NewMRequest from "./pages/NewMRequest";
 //blue-black: #091240 ,  light-blue: #1890db
 
 function App() {
@@ -106,9 +110,18 @@ function App() {
                 </Route>
 
                 <Route path="/homeDetails/:id" element={<HomeDetails />} />
-                <Route path="tenant">
-                  <Route path="applications" element={<Test />} />
-                </Route>
+                <Route
+                path="/tenant"
+                element={
+                  //<DashboardContextProvider>
+                    <TenantDashboard />
+                  //</DashboardContextProvider>
+                }
+              >
+                <Route path="applications" element={<TenantApplications />} />
+                <Route path="mRequests" element={<MaintenanceRequests />} />
+                <Route path="mRequests/new" element={<NewMRequest />} />
+              </Route>
               </Routes>
             </main>
           </div>

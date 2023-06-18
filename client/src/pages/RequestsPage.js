@@ -1,7 +1,7 @@
 import React from "react";
 import Dropdown from "../components/Dropdown";
 
-export const Request = ({ request }) => {
+const Request = ({ request }) => {
   const dropdownActions = ["Mark as seen"];
   const dropdownSelectHandler = (requestId, type, action) => {
     console.log(requestId, type, action);

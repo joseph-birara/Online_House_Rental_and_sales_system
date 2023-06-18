@@ -15,7 +15,10 @@ const rentSchema = new mongoose.Schema(
       default: "",
     },
     paymentAmount: Number,
-    paymentStatus: String,
+    paymentStatus: {
+      type: Boolean,
+      default: fasle
+    },
 
     tenantId: {
       type: mongoose.Schema.Types.ObjectId,

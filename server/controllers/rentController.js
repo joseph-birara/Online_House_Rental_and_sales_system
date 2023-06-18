@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const rentModel = require("../models/rentModel");
 const tenantModel = require("../models/tenantModel");
 const ownerModel = require("../models/ownerModel");
@@ -10,25 +9,41 @@ const addRentInformation = async (req, res) => {
   try {
     const rentInfo = await rentModel.create(req.body);
     if (!rentInfo) {
-      return res.status(404).json({ message: "faild!" });
+      return res.status(404).json({ message: "Failed!" });
     }
 
-    //retrive owner and tenant and add the id of the rent
+    // Retrieve owner and tenant and add the id of the rent
     const tenant = await tenantModel.findOne(rentInfo.tenantId);
     const owner = await ownerModel.findOne(rentInfo.ownerId);
-    console.log(tenant);
-    // console.log(owner);
 
-    // update with rent id
+    // Update with rent id
     tenant.rentId.push(rentInfo._id);
     owner.rentId.push(rentInfo._id);
-    //save both to db
+
+    // Save both to the database
     await tenant.save();
     await owner.save();
-    return res.status(201).json({ message: "rent information added !" });
+
+    // Update other applications to "rejected"
+    await applicationModel.updateMany(
+      { homeId: rentInfo.homeId },
+      { $set: { status: "rejected" } }
+    );
+
+    // Update the application being changed to "rent" to "accepted"
+    await applicationModel.findOneAndUpdate(
+      {
+        applicantId: req.body.tenantId,
+        homeId: req.body.homeId,
+      },
+      { $set: { status: "accepted" } },
+      { new: true }
+    );
+
+    return res.status(201).json({ message: "Rent information added!" });
   } catch (error) {
     console.log(error);
-    return res.status(404).json({ message: error });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 

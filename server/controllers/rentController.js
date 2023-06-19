@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const rentModel = require("../models/rentModel");
 const tenantModel = require("../models/tenantModel");
 const ownerModel = require("../models/ownerModel");
+const homeModel = require("../models/homeModel");
 
 // add rent information to database
 
@@ -15,14 +16,17 @@ const addRentInformation = async (req, res) => {
     // Retrieve owner and tenant and add the id of the rent
     const tenant = await tenantModel.findOne(rentInfo.tenantId);
     const owner = await ownerModel.findOne(rentInfo.ownerId);
+    const home = await homeModel.findOne(rentInfo.homeId);
 
     // Update with rent id
     tenant.rentId.push(rentInfo._id);
     owner.rentId.push(rentInfo._id);
+    home.isRented = true;
 
     // Save both to the database
     await tenant.save();
     await owner.save();
+    await home.save();
 
     // Update other applications to "rejected"
     await applicationModel.updateMany(
@@ -101,7 +105,7 @@ const updateRent = async (req, res) => {
 const getRentInformationByOwner = async (req, res) => {
   try {
     const { ownerId } = req.params;
-    const rent = await rentModel.find({ ownerId }).populate("homeId");
+    const rent = await rentModel.find({ ownerId: ownerId }).populate("homeId");
     return res.status(200).json(rent);
   } catch (error) {
     console.log(error);
@@ -111,7 +115,9 @@ const getRentInformationByOwner = async (req, res) => {
 const getRentInformationByTenant = async (req, res) => {
   try {
     const { tenantId } = req.params;
-    const rent = await rentModel.find({ tenantId }).populate("homeId");
+    const rent = await rentModel
+      .find({ tenantId: tenantId })
+      .populate("homeId");
     return res.status(200).json(rent);
   } catch (error) {
     console.log(error);
@@ -121,7 +127,7 @@ const getRentInformationByTenant = async (req, res) => {
 const getRentInformationByHome = async (req, res) => {
   try {
     const { homeId } = req.params;
-    const rent = await rentModel.find({ homeId }).populate("homeId");
+    const rent = await rentModel.find({ homeId: homeId }).populate("homeId");
     return res.status(200).json(rent);
   } catch (error) {
     console.log(error);

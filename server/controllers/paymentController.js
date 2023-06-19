@@ -44,7 +44,7 @@ const editPayment = async (req, res) => {
 //retrive payment information
 
 const getSingle = async (req, res) => {
-  const id = req.params;
+  const { id } = req.params;
   try {
     const payment = await paymentModel.findById(id);
     if (!payment) {

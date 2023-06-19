@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const StatusEnum = Object.freeze({
   PENDING: "pending",
   REJECTED: "rejected",
-  ACCEPTED: "accepted",
+  ACCEPTED: "accepted"
 });
 
 const applicationSchema = new mongoose.Schema({

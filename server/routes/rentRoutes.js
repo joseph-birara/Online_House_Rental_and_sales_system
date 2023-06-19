@@ -177,13 +177,13 @@ const express = require("express");
 const router = express.Router();
 
 //define the routes
-router.get("/single", getRentInformationByID);
+router.get("/single/:id", getRentInformationByID);
 router.get("/all", getAllRent);
-router.post("/add", addRentInformation);
+router.post("/accept", addRentInformation);//when appliction is accepted by home owner
 router.delete("/delete/:id", deleteRentInformation);
 router.put("/update", updateRent);
-router.get("/getByOwner", getRentInformationByOwner);
-router.get("/getByHome", getRentInformationByHome);
-router.get("/getByTenant", getRentInformationByTenant);
+router.get("/getByOwner/:id", getRentInformationByOwner);
+router.get("/getByHome/:id", getRentInformationByHome);
+router.get("/getByTenant/:id", getRentInformationByTenant);
 
 module.exports = router;

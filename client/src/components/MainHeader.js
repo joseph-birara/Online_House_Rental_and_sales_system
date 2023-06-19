@@ -29,14 +29,14 @@ const MainHeader = () => {
         className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg transform scale-125"
         onClick={() => handleClick("userProfile")}
       >
-          <img
-            className="rounded-full w-11 h-11"
-            src={user && user.image}
-            onError={(e) => {
-              e.target.src = 'https://media.gettyimages.com/id/1227618807/vector/human-face-avatar-icon-profile-for-social-network-man-vector-illustration.jpg?s=1024x1024&w=gi&k=20&c=-Iz47dY99Hx3S8JAkVLKvzQN65Qn8m7UPFAMbJvfd1Y=';
-            }}
-            alt="user-profile"
-          />
+        <img
+          className="rounded-full w-11 h-11"
+          src={user && user.image}
+          onError={(e) => {
+            e.target.src = 'https://media.gettyimages.com/id/1227618807/vector/human-face-avatar-icon-profile-for-social-network-man-vector-illustration.jpg?s=1024x1024&w=gi&k=20&c=-Iz47dY99Hx3S8JAkVLKvzQN65Qn8m7UPFAMbJvfd1Y=';
+          }}
+          alt="user-profile"
+        />
       </div>
       {isClicked.userProfile && <UserProfile />}
     </div>)
@@ -63,19 +63,22 @@ const MainHeader = () => {
             </NavLink>
           </li>
 
-          {user && user.userType !== 'admin' && <li>
-            <NavLink className={({ isActive }) => isActive ? classes.active : classes.navLink} to="/homeOwner">
-              For home-owners
-            </NavLink>
+          {user && user.userType && <li>
+            {user.userType === 'owner' && <NavLink className={({ isActive }) => isActive ? classes.active : classes.navLink} to="/homeOwner">
+              For Home-owners
+            </NavLink>}
+            {user.userType === 'tenant' && <NavLink className={({ isActive }) => isActive ? classes.active : classes.navLink} to="/tenant">
+              For Tenant
+            </NavLink>}
+            {user.userType === 'buyer' && <NavLink className={({ isActive }) => isActive ? classes.active : classes.navLink} to="/buyer">
+              For Buyers
+            </NavLink>}
+            {user.userType === 'admin' && <NavLink className={({ isActive }) => isActive ? classes.active : classes.navLink} to="/admin">
+              For Buyers
+            </NavLink>}
           </li>
           }
 
-          {user && user.userType === 'admin' && <li>
-            <NavLink className={({ isActive }) => isActive ? classes.active : classes.navLink} to="/admin">
-              Admin
-            </NavLink>
-          </li>
-          }
           <li>
             {token ? <ProfileSection /> :
               <NavLink className={classes.loginSignup} to="/login" >

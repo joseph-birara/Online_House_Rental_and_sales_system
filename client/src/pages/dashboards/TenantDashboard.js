@@ -9,6 +9,16 @@ import { RiContactsLine } from "react-icons/ri";
 const TenantDashboard = () => {
   const sidebarLinks = [
     {
+      title: "Rented Homes",
+      links: [
+        {
+          name: "View Rented Homes",
+          link: "tenant/rentedHomes",
+          icon: <FiShoppingBag />,
+        },
+      ],
+    },
+    {
       title: "Applications",
       links: [
         {
@@ -27,13 +37,13 @@ const TenantDashboard = () => {
           icon: <RiContactsLine />,
         },
         {
-            name: "New Maintenance Request",
-            link: "tenant/mRequests/new",
-            icon: <RiContactsLine />,
-          },
+          name: "New Maintenance Request",
+          link: "tenant/mRequests/new",
+          icon: <RiContactsLine />,
+        },
       ],
     },
-    
+
   ];
   const notificationData = [
     {

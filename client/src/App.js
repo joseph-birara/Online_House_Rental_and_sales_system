@@ -30,6 +30,7 @@ import TenantDashboard from "./pages/dashboards/TenantDashboard";
 import MaintenanceRequests from "./pages/MaintenanceRequests";
 import NewMRequest from "./pages/NewMRequest";
 import UpdateProfilePage from "./pages/Auth/UpdateProfile";
+import TenantRentedHomes from "./pages/TenantRentedHomes";
 
 function App() {
   return (
@@ -87,6 +88,7 @@ function App() {
                 {/* Tenant Routes */}
                 <Route path="/tenant" element={<TenantDashboard />} >
                   <Route path="applications" element={<TenantApplications />} />
+                  <Route path="rentedHomes" element={<TenantRentedHomes />} />
                   <Route path="mRequests" element={<MaintenanceRequests />} />
                   <Route path="mRequests/new" element={<NewMRequest />} />
                 </Route>

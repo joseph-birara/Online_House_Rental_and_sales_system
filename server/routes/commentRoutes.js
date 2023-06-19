@@ -286,6 +286,7 @@ const {
   deleteComment,
   editComment,
   addComment,
+  getAllComments,
 } = require("../controllers/commentController");
 
 router.post("/add", addComment);
@@ -293,5 +294,6 @@ router.get("/getByhouse/:id", getByHouse);
 router.get("/getByowner/:id", getByOwner);
 router.delete("/delete/:id", deleteComment);
 router.put("/edit", editComment);
+router.get("/all", getAllComments);
 
 module.exports = router;

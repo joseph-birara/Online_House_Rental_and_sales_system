@@ -7,10 +7,11 @@ const commentSchema = new Schema(
     houseId: ObjectId,
     ownerId: ObjectId,
     reviewerId: ObjectId,
-    like: {
-      type: Number,
-      default: 0,
+    parentId: {
+      type: ObjectId,
+      default: null,
     },
+
     message: {
       type: String,
       default: "",

@@ -3,8 +3,10 @@ const commentModel = require("../models/commentModel");
 
 const mongoose = require("mongoose");
 const getByOwner = async (req, res) => {
-  const id = req.params;
-  const comments = await commentModel.find({ ownerId: id });
+  const { id } = req.params;
+  const comments = await commentModel
+    .find({ ownerId: id })
+    .populate({ path: "reviewerId", select: "name _id" });
   if (!comments) {
     return res
       .status(200)
@@ -13,8 +15,11 @@ const getByOwner = async (req, res) => {
   return comments;
 };
 const getByHouse = async (req, res) => {
-  const id = req.params;
-  const comments = await commentModel.find({ ownerId: id });
+  const { id } = req.params;
+  console.log(id);
+  const comments = await commentModel
+    .find({ houseId: id })
+    .populate({ path: "reviewerId", select: "name _id" });
   if (!comments) {
     return res
       .status(200)
@@ -61,10 +66,22 @@ const deleteComment = async (req, res) => {
   }
 };
 
+const getAllComments = async (req, res) => {
+  console.log("get all comments");
+  const comments = await commentModel
+    .find()
+    .populate({ path: "reviewerId", select: "name _id" });
+  if (!comments) {
+    return res.status(401).send("no comment s found");
+  }
+  return res.status(201).json(comments);
+};
+
 module.exports = {
   getByHouse,
   getByOwner,
   deleteComment,
   editComment,
   addComment,
+  getAllComments,
 };

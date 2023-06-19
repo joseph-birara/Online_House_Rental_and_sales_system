@@ -49,7 +49,7 @@ const HomeSchema = new Schema(
     },
     homeType: {
       type: String,
-      default: "",// can be either regularRent, ShorteTerm ...
+      default: "", // can be either regularRent, ShorteTerm ...
     },
     bedRoom: {
       type: Number,
@@ -71,6 +71,10 @@ const HomeSchema = new Schema(
       checkin: String,
       checkout: String,
       maxGuest: String,
+    },
+    like: {
+      type: Number,
+      default: 0,
     },
     amenity: [String],
   },

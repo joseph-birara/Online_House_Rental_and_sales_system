@@ -91,6 +91,10 @@ function App() {
                   <Route path="mRequests/new" element={<NewMRequest />} />
                 </Route>
 
+                {/*  Buyer page  and there should be a Buyer dashboard*/}
+                <Route path="/buyer" element={<Test />} >
+                </Route>
+
               </Routes>
 
             </main>

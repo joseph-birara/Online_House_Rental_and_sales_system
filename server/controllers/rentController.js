@@ -5,7 +5,6 @@ const ownerModel = require("../models/ownerModel");
 const homeModel = require("../models/homeModel");
 
 // add rent information to database
-
 const addRentInformation = async (req, res) => {
   try {
     const rentInfo = await rentModel.create(req.body);
@@ -50,7 +49,6 @@ const addRentInformation = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-
 //delete rent information
 const deleteRentInformation = async (req, res) => {
   try {
@@ -65,7 +63,6 @@ const deleteRentInformation = async (req, res) => {
   }
 };
 // get rent information by id
-
 const getRentInformationByID = async (req, res) => {
   try {
     const { id } = req.params;
@@ -104,8 +101,8 @@ const updateRent = async (req, res) => {
 };
 const getRentInformationByOwner = async (req, res) => {
   try {
-    const { ownerId } = req.params;
-    const rent = await rentModel.find({ ownerId: ownerId }).populate("homeId");
+    const { id } = req.params;
+    const rent = await rentModel.find({ ownerId: id }).populate("homeId");
     return res.status(200).json(rent);
   } catch (error) {
     console.log(error);
@@ -114,10 +111,8 @@ const getRentInformationByOwner = async (req, res) => {
 };
 const getRentInformationByTenant = async (req, res) => {
   try {
-    const { tenantId } = req.params;
-    const rent = await rentModel
-      .find({ tenantId: tenantId })
-      .populate("homeId");
+    const { id } = req.params;
+    const rent = await rentModel.find({ tenantId: id }).populate("homeId");
     return res.status(200).json(rent);
   } catch (error) {
     console.log(error);
@@ -126,8 +121,8 @@ const getRentInformationByTenant = async (req, res) => {
 };
 const getRentInformationByHome = async (req, res) => {
   try {
-    const { homeId } = req.params;
-    const rent = await rentModel.find({ homeId: homeId }).populate("homeId");
+    const { id } = req.params;
+    const rent = await rentModel.find({ homeId: id }).populate("homeId");
     return res.status(200).json(rent);
   } catch (error) {
     console.log(error);

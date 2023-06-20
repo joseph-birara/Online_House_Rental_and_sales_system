@@ -26,7 +26,7 @@ const addApplicationRequest = async (req, res) => {
       homeId: homeId,
       applicantId: req.body.applicantId,
     });
-    if (app.status == "pending") {
+    if (app && app.status == "pending") {
       return res
         .status(200)
         .send("application already sent. wait for ownr response");
@@ -47,6 +47,7 @@ const addApplicationRequest = async (req, res) => {
       application,
     });
   } catch (error) {
+    console.log(error)
     return res.status(404).json({ message: "something wnet wrong" });
   }
 };

@@ -1,154 +1,201 @@
 import React, { useContext, useEffect } from "react";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import Dropdown from "../components/Dropdown";
 import { UserContext } from "../contexts/UserContextProvider";
 
-const Applicant = ({ application }) => {
-  const {user, token} = useContext(UserContext);
-
-  const { applications, setApplications } = useContext(UtilityContext);
+const Applicant = ({ singleApplication, selectHandler }) => {
 
   const actionOptions = ["Accept", "Reject"];
-  const selectHandler = (appId, itemType, option) => {
-    // const app = applications.filter((a) => a.id === appId)[0];
-    option = option === "Accept" ? "accepted" : "rejected";
-    const updatedApp = {
-      status: option,
-      id: appId,
-    };
-    // console.log(app);
 
-    axios
-      .put(`${process.env.REACT_APP_baseURL}/application/update`, updatedApp, {
-        headers: {
-          Authorization: `Bearer + ${token}`,
-        }})
-      .then((response) => {
-        console.log(response.data);
-        setApplications(((prev) => {
-          console.log("apps: ", prev);
-          const updated = prev.filter((app) => app._id === appId)[0];
-          updated.status = option;
-          return [updated, ...prev.filter((app) => app._id !== appId)]
-        }));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  // application = application.application;
-  // console.log("token: ",token);
-  // console.log("z", application);
-  // console.log("a", application.applicantId);
-  return (
-    <Link
-      to={"#"}
-      className="flex justify-between items-center cursor-pointer gap-1 p-4 rounded-lg m-4"
-      style={{ boxShadow: "0 0 1px #091240" }}
-    >
-      <div className="flex w-32 h-32 bg-gray-300 shrink-0">
-        <img src="" alt="" />
-      </div>
-      <div className="grow shrink w-fit">
-        <p>
-          First Name:{" "}
-          <span className="text-base font-semibold">
-            {application.applicantId.name}
-          </span>
-        </p>
-        <p>
-          Last Name:{" "}
-          <span className="text-base font-semibold">
-            {application.applicantId.lastName}
-          </span>
-        </p>
-      </div>
-      <div className="grow shrink w-fit">
-        <p>
-          Checkin Date:{" "}
-          <span className="text-base font-semibold">{application.checkin}</span>
-        </p>
-        <p>
-          Checkout Date:{" "}
-          <span className="text-base font-semibold">
-            {application.checkout}
-          </span>
-        </p>
-      </div>
-      <div className="grow shrink w-fit">
-        <p>
-          Number of Guests:{" "}
-          <span className="text-base font-semibold">
-            {application.numGuests}
-          </span>
-        </p>
-        <p>
-          Visit Request Date:{" "}
-          <span className="text-base font-semibold">
-            {application.visitRequest}
-          </span>
-        </p>
-      </div>
-      <div className="grow shrink w-fit">
-        <p>
-          Status:{" "}
-          <span className="text-base font-semibold">{application.status}</span>
-        </p>
-        <p>
-          Phone:{" "}
-          <span className="text-base font-semibold">
-            {application.applicantId.phone}
-          </span>
-        </p>
-      </div>
+  // const selectHandler = (appId, option) => {
+  //   // const app = applications.filter((a) => a.id === appId)[0];
+  //   // option = option === "Accept" ? "accepted" : "rejected";
+  //   // get home price
+  //   if (option === 'Accept') {
+  //     axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'accepted' }, {
+  //       headers: {
+  //         Authorization: `Bearer + ${token}`,
+  //       }
+  //     }).then((response) => {
+  //       console.log(' Applicatioin is accepted successfuly ');
+  //       const updateApplication = applications.map(app => {
+  //         if (app._id === appId) {
+  //           return { app, statu: 'accepted' };
+  //         }
+  //         return app;
+  //       });
+  //       setApplications(updateApplication)
 
-      <div>
-        <Dropdown
-          actions={actionOptions}
-          onSelect={selectHandler}
-          itemId={application._id}
-          itemType="applicant"
-        />
-      </div>
-    </Link>
+  //     })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   } else {
+
+  //     axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'rejected' }, {
+  //       headers: {
+  //         Authorization: `Bearer + ${token}`,
+  //       }
+  //     }).then((response) => {
+  //       // console.log(response.data);
+  //       console.log('Application is canceled successfully');
+  //       const updateApplication = applications.map(app => {
+  //         if (app._id === appId) {
+  //           return { app, statu: 'rejected' };
+  //         }
+  //         return app;
+  //       });
+  //       setApplications(updateApplication)
+  //     }).catch((error) => {
+  //       console.log(error);
+  //     });
+  //   };
+
+  // }
+
+  return (singleApplication && <div
+    className="outline outline-2 outline-[lightgray] flex justify-between items-center gap-1 p-4 rounded-lg m-4 mr-0"
+    style={{ boxShadow: "0 0 1px #091240" }}
+  >
+    <div className="grow w-fit">
+      <p>
+        First Name:{" "}
+        <span className="text-base font-semibold">
+          {singleApplication.applicantId.name}
+        </span>
+      </p>
+      <p>
+        Last Name:{" "}
+        <span className="text-base font-semibold">
+          {singleApplication.applicantId.lastName}
+        </span>
+      </p>
+
+      <p>
+        Phone:{" "}
+        <span className="text-base font-semibold">
+          {singleApplication.applicantId.phone}
+        </span>
+      </p>
+    </div>
+    <div className="grow shrink w-fit">
+      <p>
+        Checkin Date:{" "}
+        {singleApplication.checkin && <span className="text-base font-semibold">{singleApplication.checkin}</span>}
+      </p>
+      <p>
+        Checkout Date:{" "}
+        <span className="text-base font-semibold">
+          {singleApplication.checkout ? (singleApplication.checkout) : ("Not Specified")}
+        </span>
+      </p>
+      <p>
+        Number of Guests:{" "}
+        <span className="text-base font-semibold">
+          {singleApplication.numGuests}
+        </span>
+      </p>
+    </div>
+    <div className="grow shrink w-fit">
+
+      <p>
+        Visit Request Date:{" "}
+        <span className="text-base font-semibold">
+          {singleApplication.visitRequest && singleApplication.visitRequest}
+        </span>
+      </p>
+      <p className="pt-2">
+        Status:{" "}
+        <span className={`text-base text-white p-1 rounded-lg font-semibold px-2 ${singleApplication.status === 'completed' ? 'bg-[#4ff23d]' : ''} ${singleApplication.status === 'accepted' ? 'bg-[green]' : ''}  ${singleApplication.status === 'rejected' ? 'bg-[red]' : ''}  ${singleApplication.status === 'pending' ? 'bg-[#dfdf0e]' : ''} font-semibold`}>{singleApplication.status}</span>
+      </p>
+    </div>
+
+    <div className={`${singleApplication.status !== 'pending' ? 'hidden' : ''} text-white bg-lightBlue mr-3`}>
+      <Dropdown
+        actions={actionOptions}
+        onSelect={selectHandler}
+        itemId={singleApplication._id}
+        itemType="applicant"
+      />
+    </div>
+  </div>
   );
 };
 
 const Applicants = () => {
   const { applications, setApplications } = useContext(UtilityContext);
+  const { user, token } = useContext(UserContext);
+  const actionOptions = ["Accept", "Reject"];
+
+  const selectHandler = (appId, option) => {
+    // get home price
+    if (option === 'Accept') {
+      axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'accepted' }, {
+        headers: {
+          Authorization: `Bearer + ${token}`,
+        }
+      }).then((response) => {
+        console.log(' Applicatioin is accepted successfuly ');
+        const updateApplication = applications.map(app => {
+          if (app._id === appId) {
+            return { app, statu: 'accepted' };
+          }
+          return app;
+        });
+        setApplications(updateApplication)
+
+      })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+
+      axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'rejected' }, {
+        headers: {
+          Authorization: `Bearer + ${token}`,
+        }
+      }).then((response) => {
+        // console.log(response.data);
+        console.log('Application is canceled successfully');
+        const updateApplication = applications.map(app => {
+          if (app._id === appId) {
+            return { app, statu: 'rejected' };
+          }
+          return app;
+        });
+        setApplications(updateApplication)
+      }).catch((error) => {
+        console.log(error);
+      });
+    };
+
+  }
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_baseURL}/application/all`)
+    axios.get(`${process.env.REACT_APP_baseURL}/application/all`)
       .then((response) => {
         // console.log("aa", response.data);
-        setApplications(response.data);
-        // console.log("ap", applications);
-      })
-      .catch((error) => {
+        const filterApplicatios = response.data.filter(app => app.ownerId._id === user._id);
+        setApplications(filterApplicatios);
+        console.log('applicants is clicked by owner and list of applications is');
+        console.log(filterApplicatios)
+      }).catch((error) => {
         console.log(error);
       });
   }, []);
 
   return (
-    // <>
-    //   <p className="text-xl font-semibold mx-4 mb-8 pb-4 border-b-1 border-[#7dd3fc]">
-    //     Applicants
-    //   </p>
-    //   <UsersLister
-    //     userType="applicant"
-    //     users={applications}
-    //     dropdownSelectHandler={selectHandler}
-    //   />
-    // </>
-
-    <div className="mt-4">
-      {applications.length > 0 &&
+    <div className="mt-1">
+      <p className="text-xl font-semibold mx-4 mb-8 pb-4 border-b-1 border-[#7dd3fc]">
+        List of Applications
+      </p>
+      {applications &&
         applications.map((app) => {
-          return <Applicant key={app._id} application={app} />;
-        })}
+          return <Applicant key={app._id} singleApplication={app} selectHandler={selectHandler} />
+        })
+
+      }
     </div>
   );
 };

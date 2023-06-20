@@ -7,6 +7,35 @@ import { UserContext } from "../contexts/UserContextProvider";
 import axios from "axios";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 
+
+const RenatedHomesList = ({ data, handleSelect }) => {
+
+  return (
+    <div className="outline  flex justify-between items-center cursor-pointer gap-1 p-2 rounded-lg m-4 " >
+
+      <div className="w-2/4 bg-gray-300 outline mx-2">
+        <img className="" src={data.homeImage} alt="home imag is this" />
+      </div>
+      <div className="grow-0 shrink px-1 outline outline-[red] p-1 mr-3">
+        <h2 className="text-xl">{data.homeTitle}</h2>
+        <p className="text-sm mt-2">{data.homeDescription}</p>
+        <div className="flex justify-start gap-8">
+          <p><IoBedOutline /> {data.bedRoom}</p>
+          <p><FaShower /> {data.bathRoom}</p>
+          <p><TfiRulerAlt2 /> {data.area}m<sup>2</sup></p>
+          <p className="flex justify-center items-center font-semibold">{data.appType}</p>
+        </div>
+        <button
+          className="outline mr-3 mt-4 w-fit bg-[#f65050ee] hover:bg-[red] text-white py-2 px-2 rounded"
+          onClick={() => handleSelect(data.applicationId, data.homeId)}
+        >
+          cancel Rent
+        </button>
+      </div>
+    </div>
+  )
+};
+
 const TenantRentedHomes = () => {
 
   const { HousesList, setHousesList, applications, setApplications } = useContext(UtilityContext);
@@ -26,7 +55,6 @@ const TenantRentedHomes = () => {
         console.log(error);
       });
   }, []);
-
 
   const handleSelect = (appId, homeId) => {
 
@@ -60,50 +88,38 @@ const TenantRentedHomes = () => {
         console.log('Error on canceling rented home');
         console.log(error);
       });
-
   }
 
   // get homesId rented by tenant
-  const fitltedApplication = applications.filter(applica => user.applicationId.includes(applica._id) && applica.status === 'accepted')
-  const filteredHomes = fitltedApplication.map(AAA => ({ "house": AAA.homeId, "appId": AAA._id }));
-  console.log(' Tenant rented the following homes are ')
-  console.log(filteredHomes)
+  const fitltedApplication = applications.filter(applica => user.applicationId.includes(applica._id) && applica.status === 'accepted');
+  // const filteredHomes = fitltedApplication.map(AAA => ({ "house": AAA.homeId, "appId": AAA._id }));
+  // console.log(' Tenant rented the following homes are ')
+  // console.log(fitltedApplication)
+
   return (
 
-    <div>
-      {filteredHomes && filteredHomes.map(({ house, appId }) => (
+    <div >
+      <p className="text-xl font-semibold mx-4 mb-8 pb-4 border-b-1 border-[#7dd3fc]">
+        List of Rented Homes
+      </p>
+      {fitltedApplication && fitltedApplication.map((applic) => {
 
-        <div className="outline  flex justify-between items-center cursor-pointer gap-1 p-2 rounded-lg m-4 " >
+        const data = {
+          homeImage: applic.homeId.images[0],
+          homeTitle: applic.homeId.title,
+          homeDescription: applic.homeId.description,
+          bedRoom: applic.homeId.bedRoom,
+          bathRoom: applic.homeId.bathRoom,
+          area: applic.homeId.area,
+          appType: applic.applicationType,
+          appplicationId: applic._id,
+          homeId: applic.homeId._id
+        };
+        return <RenatedHomesList key={applic._id} data={data} handleSelect={handleSelect} />;
+      })}
 
-          <div className=" flex w-32 h-32 bg-gray-300 shrink-0 mx-2 ">
-            <img src={house.images[0]} alt="" />
-          </div>
-          <div className="grow-0 shrink px-1 outline outline-[red] p-1 mr-3">
-            <h2 className="text-xl">{house.title}</h2>
-            <p className="text-sm mt-2">{house.description}</p>
-            <div className="flex justify-start gap-8">
-              <p><IoBedOutline /> {house.bedRoom}</p>
-              <p><FaShower /> {house.bathRoom}</p>
-              <p><TfiRulerAlt2 /> {house.area}m<sup>2</sup></p>
-              <p className=" flex justify-center items-center font-semibold" >{house.homeType}</p>
-            </div>
-
-            <button
-              className=" outline mr-3 mt-4 w-fit bg-[#f65050ee] hover:bg-[red] text-white py-2 px-2 rounded"
-              onClick={() => handleSelect(appId, house._id)}
-            >
-              cancel Rent
-
-            </button>
-          </div>
-
-        </div>
-      )
-      )}
     </div>
-
   )
-
 };
 
 export default TenantRentedHomes

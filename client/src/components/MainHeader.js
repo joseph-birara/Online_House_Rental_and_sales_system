@@ -74,7 +74,7 @@ const MainHeader = () => {
               For Buyers
             </NavLink>}
             {user.userType === 'admin' && <NavLink className={({ isActive }) => isActive ? classes.active : classes.navLink} to="/admin">
-              For Buyers
+              For Admin
             </NavLink>}
           </li>
           }

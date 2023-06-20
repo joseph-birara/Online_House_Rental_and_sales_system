@@ -25,8 +25,6 @@ export const Home = ({ home }) => {
       url: item,
     };
   });
-
-
   return (
     <div className={styles.mainContainer}>
       <ImageSlider
@@ -86,12 +84,12 @@ const HomesListing = () => {
   return (
     <div className="mx-2 p-2 flex gap-4 justify-start flex-wrap">
       {HousesList.map((house) => (
-        <NavLink className={styles.navLink} to={`/homeDetails/${house._id}`}>
+        house.homeType !== 'sale' && < NavLink className={styles.navLink} to={`/homeDetails/${house._id}`}>
           <Home key={house._id} home={house} />
         </NavLink>
 
       ))}
-    </div>
+    </div >
   );
 };
 

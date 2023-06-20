@@ -6,7 +6,10 @@ const commentSchema = new Schema(
   {
     houseId: ObjectId,
     ownerId: ObjectId,
-    reviewerId: ObjectId,
+    reviewerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tenant",
+    },
     parentId: {
       type: ObjectId,
       default: null,

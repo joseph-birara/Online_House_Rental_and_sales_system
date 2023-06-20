@@ -12,7 +12,7 @@ const getByOwner = async (req, res) => {
       .status(200)
       .json({ message: "no comments found for this owner" });
   }
-  return comments;
+  return res.status(201).json(comments);
 };
 const getByHouse = async (req, res) => {
   const { id } = req.params;
@@ -31,7 +31,7 @@ const getByHouse = async (req, res) => {
 const addComment = async (req, res) => {
   try {
     const comment = await commentModel.create(req.body);
-    return res.status(200).json({ message: "comment added" });
+    return res.status(200).json({ message: "comment added", comment });
   } catch (error) {
     return res.status(400).json({ error: error });
   }
@@ -43,11 +43,15 @@ const editComment = async (req, res) => {
     return res.status(400).json({ message: "invalid id" });
   }
   try {
-    const comment = await commentModel.findByIdAndUpdate(id);
+    const comment = await commentModel.findByIdAndUpdate(
+      id,
+      { ...req.body },
+      { new: true }
+    );
     if (!comment) {
       return res.status(401).json({ message: "no comment found" });
     }
-    return res.status(200).json({ message: "comment edited !" });
+    return res.status(200).json({ message: "comment edited !", comment });
   } catch (error) {
     return res.status(404).json({ error: error });
   }

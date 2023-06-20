@@ -1,8 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { differenceInCalendarDays } from "date-fns";
-// import axios from "axios";
 import { Navigate } from "react-router-dom";
-// import {UserContext} from "./UserContext.jsx";
 import { UserContext } from "../contexts/UserContextProvider";
 import axios from "axios";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
@@ -12,17 +10,10 @@ export default function BookingWidget({ place }) {
   const [checkOut, setCheckOut] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState("");
   const [visitRequest, setVisitRequest] = useState("");
-  // const [name, setName] = useState("");
-  // const [phone, setPhone] = useState("");
   const [redirect, setRedirect] = useState("");
-  const {user, token} = useContext(UserContext);
-  const {setApplications} = useContext(UtilityContext);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setName(user.name);
-  //   }
-  // }, [user]);
+  const { user, token } = useContext(UserContext);
+  const { setApplications } = useContext(UtilityContext);
 
   let numberOfNights = 0;
   if (checkIn && checkOut) {
@@ -39,38 +30,69 @@ export default function BookingWidget({ place }) {
       ownerId: place.ownerId._id,
       applicationType: place.homeType,
       checkin: checkIn,
+      paymentAmount: place.price,
+    };
+
+    if (place.homeType === "shortTerm") {
+      applicationData.checkout = checkOut;
+    }
+    if (place.homeType !== "sale") {
+      applicationData.numGuests = numberOfGuests;
+    }
+    if (Boolean(visitRequest)) {
+      applicationData.visitRequest = visitRequest;
     }
 
-    if (place.homeType === "shortTerm"){
-      applicationData.checkout = checkOut
-    }
-    if(place.homeType !== "sale"){
-      applicationData.numGuests = numberOfGuests
-    }
-    if(Boolean(visitRequest)){
-      applicationData.visitRequest = visitRequest
-    }
-    console.log(applicationData);
-    console.log(token);
-
-    axios.post(`${process.env.REACT_APP_baseURL}/application/send`, applicationData, {
-      headers: {
-        Authorization: `Bearer + ${token}`,
-      }})
+    axios
+      .post(
+        `${process.env.REACT_APP_baseURL}/application/send`,
+        applicationData,
+        {
+          headers: {
+            Authorization: `Bearer + ${token}`,
+          },
+        }
+      )
       .then((response) => {
-        console.log(response.data.message)
-        console.log(response)
-        setRedirect(`/tenant/applications`);
-        // setHousesList(response.data)
+        // handle if the tenant apply more than one time for a given home
+        if (response.data.message === "application sent!") {
+          // set applicaton list and make request
+          console.log("successyly sent ********************");
+          axios
+            .get("http://localhost:4000/rent/all")
+            .then((response) => {
+              
+              // first redirect for first
+              setRedirect(`/tenant/applications`);
+
+              console.log(" acceptedApplication Lists  ");
+              const filterApplicatios = response.data.filter(
+                (app) => app.applicantId._id === user._id
+              );
+              setApplications(filterApplicatios);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+
+          // setApplications();
+        } else {
+          alert(response.data);
+          console.log("alert message");
+        }
       })
       .catch((error) => {
+        console.log("-----------------error on applying to home");
         console.log(error);
       });
-      // const bookingId = response.data._id;
-      // setRedirect(`/account/bookings/${bookingId}`);
   }
 
-  const priceRate = place.homeType === "sale" ? "total" : place.homeType === "regular" ? "per month" : "per night";
+  const priceRate =
+    place.homeType === "sale"
+      ? "total"
+      : place.homeType === "regular"
+      ? "per month"
+      : "per night";
 
   if (redirect) {
     return <Navigate to={redirect} />;
@@ -98,7 +120,8 @@ export default function BookingWidget({ place }) {
           </div>
           <div className="py-3 px-4 border-l">
             <label>Check out:</label>
-            <input className="disabled:bg-[dimgrey] disabled:text-[linen] disabled:opacity-100"
+            <input
+              className="disabled:bg-[dimgrey] disabled:text-[linen] disabled:opacity-100"
               type="date"
               disabled={place.homeType !== "shortTerm"}
               value={checkOut}
@@ -108,7 +131,8 @@ export default function BookingWidget({ place }) {
         </div>
         <div className="py-3 px-4 border-t">
           <label>Number of guests:</label>
-          <input className="disabled:bg-[dimgrey] disabled:text-[linen] disabled:opacity-100"
+          <input
+            className="disabled:bg-[dimgrey] disabled:text-[linen] disabled:opacity-100"
             type="number"
             disabled={place.homeType === "sale"}
             value={numberOfGuests}
@@ -117,7 +141,7 @@ export default function BookingWidget({ place }) {
         </div>
         <div className="py-3 px-4 border-t">
           <label>Pick a date for visit request(Optional):</label>
-          <input 
+          <input
             type="date"
             value={visitRequest}
             onChange={(ev) => setVisitRequest(ev.target.value)}
@@ -128,7 +152,7 @@ export default function BookingWidget({ place }) {
         onClick={applyHandler}
         className="primary  bg-lightBlue hover:bg-lbHover mt-4"
       >
-       Apply to {place.homeType === "sale" ? 'buy' : 'rent'}
+        Apply to {place.homeType === "sale" ? "buy" : "rent"}
         {numberOfNights > 0 && <span> ${numberOfNights * place.price}</span>}
       </button>
     </div>

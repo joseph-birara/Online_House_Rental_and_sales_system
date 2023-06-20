@@ -5,6 +5,7 @@ const StatusEnum = Object.freeze({
   PENDING: "pending",
   REJECTED: "rejected",
   ACCEPTED: "accepted",
+  COMPLETED: 'completed'
 });
 
 const applicationSchema = new mongoose.Schema({
@@ -38,10 +39,6 @@ const applicationSchema = new mongoose.Schema({
   applicationType: {
     type: String,
     default: "",
-  },
-  isAway: { // if the tenant leaves after the application is accepted or homeowner removes the tenant
-    type: Boolean,
-    default: true
   }
 });
 

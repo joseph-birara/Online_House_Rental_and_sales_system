@@ -47,7 +47,7 @@ const addApplicationRequest = async (req, res) => {
       application,
     });
   } catch (error) {
-    return res.status(404).json({ message: "something wnet wrong" });
+    return res.status(404).json({ message: "something went wrong" });
   }
 };
 // get all applications in database
@@ -69,7 +69,7 @@ const getAllApplictions = async (req, res) => {
 };
 // get applications that blongs to a tenant
 const getTenantApplications = async (req, res) => {
-  const id = req.params;
+  const { id } = req.params;
 
   try {
     const applications = await applicationModel
@@ -87,11 +87,11 @@ const getTenantApplications = async (req, res) => {
 };
 // get all applications that belongs to a single home owner
 const getOwnerApplications = async (req, res) => {
-  const ownerId = req.params;
+  const { id } = req.params;
 
   try {
     const applications = await applicationModel
-      .find({ ownerId: ownerId })
+      .find({ ownerId: id })
       .populate("ownerId")
       .populate("applicantId")
       .populate("homeId");
@@ -105,7 +105,7 @@ const getOwnerApplications = async (req, res) => {
 };
 //get all applications that belongs to a single house
 const getHouseApplications = async (req, res) => {
-  const id = req.params;
+  const { id } = req.params;
 
   try {
     const applications = await applicationModel
@@ -186,6 +186,10 @@ const updateApplication = async (req, res) => {
     if (!application) {
       return res.status(404).json({ message: "Application not found" });
     }
+
+    const home = await homeModel.findByIdAndUpdate(application.homeId, {
+      isRented: true,
+    });
 
     return res
       .status(200)

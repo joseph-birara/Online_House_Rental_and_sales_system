@@ -61,7 +61,7 @@ function App() {
                   </Route>
 
                   <Route path="applicants" element={<Applicants />} />
-                  <Route path="tenants" element={<UsersList userType="tenant/plain" removeDropdown={true} />} />
+                  <Route path="tenants" element={<UsersList />} />
                   <Route path="maintenanceRequests" element={<RequestsPage />} />
                 </Route>
 

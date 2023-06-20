@@ -94,24 +94,27 @@ const TenantApplications = () => {
   }, []);
 
   return (
-    <div className="mt-4">
+    <div className="mt-1">
+      <p className="text-xl font-semibold mx-4 mb-8 pb-4 border-b-1 border-[#7dd3fc]">
+        List of Applications
+      </p>
       {applications && applications.map((singleApp) => {
-        
-          const data = {
-            homePic: singleApp.homeId.images[0],
-            homeTitle: singleApp.homeId.title,
-            homeDescription: singleApp.homeId.description,
-            appType: singleApp.applicationType,
-            ownerName: singleApp.ownerId.name,
-            checkin: singleApp.homeId.checkin,
-            checkout: singleApp.homeId.checkout,
-            price: singleApp.homeId.price,
-            appStatus: singleApp.status,
-            appplicationId: singleApp._id,
-            status: singleApp.status
-          };
-          return <Application key={singleApp._id} data={data} />;
-        })}
+
+        const data = {
+          homePic: singleApp.homeId.images[0],
+          homeTitle: singleApp.homeId.title,
+          homeDescription: singleApp.homeId.description,
+          appType: singleApp.applicationType,
+          ownerName: singleApp.ownerId.name,
+          checkin: singleApp.homeId.checkin,
+          checkout: singleApp.homeId.checkout,
+          price: singleApp.homeId.price,
+          appStatus: singleApp.status,
+          appplicationId: singleApp._id,
+          status: singleApp.status
+        };
+        return <Application key={singleApp._id} data={data} />;
+      })}
     </div>
   );
 };

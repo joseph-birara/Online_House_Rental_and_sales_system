@@ -10,6 +10,7 @@ export function UtilityContextProvider({ children }) {
     const [BuyersList, setBuyerList] = useState()
     const [AdminsList, setAdminList] = useState([])
     const [applications, setApplications] = useState([])
+    // const [acceptedApplicatons, SetacceptedApplicatons] = useState([])
     // const [both_Tenant_and_Buyer, set_both_Tenant_and_Buyer] = useState([])
 
     return (
@@ -21,7 +22,7 @@ export function UtilityContextProvider({ children }) {
             setAdminList,
             setApplications,
             OwnersList,
-            setOwnersList, TenantList, setTenatList, BuyersList, setBuyerList
+            setOwnersList, TenantList, setTenatList, BuyersList, setBuyerList, //acceptedApplicatons, SetacceptedApplicatons
         }} >
 
             {children}

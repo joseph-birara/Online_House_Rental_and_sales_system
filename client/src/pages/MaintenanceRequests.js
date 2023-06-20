@@ -109,6 +109,9 @@ const MaintenanceRequests = () => {
 
       return (
         <div>
+      <p className="text-xl font-semibold mx-4 mb-8 pb-4 border-b-1 border-[#7dd3fc]">
+        List of Maintenance Requests
+      </p>
           {maintenanceRequests.map((request) => (
             <Request id={request.id} request={request} />
           ))}

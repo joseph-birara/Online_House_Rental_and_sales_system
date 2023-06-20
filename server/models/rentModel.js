@@ -6,32 +6,32 @@ const rentSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    startDate: {
-      type: String,
-      default: "",
-    },
-    endDate: {
-      type: String,
-      default: "",
-    },
+    // startDate: {
+    //   type: String,
+    //   default: "",
+    // },
+    // endDate: {
+    //   type: String,
+    //   default: "",
+    // },
     paymentAmount: Number,
     paymentStatus: {
       type: Boolean,
-      default: false
+      default: false,
     },
 
-    tenantId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Tenant",
-    },
-    ownerId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "HomeOwner",
-    },
-    homeId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Houses",
-    },
+    // tenantId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Tenant",
+    // },
+    // ownerId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "HomeOwner",
+    // },
+    // homeId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Houses",
+    // },
   },
   { timestamps: true }
 );

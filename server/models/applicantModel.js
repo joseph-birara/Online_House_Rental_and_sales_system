@@ -4,13 +4,18 @@ const mongoose = require("mongoose");
 const StatusEnum = Object.freeze({
   PENDING: "pending",
   REJECTED: "rejected",
-  ACCEPTED: "accepted"
+  ACCEPTED: "accepted",
 });
 
 const applicationSchema = new mongoose.Schema({
   checkin: String,
   checkout: String,
   numGuests: Number,
+  paymentAmount: Number,
+  paymentStatus: {
+    type: Boolean,
+    default: false,
+  },
   status: {
     type: String,
     enum: Object.values(StatusEnum),

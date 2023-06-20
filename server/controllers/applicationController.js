@@ -3,6 +3,7 @@ const tenantModel = require("../models/tenantModel");
 const ownerModel = require("../models/ownerModel");
 const sendEmail = require("../authController/sendEmial");
 const { default: mongoose } = require("mongoose");
+const homeModel = require("../models/homeModel");
 
 // send application request
 
@@ -19,6 +20,16 @@ const addApplicationRequest = async (req, res) => {
     }
     if (!owner) {
       return res.status(404).json({ message: "owner file doesn't exist" });
+    }
+    const homeId = req.body.homeId;
+    const app = await applicationModel.findOne({
+      homeId: homeId,
+      applicantId: req.body.applicantId,
+    });
+    if (app.status == "pending") {
+      return res
+        .status(402)
+        .send("application already sent. wait for ownr response");
     }
     // add to database
     const application = await applicationModel.create(req.body);

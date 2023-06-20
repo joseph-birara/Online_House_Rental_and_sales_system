@@ -28,7 +28,7 @@ const addApplicationRequest = async (req, res) => {
     });
     if (app.status == "pending") {
       return res
-        .status(402)
+        .status(200)
         .send("application already sent. wait for ownr response");
     }
     // add to database

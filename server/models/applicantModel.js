@@ -41,7 +41,7 @@ const applicationSchema = new mongoose.Schema({
   },
   isAway: { // if the tenant leaves after the application is accepted or homeowner removes the tenant
     type: Boolean,
-    default: false
+    default: true
   }
 });
 

@@ -6,7 +6,6 @@ const { default: mongoose } = require("mongoose");
 const homeModel = require("../models/homeModel");
 
 // send application request
-
 const addApplicationRequest = async (req, res) => {
   try {
     console.log("befor distracturin", req.body);
@@ -187,10 +186,16 @@ const updateApplication = async (req, res) => {
     if (!application) {
       return res.status(404).json({ message: "Application not found" });
     }
-
-    const home = await homeModel.findByIdAndUpdate(application.homeId, {
-      isRented: true,
-    });
+    if (req.body.status == "accepted") {
+      const home = await homeModel.findByIdAndUpdate(application.homeId, {
+        isRented: true,
+      });
+    }
+    if (req.body.status == "completed") {
+      const home = await homeModel.findByIdAndUpdate(application.homeId, {
+        isRented: false,
+      });
+    }
 
     return res
       .status(200)

@@ -4,6 +4,7 @@ const { default: mongoose } = require("mongoose");
 const cors = require("cors");
 
 //import routes one by one
+const paymentRouter = require("./routes/paymentRoute");
 const adminRouts = require("./routes/adminRoutes");
 const ownerRouts = require("./routes/ownerRoutes");
 const commentRoutes = require("./routes/commentRoutes");
@@ -37,6 +38,7 @@ const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 //use routs
+app.use("/payment", paymentRouter);
 app.use("/admin", adminRouts);
 app.use("/owner", ownerRouts);
 app.use("/comment", commentRoutes);

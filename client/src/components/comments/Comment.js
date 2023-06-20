@@ -16,18 +16,16 @@ const Comment = ({
 }) => {
   const isEditing =
     activeComment &&
-    activeComment.id === comment.id &&
+    activeComment.id === comment._id &&
     activeComment.type === "editing";
   const isReplying =
     activeComment &&
-    activeComment.id === comment.id &&
+    activeComment.id === comment._id &&
     activeComment.type === "replying";
-  const fiveMinutes = 300000;
-  const timePassed = new Date() - new Date(comment.createdAt) > fiveMinutes;
   const canDelete =
-    currentUserId === comment.userId && replies.length === 0 && !timePassed;
+    currentUserId === comment.reviewerId._id && replies.length === 0;
   const canReply = Boolean(currentUserId);
-  const canEdit = currentUserId === comment.userId && !timePassed;
+  const canEdit = currentUserId === comment.reviewerId._id;
   const createdAt = new Date(comment.createdAt).toLocaleDateString();
   const dateFormatter = new Intl.DateTimeFormat(undefined, {
     dateStyle: "medium",
@@ -40,18 +38,18 @@ const Comment = ({
       </div>
       <div className={styles["comment-right-part"]}>
         <div className={styles["comment-content"]}>
-          <div className={styles["comment-author"]}>{comment.username}</div>
+          <div className={styles["comment-author"]}>{comment.reviewerId.name}</div>
           <div>{dateFormatter.format(Date.parse(comment.createdAt))}</div>
         </div>
         {!isEditing && (
-          <div className={styles["comment-text"]}>{comment.body}</div>
+          <div className={styles["comment-text"]}>{comment.message}</div>
         )}
         {isEditing && (
           <CommentForm
             submitLabel="Update"
             hasCancelButton
-            initialText={comment.body}
-            handleSubmit={(text) => updateComment(text, comment.id)}
+            initialText={comment.message}
+            handleSubmit={(text) => updateComment(text, comment._id)}
             handleCancel={() => {
               setActiveComment(null);
             }}
@@ -62,7 +60,7 @@ const Comment = ({
             <div
               className={styles["comment-action"]}
               onClick={() =>
-                setActiveComment({ id: comment.id, type: "replying" })
+                setActiveComment({ id: comment._id, type: "replying" })
               }
             >
               Reply
@@ -72,7 +70,7 @@ const Comment = ({
             <div
               className={styles["comment-action"]}
               onClick={() =>
-                setActiveComment({ id: comment.id, type: "editing" })
+                setActiveComment({ id: comment._id, type: "editing" })
               }
             >
               Edit
@@ -81,7 +79,7 @@ const Comment = ({
           {canDelete && (
             <div
               className={styles["comment-action"]}
-              onClick={() => deleteComment(comment.id)}
+              onClick={() => deleteComment(comment._id)}
             >
               Delete
             </div>
@@ -90,7 +88,7 @@ const Comment = ({
         {isReplying && (
           <CommentForm
             submitLabel="Reply"
-            handleSubmit={(text) => addComment(text, comment.id)}
+            handleSubmit={(text) => addComment(text, comment._id)}
           />
         )}
         {replies.length > 0 && (
@@ -105,7 +103,7 @@ const Comment = ({
                 deleteComment={deleteComment}
                 addComment={addComment}
                 parentId={comment.id}
-                replies={getReplies(reply.id)}
+                replies={getReplies(reply._id)}
                 getReplies={getReplies}
                 currentUserId={currentUserId}
               />

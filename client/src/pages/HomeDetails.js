@@ -1,5 +1,5 @@
 import ImageGalleryDisplayer from "../components/ImageGalleryDisplayer";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 import { CiLocationOn } from "react-icons/ci";
 import { IoPersonOutline } from "react-icons/io5";
@@ -14,15 +14,14 @@ import { UtilityContext } from "../contexts/UtilityContextProvide";
 
 const HomeDetails = ({ forAdmin }) => {
   const { id } = useParams();
-  const { HousesList } = useContext(UtilityContext)
-
+  const { HousesList } = useContext(UtilityContext);
 
   const getHouseById = (h_id) => {
     return HousesList.find((house) => house._id === h_id);
   };
 
-  const specificHouse = getHouseById(id); // Replace 
-  const houseImages = specificHouse.images
+  const specificHouse = getHouseById(id); // Replace
+  const houseImages = specificHouse.images;
   const homePics = houseImages.map((image) => {
     return {
       original: image,
@@ -36,7 +35,8 @@ const HomeDetails = ({ forAdmin }) => {
         <h1>{specificHouse.title}</h1>
         <p>
           <CiLocationOn />
-          {specificHouse.woreda} {specificHouse.subCity} {specificHouse.city} {' Ethiopia'}
+          {specificHouse.woreda} {specificHouse.subCity} {specificHouse.city}{" "}
+          {" Ethiopia"}
         </p>
         <div className={styles.reviewsAndOwnerContainer}>
           <div>
@@ -46,7 +46,10 @@ const HomeDetails = ({ forAdmin }) => {
             <span>
               <IoPersonOutline /> Posted by:
             </span>
-            <a href="#"> {specificHouse.ownerId.name} {specificHouse.ownerId.lastName}  </a>
+            <a href="#">
+              {" "}
+              {specificHouse.ownerId.name} {specificHouse.ownerId.lastName}{" "}
+            </a>
           </div>
         </div>
       </div>
@@ -64,8 +67,13 @@ const HomeDetails = ({ forAdmin }) => {
         <BookingWidget place={specificHouse} />
       </div>
       <HomeProperties specificHouse={specificHouse} />
-      <AmenitiesDisplayer />
-      {!forAdmin && <Comments currentUserId="1" />}
+      <AmenitiesDisplayer amenities={specificHouse.amenity} />
+      {!forAdmin && (
+        <Comments
+          houseId={specificHouse._id}
+          ownerId={specificHouse.ownerId._id}
+        />
+      )}
     </div>
   );
 };

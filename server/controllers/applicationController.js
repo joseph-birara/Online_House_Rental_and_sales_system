@@ -47,7 +47,7 @@ const addApplicationRequest = async (req, res) => {
       application,
     });
   } catch (error) {
-    return res.status(404).json({ message: error });
+    return res.status(404).json({ message: "something wnet wrong" });
   }
 };
 // get all applications in database

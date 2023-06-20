@@ -31,7 +31,10 @@ const getByHouse = async (req, res) => {
 const addComment = async (req, res) => {
   try {
     const comment = await commentModel.create(req.body);
-    return res.status(200).json({ message: "comment added", comment });
+    const newComment = await commentModel
+      .findById(comment._id)
+      .populate({ path: "reviewerId", select: "name _id" });
+    return res.status(200).json({ message: "comment added", newComment });
   } catch (error) {
     return res.status(400).json({ error: error });
   }

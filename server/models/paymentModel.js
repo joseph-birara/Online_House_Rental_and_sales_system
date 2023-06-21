@@ -6,7 +6,12 @@ const paymentSchema = new mongoose.Schema(
     amount: Number,
     reciepentId: ObjectId,
     homeId: ObjectId,
-    payerID: ObjectId,
+    payerId: ObjectId,
+    phone: String,
+    randomChar: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );

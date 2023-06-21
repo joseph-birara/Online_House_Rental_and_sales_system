@@ -1,23 +1,36 @@
 const paymentModel = require("../models/paymentModel");
 var request = require("request");
+const generateRandomCharacterSet = require("../authController/randomCharater");
 
 //functions to process pyment
 const pay = async (req, res) => {
+  const randomChar = generateRandomCharacterSet();
+
+  const { email, name, phone, amount, reciepentId, homeId, payerId } = req.body;
+  const payment = await paymentModel.create({
+    email: email,
+    amount: amount,
+    phone: phone,
+    payerId: payerId,
+    reciepentId: reciepentId,
+    homeId: homeId,
+    randomChar: randomChar,
+  });
   var options = {
     method: "POST",
     url: "https://api.chapa.co/v1/transaction/initialize",
     headers: {
-      Authorization: "Bearer CHASECK-xxxxxxxxxxxxxxxx",
+      Authorization: "Bearer CHASECK_TEST-1wysCA5FZesSOAlsuCc9bHiNzFU7Y9bp",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      amount: "100",
+      amount: amount,
       currency: "ETB",
-      email: "abebech_bekele@gmail.com",
-      first_name: "Bilen",
+      email: email,
+      first_name: name,
       last_name: "Gizachew",
-      phone_number: "0912345678",
-      tx_ref: "chewatatest-6669",
+      phone_number: phone,
+      tx_ref: randomChar,
       callback_url: "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
       return_url: "https://www.google.com/", // order
       "customization[title]": "Payment for my favourite merchant",
@@ -27,9 +40,13 @@ const pay = async (req, res) => {
   request(options, function (error, response) {
     if (error) {
       console.log(error);
+      return res.status(500).json({ error: "An error occurred" });
     }
-    console.log(response.body);
+    const responseBody = JSON.parse(response.body);
+    console.log(responseBody.data);
+    return res.status(200).json({ link_url: responseBody.data.checkout_url });
   });
+
   // user identify by the cookie
 
   // sending request saving the textref with user
@@ -48,7 +65,22 @@ const pay = async (req, res) => {
   //   return res.status(501).json(error);
   // }
 };
-
+//verfi payment chapp second api
+const verifyPayment = async (req, res) => {
+  const { payerId } = req.body;
+  const payment = await paymentModel.findOne({ payerId: id });
+  var options = {
+    method: "GET",
+    url: `https://api.chapa.co/v1/transaction/verify/${payment.randomChar}`,
+    headers: {
+      Authorization: "Bearer CHASECK_TEST-1wysCA5FZesSOAlsuCc9bHiNzFU7Y9bp",
+    },
+  };
+  request(options, function (error, response) {
+    if (error) throw new Error(error);
+    console.log(response.body);
+  });
+};
 const deletePayment = async (req, res) => {
   console.log("delete function called");
   //console.log(req);

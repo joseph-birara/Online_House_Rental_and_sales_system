@@ -8,6 +8,7 @@ const paymentSchema = new mongoose.Schema(
     homeId: ObjectId,
     payerId: ObjectId,
     phone: String,
+    email: String,
     randomChar: {
       type: String,
       default: "",

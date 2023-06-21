@@ -36,11 +36,11 @@ export const H_HOME = ({ house, forAdmin }) => {
       style={{ boxShadow: "0 0 1px #091240" }}
     >
       <div className="flex w-32 h-32 bg-gray-300 shrink-0 mr-4 ">
-        <img src={house.images[0]} alt="" />
+        <img className="rounded-lg" src={house.images[0]} alt="" />
       </div>
       <div className="grow-0 shrink px-1">
         <h2 className="text-xl">{house.title}</h2>
-        <p className="text-sm mt-2">{house.description}</p>
+        <p className="text-sm mt-2 line-clamp-2">{house.description}</p>
         <div className="flex justify-start gap-8">
           <p>
             <IoBedOutline /> {house.bedRoom}

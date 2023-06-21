@@ -35,7 +35,9 @@ const Applicant = ({ data, selectHandler }) => {
     <div className="grow shrink w-fit">
       <p>
         Checkin Date:{" "}
-        {data.checkin && <span className="text-base font-semibold">{data.checkin}</span>}
+        <span className="text-base font-semibold">
+          {data.checkin ? (data.checkin) : ("Not Specified")}
+        </span>
       </p>
       <p>
         Checkout Date:{" "}
@@ -55,8 +57,9 @@ const Applicant = ({ data, selectHandler }) => {
       <p>
         Visit Request Date:{" "}
         <span className="text-base font-semibold">
-          {data.visitRequest && data.visitRequest}
+          {data.visitRequest ? (data.visitRequest) : ("Not Specified")}
         </span>
+
       </p>
       <p className="pt-2">
         Status:{" "}

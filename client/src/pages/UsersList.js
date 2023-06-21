@@ -7,10 +7,10 @@ import { useState } from "react";
 
 const RentedTenantList = ({ data, handleSelect }) => {
   return (
-    <div className="outline  flex justify-around items-center cursor-pointer gap-1 py-1 rounded-lg m-4 ">
-      <div className=" w-1/6 rounded-md bg-gray-300 outline mx-2">
+    <div className="outline outline-[lightgray]  flex  items-center cursor-pointer gap-1 py-1 rounded-lg m-4 ">
+      <div className=" w-3/12 rounded-md bg-gray-300  mx-2">
         <img
-          className=""
+          className="rounded-lg "
           src={data.tenantImage && data.tenantImage}
           onError={(e) => {
             e.target.src =
@@ -19,29 +19,30 @@ const RentedTenantList = ({ data, handleSelect }) => {
           alt="home imag is this"
         />
       </div>
-      <div className="grow-0 w-3/4 shrink px-1 outline outline-[red]">
+      <div className="grow-0 w-3/4 shrink px-1 ">
         <h3 className="text-2xl">
           {data.name} {data.lastName}
         </h3>
-        <h4 className="text-xl">{data.homeTitle}</h4>
+        <h4 className="text-xl"> {data.homeTitle}</h4>
         <div className="flex text-lg gap-10 mx-5">
           <div className="mt-1">
             <p>Email: {data.email}</p>
             <p>Phone: {data.phone}</p>
-            <p>RentTye: {data.appType}</p>
           </div>
 
           <div className="mt-1">
             <p>Price: {data.price} </p>
             <p>Payment Status:
-
-              <span className={` text-white  m-2 px-2 p-1 rounded-lg  ${data.status ? 'bg-[green]' : 'bg-[#ced02b]'}`} >{data.paymentStatus ? 'Paid' : 'Waiting'}</span>
+              <span className={` text-white text-lg  m-2 px-2 p-1 rounded-lg  ${data.paymentStatus ? 'bg-[green]' : 'bg-[#bcbf20]'}`} >{data.paymentStatus ? 'Paid' : 'Waiting'}</span>
             </p>
+          </div>
+          <div className="mt-1">
+            <p>RentTye: {data.appType}</p>
           </div>
         </div>
 
         <button
-          className="outline mr-3 mt-4 w-fit bg-[#f65050ee] hover:bg-[red] text-white py-2 px-2 rounded"
+          className="outline mr-3 mt-4 w-fit bg-[#fc4a4a] hover:bg-[red] text-white py-2 px-2 rounded"
           onClick={() => handleSelect(data.appplicationId, data.homeId)}
         >
           cancel Rent

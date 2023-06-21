@@ -30,11 +30,11 @@ const Application = ({ data }) => {
 
   return (
     <div
-      className="flex oulinte-1 outline-[lightgray] items-center cursor-pointer gap-3 p-4 rounded-lg m-4"
-      style={{ boxShadow: "1px 1px 1px 1px #091240" }}
+      className="flex outline outline-[2px] outline-[lightgray] items-center cursor-pointer gap-3 p-4 rounded-lg m-4"
+      // style={{ boxShadow: "1px 1px 1px 1px #091240" }}
     >
       <div className="flex w-32 h-32 bg-gray-300 shrink-0 mr-5">
-        <img src={data.homePic} alt="" />
+        <img className="rounded-lg" src={data.homePic} alt="" />
       </div>
       <div className=" grow-0 shrink">
         <h2 className="text-xl">{data.homeTitle}</h2>
@@ -44,7 +44,7 @@ const Application = ({ data }) => {
               <span >Application type: </span> <span>{data.appType}</span>
             </p>
             <p>
-              <span>Houseowner name: </span> {data.ownerName}
+              <span>Owner name: </span> {data.ownerName}
             </p>
             <p>
               <span>Total price: </span> <span>{data.price}</span>
@@ -52,13 +52,13 @@ const Application = ({ data }) => {
           </div>
           <div className="px-2" >
             <p>
-              <span>Checkin date: </span> <span>{data.checkin}</span>
+              <span>Checkin date: </span> <span>{data.checkin ? data.checkin : "Not specified"}</span>
             </p>
             <p>
               <span>Checkout date: </span> <span>{data.checkout ? data.checkout : "Not specified"}</span>
             </p>
             <p className="pt-2">
-              <span>App Status: </span> <span className={` text-white  mx-2  p-2 rounded-xl outline  ${data.status === 'accepted' ? 'bg-[green]' : ''} ${data.status === 'completed' ? 'bg-[#4ff23d]' : ''}  ${data.status === 'rejected' ? 'bg-[red]' : ''}  ${data.status === 'pending' ? 'bg-[#dfdf0e]' : ''}`} >{data.appStatus}</span>
+              <span>App Status: </span> <span className={` text-white mx-3 pb-1 px-2 rounded-xl outline  ${data.status === 'accepted' ? 'bg-[green]' : ''} ${data.status === 'completed' ? 'bg-[#4ff23d]' : ''}  ${data.status === 'rejected' ? 'bg-[red]' : ''}  ${data.status === 'pending' ? 'bg-[#dfdf0e]' : ''}`} >{data.appStatus}</span>
             </p>
           </div>
         </div>

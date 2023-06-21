@@ -80,18 +80,16 @@ const TenantApplications = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_baseURL}/application/all`)
+      .get(`${process.env.REACT_APP_baseURL}/application/bytenant/${user._id}`)
       .then((response) => {
 
-        // filter only tenant applications
-        const filterApplicatios = response.data.filter(app => app.applicantId._id === user._id);
-        setApplications(filterApplicatios);
+        setApplications(response.data);
         // console.log("ap", applications);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [applications]);
 
   return (
     <div className="mt-1">
@@ -99,6 +97,9 @@ const TenantApplications = () => {
         List of Applications
       </p>
       {applications && applications.map((singleApp) => {
+        if (!singleApp.applicantId) {
+          return null; // Skip this application if applicantId is undefined
+        }
 
         const data = {
           homePic: singleApp.homeId.images[0],

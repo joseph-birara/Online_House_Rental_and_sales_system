@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PlacesLister from "../components/PlacesLister";
 import { useContext } from "react";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 import { UserContext } from "../contexts/UserContextProvider";
+import axios from "axios";
 
 
 const HomesList = ({ rented }) => {
 
   /// use this list of homes and take these to display these
-  const { HousesList } = useContext(UtilityContext)
+  const { HousesList, setHousesList } = useContext(UtilityContext)
   const { user } = useContext(UserContext)
+
+  useEffect(() => {
+
+    // get all houses and set to the context
+    axios.get('http://localhost:4000/houses/all')
+      .then((response) => {
+        console.log(' admin is logged in and houses is ');
+        console.log(response.data);
+        setHousesList(response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [HousesList])
 
 
   if (rented && user.userType === 'owner') {

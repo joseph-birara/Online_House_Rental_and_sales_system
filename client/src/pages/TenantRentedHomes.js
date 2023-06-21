@@ -43,18 +43,15 @@ const TenantRentedHomes = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_baseURL}/application/all`)
+      .get(`${process.env.REACT_APP_baseURL}/application/bytenant/${user._id}`)
       .then((response) => {
-
-        // filter only tenant applications
-        const filterApplicatios = response.data.filter(app => app.applicantId._id === user._id);
-        setApplications(filterApplicatios);
+        setApplications(response.data);
         // console.log("ap", applications);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [applications]);
 
   const handleSelect = (appId, homeId) => {
 
@@ -91,10 +88,7 @@ const TenantRentedHomes = () => {
   }
 
   // get homesId rented by tenant
-  const fitltedApplication = applications.filter(applica => user.applicationId.includes(applica._id) && applica.status === 'accepted');
-  // const filteredHomes = fitltedApplication.map(AAA => ({ "house": AAA.homeId, "appId": AAA._id }));
-  // console.log(' Tenant rented the following homes are ')
-  // console.log(fitltedApplication)
+  const fitltedApplication = applications.filter(applica => applica.status === 'accepted');
 
   return (
 
@@ -103,6 +97,9 @@ const TenantRentedHomes = () => {
         List of Rented Homes
       </p>
       {fitltedApplication && fitltedApplication.map((applic) => {
+        if (!applic.applicantId) {
+          return null; // Skip this application if applicantId is undefined
+        }
 
         const data = {
           homeImage: applic.homeId.images[0],

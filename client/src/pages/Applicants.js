@@ -1,60 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 import axios from "axios";
 import Dropdown from "../components/Dropdown";
 import { UserContext } from "../contexts/UserContextProvider";
 
-const Applicant = ({ singleApplication, selectHandler }) => {
+const Applicant = ({ data, selectHandler }) => {
 
   const actionOptions = ["Accept", "Reject"];
-
-  // const selectHandler = (appId, option) => {
-  //   // const app = applications.filter((a) => a.id === appId)[0];
-  //   // option = option === "Accept" ? "accepted" : "rejected";
-  //   // get home price
-  //   if (option === 'Accept') {
-  //     axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'accepted' }, {
-  //       headers: {
-  //         Authorization: `Bearer + ${token}`,
-  //       }
-  //     }).then((response) => {
-  //       console.log(' Applicatioin is accepted successfuly ');
-  //       const updateApplication = applications.map(app => {
-  //         if (app._id === appId) {
-  //           return { app, statu: 'accepted' };
-  //         }
-  //         return app;
-  //       });
-  //       setApplications(updateApplication)
-
-  //     })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   } else {
-
-  //     axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'rejected' }, {
-  //       headers: {
-  //         Authorization: `Bearer + ${token}`,
-  //       }
-  //     }).then((response) => {
-  //       // console.log(response.data);
-  //       console.log('Application is canceled successfully');
-  //       const updateApplication = applications.map(app => {
-  //         if (app._id === appId) {
-  //           return { app, statu: 'rejected' };
-  //         }
-  //         return app;
-  //       });
-  //       setApplications(updateApplication)
-  //     }).catch((error) => {
-  //       console.log(error);
-  //     });
-  //   };
-
-  // }
-
-  return (singleApplication && <div
+  return (data && <div
     className="outline outline-2 outline-[lightgray] flex justify-between items-center gap-1 p-4 rounded-lg m-4 mr-0"
     style={{ boxShadow: "0 0 1px #091240" }}
   >
@@ -62,38 +15,38 @@ const Applicant = ({ singleApplication, selectHandler }) => {
       <p>
         First Name:{" "}
         <span className="text-base font-semibold">
-          {singleApplication.applicantId.name}
+          {data.applicantName}
         </span>
       </p>
       <p>
         Last Name:{" "}
         <span className="text-base font-semibold">
-          {singleApplication.applicantId.lastName}
+          {data.applicantLastname}
         </span>
       </p>
 
       <p>
         Phone:{" "}
         <span className="text-base font-semibold">
-          {singleApplication.applicantId.phone}
+          {data.phone}
         </span>
       </p>
     </div>
     <div className="grow shrink w-fit">
       <p>
         Checkin Date:{" "}
-        {singleApplication.checkin && <span className="text-base font-semibold">{singleApplication.checkin}</span>}
+        {data.checkin && <span className="text-base font-semibold">{data.checkin}</span>}
       </p>
       <p>
         Checkout Date:{" "}
         <span className="text-base font-semibold">
-          {singleApplication.checkout ? (singleApplication.checkout) : ("Not Specified")}
+          {data.checkout ? (data.checkout) : ("Not Specified")}
         </span>
       </p>
       <p>
         Number of Guests:{" "}
         <span className="text-base font-semibold">
-          {singleApplication.numGuests}
+          {data.numGuests}
         </span>
       </p>
     </div>
@@ -102,20 +55,20 @@ const Applicant = ({ singleApplication, selectHandler }) => {
       <p>
         Visit Request Date:{" "}
         <span className="text-base font-semibold">
-          {singleApplication.visitRequest && singleApplication.visitRequest}
+          {data.visitRequest && data.visitRequest}
         </span>
       </p>
       <p className="pt-2">
         Status:{" "}
-        <span className={`text-base text-white p-1 rounded-lg font-semibold px-2 ${singleApplication.status === 'completed' ? 'bg-[#4ff23d]' : ''} ${singleApplication.status === 'accepted' ? 'bg-[green]' : ''}  ${singleApplication.status === 'rejected' ? 'bg-[red]' : ''}  ${singleApplication.status === 'pending' ? 'bg-[#dfdf0e]' : ''} font-semibold`}>{singleApplication.status}</span>
+        <span className={`text-base text-white p-1 rounded-lg font-semibold px-2 ${data.status === 'completed' ? 'bg-[#4ff23d]' : ''} ${data.status === 'accepted' ? 'bg-[green]' : ''}  ${data.status === 'rejected' ? 'bg-[red]' : ''}  ${data.status === 'pending' ? 'bg-[#dfdf0e]' : ''} font-semibold`}>{data.status}</span>
       </p>
     </div>
 
-    <div className={`${singleApplication.status !== 'pending' ? 'hidden' : ''} text-white bg-lightBlue mr-3`}>
+    <div className={`${data.status !== 'pending' ? 'hidden' : ''} text-white bg-lightBlue mr-3`}>
       <Dropdown
         actions={actionOptions}
         onSelect={selectHandler}
-        itemId={singleApplication._id}
+        itemId={data.appplicationId}
         itemType="applicant"
       />
     </div>
@@ -126,7 +79,6 @@ const Applicant = ({ singleApplication, selectHandler }) => {
 const Applicants = () => {
   const { applications, setApplications } = useContext(UtilityContext);
   const { user, token } = useContext(UserContext);
-  const actionOptions = ["Accept", "Reject"];
 
   const selectHandler = (appId, option) => {
     // get home price
@@ -173,17 +125,13 @@ const Applicants = () => {
   }
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_baseURL}/application/all`)
+    axios.get(`${process.env.REACT_APP_baseURL}/application/byOwner/${user._id}`)
       .then((response) => {
-        // console.log("aa", response.data);
-        const filterApplicatios = response.data.filter(app => app.ownerId._id === user._id);
-        setApplications(filterApplicatios);
-        console.log('applicants is clicked by owner and list of applications is');
-        console.log(filterApplicatios)
+        setApplications(response.data);
       }).catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [applications]);
 
   return (
     <div className="mt-1">
@@ -192,7 +140,24 @@ const Applicants = () => {
       </p>
       {applications &&
         applications.map((app) => {
-          return <Applicant key={app._id} singleApplication={app} selectHandler={selectHandler} />
+
+          if (!app.applicantId) {
+            return null; // Skip this application if applicantId is undefined
+          }
+
+          const data = {
+            applicantName: app.applicantId.name,
+            applicantLastname: app.applicantId.lastName,
+            phone: app.applicantId.phone,
+            checkin: app.checkin,
+            checkout: app.checkout,
+            numGuests: app.numGuests,
+            visitRequest: app.visitRequest,
+            status: app.status,
+            appplicationId: app._id,
+
+          };
+          return <Applicant key={app._id} data={data} selectHandler={selectHandler} />
         })
 
       }

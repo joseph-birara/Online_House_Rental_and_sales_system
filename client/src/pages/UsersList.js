@@ -3,6 +3,7 @@ import { useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContextProvider";
 import axios from "axios";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
+import { useState } from "react";
 
 const RentedTenantList = ({ data, handleSelect }) => {
   return (
@@ -51,25 +52,20 @@ const RentedTenantList = ({ data, handleSelect }) => {
 };
 
 const UsersList = () => {
-  const { setHousesList, applications, setApplications } =
-    useContext(UtilityContext);
+  const { setHousesList, applications, setApplications } = useContext(UtilityContext);
   const { token, user } = useContext(UserContext);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_baseURL}/application/all`)
+    axios.get(`${process.env.REACT_APP_baseURL}/application/byOwner/${user._id}`)
       .then((response) => {
-        // filter only tenant applications
-        const filterApplicatios = response.data.filter(
-          (app) => app.ownerId._id === user._id
-        );
-        setApplications(filterApplicatios);
-        // console.log("ap", applications);
-      })
-      .catch((error) => {
+        console.log("onwer list of applicatons are");
+        console.log(response.data);
+        setApplications(response.data);
+      }).catch((error) => {
         console.log(error);
       });
-  }, [user._id, setApplications]);
+  }, [applications]);
+
 
   const handleSelect = (appId, homeId) => {
     axios
@@ -111,15 +107,9 @@ const UsersList = () => {
       });
   };
 
-
   // get homesId rented by tenant
-  const fitltedApplication = applications.filter(
-    (applica) =>
-      user.applicationId.includes(applica._id) && applica.status === "accepted"
-  );
-  // const filteredHomes = fitltedApplication.map(AAA => ({ "house": AAA.homeId, "appId": AAA._id }));
-  console.log(" Tenant rented the following homes are ");
-  console.log(fitltedApplication);
+  const fitltedApplication = applications.filter((applica) => applica.status === "accepted");
+
   return (
     <div>
       <p className="text-xl font-semibold mx-4 mb-8 pb-4 border-b-1 border-[#7dd3fc]">
@@ -127,6 +117,10 @@ const UsersList = () => {
       </p>
       {fitltedApplication &&
         fitltedApplication.map((applic) => {
+
+          if (!applic.applicantId) {
+            return null; // Skip this application if applicantId is undefined
+          }
           const data = {
             tenantImage: applic.applicantId.image,
             homeTitle: applic.homeId.title,

@@ -5,7 +5,6 @@ import { UserContext } from "../../contexts/UserContextProvider";
 // import axios from "axios";
 
 export default function RegisterPage() {
-
   const [userData, setUserData] = useState({
     name: "",
     lastName: "",
@@ -17,20 +16,22 @@ export default function RegisterPage() {
     kebele: "",
     phone: "",
     userType: "",
-    image: ""
-  })
-  const [profileImage, setProfileImage] = useState('https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector-PNG.png')
-  const [imageFile, setImageFile] = useState(null)
+    image: "",
+  });
+  const [profileImage, setProfileImage] = useState(
+    "https://res.cloudinary.com/dmegiw31y/image/upload/v1687336585/HomeRental/user_avatr_qmpy1y.png"
+  );
+  const [imageFile, setImageFile] = useState(null);
   const navigate = useNavigate();
-  const { setToken, setUser } = useContext(UserContext)
+  const { setToken, setUser } = useContext(UserContext);
 
   const imageHanlder = (e) => {
-    setImageFile(e.target.files[0])// grab image file
-    setProfileImage(URL.createObjectURL(e.target.files[0])) // create a url for locall rendering
+    setImageFile(e.target.files[0]); // grab image file
+    setProfileImage(URL.createObjectURL(e.target.files[0])); // create a url for locall rendering
     // console.log(e.target.files[0]);
     // console.log(" user profile par : ");
     // console.log(profileImage);
-  }
+  };
 
   async function registerUser(e) {
     e.preventDefault();
@@ -39,121 +40,196 @@ export default function RegisterPage() {
     // console.log(imageFile);
 
     if (imageFile != null) {
-      const formdata = new FormData()
-      formdata.append('file', imageFile)
-      formdata.append('upload_preset', process.env.REACT_APP_preset_key)
-      axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_cloud_name}/image/upload`, formdata)
-        .then(response => {
+      const formdata = new FormData();
+      formdata.append("file", imageFile);
+      formdata.append("upload_preset", process.env.REACT_APP_preset_key);
+      axios
+        .post(
+          `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_cloud_name}/image/upload`,
+          formdata
+        )
+        .then((response) => {
           console.log("image uploaded successfully");
-          setUserData({ ...userData, image: response.data.secure_url })
+          setUserData({ ...userData, image: response.data.secure_url });
           // console.log(response.data.secure_url)
         })
-        .catch(erro => {
+        .catch((erro) => {
           console.log("image upload error message ");
-          console.log(erro)
-        })
+          console.log(erro);
+        });
     }
 
     // register the user to the backend
-    const userRoute = userData.userType === 'buyer' ? 'tenant' : userData.userType;
-    axios.post(`${process.env.REACT_APP_baseURL}/${userRoute}/register`, userData)
+    const userRoute =
+      userData.userType === "buyer" ? "tenant" : userData.userType;
+    axios
+      .post(`${process.env.REACT_APP_baseURL}/${userRoute}/register`, userData)
       .then((response) => {
         console.log("user register successfully ********************");
-        console.log(response.data.user)
+        console.log(response.data.user);
 
         // save the data on the context
-        setUser(response.data.user)
-        setToken(response.data.token)
+        setUser(response.data.user);
+        setToken(response.data.token);
 
         // save the data locally on the broswer
-        window.localStorage.setItem('user-data', JSON.stringify(response.data.user))
-        window.localStorage.setItem('user-token', JSON.stringify(response.data.token))
-        navigate('/')
-
-      }).catch((error) => {
+        window.localStorage.setItem(
+          "user-data",
+          JSON.stringify(response.data.user)
+        );
+        window.localStorage.setItem(
+          "user-token",
+          JSON.stringify(response.data.token)
+        );
+        navigate("/");
+      })
+      .catch((error) => {
         console.log("user registion Error-----------------");
         console.log(error);
       });
-
   }
 
   return (
-    <div className="mt-4 grow flex items-center justify-around">
-      <div className="mb-64">
+    <div className="mt-4 pb-10 w-4/6 mx-auto px-3 grow flex items-center justify-around">
+      <div className="mb-4">
         <h1 className="text-4xl text-center mb-4">Register</h1>
 
-
         {/* for image upload part  */}
-        <div className="flex flex-col items-center justify-center outline py-2">
+        <div className="flex flex-col items-center justify-center py-2">
           <img
             src={profileImage}
             alt="Selected"
-            className="h-56 object-fill outline rounded-lg "
+            className="h-56 object-fill outline outline-lightBlue rounded-lg "
           />
 
-          <label htmlFor="image-input" className="  cursor-pointer bg-lightBlue mt-2 text-white p-1.5 hover:bg-lbHover  rounded-md">
-            set Profile Picture
+          <label
+            htmlFor="image-input"
+            className=" cursor-pointer bg-lightBlue mt-2  text-white p-1.5 hover:bg-lbHover  rounded-md"
+          >
+            <p className="mx-5">set Profile Picture</p>
           </label>
-          <input type="file" id="image-input" className="hidden" onChange={imageHanlder} />
-
+          <input
+            required
+            type="file"
+            id="image-input"
+            className="hidden"
+            onChange={imageHanlder}
+          />
         </div>
 
+        <form className=" mx-auto px-5 py-2" onSubmit={registerUser}>
+          <div className="flex gap-x-2 justify-around">
+            <div>
+              <input
+                type="text"
+                required
+                placeholder="first name"
+                value={userData.name}
+                onChange={(e) =>
+                  setUserData({ ...userData, name: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                required
+                placeholder="last name"
+                value={userData.lastName}
+                onChange={(e) =>
+                  setUserData({ ...userData, lastName: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                required
+                placeholder="city"
+                value={userData.city}
+                onChange={(e) =>
+                  setUserData({ ...userData, city: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                required
+                placeholder="subcity"
+                value={userData.subcity}
+                onChange={(e) =>
+                  setUserData({ ...userData, subcity: e.target.value })
+                }
+              />
 
-        <form className="max-w-md mx-auto" onSubmit={registerUser}>
-          <input
-            type="text"
-            placeholder="first name"
-            value={userData.name}
-            onChange={e => setUserData({ ...userData, name: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="last name"
-            value={userData.lastName}
-            onChange={(e) => setUserData({ ...userData, lastName: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="city"
-            value={userData.city}
-            onChange={(e) => setUserData({ ...userData, city: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="subcity"
-            value={userData.subcity}
-            onChange={(e) => setUserData({ ...userData, subcity: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="woreda"
-            value={userData.woreda}
-            onChange={(e) => setUserData({ ...userData, woreda: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="kebele"
-            value={userData.kebele}
-            onChange={(e) => setUserData({ ...userData, kebele: e.target.value })}
-          />
-          <input
-            type="number"
-            placeholder="phone"
-            value={userData.phone}
-            onChange={(e) => setUserData({ ...userData, phone: e.target.value })}
-          />
-          <input
-            type="email"
-            placeholder="your@email.com"
-            value={userData.email}
-            onChange={(e) => setUserData({ ...userData, email: e.target.value })}
-          />
-          <input
-            type="password"
-            placeholder="password"
-            value={userData.password}
-            onChange={(e) => setUserData({ ...userData, password: e.target.value })}
-          />
+              <input
+                type="text"
+                required
+                placeholder="woreda"
+                value={userData.woreda}
+                onChange={(e) =>
+                  setUserData({ ...userData, woreda: e.target.value })
+                }
+              />
+            </div>
+
+            <div>
+              <input
+                type="text"
+                required
+                placeholder="kebele"
+                value={userData.kebele}
+                onChange={(e) =>
+                  setUserData({ ...userData, kebele: e.target.value })
+                }
+              />
+              <input
+                type="number"
+                required
+                placeholder="phone"
+                value={userData.phone}
+                onChange={(e) =>
+                  setUserData({ ...userData, phone: e.target.value })
+                }
+              />
+              <input
+                type="email"
+                required
+                placeholder="your@email.com"
+                value={userData.email}
+                onChange={(e) =>
+                  setUserData({ ...userData, email: e.target.value })
+                }
+              />
+              <input
+                type="password"
+                required
+                placeholder="password"
+                value={userData.password}
+                onChange={(e) =>
+                  setUserData({ ...userData, password: e.target.value })
+                }
+              />
+            </div>
+          </div>
+
+          <div className="mt-1">
+            <input required className="" id="agreement" type="checkbox" />
+            <label htmlFor="">
+              {" "}
+              By signing this up you agree to our
+              <Link
+                className="underline text-lightBlue mx-1 text-black"
+                to={"#"}
+              >
+                Privacy Policy
+              </Link>
+              and
+              <Link
+                className="underline  text-lightBlue mx-1  text-black"
+                to={"#"}
+              >
+                Terms of Services
+              </Link>{" "}
+              .{" "}
+            </label>
+          </div>
+
           <div className="my-4">
             <p className="font-medium">Who are you?</p>
             <div className="flex gap-4">
@@ -162,7 +238,9 @@ export default function RegisterPage() {
                   type="radio"
                   name="owner"
                   checked={userData.userType === "owner"}
-                  onChange={(e) => setUserData({ ...userData, userType: "owner" })}
+                  onChange={(e) =>
+                    setUserData({ ...userData, userType: "owner" })
+                  }
                 />
                 <span>Homeowner</span>
               </label>
@@ -171,7 +249,9 @@ export default function RegisterPage() {
                   type="radio"
                   name="tenant"
                   checked={userData.userType === "tenant"}
-                  onChange={(e) => setUserData({ ...userData, userType: "tenant" })}
+                  onChange={(e) =>
+                    setUserData({ ...userData, userType: "tenant" })
+                  }
                 />
                 <span>Tenant</span>
               </label>
@@ -179,14 +259,17 @@ export default function RegisterPage() {
                 <input
                   type="radio"
                   name="buyer"
+                  required
                   checked={userData.userType === "buyer"}
-                  onChange={(e) => setUserData({ ...userData, userType: "buyer" })}
+                  onChange={(e) =>
+                    setUserData({ ...userData, userType: "buyer" })
+                  }
                 />
                 <span>Buyer</span>
               </label>
             </div>
           </div>
-          <button className="primary bg-lightBlue hover:bg-lbHover mt-4">
+          <button className="primary w-1/4 mx-auto bg-lightBlue hover:bg-lbHover mt-4">
             Register
           </button>
           <div className="text-center py-2 text-gray-500">

@@ -30,16 +30,16 @@ const Application = ({ data }) => {
 
   return (
     <div
-      className="flex outline outline-[2px] outline-[lightgray] items-center cursor-pointer gap-3 p-4 rounded-lg m-4"
-      // style={{ boxShadow: "1px 1px 1px 1px #091240" }}
+      className="outline outline-[2px] outline-[lightgray]  flex justify-start items-center  gap-1 p-2 rounded-lg m-4 "
+    // style={{ boxShadow: "1px 1px 1px 1px #091240" }}
     >
-      <div className="flex w-32 h-32 bg-gray-300 shrink-0 mr-5">
+      <div className="w-1/6 bg-gray-300 ml-2">
         <img className="rounded-lg" src={data.homePic} alt="" />
       </div>
-      <div className=" grow-0 shrink">
+      <div className="grow-0 shrink px-1 p-1 ml-1">
         <h2 className="text-xl">{data.homeTitle}</h2>
-        <div className=" flex gap-5 justify-around">
-          <div className="px-2 mx-2">
+        <div className=" flex justify-start gap-4">
+          <div className="mx-2">
             <p>
               <span >Application type: </span> <span>{data.appType}</span>
             </p>

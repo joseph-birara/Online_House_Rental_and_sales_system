@@ -55,6 +55,8 @@ const DetailsPage = () => {
       {/* Display User */}
 
       <div className="mx-10 mb-10 ">
+        <h1> The detail page and should access the global context </h1>
+        <h1> But it is using hardcoded data</h1>
         {/** user deatil container */}
         <div className="bg-white  rounded-lg shadow-xl">
           {/* for profile header */}

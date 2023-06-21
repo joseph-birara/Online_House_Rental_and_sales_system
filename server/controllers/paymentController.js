@@ -6,7 +6,17 @@ const generateRandomCharacterSet = require("../authController/randomCharater");
 const pay = async (req, res) => {
   const randomChar = generateRandomCharacterSet();
 
-  const { email, name, phone, amount, reciepentId, homeId, payerId } = req.body;
+  const {
+    email,
+    name,
+    phone,
+    amount,
+    reciepentId,
+    homeId,
+    payerId,
+    lastName,
+    return_url,
+  } = req.body;
   const payment = await paymentModel.create({
     email: email,
     amount: amount,
@@ -28,11 +38,11 @@ const pay = async (req, res) => {
       currency: "ETB",
       email: email,
       first_name: name,
-      last_name: "Gizachew",
+      last_name: lastName,
       phone_number: phone,
       tx_ref: randomChar,
       callback_url: "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
-      return_url: "https://www.google.com/", // order
+      return_url: return_url,
       "customization[title]": "Payment for my favourite merchant",
       "customization[description]": "I love online payments",
     }),
@@ -69,7 +79,7 @@ const pay = async (req, res) => {
 const verifyPayment = async (req, res) => {
   const { payerId } = req.params;
   const payment = await paymentModel
-    .findOne({ payerId: id })
+    .findOne({ payerId: payerId })
     .sort({ _id: -1 })
     .limit(1);
   var options = {

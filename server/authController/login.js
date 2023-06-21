@@ -25,6 +25,9 @@ async function login(req, res, userModel, useType) {
       await sendEmail(email, subject, text);
       return res.json({ message: "please activate account" });
     }
+    if (user.suspended) {
+      return res.status(201).send("Your Account is suspended");
+    }
     const token = generateToken(user._id);
     return res.json({ token: token, user: user });
   } catch (error) {

@@ -9,6 +9,10 @@ const paymentSchema = new mongoose.Schema(
     payerId: ObjectId,
     phone: String,
     email: String,
+    verified: {
+      type: Boolean,
+      default: false,
+    },
     randomChar: {
       type: String,
       default: "",

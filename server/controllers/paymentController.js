@@ -4,11 +4,21 @@ const generateRandomCharacterSet = require("../authController/randomCharater");
 const applicationModel = require("../models/applicantModel");
 
 //functions to process pyment
+// application id from front i=end is used as unique character her
 const pay = async (req, res) => {
   const randomChar = generateRandomCharacterSet();
 
-  const { email, name, phone, amount, reciepentId, homeId, payerId, lastName } =
-    req.body;
+  const {
+    email,
+    name,
+    phone,
+    amount,
+    reciepentId,
+    homeId,
+    payerId,
+    lastName,
+    applicationId,
+  } = req.body;
   const payment = await paymentModel.create({
     email: email,
     amount: amount,
@@ -16,7 +26,7 @@ const pay = async (req, res) => {
     payerId: payerId,
     reciepentId: reciepentId,
     homeId: homeId,
-    randomChar: randomChar,
+    randomChar: applicationId,
   });
   var options = {
     method: "POST",
@@ -32,9 +42,9 @@ const pay = async (req, res) => {
       first_name: name,
       last_name: lastName,
       phone_number: phone,
-      tx_ref: randomChar,
+      tx_ref: applicationId,
       callback_url: "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
-      return_url:  `http://localhost:3000/tenant/pay/${applicationId}`,
+      return_url: `http://localhost:3000/tenant/pay/${applicationId}`,
       "customization[title]": "Payment for my favourite merchant",
       "customization[description]": "I love online payments",
     }),
@@ -49,9 +59,11 @@ const pay = async (req, res) => {
     if (responseBody.status == "failed") {
       return res.status(201).json({ status: "failed", data: null });
     }
-    return res
-      .status(200)
-      .json({ status: "success", data: responseBody.data.checkout_url });
+    return res.status(200).json({
+      status: "success",
+      data: responseBody.data.checkout_url,
+      applicationId: applicationId,
+    });
   });
 
   // user identify by the cookie
@@ -74,14 +86,14 @@ const pay = async (req, res) => {
 };
 //verfi payment chappa second api
 const verifyPayment = async (req, res) => {
-  const { payerId } = req.body;
-  const payment = await paymentModel
-    .findOne({ payerId: payerId })
-    .sort({ _id: -1 })
-    .limit(1);
+  const { applicationId } = req.body;
+  // const payment = await paymentModel
+  //   .findOne({ randomChar: applicationId })
+  //   .sort({ _id: -1 })
+  //   .limit(1);
   var options = {
     method: "GET",
-    url: `https://api.chapa.co/v1/transaction/verify/${payment.randomChar}`,
+    url: `https://api.chapa.co/v1/transaction/verify/${applicationId}`,
     headers: {
       Authorization: "Bearer CHASECK_TEST-1wysCA5FZesSOAlsuCc9bHiNzFU7Y9bp",
     },
@@ -99,7 +111,7 @@ const verifyPayment = async (req, res) => {
       return res.status(201).json({ status: "failed", data: null });
     }
     const updatedApplication = applicationModel.findOne({
-      homeId: payment.homeId,
+      _id: applicationId,
     });
     updatedApplication.paymentStatus = true;
     updatedApplication.save();

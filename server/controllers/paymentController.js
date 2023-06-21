@@ -7,6 +7,7 @@ const applicationModel = require("../models/applicantModel");
 // application id from front i=end is used as unique character her
 const pay = async (req, res) => {
   const randomChar = generateRandomCharacterSet();
+  console.log(req.body);
 
   const {
     email,
@@ -26,7 +27,8 @@ const pay = async (req, res) => {
     payerId: payerId,
     reciepentId: reciepentId,
     homeId: homeId,
-    randomChar: applicationId,
+    randomChar: randomChar,
+    applicationId: applicationId
   });
   var options = {
     method: "POST",
@@ -41,8 +43,8 @@ const pay = async (req, res) => {
       email: email,
       first_name: name,
       last_name: lastName,
-      phone_number: phone,
-      tx_ref: applicationId,
+      phone_number: "0908080808",
+      tx_ref: applicationId + randomChar,
       callback_url: "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
       return_url: `http://localhost:3000/tenant/pay/${applicationId}`,
       "customization[title]": "Payment for my favourite merchant",
@@ -86,37 +88,15 @@ const pay = async (req, res) => {
 };
 //verfi payment chappa second api
 const verifyPayment = async (req, res) => {
-  const { applicationId } = req.body;
-  // const payment = await paymentModel
-  //   .findOne({ randomChar: applicationId })
-  //   .sort({ _id: -1 })
-  //   .limit(1);
-  var options = {
-    method: "GET",
-    url: `https://api.chapa.co/v1/transaction/verify/${applicationId}`,
-    headers: {
-      Authorization: "Bearer CHASECK_TEST-1wysCA5FZesSOAlsuCc9bHiNzFU7Y9bp",
-    },
-  };
-  request(options, function (error, response) {
-    if (error) {
-      console.log(error);
-      return res.status(400).josn({ status: "failed", data: null });
-    }
-    const verfyResponse = JSON.parse(response.body);
-    console.log(response.body);
-    // if verfy is success
-    //uppdate the payment status
-    if (verfyResponse.status == "failed") {
-      return res.status(201).json({ status: "failed", data: null });
-    }
-    const updatedApplication = applicationModel.findOne({
-      _id: applicationId,
-    });
-    updatedApplication.paymentStatus = true;
-    updatedApplication.save();
-    return res.status(200).json({ status: "saccess", data: null });
+  const { id } = req.body;
+
+  const updatedApplication = applicationModel.findOne({
+    _id: id,
   });
+  updatedApplication.paymentStatus = true;
+  updatedApplication.save();
+  return res.status(200).json({ status: "saccess", data: null });
+
 };
 const deletePayment = async (req, res) => {
   console.log("delete function called");
@@ -155,7 +135,7 @@ const getSingle = async (req, res) => {
     if (!payment) {
       return res.status(401).json;
     }
-  } catch (error) {}
+  } catch (error) { }
 };
 
 module.exports = {

@@ -1,22 +1,14 @@
 const paymentModel = require("../models/paymentModel");
 var request = require("request");
 const generateRandomCharacterSet = require("../authController/randomCharater");
+const applicationModel = require("../models/applicantModel");
 
 //functions to process pyment
 const pay = async (req, res) => {
   const randomChar = generateRandomCharacterSet();
 
-  const {
-    email,
-    name,
-    phone,
-    amount,
-    reciepentId,
-    homeId,
-    payerId,
-    lastName,
-    return_url,
-  } = req.body;
+  const { email, name, phone, amount, reciepentId, homeId, payerId, lastName } =
+    req.body;
   const payment = await paymentModel.create({
     email: email,
     amount: amount,
@@ -42,7 +34,7 @@ const pay = async (req, res) => {
       phone_number: phone,
       tx_ref: randomChar,
       callback_url: "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
-      return_url: return_url,
+      return_url: "http://localhost:3000",
       "customization[title]": "Payment for my favourite merchant",
       "customization[description]": "I love online payments",
     }),
@@ -50,11 +42,16 @@ const pay = async (req, res) => {
   request(options, function (error, response) {
     if (error) {
       console.log(error);
-      return res.status(500).json({ error: "An error occurred" });
+      return res.status(500).json({ status: "failed", data: null });
     }
     const responseBody = JSON.parse(response.body);
-    console.log(responseBody.data);
-    return res.status(200).json({ link_url: responseBody.data.checkout_url });
+    console.log(responseBody);
+    if (responseBody.status == "failed") {
+      return res.status(201).json({ status: "failed", data: null });
+    }
+    return res
+      .status(200)
+      .json({ status: "success", data: responseBody.data.checkout_url });
   });
 
   // user identify by the cookie
@@ -90,8 +87,23 @@ const verifyPayment = async (req, res) => {
     },
   };
   request(options, function (error, response) {
-    if (error) throw new Error(error);
+    if (error) {
+      console.log(error);
+      return res.status(400).josn({ status: "failed", data: null });
+    }
+    const verfyResponse = JSON.parse(response.body);
     console.log(response.body);
+    // if verfy is success
+    //uppdate the payment status
+    if (verfyResponse.status == "failed") {
+      return res.status(201).json({ status: "failed", data: null });
+    }
+    const updatedApplication = applicationModel.findOne({
+      homeId: payment.homeId,
+    });
+    updatedApplication.paymentStatus = true;
+    updatedApplication.save();
+    return res.status(200).json({ status: "saccess", data: null });
   });
 };
 const deletePayment = async (req, res) => {

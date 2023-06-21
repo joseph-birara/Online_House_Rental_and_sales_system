@@ -9,7 +9,9 @@ const paymentSchema = new mongoose.Schema(
     payerId: ObjectId,
     phone: String,
     email: String,
-    applicationId: String,
+    applicationId: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
     randomChar: {
       type: String,
       default: "",

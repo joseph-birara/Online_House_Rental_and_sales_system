@@ -11,7 +11,7 @@ const {
 const { route } = require("./commentRoutes");
 
 router.post("/pay", pay);
-router.get("/verify/:payerId", verifyPayment);
+router.post("/verify", verifyPayment);
 router.delete("/delete/:id", deletePayment);
 router.get("/single/:id", getSingle);
 

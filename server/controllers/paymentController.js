@@ -74,7 +74,7 @@ const pay = async (req, res) => {
 };
 //verfi payment chappa second api
 const verifyPayment = async (req, res) => {
-  const { payerId } = req.params;
+  const { payerId } = req.body;
   const payment = await paymentModel
     .findOne({ payerId: payerId })
     .sort({ _id: -1 })

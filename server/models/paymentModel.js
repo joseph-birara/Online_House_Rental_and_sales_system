@@ -8,6 +8,8 @@ const paymentSchema = new mongoose.Schema(
     homeId: ObjectId,
     payerId: ObjectId,
     phone: String,
+    name: String,
+    lastName: String,
     email: String,
     applicationId: {
       type: mongoose.Schema.Types.ObjectId,

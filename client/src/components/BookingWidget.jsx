@@ -3,7 +3,6 @@ import { differenceInCalendarDays } from "date-fns";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContextProvider";
 import axios from "axios";
-import { UtilityContext } from "../contexts/UtilityContextProvide";
 
 export default function BookingWidget({ place }) {
   const [checkIn, setCheckIn] = useState("");
@@ -13,7 +12,6 @@ export default function BookingWidget({ place }) {
   const [redirect, setRedirect] = useState("");
 
   const { user, token } = useContext(UserContext);
-  const { setApplications } = useContext(UtilityContext);
 
   let numberOfNights = 0;
   if (checkIn && checkOut) {
@@ -58,23 +56,8 @@ export default function BookingWidget({ place }) {
         if (response.data.message === "application sent!") {
           // set applicaton list and make request
           console.log("successyly sent ********************");
-          axios
-            .get("http://localhost:4000/rent/all")
-            .then((response) => {
-              
-              // first redirect for first
-              setRedirect(`/tenant/applications`);
-
-              console.log(" acceptedApplication Lists  ");
-              const filterApplicatios = response.data.filter(
-                (app) => app.applicantId._id === user._id
-              );
-              setApplications(filterApplicatios);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-
+          // first redirect for first
+          setRedirect(`/tenant/applications`);
           // setApplications();
         } else {
           alert(response.data);

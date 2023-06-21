@@ -65,10 +65,13 @@ const pay = async (req, res) => {
   //   return res.status(501).json(error);
   // }
 };
-//verfi payment chapp second api
+//verfi payment chappa second api
 const verifyPayment = async (req, res) => {
-  const { payerId } = req.body;
-  const payment = await paymentModel.findOne({ payerId: id });
+  const { payerId } = req.params;
+  const payment = await paymentModel
+    .findOne({ payerId: id })
+    .sort({ _id: -1 })
+    .limit(1);
   var options = {
     method: "GET",
     url: `https://api.chapa.co/v1/transaction/verify/${payment.randomChar}`,
@@ -126,4 +129,5 @@ module.exports = {
   deletePayment,
   editPayment,
   getSingle,
+  verifyPayment,
 };

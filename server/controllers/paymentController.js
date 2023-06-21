@@ -90,11 +90,22 @@ const pay = async (req, res) => {
 const verifyPayment = async (req, res) => {
   const { id } = req.body;
 
-  const updatedApplication = applicationModel.findOne({
-    _id: id,
-  });
-  updatedApplication.paymentStatus = true;
-  updatedApplication.save();
+  // const updatedApplication = applicationModel.findOne({
+  //   _id: id,
+  // });
+  // updatedApplication.paymentStatus = true;
+  // updatedApplication.save();
+  try {
+    const updatedApplication = await applicationModel.findOneAndUpdate(
+      { _id: id },
+      { $set: { paymentStatus: true } },
+      { new: true }
+    );
+    console.log('Application updated successfully:', updatedApplication);
+  } catch (error) {
+    console.log('Error updating application:', error);
+  }
+
   return res.status(200).json({ status: "saccess", data: null });
 
 };

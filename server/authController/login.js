@@ -10,11 +10,11 @@ async function login(req, res, userModel, useType) {
   try {
     const user = await userModel.findOne({ email });
     if (!user) {
-      return res.status(400).json({ error: "Invalid email or password" });
+      return res.status(200).json({ error: "Invalid email or password" });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ error: "Invalid email or password" });
+      return res.status(200).json({ error: "Invalid email or password" });
     }
     if (!user.accountStatus) {
       //resend the mail to verify account

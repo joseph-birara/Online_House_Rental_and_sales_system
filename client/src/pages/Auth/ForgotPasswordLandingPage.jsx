@@ -91,7 +91,7 @@ export default function ForgotPasswordLandingPage({ isAdmin }) {
           />
 
           {/* for user choice */}
-          <div className="my-4">
+          {!isAdmin && <div className="my-4">
             <p className="font-medium">Who are you?</p>
             <fieldset className="flex gap-6">
               <label>
@@ -126,7 +126,7 @@ export default function ForgotPasswordLandingPage({ isAdmin }) {
                 <span>Buyer</span>
               </label>
             </fieldset>
-          </div>
+          </div>}
 
           <Link className="underline text-lightBlue text-black" to={"/login"}>
             back to login

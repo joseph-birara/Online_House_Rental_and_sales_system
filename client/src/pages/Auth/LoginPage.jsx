@@ -220,7 +220,7 @@ export default function LoginPage({ isAdmin }) {
             </div>
           )}
 
-          <Link className="underline text-lightBlue text-black" to={"#"}>
+          <Link className="underline text-lightBlue text-black" to={"/forgetpassword"}>
             Forgot passowrd
           </Link>
 

@@ -19,7 +19,7 @@ const verifyEmail = async (req, res, userModel) => {
     user.accountStatus = true;
     await user.save();
     const htmlElementWithLink = `
-  <a href="https:/google.com/">
+  <a href="http://localhost:3000/login/">
     <button>Go to Other Page</button>
   </a>
 `;

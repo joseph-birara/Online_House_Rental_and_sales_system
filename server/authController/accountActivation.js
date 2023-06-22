@@ -10,8 +10,8 @@ const verifyEmail = async (req, res, userModel) => {
       expiresAt: { $gt: Date.now() },
     });
     console.log(userToken);
-    if (!userToken) {
-      return res.status(400).json({ error: "Invalid or expired token." });
+    if (!userToken || userToken.expiresAt < Date.now()) {
+      return res.status(200).send("Invalid or expired token.");
     }
 
     // Update the account status to active
@@ -26,7 +26,7 @@ const verifyEmail = async (req, res, userModel) => {
 
     res.status(200).send(htmlElementWithLink);
   } catch (err) {
-    res.status(500).json({ error: "Something went wrong." });
+    res.status(400).send("Something went wrong.");
   }
 };
 

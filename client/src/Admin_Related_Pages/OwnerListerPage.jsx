@@ -1,4 +1,4 @@
-import React, { useContext, useId, useState } from 'react';
+import React, { useContext, useEffect, useId, useState } from 'react';
 import { UserContext } from '../contexts/UserContextProvider';
 import { UtilityContext } from '../contexts/UtilityContextProvide';
 import axios from 'axios';
@@ -9,7 +9,19 @@ const OwnerListerPage = () => {
     const { OwnersList, setOwnersList } = useContext(UtilityContext)
     const altenativeImageLink = "https://thumbs.dreamstime.com/b/user-blue-icon-member-service-43464682.jpg"
     const [selectedOption, setSelectionOption] = useState('')
-    const handleActionChange = (USERID, action, status) => {
+    useEffect(() => {
+        // get all houses and set to the context
+        axios.get('http://localhost:4000/owner/all')
+            .then((response) => {
+                console.log(' admin is on the tenant list pages ');
+                setOwnersList(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    const handleActionChange = (USERID, action, status, isSuspended) => {
 
         setSelectionOption('')
         if (action === 'delete') {
@@ -28,9 +40,15 @@ const OwnerListerPage = () => {
                 console.log(error.message);
             });
         }
-        else if (action === 'activate') {
+        else if (action === 'activate' || action === 'suspend') {
             console.log('pressed activate button');
-            const ownerData = { id: USERID, accountStatus: !status }
+            const ownerData = { id: USERID }
+
+            if (action === 'activate') {
+                ownerData.accountStatus = !status;
+            } else {
+                ownerData.suspended = !isSuspended;
+            }
 
             axios.put(`http://localhost:4000/owner/update`, ownerData, {
                 headers: {
@@ -41,15 +59,27 @@ const OwnerListerPage = () => {
                 // update the context
                 console.log("updated successfully");
                 console.log(response.data);
-                setOwnersList(prev => {
-                    return prev.map(user => {
-                        if (user._id === USERID) {
-                            return { ...user, accountStatus: ownerData.accountStatus }
-                        }
-                        return user;
-                    })
+                if (action === 'activate') {
+                    setOwnersList(prev => {
+                        return prev.map(user => {
+                            if (user._id === USERID) {
+                                return { ...user, accountStatus: ownerData.accountStatus }
+                            }
+                            return user;
+                        })
+                    });
+                } else {
 
-                });
+                    setOwnersList(prev => {
+                        return prev.map(user => {
+                            if (user._id === USERID) {
+                                return { ...user, suspended: ownerData.suspended }
+                            }
+                            return user;
+                        })
+
+                    });
+                }
 
                 console.log(OwnersList);
                 // return <Navigate to={"/homeOwner/homes/onListing"} />;
@@ -63,34 +93,28 @@ const OwnerListerPage = () => {
     return (
         <div>
             {OwnersList.length > 0 && OwnersList.map((user) => (
-                <div key={user.id} className=" border border-[#cccaca] 11/12 mx-auto  rounded flex flex-row items-center mb-3">
-                    <div className=" rounded bg-gray-300 mx-3">
+                <div key={user.id} className="border border-[#cccaca] 11/12 mx-auto rounded flex flex-row items-center mb-3">
+                    <div className="rounded bg-gray-300 mx-3">
                         <img
                             src={user.image || altenativeImageLink}
-                            alt={""}
+                            alt=""
                             className="w-28 h-28 rounded object-cover"
                         />
                     </div>
 
-                    <div className=" ml-2 flex justify-evenly gap-x-3 ">
-                        <div className=''>
+                    <div className="ml-2 flex justify-start gap-x-3">
+                        <div>
                             <p>First Name: <span className="ml-1 text-base font-semibold">{user.name}</span></p>
-                            <p>
-                                Last Name: <span className="ml-1 text-base font-semibold">{user.lastName}</span>
-                            </p>
+                            <p>Last Name: <span className="ml-1 text-base font-semibold">{user.lastName}</span></p>
                         </div>
 
-                        <div className=' ml-2'>
-                            <p>
-                                Email: <span className="  ml-1 text-base font-semibold">{user.email}</span>
-                            </p>
-                            <p className='flex'>
+                        <div >
+                            <p>Email: <span className="ml-1 text-base font-semibold">{user.email}</span></p>
+                            <p className="flex">
                                 Acc. Status:
-
                                 <div className="ml-3 flex justify-center items-center">
-
                                     <svg
-                                        className={`w-4 h-4 mr-1.5 ${user.accountStatus ? 'text-[#38A169]' : 'text-[#DC2626]'}   dark:text-green-400 flex-shrink-0`}
+                                        className={`w-4 h-4 mr-1.5 ${user.accountStatus ? 'text-[#38A169]' : 'text-[#DC2626]'} dark:text-green-400 flex-shrink-0`}
                                         fill="currentColor"
                                         viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -101,48 +125,35 @@ const OwnerListerPage = () => {
                                             clipRule="evenodd"
                                         ></path>
                                     </svg>
-                                    <p> {user.accountStatus ? 'active' : 'inactive'} </p>
+                                    <p>{user.accountStatus ? 'active' : 'inactive'}</p>
                                 </div>
-
-
                             </p>
                         </div>
 
-                        <div className=' ml-2'>
-                            <p>
-                                City:<span className="ml-1 text-base font-semibold">{user.city}</span>
-                            </p>
-                            <p>
-                                Subcity: <span className="ml-1 text-base font-semibold">{user.subcity}</span>
-                            </p>
+                        <div className="">
+                            <p>City:<span className="ml-1 text-base font-semibold">{user.city}</span></p>
+                            <p>Subcity: <span className="ml-1 text-base font-semibold">{user.subcity}</span></p>
                         </div>
 
-
-                        <div className='mx-2'>
-                            <p>
-                                Kebele: <span className="ml-1 text-base font-semibold">{user.kebele}</span>
+                        <div >
+                            <p className={`flex w-fit  px-1 outline outline-[2px] ${user.suspended ? 'outline-[#de1414] text-[#de1414]' : 'outline-[008000] text-[#008000]'} justify-center rounded-lg`}>
+                                {user.suspended ? 'Suspended' : 'Not-suspended'}
                             </p>
-                            <p>
-                                Phone: <span className="ml-1 text-base font-semibold">{user.phone}</span>
-                            </p>
+                            <p>Phone: <span className="ml-1 text-base font-semibold">{user.phone}</span></p>
                         </div>
-
                     </div>
 
                     <select
-                        className=" outline ml-auto mr-10 bg-lightBlue hover:bg-lbHover text-white py-2 px-2 rounded"
                         value={selectedOption}
+                        className="outline ml-auto mr-10 bg-lightBlue hover:bg-lbHover text-white py-2 px-2 rounded"
                         onChange={(e) => {
-                            // user.accountStatus = e.target.value === 'activate' ? !user.accountStatus : user.accountStatus
-                            handleActionChange(user._id, e.target.value, user.accountStatus)
+                            handleActionChange(user._id, e.target.value, user.accountStatus, user.suspended);
                         }}
                     >
                         <option value="">Select Action</option>
-                        <option value="delete"> Delete</option>
-                        <option value="activate">
-                            {user.accountStatus ? 'Deactivate' : 'Activate'}
-                        </option>
-
+                        <option value="delete">Delete</option>
+                        <option value="activate">{user.accountStatus ? 'Deactivate' : 'Activate'}</option>
+                        <option value="suspend">{user.accountStatus ? 'Unsuspend' : 'Suspend'}</option>
                     </select>
                 </div>
             ))}

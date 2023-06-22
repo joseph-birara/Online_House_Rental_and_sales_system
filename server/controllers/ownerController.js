@@ -71,7 +71,7 @@ const registerOwner = async (req, res) => {
   // Check if email is already taken
   const isTaken = await ownerModel.findOne({ email });
   if (isTaken) {
-    return res.status(401).json({ error: "email is taken" });
+    return res.status(401).send("Your email is already taken, use another");
   }
 
   // Hash password
@@ -118,18 +118,19 @@ const registerOwner = async (req, res) => {
     const token = generateToken(owner._id);
     console.log(owner[0]);
 
-    res.status(200).json({
-      token: token,
-      user: owner[0],
-      message:
-        "owner registered successfully. Please check your email for verification.",
-    });
+    // res.status(200).json({
+    //   token: token,
+    //   user: owner[0],
+    //   message:
+    //     "owner registered successfully. Please check your email for verification.",
+    // });
+    res.status(200).send("check you email");
   } catch (err) {
     if (session) {
       await session.abortTransaction(); // rollback the transaction if an error occurs
       session.endSession(); // end the session
     }
-    res.status(400).json({ error: err.message });
+    res.status(400).send(err.message);
   } finally {
     if (session) {
       session.endSession(); // end the session
@@ -155,7 +156,7 @@ const deleteOwner = async (req, res) => {
     const owner = await ownerModel.findById(id);
 
     if (!owner) {
-      return res.status(400).json({ error: "No such owner" });
+      return res.status(400).send("No such owner");
     }
 
     // Delete houses associated with the owner

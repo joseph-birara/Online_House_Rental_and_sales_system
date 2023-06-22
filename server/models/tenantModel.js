@@ -7,11 +7,11 @@ const tenantSchema = new Schema(
       type: String,
       required: true,
     },
-    suspended: {
+    suspended: { ///
       type: Boolean,
       default: false,
     },
-    accountStatus: {
+    accountStatus: {// for email activation
       type: Boolean,
       default: false,
     },

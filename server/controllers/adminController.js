@@ -57,7 +57,7 @@ const addAdmin = async (req, res) => {
   const image = data.image;
   const isTaken = await adminModel.findOne({ email });
   if (isTaken) {
-    return res.status(401).json({ error: "email is taken" });
+    return res.status(200).send("Your email is already taken, use another");
   }
 
   console.log("body", password);
@@ -81,7 +81,7 @@ const addAdmin = async (req, res) => {
     const token = generateToken(admin._id);
     res.status(200).json({ user: admin, token: token });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).send(err.message);
   }
 };
 

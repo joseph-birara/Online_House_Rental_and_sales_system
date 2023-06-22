@@ -118,12 +118,13 @@ const registerOwner = async (req, res) => {
     const token = generateToken(owner._id);
     console.log(owner[0]);
 
-    res.status(200).json({
-      token: token,
-      user: owner[0],
-      message:
-        "owner registered successfully. Please check your email for verification.",
-    });
+    // res.status(200).json({
+    //   token: token,
+    //   user: owner[0],
+    //   message:
+    //     "owner registered successfully. Please check your email for verification.",
+    // });
+    res.status(200).send("check you email");
   } catch (err) {
     if (session) {
       await session.abortTransaction(); // rollback the transaction if an error occurs

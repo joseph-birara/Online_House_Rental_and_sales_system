@@ -31,12 +31,14 @@ import MaintenanceRequests from "./pages/MaintenanceRequests";
 import NewMRequest from "./pages/NewMRequest";
 import UpdateProfilePage from "./pages/Auth/UpdateProfile";
 import TenantRentedHomes from "./pages/TenantRentedHomes";
-import ValidatePayment from "./pages/Auth/ValidatePayment";
+// import ValidatePayment from "./pages/Auth/ValidatePayment";
 import PaymentSuccessMessage from "./pages/Auth/PaymentSuccess";
 import PaymentFailedMessage from "./pages/Auth/PaymentFail";
 import ActivateEmail from "./pages/Auth/ActivateEmailMessage";
 import ActivateEmailMessage from "./pages/Auth/ActivateEmailMessage";
 import VerifyEmail from "./pages/Auth/VerifyEmail";
+import ForgotPasswordLandingPage from "./pages/Auth/ForgotPasswordLandingPage";
+import PasswordResetPage from "./pages/Auth/PasswordResetPage";
 
 function App() {
   return (
@@ -54,13 +56,21 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/buy" element={<Buy />} />
                 <Route path="/rent" element={<HomesListing />} />
-                {/* <Route path="/forgetpassword" element={<HomesListing />} /> */}
                 <Route path="/updateProfile" element={<UpdateProfilePage />} />
                 <Route path="/homeDetails/:id" element={<HomeDetails />} />
-                <Route path="payment/success" element={<PaymentSuccessMessage />} />
-                <Route path="payment/fail" element={<PaymentFailedMessage />} />
+
+                {/* activate and verify email */}
                 <Route path="activateEmail" element={<ActivateEmailMessage />} />
                 <Route path="verifyEmail/:id" element={<VerifyEmail />} />
+
+                {/* for forget passwrod */}
+                <Route path="/forgetpassword" element={<ForgotPasswordLandingPage />} />
+                <Route path="/admin-forgetpassword" element={<ForgotPasswordLandingPage isAdmin={true} />} />
+                <Route path="/forgetpassword/reset/:accountType" element={<PasswordResetPage />} />
+
+                {/* for payment  */}
+                <Route path="payment/success" element={<PaymentSuccessMessage />} />
+                <Route path="payment/fail" element={<PaymentFailedMessage />} />
 
                 {/* HomeOwner Routes */}
                 <Route path="/homeOwner" element={<HomeownerDashboard />} >
@@ -102,7 +112,7 @@ function App() {
                   <Route path="rentedHomes" element={<TenantRentedHomes />} />
                   <Route path="mRequests" element={<MaintenanceRequests />} />
                   <Route path="mRequests/new" element={<NewMRequest />} />
-                  <Route path="pay/:id" element={<ValidatePayment />} />
+                  {/* <Route path="pay/:id" element={<ValidatePayment />} /> */}
                 </Route>
 
                 {/*  Buyer page  and there should be a Buyer dashboard*/}

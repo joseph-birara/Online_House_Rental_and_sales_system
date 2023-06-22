@@ -1,8 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { UserContext } from "../../contexts/UserContextProvider";
-// import axios from "axios";
+import LoadingOverlay from 'react-loading-overlay-ts';
 
 export default function RegisterPage() {
   const [userData, setUserData] = useState({
@@ -23,20 +22,17 @@ export default function RegisterPage() {
   );
   const [imageFile, setImageFile] = useState(null);
   const navigate = useNavigate();
-  const { setToken, setUser } = useContext(UserContext);
+  const [errorMessage, setErrorMessage] = useState('')
+  let [loading, setLoading] = useState(false);
 
   const imageHanlder = (e) => {
     setImageFile(e.target.files[0]); // grab image file
     setProfileImage(URL.createObjectURL(e.target.files[0])); // create a url for locall rendering
-    // console.log(e.target.files[0]);
-    // console.log(" user profile par : ");
-    // console.log(profileImage);
   };
 
   async function registerUser(e) {
     e.preventDefault();
-    // console.log(userData);
-    // console.log(profileImage);
+    setLoading(true); // set teh loading overlay to true
     // console.log(imageFile);
 
     if (imageFile != null) {
@@ -55,37 +51,32 @@ export default function RegisterPage() {
         })
         .catch((erro) => {
           console.log("image upload error message ");
+          setErrorMessage(' Image upload Error.');
+          setLoading(false);
           console.log(erro);
         });
     }
 
     // register the user to the backend
-    const userRoute =
-      userData.userType === "buyer" ? "tenant" : userData.userType;
+    const backendRoutingPath = userData.userType === "buyer" ? "tenant" : userData.userType;
+    // console.log(userData);
     axios
-      .post(`${process.env.REACT_APP_baseURL}/${userRoute}/register`, userData)
+      .post(`${process.env.REACT_APP_baseURL}/${backendRoutingPath}/register`, userData)
       .then((response) => {
-        console.log("user register successfully ********************");
-        console.log(response.data.user);
+        // console.log("user register successfully ********************");
 
-        // save the data on the context
-        setUser(response.data.user);
-        setToken(response.data.token);
+        if (response.data === "check your email") {
+          navigate("/activateEmail");
+        } else {
+          setErrorMessage(response.data)
+          setLoading(false);
+        }
 
-        // save the data locally on the broswer
-        window.localStorage.setItem(
-          "user-data",
-          JSON.stringify(response.data.user)
-        );
-        window.localStorage.setItem(
-          "user-token",
-          JSON.stringify(response.data.token)
-        );
-        navigate("/");
-      })
-      .catch((error) => {
+      }).catch((error) => {
         console.log("user registion Error-----------------");
         console.log(error);
+        setErrorMessage("Server error: " + error.message)
+        setLoading(false)
       });
   }
 
@@ -118,6 +109,13 @@ export default function RegisterPage() {
         </div>
 
         <form className=" mx-auto px-5 py-2" onSubmit={registerUser}>
+
+          {/* for error message */}
+          <div className={`text-[red] ml-1 outline w-fit px-2 outline-[2px] rounded-lg  ${errorMessage ? '' : 'invisible'}`}>
+            {errorMessage ? (<span> {errorMessage}</span>) : (<span> == </span>)}
+          </div>
+
+          {/* for imput elements */}
           <div className="flex gap-x-2 justify-around">
             <div>
               <input
@@ -208,70 +206,90 @@ export default function RegisterPage() {
             </div>
           </div>
 
+          {/* terms and services */}
           <div className="mt-1">
             <input required className="" id="agreement" type="checkbox" />
-            <label htmlFor="">
-              {" "}
+            <label htmlFor="agreement">
               By signing this up you agree to our
-              <Link
-                className="underline text-lightBlue mx-1 text-black"
+              <Link className="underline text-lightBlue mx-1 text-black"
                 to={"#"}
               >
                 Privacy Policy
-              </Link>
-              and
-              <Link
-                className="underline  text-lightBlue mx-1  text-black"
+              </Link> and
+              <Link className="underline  text-lightBlue mx-1  text-black"
                 to={"#"}
               >
                 Terms of Services
-              </Link>{" "}
-              .{" "}
+              </Link> .
             </label>
           </div>
 
+          {/* who are you */}
           <div className="my-4">
             <p className="font-medium">Who are you?</p>
             <div className="flex gap-4">
-              <label>
-                <input
-                  type="radio"
-                  name="owner"
-                  checked={userData.userType === "owner"}
-                  onChange={(e) =>
-                    setUserData({ ...userData, userType: "owner" })
-                  }
-                />
-                <span>Homeowner</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="tenant"
-                  checked={userData.userType === "tenant"}
-                  onChange={(e) =>
-                    setUserData({ ...userData, userType: "tenant" })
-                  }
-                />
-                <span>Tenant</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="buyer"
-                  required
-                  checked={userData.userType === "buyer"}
-                  onChange={(e) =>
-                    setUserData({ ...userData, userType: "buyer" })
-                  }
-                />
-                <span>Buyer</span>
-              </label>
+              <fieldset className="flex gap-6">
+                <label>
+                  <input
+                    type="radio"
+                    name="userType"
+                    value="owner"
+                    checked={userData.userType === "owner"}
+                    onChange={(e) => setUserData({ ...userData, userType: e.target.value })}
+                    required
+                  />
+                  <span>Homeowner</span>
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="userType"
+                    value="tenant"
+                    checked={userData.userType === "tenant"}
+                    onChange={(e) => setUserData({ ...userData, userType: e.target.value })}
+                  />
+                  <span>Tenant</span>
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="userType"
+                    value="buyer"
+                    checked={userData.userType === "buyer"}
+                    onChange={(e) => setUserData({ ...userData, userType: e.target.value })}
+                  />
+                  <span>Buyer</span>
+                </label>
+              </fieldset>
             </div>
+
           </div>
-          <button className="primary w-1/4 mx-auto bg-lightBlue hover:bg-lbHover mt-4">
-            Register
-          </button>
+
+          {/* submit button */}
+          <div className="w-2/4  mx-auto mt-4">
+            <button
+              type="submit"
+              className="primary text-xl  bg-lightBlue hover:bg-lbHover Hover px-1 relative"
+            >
+              <LoadingOverlay
+                active={loading}
+                spinner
+                className="loading-overlay"
+                spinnerClassName="w-12 h-12"
+                contentClassName="opacity-50 pointer-events-none"
+                spinnerProps={{
+                  style: {
+                    borderTopColor: 'lightblue',
+                    borderLeftColor: 'lightblue',
+                  },
+                }}
+              >
+              </LoadingOverlay>
+              {loading ? "Processing..." : "Register"}
+            </button>
+          </div>
+
+          {/* already a member or login */}
           <div className="text-center py-2 text-gray-500">
             Already a member?{" "}
             <Link className="underline text-black" to={"/login"}>

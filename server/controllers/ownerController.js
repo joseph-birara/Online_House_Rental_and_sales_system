@@ -124,7 +124,7 @@ const registerOwner = async (req, res) => {
     //   message:
     //     "owner registered successfully. Please check your email for verification.",
     // });
-    res.status(200).send("check you email");
+    res.status(200).send("check your email");
   } catch (err) {
     if (session) {
       await session.abortTransaction(); // rollback the transaction if an error occurs

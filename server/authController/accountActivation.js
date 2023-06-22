@@ -7,9 +7,10 @@ const verifyEmail = async (req, res, userModel) => {
     // Check if the token is valid and remove the verification token
     const userToken = await tokenModel.findOneAndDelete(token);
     console.log(userToken);
-    if (!userToken || userToken.expiresAt < Date.now()) {
+    if (!userToken || userToken.expiresAt.getTime() < Date.now()) {
       return res.status(400).json({ error: "Invalid or expired token." });
     }
+
     // Update the account status to active
     const user = await userModel.findOne({ email: userToken.email });
     user.accountStatus = true;

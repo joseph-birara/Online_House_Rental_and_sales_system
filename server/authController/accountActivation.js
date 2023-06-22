@@ -10,6 +10,7 @@ const verifyEmail = async (req, res, userModel) => {
     if (!userToken || userToken.expiresAt < Date.now()) {
       return res.status(200).send("Invalid or expired token.");
     }
+
     // Update the account status to active
     const user = await userModel.findOne({ email: userToken.email });
     user.accountStatus = true;

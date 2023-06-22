@@ -51,10 +51,11 @@ export default function ForgotPasswordLandingPage({ isAdmin }) {
         // console.log(response);
         if (response.data === 'success') {
 
-          navigate("/forgetpassword/reset");
+          navigate(`/forgetpassword/reset/${backendRoutingPath}`);
           console.log("password reset is done-----------");
         } else {
           setErrorMessage(response.data);
+          console.log(response.data);
           setLoading(false);
         }
 
@@ -151,7 +152,7 @@ export default function ForgotPasswordLandingPage({ isAdmin }) {
               }}
             >
             </LoadingOverlay>
-            {loading ? "Checking..." : "SignIn"}
+            {loading ? "Checking..." : " send "}
           </button>
         </form>
 

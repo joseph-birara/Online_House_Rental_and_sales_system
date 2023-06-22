@@ -1,15 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import LoadingOverlay from 'react-loading-overlay-ts';
 import { UserContext } from "../../contexts/UserContextProvider";
 import { UtilityContext } from "../../contexts/UtilityContextProvide";
 
 export default function LoginPage({ isAdmin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [currentUserChoice, setUserType] = useState("");
+  const [currentUserChoice, setCurrentUserChoice] = useState("");
   const { setUser, setToken, token, user } = useContext(UserContext);
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('')
+  let [loading, setLoading] = useState(false);
 
   // save user info on local storage
   useEffect(() => {
@@ -18,13 +21,7 @@ export default function LoginPage({ isAdmin }) {
   }, [token, user]);
 
   // for admin purpose
-  const {
-    setOwnersList,
-    setTenatList,
-    setHousesList,
-    setBuyerList,
-    setAdminList,
-  } = useContext(UtilityContext);
+  const { setOwnersList, setTenatList, setHousesList, setBuyerList, setAdminList, } = useContext(UtilityContext);
   useEffect(() => {
     // get all tenants
     axios
@@ -83,57 +80,89 @@ export default function LoginPage({ isAdmin }) {
       });
   }, []);
 
+
+  // for error message
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage('')
+      }, 2000);
+
+      // Clean up the timer when the component unmounts or when the dependency changes
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]); // Empty dependency array ensures it only runs once
+
   async function handleLoginSubmit(ev) {
     ev.preventDefault();
+    setLoading(true); // set teh loading overlay to true
 
     if (isAdmin) {
-      setUserType("admin");
+      setCurrentUserChoice("admin");
     }
+
+    let subRoutingPart = currentUserChoice
+
+    // user types are only two so
+    // all buyers should be tenants
+    if (currentUserChoice === 'buyer') {
+      subRoutingPart = 'tenant'
+    }
+
     console.log(" email : " + email);
     console.log(" password : " + password);
     console.log(" userType : " + currentUserChoice);
+    console.log('routing link ' + subRoutingPart);
+
     axios
-      .post(`http://localhost:4000/${currentUserChoice}/login`, {
+      .post(`http://localhost:4000/${subRoutingPart}/login`, {
         email,
-        password,
+        password
       })
       .then((response) => {
-        let userData = response.data.user;
-        userData.userType = currentUserChoice;
+        if (response.data.token) {
 
-        console.log("success logged in");
-        console.log(userData);
-        console.log("token is " + response.data.token);
+          let userData = response.data.user;
+          userData.userType = currentUserChoice;
 
-        setToken(response.data.token);
-        setUser(userData);
+          console.log("success logged in");
+          console.log("token is " + response.data.token);
 
-        // save the data locally
-        window.localStorage.setItem(
-          "user-token",
-          JSON.stringify(response.data.token)
-        );
-        window.localStorage.setItem("user-data", JSON.stringify(userData));
-        navigate("/");
-        console.log("directed the page");
+          setToken(response.data.token);
+          setUser(userData);
+
+          // save the data locally
+          window.localStorage.setItem("user-token", JSON.stringify(response.data.token));
+          window.localStorage.setItem("user-data", JSON.stringify(userData));
+          navigate("/");
+          console.log("directed the page");
+        } else {
+          setErrorMessage(response.data);
+          setLoading(false);
+        }
+
       })
       .catch((error) => {
         console.log(" error message ");
+        setErrorMessage("Server error: " + error.message)
+        setLoading(false);
         console.log(error);
       });
   }
 
-  function handleSelect(e) {
-    setUserType(e.target.name);
-  }
-
   return (
-    <div className="mt-4 grow flex items-center justify-around">
-      <div className="mb-64">
+    <div className=" mt-4 grow flex items-center justify-around">
+      <div className="mb-64 w-2/4 ">
         <h1 className="text-4xl text-center mb-4">
           {" "}
           {isAdmin && <span> Admin </span>} Login
         </h1>
+
+        {/* for error message */}
+        <div className={` text-[red]  outline outline-[1px] rounded-lg w-4/6 pl-2 mx-auto ${errorMessage ? '' : 'invisible'}`}>
+          {errorMessage ? (<span> {errorMessage}</span>) : (<span> == </span>)}
+        </div>
+
         <form className="max-w-md mx-auto" onSubmit={handleLoginSubmit}>
           <input
             type="email"
@@ -154,48 +183,67 @@ export default function LoginPage({ isAdmin }) {
           {!isAdmin && (
             <div className="my-4">
               <p className="font-medium">Who are you?</p>
-              <div className="flex gap-4">
+
+              <fieldset className="flex gap-6">
                 <label>
                   <input
                     type="radio"
-                    name="owner"
+                    name="userType"
+                    value="owner"
+                    checked={currentUserChoice === "owner"} // Bound to userType state
+                    onChange={(e) => setCurrentUserChoice(e.target.value)} // Update userType state
                     required
-                    checked={currentUserChoice === "owner"}
-                    onChange={handleSelect}
                   />
                   <span>Homeowner</span>
                 </label>
                 <label>
                   <input
                     type="radio"
-                    name="tenant"
-                    checked={currentUserChoice === "tenant"}
-                    onChange={handleSelect}
+                    name="userType"
+                    value="tenant"
+                    checked={currentUserChoice === "tenant"} // Bound to userType state
+                    onChange={(e) => setCurrentUserChoice(e.target.value)} // Update userType state
                   />
                   <span>Tenant</span>
                 </label>
                 <label>
                   <input
                     type="radio"
-                    name="buyer"
-                    checked={currentUserChoice === "buyer"}
-                    onChange={handleSelect}
+                    name="userType"
+                    value="buyer"
+                    checked={currentUserChoice === "buyer"} // Bound to userType state
+                    onChange={(e) => setCurrentUserChoice(e.target.value)} // Update userType state
                   />
                   <span>Buyer</span>
                 </label>
-              </div>
+              </fieldset>
             </div>
           )}
 
           <Link className="underline text-lightBlue text-black" to={"#"}>
             Forgot passowrd
           </Link>
+
           <button
             type="submit"
-            onClick={handleLoginSubmit}
-            className="primary bg-lightBlue hover:bg-lbHover Hover mt-4"
+            // onClick={() => setLoading(!loading)}
+            className="primary bg-lightBlue hover:bg-lbHover Hover mt-4 relative"
           >
-            Login
+            <LoadingOverlay
+              active={loading}
+              spinner
+              className="loading-overlay"
+              spinnerClassName="w-12 h-12"
+              contentClassName="opacity-50 pointer-events-none"
+              spinnerProps={{
+                style: {
+                  borderTopColor: 'lightblue',
+                  borderLeftColor: 'lightblue',
+                },
+              }}
+            >
+            </LoadingOverlay>
+            {loading ? "Checking..." : "SignIn"}
           </button>
 
           {!isAdmin && (
@@ -207,6 +255,7 @@ export default function LoginPage({ isAdmin }) {
             </div>
           )}
         </form>
+
       </div>
     </div>
   );

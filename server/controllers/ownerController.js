@@ -3,6 +3,7 @@ const ownerModel = require("../models/ownerModel");
 const houseModel = require("../models/homeModel");
 const login = require("../authController/login");
 const sendVerificationEmail = require("../authController/sendEmial");
+const smsService = require("../authController/smsService");
 const {
   initiatePasswordReset,
   resetPassword,
@@ -117,7 +118,11 @@ const registerOwner = async (req, res) => {
     await session.commitTransaction(); // commit the transaction
     const token = generateToken(owner._id);
     console.log(owner[0]);
-
+    try {
+      await smsService.sendSMS("+2510977439777", "hello jossyy");
+    } catch (error) {
+      console.log(error);
+    }
     // res.status(200).json({
     //   token: token,
     //   user: owner[0],

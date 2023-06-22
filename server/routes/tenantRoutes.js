@@ -274,6 +274,6 @@ router.post("/login", tenantLogin);
 router.put("/updatePassword", updatePassword);
 router.post("/reset", passwordResetRequest);
 router.post("/newPassword", resetPasswordProcess);
-router.get("/verify-email/:verificationToken", activateAccount);
+router.get("/verify-email/:token", activateAccount);
 
 module.exports = router;

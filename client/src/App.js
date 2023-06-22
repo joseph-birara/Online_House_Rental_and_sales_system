@@ -54,6 +54,7 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/buy" element={<Buy />} />
                 <Route path="/rent" element={<HomesListing />} />
+                {/* <Route path="/forgetpassword" element={<HomesListing />} /> */}
                 <Route path="/updateProfile" element={<UpdateProfilePage />} />
                 <Route path="/homeDetails/:id" element={<HomeDetails />} />
                 <Route path="payment/success" element={<PaymentSuccessMessage />} />

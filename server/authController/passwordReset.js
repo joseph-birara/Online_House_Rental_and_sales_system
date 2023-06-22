@@ -19,9 +19,9 @@ const initiatePasswordReset = async (req, res, userModel) => {
     let subject = "Password Reset Request";
     let text = `Hello ${user.name},\n\nYou recently requested to reset your password for your account. Please use the following code to reset your password:\n\n\n ${token}\n\n\nIf you did not request a password reset, please ignore this email.\n\nThanks,\n\n House Hub`;
     await sendEmail(email, subject, text);
-    res.json({ message: "success" });
+    res.status(200).send("success");
   } catch (error) {
-    res.status(400).json({ message: "failed" });
+    res.status(200).send("Enter correct credentials, try again.");
   }
 };
 
@@ -34,9 +34,9 @@ const resetPassword = async (req, res, userModel) => {
     //need to be hashed befor save
     user.password = await hashPassword(password);
     await user.save();
-    res.json({ message: "Password reset successful" });
+    res.status(200).send("Password reset successful");
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(200).send(error.message);
   }
 };
 

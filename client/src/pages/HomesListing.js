@@ -79,7 +79,7 @@ const HomesListing = () => {
         console.log(error);
       });
 
-  }, [HousesList]);
+  }, []);
 
   return (
     <div className="mx-2 p-2 flex gap-4 justify-start flex-wrap">

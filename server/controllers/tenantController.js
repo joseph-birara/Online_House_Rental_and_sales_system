@@ -65,7 +65,7 @@ const registerTenant = async (req, res) => {
   const image = data.image;
   const isTaken = await tenantModel.findOne({ email });
   if (isTaken) {
-    return res.status(200).send("Your email is already taken, use another");
+    return res.status(200).send("Your email is already taken, use another email");
   }
   console.log("body", password);
 
@@ -96,7 +96,7 @@ const registerTenant = async (req, res) => {
 
     // Send email verification email to the newly registered user
     let subject = "Account activation";
-    let text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/tenant/verify-email/${verificationToken}`;
+    let text = `Please click the following link to verify your email address: http://localhost:3000/verifyEmail/${verificationToken}`;
     await sendVerificationEmail(email, subject, text);
     const token = generateToken(tenant._id);
     res.status(200).send("check your email");

@@ -20,7 +20,7 @@ const verifyEmail = async (req, res, userModel) => {
     await user.save();
     const htmlElementWithLink = `
   <a href="http://localhost:3000/login/">
-    <button>Go to Other Page</button>
+    <button>your account is successfuly verfied. Go to login page</button>
   </a>
 `;
 

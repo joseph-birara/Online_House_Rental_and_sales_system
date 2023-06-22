@@ -101,21 +101,21 @@ export default function LoginPage({ isAdmin }) {
       setCurrentUserChoice("admin");
     }
 
-    let subRoutingPart = currentUserChoice
+    let backendRoutingPath = currentUserChoice
 
     // user types are only two so
     // all buyers should be tenants
     if (currentUserChoice === 'buyer') {
-      subRoutingPart = 'tenant'
+      backendRoutingPath = 'tenant'
     }
 
     console.log(" email : " + email);
     console.log(" password : " + password);
     console.log(" userType : " + currentUserChoice);
-    console.log('routing link ' + subRoutingPart);
+    console.log('routing link ' + backendRoutingPath);
 
     axios
-      .post(`http://localhost:4000/${subRoutingPart}/login`, {
+      .post(`http://localhost:4000/${backendRoutingPath}/login`, {
         email,
         password
       })

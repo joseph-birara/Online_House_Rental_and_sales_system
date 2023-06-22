@@ -10,7 +10,7 @@ const verifyEmail = async (req, res, userModel) => {
       expiresAt: { $gt: Date.now() },
     });
     console.log(userToken);
-    if (!userToken || userToken.expiresAt < Date.now()) {
+    if (!userToken) {
       return res.status(200).send("Invalid or expired token.");
     }
 
@@ -18,9 +18,33 @@ const verifyEmail = async (req, res, userModel) => {
     const user = await userModel.findOne({ email: userToken.email });
     user.accountStatus = true;
     await user.save();
+    const linkText = "Log in ";
+    const linkUrl = "/login";
+    const message = "click the bottun below to log in to your account";
+
     const htmlElementWithLink = `
-  <a href="https:/google.com/">
-    <button>Go to Other Page</button>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    
+    .custom-button {
+      background-color: blue;
+      color: white;
+    }
+    
+    .message {
+      margin-bottom: 10px;
+    }
+  </style>
+  <div class="message">${message}</div>
+  <a href="${linkUrl}">
+    <button class="custom-button">${linkText}</button>
   </a>
 `;
 
@@ -29,5 +53,4 @@ const verifyEmail = async (req, res, userModel) => {
     res.status(400).send("Something went wrong.");
   }
 };
-
 module.exports = verifyEmail;

@@ -55,11 +55,15 @@ export const RequestForm = () => {
       description: description,
     };
     axios
-      .post(`http://localhost:4000/maintenance/send`, mRequestData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .post(
+        `https://house-rental.onrender.com/maintenance/send`,
+        mRequestData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((response) => {
         console.log("House saved successfully");
         setTitle("");

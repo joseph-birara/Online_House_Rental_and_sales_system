@@ -8,12 +8,9 @@ import { UserContext } from "../contexts/UserContextProvider";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 import axios from "axios";
 
-
-
-
 export default function PlacesFormPage() {
-  const { user, token } = useContext(UserContext)
-  const { HousesList, setHousesList } = useContext(UtilityContext)
+  const { user, token } = useContext(UserContext);
+  const { HousesList, setHousesList } = useContext(UtilityContext);
 
   const { id } = useParams();
   const [title, setTitle] = useState("");
@@ -31,18 +28,18 @@ export default function PlacesFormPage() {
   const [perks, setPerks] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [homeType, setHomeType] = useState("regularRent");
-  const [houseImageFiles, setHouseImageFiles] = useState([])
-  const [forHomeUpdate, setForHomeUpdate] = useState({}) // store info when house update is need
+  const [houseImageFiles, setHouseImageFiles] = useState([]);
+  const [forHomeUpdate, setForHomeUpdate] = useState({}); // store info when house update is need
 
   const priceRef = useRef();
   const checkInRef = useRef();
   const checkOutRef = useRef();
   const maxGuestsRef = useRef();
 
-  let currHouse = null
+  let currHouse = null;
   if (id) {
-    currHouse = HousesList.filter((house) => house._id === id)
-    currHouse = currHouse[0]
+    currHouse = HousesList.filter((house) => house._id === id);
+    currHouse = currHouse[0];
   }
 
   useEffect(() => {
@@ -51,27 +48,33 @@ export default function PlacesFormPage() {
     }
 
     if (currHouse) {
-
-      if (currHouse.homeType === "shortTermRent") { // shortTermRent
-        checkInRef.current.value = currHouse.shortTerm.checkin ?? checkInRef.current.value // checkin
-        checkOutRef.current.value = currHouse.shortTerm.checkout ?? checkOutRef.current.value//checkout
-        maxGuestsRef.current.value = currHouse.shortTerm.maxGuest ?? maxGuestsRef.current.value // maxGuest
+      if (currHouse.homeType === "shortTermRent") {
+        // shortTermRent
+        checkInRef.current.value =
+          currHouse.shortTerm.checkin ?? checkInRef.current.value; // checkin
+        checkOutRef.current.value =
+          currHouse.shortTerm.checkout ?? checkOutRef.current.value; //checkout
+        maxGuestsRef.current.value =
+          currHouse.shortTerm.maxGuest ?? maxGuestsRef.current.value; // maxGuest
       }
 
       // priceRef.current.value = currHouse.price ?? priceRef.current.value;
-      priceRef.current.value = currHouse.price !== undefined ? currHouse.price : priceRef.current.value;
-      setTitle(currHouse.title)
-      setCity(currHouse.city)
-      setSubcity(currHouse.subCity)
-      setWoreda(currHouse.woreda)
-      setKebele(currHouse.kebele)
-      setArea(currHouse.area)
-      setHomeType(currHouse.homeType)
-      setDescription(currHouse.description)
-      setBedrooms(currHouse.bedRoom)
-      setBathrooms(currHouse.bathRoom)
-      setPerks(currHouse.amenity)
-      setForHomeUpdate(currHouse)
+      priceRef.current.value =
+        currHouse.price !== undefined
+          ? currHouse.price
+          : priceRef.current.value;
+      setTitle(currHouse.title);
+      setCity(currHouse.city);
+      setSubcity(currHouse.subCity);
+      setWoreda(currHouse.woreda);
+      setKebele(currHouse.kebele);
+      setArea(currHouse.area);
+      setHomeType(currHouse.homeType);
+      setDescription(currHouse.description);
+      setBedrooms(currHouse.bedRoom);
+      setBathrooms(currHouse.bathRoom);
+      setPerks(currHouse.amenity);
+      setForHomeUpdate(currHouse);
     }
   }, [currHouse]);
 
@@ -156,62 +159,65 @@ export default function PlacesFormPage() {
     ev.preventDefault();
     // to update the existing one
     if (Object.keys(forHomeUpdate).length > 0) {
-
       const houseData = {
-        'id': currHouse._id,
+        id: currHouse._id,
         title,
         city,
         subCity,
         woreda,
         kebele,
-        "price": priceRef.current.value,
-        "images": currHouse.images,
+        price: priceRef.current.value,
+        images: currHouse.images,
         area,
-        "shortTerm": {},
+        shortTerm: {},
         description,
         homeType,
         bedRoom,
         bathRoom,
-        "amenity": perks,
+        amenity: perks,
       };
-      if (homeType === 'shortTermRent') {
+      if (homeType === "shortTermRent") {
         houseData.shortTerm = {
-          "checkin": checkInRef.current.value,
-          "checkout": checkOutRef.current.value,
-          "maxGuest": maxGuestsRef.current.value
-        }
+          checkin: checkInRef.current.value,
+          checkout: checkOutRef.current.value,
+          maxGuest: maxGuestsRef.current.value,
+        };
       }
       // console.log('on update ---');
       // console.log(houseData);
       // console.log('and the currhouse i s');
       // console.log(currHouse);
 
-      axios.put(`http://localhost:4000/houses/update`, houseData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      })
-        .then(response => {
-          setHousesList(prevHouseList => prevHouseList.map(home => {
-            if (home.id === currHouse._id) {
-              houseData.ownerId = currHouse.ownerId
-              return houseData;
-            } else {
-              return home;
-            }
-          }));
-
-          console.log('updated succesfuly');
-          setRedirect(true)// redirect to house list page
+      axios
+        .put(`https://house-rental.onrender.com/houses/update`, houseData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         })
-        .catch(error => {
+        .then((response) => {
+          setHousesList((prevHouseList) =>
+            prevHouseList.map((home) => {
+              if (home.id === currHouse._id) {
+                houseData.ownerId = currHouse.ownerId;
+                return houseData;
+              } else {
+                return home;
+              }
+            })
+          );
+
+          console.log("updated succesfuly");
+          setRedirect(true); // redirect to house list page
+        })
+        .catch((error) => {
           console.log("Error on updating house");
           console.log(error);
         });
     }
 
     // to register a nwe house
-    else { //  assumning that images are added (houseImageFiles.length > 0)
+    else {
+      //  assumning that images are added (houseImageFiles.length > 0)
       // image upload part
       const houseData = {
         ownerId: user._id,
@@ -220,68 +226,73 @@ export default function PlacesFormPage() {
         subCity,
         woreda,
         kebele,
-        "price": priceRef.current.value,
-        "images": [],
+        price: priceRef.current.value,
+        images: [],
         area,
-        "shortTerm": {},
+        shortTerm: {},
         description,
         homeType,
         bedRoom,
         bathRoom,
-        "amenity": perks,
+        amenity: perks,
       };
-      if (homeType === 'shortTermRent') {
+      if (homeType === "shortTermRent") {
         houseData.shortTerm = {
-          "checkin": checkInRef.current.value,
-          "checkout": checkOutRef.current.value,
-          "maxGuest": maxGuestsRef.current.value
-        }
+          checkin: checkInRef.current.value,
+          checkout: checkOutRef.current.value,
+          maxGuest: maxGuestsRef.current.value,
+        };
       }
 
-      let imageUploadPromises = []
+      let imageUploadPromises = [];
       for (let i = 0; i < houseImageFiles.length; i++) {
-        const formdata = new FormData()
-        formdata.append('file', houseImageFiles[i].value)
-        formdata.append('upload_preset', process.env.REACT_APP_preset_key)
-        imageUploadPromises.push(axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_cloud_name}/image/upload`, formdata))
+        const formdata = new FormData();
+        formdata.append("file", houseImageFiles[i].value);
+        formdata.append("upload_preset", process.env.REACT_APP_preset_key);
+        imageUploadPromises.push(
+          axios.post(
+            `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_cloud_name}/image/upload`,
+            formdata
+          )
+        );
       }
 
-      console.log('new home data ');
+      console.log("new home data ");
       console.log(houseData);
 
-      // // save house part 
+      // // save house part
       Promise.all(imageUploadPromises)
-        .then(responses => {
+        .then((responses) => {
           console.log("All house images uploaded successfully");
-          let imageLinks = responses.map(response => response.data.secure_url)
-          houseData.images = imageLinks
+          let imageLinks = responses.map(
+            (response) => response.data.secure_url
+          );
+          houseData.images = imageLinks;
           // console.log('the added house is here with its this ------');
           // console.log(houseData);
-          axios.post(`http://localhost:4000/houses/add`, houseData, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          })
-            .then(response => {
+          axios
+            .post(`https://house-rental.onrender.com/houses/add`, houseData, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            .then((response) => {
               console.log("House saved successfully");
               // console.log(houseData);
-              setHousesList([...HousesList, houseData]) //update house list state
-              setRedirect(true)// redirect to house list page
-
+              setHousesList([...HousesList, houseData]); //update house list state
+              setRedirect(true); // redirect to house list page
             })
-            .catch(error => {
+            .catch((error) => {
               console.log("Error saving house");
               console.log(error);
             });
-        }
-        )
-        .catch(error => {
+        })
+        .catch((error) => {
           console.log("Error uploading house images");
           console.log(error);
         });
-
     }
-  }
+  };
 
   if (redirect) {
     return <Navigate to={"/homeOwner/homes/onListing"} />;
@@ -308,7 +319,9 @@ export default function PlacesFormPage() {
           </button>
           <button
             className={
-              homeType === "shortTermRent" ? selectedBtnStyle : unselectedBtnStyle
+              homeType === "shortTermRent"
+                ? selectedBtnStyle
+                : unselectedBtnStyle
             }
             onClick={() => homeTypeHandler("shortTermRent")}
           >
@@ -390,12 +403,16 @@ export default function PlacesFormPage() {
             onChange={(ev) => setBathrooms(ev.target.value)}
             placeholder="bathrooms"
           />
-
         </div>
         {preInput("Photos", "more = better")}
 
         {/* to upload house  images */}
-        <PhotosUploader houseImages={houseImageFiles} setHouseImageFiles={setHouseImageFiles} hasHouseId={currHouse ? true : false} imageLinks={currHouse ? currHouse.images : ''} />
+        <PhotosUploader
+          houseImages={houseImageFiles}
+          setHouseImageFiles={setHouseImageFiles}
+          hasHouseId={currHouse ? true : false}
+          imageLinks={currHouse ? currHouse.images : ""}
+        />
 
         {preInput("Description", "description of your house")}
         <textarea

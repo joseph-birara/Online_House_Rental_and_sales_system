@@ -20,8 +20,8 @@ const HomeDetails = ({ forAdmin }) => {
     return HousesList.find((house) => house._id === h_id);
   };
 
-  const specificHouse = getHouseById(id); // Replace
-  const houseImages = specificHouse.images;
+  const specificHouse = getHouseById(id);
+  const houseImages = specificHouse?.images ?? [];
   const homePics = houseImages.map((image) => {
     return {
       original: image,
@@ -32,10 +32,10 @@ const HomeDetails = ({ forAdmin }) => {
   return (
     <div className={styles.mainContainer}>
       <div className={styles.innerContainer}>
-        <h1>{specificHouse.title}</h1>
+        <h1>{specificHouse?.title}</h1>
         <p>
           <CiLocationOn />
-          {specificHouse.woreda} {specificHouse.subCity} {specificHouse.city}{" "}
+          {specificHouse?.woreda} {specificHouse?.subCity} {specificHouse?.city}{" "}
           {" Ethiopia"}
         </p>
         <div className={styles.reviewsAndOwnerContainer}>
@@ -48,7 +48,7 @@ const HomeDetails = ({ forAdmin }) => {
             </span>
             <a href="#">
               {" "}
-              {specificHouse.ownerId.name} {specificHouse.ownerId.lastName}{" "}
+              {specificHouse?.ownerId?.name} {specificHouse?.ownerId?.lastName}{" "}
             </a>
           </div>
         </div>
@@ -62,13 +62,13 @@ const HomeDetails = ({ forAdmin }) => {
           <div className={styles.descriptionTitle}>
             <h2>Description</h2>
           </div>
-          <p>{specificHouse.description}</p>
+          <p>{specificHouse?.description}</p>
         </div>
         <BookingWidget place={specificHouse} />
       </div>
       <HomeProperties specificHouse={specificHouse} />
-      <AmenitiesDisplayer amenities={specificHouse.amenity} />
-      {!forAdmin && (
+      <AmenitiesDisplayer amenities={specificHouse?.amenity} />
+      {!forAdmin && specificHouse && specificHouse.ownerId && (
         <Comments
           houseId={specificHouse._id}
           ownerId={specificHouse.ownerId._id}

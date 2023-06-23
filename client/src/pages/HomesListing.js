@@ -135,7 +135,7 @@ const homesReducer = (state, action) => {
     if (Boolean(state.area.min)) {
       houses = action.payload.allHouses.filter(
         (home) =>
-        state.price.min <= home.price &&
+          state.price.min <= home.price &&
           home.price <= state.price.max &&
           home.area <= state.area.max
       );
@@ -148,14 +148,13 @@ const homesReducer = (state, action) => {
       homes: houses.filter((home) => home.area >= action.payload.minArea),
       area: { ...state.area, min: action.payload.minArea },
     };
-  }
-  else if (action.type === "maxArea") {
+  } else if (action.type === "maxArea") {
     if (state.area.max !== Number.MAX_VALUE) {
       houses = action.payload.allHouses.filter(
         (home) =>
-        state.price.min <= home.price &&
+          state.price.min <= home.price &&
           home.price <= state.price.max &&
-          state.area.min <= home.area 
+          state.area.min <= home.area
       );
       if (state.subcity !== "All subcities") {
         houses = houses.filter((home) => home.subCity === state.subcity);
@@ -203,13 +202,15 @@ const HomesListing = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/houses/all")
+      .get("https://house-rental.onrender.com/houses/all")
       .then((response) => {
         console.log(response.data);
         setHousesList(response.data);
         dispatchHomes({
           type: "initialize",
-          payload: { houses: response.data.filter((home) => home.isRented === false) },
+          payload: {
+            houses: response.data.filter((home) => home.isRented === false),
+          },
         });
       })
       .catch((error) => {

@@ -41,7 +41,7 @@ const Comments = ({ houseId, ownerId }) => {
       createdAt: new Date().toISOString(),
     };
     axios
-      .post(`http://localhost:4000/comment/add`, commentData, {
+      .post(`https://house-rental.onrender.com/comment/add`, commentData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -73,30 +73,30 @@ const Comments = ({ houseId, ownerId }) => {
 
     const commentData = {
       id: commentId,
-      message: text
-    }
-    axios.put(`http://localhost:4000/comment/edit`, commentData, {
+      message: text,
+    };
+    axios
+      .put(`https://house-rental.onrender.com/comment/edit`, commentData, {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
+        },
       })
-        .then((response) => {
-          console.log("comment edited succesfully");
-          const updatedBackendComments = backendComments.map((backendComment) => {
-            if (backendComment._id === commentId) {
-              return { ...backendComment, message: text };
-            }
-            return backendComment;
-          });
-          setBackendComments(updatedBackendComments);
-          setActiveComment(null);
-
-        })
-        .catch(error => {
-          console.log("Error on updating comment");
-          console.log(commentData)
-          console.log(error);
+      .then((response) => {
+        console.log("comment edited succesfully");
+        const updatedBackendComments = backendComments.map((backendComment) => {
+          if (backendComment._id === commentId) {
+            return { ...backendComment, message: text };
+          }
+          return backendComment;
         });
+        setBackendComments(updatedBackendComments);
+        setActiveComment(null);
+      })
+      .catch((error) => {
+        console.log("Error on updating comment");
+        console.log(commentData);
+        console.log(error);
+      });
   };
   const deleteComment = (commentId) => {
     // if (window.confirm("Are you sure you want to remove comment?")) {
@@ -108,22 +108,23 @@ const Comments = ({ houseId, ownerId }) => {
     //   });
     // }
 
-    axios.delete(`http://localhost:4000/comment/delete/${commentId}`, {
+    axios
+      .delete(`https://house-rental.onrender.com/comment/delete/${commentId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
+        },
       })
-        .then(() => {
-          console.log("comment deleted succesfully");
-          const updatedBackendComments = backendComments.filter(
-            (backendComment) => backendComment._id !== commentId
-          );
-          setBackendComments(updatedBackendComments);
-        })
-        .catch(error => {
-          console.log("Error on deleteing comment");
-          console.log(error);
-        });
+      .then(() => {
+        console.log("comment deleted succesfully");
+        const updatedBackendComments = backendComments.filter(
+          (backendComment) => backendComment._id !== commentId
+        );
+        setBackendComments(updatedBackendComments);
+      })
+      .catch((error) => {
+        console.log("Error on deleteing comment");
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -132,7 +133,7 @@ const Comments = ({ houseId, ownerId }) => {
     // });
 
     axios
-      .get(`http://localhost:4000/comment/getByHouse/${houseId}`, {
+      .get(`https://house-rental.onrender.com/comment/getByHouse/${houseId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

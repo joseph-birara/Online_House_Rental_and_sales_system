@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import LoadingOverlay from 'react-loading-overlay-ts';
+import LoadingOverlay from "react-loading-overlay-ts";
 
 export default function RegisterPage() {
   const [userData, setUserData] = useState({
@@ -22,7 +22,7 @@ export default function RegisterPage() {
   );
   const [imageFile, setImageFile] = useState(null);
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState("");
   let [loading, setLoading] = useState(false);
 
   const imageHanlder = (e) => {
@@ -51,32 +51,36 @@ export default function RegisterPage() {
         })
         .catch((erro) => {
           console.log("image upload error message ");
-          setErrorMessage(' Image upload Error.');
+          setErrorMessage(" Image upload Error.");
           setLoading(false);
           console.log(erro);
         });
     }
 
     // register the user to the backend
-    const backendRoutingPath = userData.userType === "buyer" ? "tenant" : userData.userType;
+    const backendRoutingPath =
+      userData.userType === "buyer" ? "tenant" : userData.userType;
     // console.log(userData);
     axios
-      .post(`${process.env.REACT_APP_baseURL}/${backendRoutingPath}/register`, userData)
+      .post(
+        `${process.env.REACT_APP_baseURL}/${backendRoutingPath}/register`,
+        userData
+      )
       .then((response) => {
         // console.log("user register successfully ********************");
 
         if (response.data === "check your email") {
           navigate("/activateEmail");
         } else {
-          setErrorMessage(response.data)
+          setErrorMessage(response.data);
           setLoading(false);
         }
-
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.log("user registion Error-----------------");
         console.log(error);
-        setErrorMessage("Server error: " + error.message)
-        setLoading(false)
+        setErrorMessage("Server error: " + error.message);
+        setLoading(false);
       });
   }
 
@@ -109,10 +113,13 @@ export default function RegisterPage() {
         </div>
 
         <form className=" mx-auto px-5 py-2" onSubmit={registerUser}>
-
           {/* for error message */}
-          <div className={`text-[red] ml-1 outline w-fit px-2 outline-[2px] rounded-lg  ${errorMessage ? '' : 'invisible'}`}>
-            {errorMessage ? (<span> {errorMessage}</span>) : (<span> == </span>)}
+          <div
+            className={`text-[red] ml-1 outline w-fit px-2 outline-[2px] rounded-lg  ${
+              errorMessage ? "" : "invisible"
+            }`}
+          >
+            {errorMessage ? <span> {errorMessage}</span> : <span> == </span>}
           </div>
 
           {/* for imput elements */}
@@ -211,16 +218,20 @@ export default function RegisterPage() {
             <input required className="" id="agreement" type="checkbox" />
             <label htmlFor="agreement">
               By signing this up you agree to our
-              <Link className="underline text-lightBlue mx-1 text-black"
+              <Link
+                className="underline text-lightBlue mx-1 text-black"
                 to={"#"}
               >
                 Privacy Policy
-              </Link> and
-              <Link className="underline  text-lightBlue mx-1  text-black"
+              </Link>{" "}
+              and
+              <Link
+                className="underline  text-lightBlue mx-1  text-black"
                 to={"#"}
               >
                 Terms of Services
-              </Link> .
+              </Link>{" "}
+              .
             </label>
           </div>
 
@@ -228,6 +239,39 @@ export default function RegisterPage() {
           <div className="my-4">
             <p className="font-medium">Who are you?</p>
             <div className="flex gap-4">
+              <label>
+                <input
+                  type="radio"
+                  name="owner"
+                  checked={userData.userType === "owner"}
+                  onChange={(e) =>
+                    setUserData({ ...userData, userType: "owner" })
+                  }
+                />
+                <span>Homeowner</span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="tenant"
+                  checked={userData.userType === "tenant"}
+                  onChange={(e) =>
+                    setUserData({ ...userData, userType: "tenant" })
+                  }
+                />
+                <span>Tenant</span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="buyer"
+                  checked={userData.userType === "buyer"}
+                  onChange={(e) =>
+                    setUserData({ ...userData, userType: "buyer" })
+                  }
+                />
+                <span>Buyer</span>
+              </label>
               <fieldset className="flex gap-6">
                 <label>
                   <input
@@ -235,7 +279,9 @@ export default function RegisterPage() {
                     name="userType"
                     value="owner"
                     checked={userData.userType === "owner"}
-                    onChange={(e) => setUserData({ ...userData, userType: e.target.value })}
+                    onChange={(e) =>
+                      setUserData({ ...userData, userType: e.target.value })
+                    }
                     required
                   />
                   <span>Homeowner</span>
@@ -246,7 +292,9 @@ export default function RegisterPage() {
                     name="userType"
                     value="tenant"
                     checked={userData.userType === "tenant"}
-                    onChange={(e) => setUserData({ ...userData, userType: e.target.value })}
+                    onChange={(e) =>
+                      setUserData({ ...userData, userType: e.target.value })
+                    }
                   />
                   <span>Tenant</span>
                 </label>
@@ -256,13 +304,14 @@ export default function RegisterPage() {
                     name="userType"
                     value="buyer"
                     checked={userData.userType === "buyer"}
-                    onChange={(e) => setUserData({ ...userData, userType: e.target.value })}
+                    onChange={(e) =>
+                      setUserData({ ...userData, userType: e.target.value })
+                    }
                   />
                   <span>Buyer</span>
                 </label>
               </fieldset>
             </div>
-
           </div>
 
           {/* submit button */}
@@ -279,12 +328,11 @@ export default function RegisterPage() {
                 contentClassName="opacity-50 pointer-events-none"
                 spinnerProps={{
                   style: {
-                    borderTopColor: 'lightblue',
-                    borderLeftColor: 'lightblue',
+                    borderTopColor: "lightblue",
+                    borderLeftColor: "lightblue",
                   },
                 }}
-              >
-              </LoadingOverlay>
+              ></LoadingOverlay>
               {loading ? "Processing..." : "Register"}
             </button>
           </div>

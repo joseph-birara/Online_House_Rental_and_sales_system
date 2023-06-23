@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import LoadingOverlay from 'react-loading-overlay-ts';
+import LoadingOverlay from "react-loading-overlay-ts";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { UtilityContext } from "../../contexts/UtilityContextProvide";
 
@@ -11,7 +11,7 @@ export default function LoginPage({ isAdmin }) {
   const [currentUserChoice, setCurrentUserChoice] = useState("");
   const { setUser, setToken, token, user } = useContext(UserContext);
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState("");
   let [loading, setLoading] = useState(false);
 
   // save user info on local storage
@@ -21,11 +21,17 @@ export default function LoginPage({ isAdmin }) {
   }, [token, user]);
 
   // for admin purpose
-  const { setOwnersList, setTenatList, setHousesList, setBuyerList, setAdminList, } = useContext(UtilityContext);
+  const {
+    setOwnersList,
+    setTenatList,
+    setHousesList,
+    setBuyerList,
+    setAdminList,
+  } = useContext(UtilityContext);
   useEffect(() => {
     // get all tenants
     axios
-      .get("http://localhost:4000/tenant/all")
+      .get("https://house-rental.onrender.com/tenant/all")
       .then((response) => {
         console.log(" admin is logged in and tenant is ");
         const both = response.data;
@@ -45,7 +51,7 @@ export default function LoginPage({ isAdmin }) {
 
     // get all ADMINS
     axios
-      .get("http://localhost:4000/admin/all")
+      .get("https://house-rental.onrender.com/admin/all")
       .then((response) => {
         console.log(" list of admins ");
         console.log(response.data);
@@ -57,7 +63,7 @@ export default function LoginPage({ isAdmin }) {
 
     // get all owners
     axios
-      .get("http://localhost:4000/owner/all")
+      .get("https://house-rental.onrender.com/owner/all")
       .then((response) => {
         console.log(" admin is logged in and owner is ");
         console.log(response.data);
@@ -69,7 +75,7 @@ export default function LoginPage({ isAdmin }) {
 
     /// load home data what ever the user is
     axios
-      .get("http://localhost:4000/houses/all")
+      .get("https://house-rental.onrender.com/houses/all")
       .then((response) => {
         console.log(" admin is logged in and houses is ");
         console.log(response.data);
@@ -80,12 +86,11 @@ export default function LoginPage({ isAdmin }) {
       });
   }, []);
 
-
   // for error message
   useEffect(() => {
     if (errorMessage) {
       const timer = setTimeout(() => {
-        setErrorMessage('')
+        setErrorMessage("");
       }, 2000);
 
       // Clean up the timer when the component unmounts or when the dependency changes
@@ -101,27 +106,26 @@ export default function LoginPage({ isAdmin }) {
       setCurrentUserChoice("admin");
     }
 
-    let backendRoutingPath = currentUserChoice
+    let backendRoutingPath = currentUserChoice;
 
     // user types are only two so
     // all buyers should be tenants
-    if (currentUserChoice === 'buyer') {
-      backendRoutingPath = 'tenant'
+    if (currentUserChoice === "buyer") {
+      backendRoutingPath = "tenant";
     }
 
     console.log(" email : " + email);
     console.log(" password : " + password);
     console.log(" userType : " + currentUserChoice);
-    console.log('routing link ' + backendRoutingPath);
+    console.log("routing link " + backendRoutingPath);
 
     axios
-      .post(`http://localhost:4000/${backendRoutingPath}/login`, {
+      .post(`https://house-rental.onrender.com/${backendRoutingPath}/login`, {
         email,
-        password
+        password,
       })
       .then((response) => {
         if (response.data.token) {
-
           let userData = response.data.user;
           userData.userType = currentUserChoice;
 
@@ -132,7 +136,10 @@ export default function LoginPage({ isAdmin }) {
           setUser(userData);
 
           // save the data locally
-          window.localStorage.setItem("user-token", JSON.stringify(response.data.token));
+          window.localStorage.setItem(
+            "user-token",
+            JSON.stringify(response.data.token)
+          );
           window.localStorage.setItem("user-data", JSON.stringify(userData));
           navigate("/");
           console.log("directed the page");
@@ -140,11 +147,10 @@ export default function LoginPage({ isAdmin }) {
           setErrorMessage(response.data);
           setLoading(false);
         }
-
       })
       .catch((error) => {
         console.log(" error message ");
-        setErrorMessage("Server error: " + error.message)
+        setErrorMessage("Server error: " + error.message);
         setLoading(false);
         console.log(error);
       });
@@ -159,8 +165,12 @@ export default function LoginPage({ isAdmin }) {
         </h1>
 
         {/* for error message */}
-        <div className={` text-[red]  outline outline-[1px] rounded-lg w-4/6 pl-2 mx-auto ${errorMessage ? '' : 'invisible'}`}>
-          {errorMessage ? (<span> {errorMessage}</span>) : (<span> == </span>)}
+        <div
+          className={` text-[red]  outline outline-[1px] rounded-lg w-4/6 pl-2 mx-auto ${
+            errorMessage ? "" : "invisible"
+          }`}
+        >
+          {errorMessage ? <span> {errorMessage}</span> : <span> == </span>}
         </div>
 
         <form className="max-w-md mx-auto" onSubmit={handleLoginSubmit}>
@@ -237,12 +247,11 @@ export default function LoginPage({ isAdmin }) {
               contentClassName="opacity-50 pointer-events-none"
               spinnerProps={{
                 style: {
-                  borderTopColor: 'lightblue',
-                  borderLeftColor: 'lightblue',
+                  borderTopColor: "lightblue",
+                  borderLeftColor: "lightblue",
                 },
               }}
-            >
-            </LoadingOverlay>
+            ></LoadingOverlay>
             {loading ? "Checking..." : "SignIn"}
           </button>
 
@@ -255,7 +264,6 @@ export default function LoginPage({ isAdmin }) {
             </div>
           )}
         </form>
-
       </div>
     </div>
   );

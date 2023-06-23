@@ -48,55 +48,93 @@ function App() {
           <div>
             <MainHeader />
             <main>
-
               <Routes>
                 <Route path="/" element={<LandingPage />} />
-                <Route path="/adminlogin" element={<LoginPage isAdmin={true} />} />
+                <Route
+                  path="/adminlogin"
+                  element={<LoginPage isAdmin={true} />}
+                />
                 <Route path="/login" element={<LoginPage isAdmin={false} />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/buy" element={<Buy />} />
                 <Route path="/rent" element={<HomesListing />} />
                 <Route path="/updateProfile" element={<UpdateProfilePage />} />
                 <Route path="/homeDetails/:id" element={<HomeDetails />} />
-
-                {/* activate and verify email */}
-                <Route path="activateEmail" element={<ActivateEmailMessage />} />
+                <Route
+                  path="payment/success"
+                  element={<PaymentSuccessMessage />}
+                />
+                <Route path="payment/fail" element={<PaymentFailedMessage />} />
+                <Route
+                  path="activateEmail"
+                  element={<ActivateEmailMessage />}
+                />
                 <Route path="verifyEmail/:id" element={<VerifyEmail />} />
 
                 {/* for forget passwrod */}
-                <Route path="/forgetpassword" element={<ForgotPasswordLandingPage />} />
-                <Route path="/admin-forgetpassword" element={<ForgotPasswordLandingPage isAdmin={true} />} />
-                <Route path="/forgetpassword/reset/:accountType" element={<PasswordResetPage />} />
+                <Route
+                  path="/forgetpassword"
+                  element={<ForgotPasswordLandingPage />}
+                />
+                <Route
+                  path="/admin-forgetpassword"
+                  element={<ForgotPasswordLandingPage isAdmin={true} />}
+                />
+                <Route
+                  path="/forgetpassword/reset/:accountType"
+                  element={<PasswordResetPage />}
+                />
 
                 {/* for payment  */}
-                <Route path="payment/success" element={<PaymentSuccessMessage />} />
+                <Route
+                  path="payment/success"
+                  element={<PaymentSuccessMessage />}
+                />
                 <Route path="payment/fail" element={<PaymentFailedMessage />} />
 
                 {/* HomeOwner Routes */}
-                <Route path="/homeOwner" element={<HomeownerDashboard />} >
+                <Route path="/homeOwner" element={<HomeownerDashboard />}>
                   <Route path="homes">
-                    <Route path="onListing" element={<HomesList rented={false} />} />
+                    <Route
+                      path="onListing"
+                      element={<HomesList rented={false} />}
+                    />
                     <Route path="onListing/:id" element={<PlacesFormPage />} />
-                    <Route path="rented" element={<HomesList rented={true} />} />
+                    <Route
+                      path="rented"
+                      element={<HomesList rented={true} />}
+                    />
                     <Route path="new" element={<PlacesFormPage />} />
                   </Route>
 
                   <Route path="applicants" element={<Applicants />} />
                   <Route path="tenants" element={<UsersList />} />
-                  <Route path="maintenanceRequests" element={<RequestsPage />} />
+                  <Route
+                    path="maintenanceRequests"
+                    element={<RequestsPage />}
+                  />
                 </Route>
 
                 {/* Admin Routes */}
-                <Route path="/admin" element={<AdminDashboard />} >
+                <Route path="/admin" element={<AdminDashboard />}>
                   <Route path="homes">
                     <Route path="onListing" element={<HomesListPage />} />
-                    <Route path="rented" element={<HomesListPage DisplayRented={true} />} />
-                    <Route path="home" element={<HomeDetails forAdmin={true} />} />
+                    <Route
+                      path="rented"
+                      element={<HomesListPage DisplayRented={true} />}
+                    />
+                    <Route
+                      path="home"
+                      element={<HomeDetails forAdmin={true} />}
+                    />
                   </Route>
 
                   <Route path="users">
                     <Route path="homeOwners" element={<OwnerListerPage />} />
-                    <Route path="homeOwners/homeOwner" element={<DetailsPage />} />
+                    <Route
+                      path="homeOwners/homeOwner"
+                      element={<DetailsPage />}
+                    />
                     <Route path="tenants" element={<TenantListerPage />} />
                     <Route path="buyers" element={<BuyerListerPage />} />
                     <Route path="admins" element={<AdminListerPage />} />
@@ -107,7 +145,7 @@ function App() {
                 </Route>
 
                 {/* Tenant Routes */}
-                <Route path="/tenant" element={<TenantDashboard />} >
+                <Route path="/tenant" element={<TenantDashboard />}>
                   <Route path="applications" element={<TenantApplications />} />
                   <Route path="rentedHomes" element={<TenantRentedHomes />} />
                   <Route path="mRequests" element={<MaintenanceRequests />} />
@@ -116,11 +154,8 @@ function App() {
                 </Route>
 
                 {/*  Buyer page  and there should be a Buyer dashboard*/}
-                <Route path="/buyer" element={<Test />} >
-                </Route>
-
+                <Route path="/buyer" element={<Test />}></Route>
               </Routes>
-
             </main>
           </div>
         </DashboardContextProvider>

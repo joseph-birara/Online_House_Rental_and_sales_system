@@ -10,20 +10,22 @@ import ImageSlider from "../components/ImageSlider";
 import { useContext, useEffect } from "react";
 import RetriveLocallyStoredData from "./Auth/RetriveLocallyStoredData";
 import { UserContext } from "../contexts/UserContextProvider";
+import Footer from "./Footer";
 
 const LandingPage = () => {
+  const { setToken, setUser } = useContext(UserContext);
+  // useEffect(() => {
+  //   const { user_token, user_data } = RetriveLocallyStoredData();
+  //   console.log("locally stored data is ");
+  //   if (user_data) {
+  //     console.log("--- user_data", JSON.parse(user_data));
+  //   }
 
-  const { setToken, setUser } = useContext(UserContext)
-  useEffect(() => {
-    const { user_token, user_data } = RetriveLocallyStoredData();
-    console.log('locally stored data is ');
-    console.log('--- user_data', JSON.parse(user_data));
-    setToken(JSON.parse(user_token))
-    setUser(JSON.parse(user_data))
+  //   setToken(JSON.parse(user_token));
+  //   setUser(JSON.parse(user_data));
+  // }, []);
 
-  }, [])
-
-  // retrive locally stored user data 
+  // retrive locally stored user data
   // useEffect(() => {
   //   let { user_token, user_data } = RetriveLocallyStoredData();
   //   setToken(JSON.parse(user_token))
@@ -41,7 +43,7 @@ const LandingPage = () => {
   //       endpoint = 'tenant'
   //     }
 
-  //     axios.get(`http://localhost:4000/${endpoint}/profile/:${user_data._id}`)
+  //     axios.get(`https://house-rental.onrender.com/${endpoint}/profile/:${user_data._id}`)
   //       .then((response) => {
   //         console.log('fetching user data on refresh is successful');
   //         console.log(response.data);
@@ -76,14 +78,24 @@ const LandingPage = () => {
   ];
   return (
     <>
-      <ImageSlider images={images} sliderContainer={sliderContainer} imgDim={img} autoplay={true} duration={2000} />
+      <ImageSlider
+        images={images}
+        sliderContainer={sliderContainer}
+        imgDim={img}
+        autoplay={true}
+        duration={2000}
+      />
       <div className={classes.moto}>
         <h1>Find your perfect home with Homiee!</h1>
-        <p>We provide a complete service for sale, purchase, or rental of homes in Ethiopia!</p>
+        <p>
+          We provide a complete service for sale, purchase, or rental of homes
+          in Ethiopia!
+        </p>
       </div>
 
       <LatestHomes forRent={true} />
       <LatestHomes />
+      <Footer />
     </>
   );
 };

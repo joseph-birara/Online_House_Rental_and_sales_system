@@ -71,7 +71,7 @@ const UserProfile = () => {
         <button
           type="button"
           onClick={() => setIsClicked(initialState)}
-          className='outline rounded-full text-[#99abb4] text-2xl p-3  hover:drop-shadow-xl hover:bg-light-gray'
+          className='rounded-full text-[#99abb4] text-2xl p-3  hover:drop-shadow-xl hover:bg-light-gray'
         >
           <MdOutlineCancel className="block" />
         </button>

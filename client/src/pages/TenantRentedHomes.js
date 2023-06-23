@@ -40,12 +40,12 @@ const RenatedHomesList = ({ data, handleSelect, makePayment }) => {
           cancel Rent
         </button>
 
-        <button
+        {!data.paymentStatus && <button
           className="outline ml-10 mr-3 mt-4 w-fit bg-[#39bbd2ee] hover:bg-[#32e5f9] text-white py-2 px-2 rounded"
           onClick={() => makePayment(data.paymentInfo)}
         >
           Checkout
-        </button>
+        </button>}
       </div>
     </div>
   )
@@ -104,15 +104,19 @@ const TenantRentedHomes = () => {
 
   const makePayment = (data) => {
     const payload = {
+      email: data.email,
+      name: data.name,
+      phone: data.phone,
       amount: data.price,
       reciepentId: data.ownerId,
       homeId: data.homeId,
       payerId: data.tenantId,
-      email: data.email,
-      phone: "0908080808"
+      lastName: data.lastName,
+      applicationId: data.applicationId
+
     }
     // console.log('yament method is ');
-    // console.log(payload);
+    console.log(payload);
 
     axios
       .post(`http://localhost:4000/payment/pay`, payload, {
@@ -121,9 +125,17 @@ const TenantRentedHomes = () => {
         },
       })
       .then((response) => {
-        console.log("here is the link");
-        console.log(response.data.link_url);
-        window.location.href = response.data.link_url
+        console.log('here is the paylod');
+        console.log(payload);
+
+        if (response.data.status === 'success') {
+          console.log("here is the response and redirected to other page");
+          window.location.href = response.data.data
+          // console.log(response.data.data);
+        } else {
+          alert('Please check you connecton and credentials')
+          console.log(response.data);
+        }
       })
       .catch((error) => {
         console.log("Error payment request");
@@ -163,7 +175,10 @@ const TenantRentedHomes = () => {
             homeId: applic.homeId._id,
             ownerId: applic.ownerId._id,
             tenantId: applic.applicantId._id,
-            phone: applic.applicantId.phone
+            phone: applic.applicantId.phone,
+            applicationId: applic._id,
+            lastName: applic.applicantId.lastName,
+            name: applic.applicantId.name,
           },
 
           appplicationId: applic._id,

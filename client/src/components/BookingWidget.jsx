@@ -86,79 +86,87 @@ export default function BookingWidget({ place }) {
     return <Navigate to={redirect} />;
   }
 
-  return (
-    <div
-      className="bg-white shadow-2xl p-4 rounded-2xl h-fit w-[400px]"
-      style={{
-        boxShadow: "0 2px 8px #091240",
-      }}
-    >
-      <div className="text-2xl text-center">
-        Price: ${place.price} / {priceRate}
-      </div>
-      <div className="border rounded-2xl mt-4">
-        <div className="flex">
-          <div className="py-3 px-4">
-            <label>Check in:</label>
-            <input
-              type="date"
-              value={checkIn}
-              onChange={(ev) => setCheckIn(ev.target.value)}
-            />
+  const isSale = user.userType === 'buyer' && place.homeType === "sale"
+  const isRent = user.userType === 'tenant' && (place.homeType === 'regularRent' || place.homeType === 'shortTermRent')
+  if (isSale || isRent) {
+
+    return (
+      <div
+        className="bg-white shadow-2xl p-4 rounded-2xl h-fit w-[400px]"
+        style={{
+          boxShadow: "0 2px 8px #091240",
+        }}
+      >
+        <div className="text-2xl text-center">
+          Price: ${place.price} / {priceRate}
+        </div>
+        <div className="border rounded-2xl mt-4">
+          <div className="flex">
+            <div className="py-3 px-4">
+              <label>Check in:</label>
+              <input
+                type="date"
+                value={checkIn}
+                onChange={(ev) => setCheckIn(ev.target.value)}
+              />
+            </div>
+            <div className="py-3 px-4 border-l">
+              <label >Check out:</label>
+              <input
+                className="disabled:bg-[dimgrey] disabled:text-[linen] disabled:opacity-100"
+                type="date"
+                required
+                disabled={place.homeType !== "shortTerm"}
+                value={checkOut}
+                onChange={(ev) => setCheckOut(ev.target.value)}
+              />
+            </div>
           </div>
-          <div className="py-3 px-4 border-l">
-            <label>Check out:</label>
+          <div className="py-3 px-4 border-t">
+            <label>Number of guests:</label>
             <input
               className="disabled:bg-[dimgrey] disabled:text-[linen] disabled:opacity-100"
+              type="number"
+              required
+              disabled={place.homeType === "sale"}
+              value={numberOfGuests}
+              onChange={(ev) => setNumberOfGuests(ev.target.value)}
+            />
+          </div>
+          <div className="py-3 px-4 border-t ">
+            <label>Pick a date for visit request(Optional):</label>
+            <input
               type="date"
-              disabled={place.homeType !== "shortTerm"}
-              value={checkOut}
-              onChange={(ev) => setCheckOut(ev.target.value)}
+              className="outline outline-[1px] px-1 rounded"
+              value={visitRequest}
+              onChange={(ev) => setVisitRequest(ev.target.value)}
             />
           </div>
         </div>
-        <div className="py-3 px-4 border-t">
-          <label>Number of guests:</label>
-          <input
-            className="disabled:bg-[dimgrey] disabled:text-[linen] disabled:opacity-100"
-            type="number"
-            disabled={place.homeType === "sale"}
-            value={numberOfGuests}
-            onChange={(ev) => setNumberOfGuests(ev.target.value)}
-          />
-        </div>
-        <div className="py-3 px-4 border-t ">
-          <label>Pick a date for visit request(Optional):</label>
-          <input
-            type="date"
-            className="outline outline-[1px] px-1 rounded"
-            value={visitRequest}
-            onChange={(ev) => setVisitRequest(ev.target.value)}
-          />
-        </div>
-      </div>
-      <button
-        onClick={applyHandler}
-        className="primary  bg-lightBlue hover:bg-lbHover mt-4"
-      >
-        <LoadingOverlay
-          active={loading}
-          spinner
-          className="loading-overlay"
-          spinnerClassName="w-12 h-12"
-          contentClassName="opacity-50 pointer-events-none"
-          spinnerProps={{
-            style: {
-              borderTopColor: 'lightblue',
-              borderLeftColor: 'lightblue',
-            },
-          }}
+        <button
+          onClick={applyHandler}
+          className="primary  bg-lightBlue hover:bg-lbHover mt-4"
         >
-        </LoadingOverlay>
-        {loading ? "Processing..." : <span> Apply to {place.homeType === "sale" ? "buy" : "rent"} </span>}
+          <LoadingOverlay
+            active={loading}
+            spinner
+            className="loading-overlay"
+            spinnerClassName="w-12 h-12"
+            contentClassName="opacity-50 pointer-events-none"
+            spinnerProps={{
+              style: {
+                borderTopColor: 'lightblue',
+                borderLeftColor: 'lightblue',
+              },
+            }}
+          >
+          </LoadingOverlay>
+          {loading ? "Processing..." : <span> Apply to {place.homeType === "sale" ? "buy" : "rent"} </span>}
 
-        {numberOfNights > 0 && <span> ${numberOfNights * place.price}</span>}
-      </button>
-    </div>
-  );
+          {numberOfNights > 0 && <span> ${numberOfNights * place.price}</span>}
+        </button>
+      </div>
+    );
+  }
+
 }

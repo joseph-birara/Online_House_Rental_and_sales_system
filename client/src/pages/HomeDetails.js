@@ -11,10 +11,12 @@ import Comments from "../components/comments/Comments";
 import BookingWidget from "../components/BookingWidget";
 import { useContext } from "react";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
+import { UserContext } from "../contexts/UserContextProvider";
 
 const HomeDetails = ({ forAdmin }) => {
   const { id } = useParams();
   const { HousesList } = useContext(UtilityContext);
+  const { user } = useContext(UserContext);
 
   const getHouseById = (h_id) => {
     return HousesList.find((house) => house._id === h_id);
@@ -64,7 +66,9 @@ const HomeDetails = ({ forAdmin }) => {
           </div>
           <p>{specificHouse.description}</p>
         </div>
-        <BookingWidget place={specificHouse} />
+        {/* {user && (user.userTye === 'tenant' || user.userTye === 'buyer') && <BookingWidget place={specificHouse} />} */}
+        {user && (user.userType === 'tenant' || user.userType === 'buyer') && <BookingWidget place={specificHouse} />}
+
       </div>
       <HomeProperties specificHouse={specificHouse} />
       <AmenitiesDisplayer amenities={specificHouse.amenity} />

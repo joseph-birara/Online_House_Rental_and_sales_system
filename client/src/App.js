@@ -71,7 +71,7 @@ function App() {
                 {/* for payment  */}
                 <Route path="payment/success" element={<PaymentSuccessMessage />} />
                 <Route path="payment/fail" element={<PaymentFailedMessage />} />
-                  <Route path="payment/verify/:appli_id" element={<ValidatePayment />} />
+                <Route path="payment/verify/:appli_id" element={<ValidatePayment />} />
 
 
                 {/* HomeOwner Routes */}

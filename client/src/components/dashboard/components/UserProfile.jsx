@@ -37,7 +37,7 @@ const UserProfile = () => {
     },
   ];
 
-  var accountDescription = ""
+  var accountDescription = "Buyer"
   if (user.userType === 'admin')
     accountDescription = 'Administrator'
   else if (user.superAdmin)

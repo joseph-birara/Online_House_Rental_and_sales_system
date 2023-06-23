@@ -106,7 +106,7 @@ const verifyPayment = async (req, res) => {
     console.log("Error updating application:", error);
   }
 
-  return res.status(200).json({ status: "saccess", data: null });
+  return res.status(200).json({ status: "success", data: null });
 };
 const deletePayment = async (req, res) => {
   console.log("delete function called");

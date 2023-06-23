@@ -113,7 +113,7 @@ function App() {
                 <Route path="/tenant" element={<TenantDashboard />} >
                   <Route path="applications" element={<TenantApplications />} />
                   <Route path="rentedHomes" element={<TenantRentedHomes />} />
-                  <Route path="mRequests" element={<MaintenanceRequests />} />
+                  <Route path="mRequest" element={<MaintenanceRequests />} />
                   <Route path="mRequests/new" element={<NewMRequest />} />
                 </Route>
 

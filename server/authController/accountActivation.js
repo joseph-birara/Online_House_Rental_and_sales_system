@@ -19,12 +19,11 @@ const verifyEmail = async (req, res, userModel) => {
     user.accountStatus = true;
     await user.save();
     const linkText = "Log in ";
-    const linkUrl = "/login";
+    const linkUrl = "http://localhost:3000/login";
     const message = "click the bottun below to log in to your account";
 
     const htmlElementWithLink = `
-<<<<<<< HEAD
-  <style>
+<style>
     body {
       display: flex;
       flex-direction: column;
@@ -46,10 +45,6 @@ const verifyEmail = async (req, res, userModel) => {
   <div class="message">${message}</div>
   <a href="${linkUrl}">
     <button class="custom-button">${linkText}</button>
-=======
-  <a href="http://localhost:3000/login/">
-    <button>your account is successfuly verfied. Go to login page</button>
->>>>>>> 1a3578308a64ec9df41407c0b490391e1188c768
   </a>
 `;
 

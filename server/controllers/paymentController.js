@@ -4,7 +4,7 @@ const generateRandomCharacterSet = require("../authController/randomCharater");
 const applicationModel = require("../models/applicantModel");
 
 //functions to process pyment
-// application id from front i=end is used as unique character her
+// application id from front end is used as unique character her
 const pay = async (req, res) => {
   const randomChar = generateRandomCharacterSet();
   console.log(req.body);
@@ -137,7 +137,6 @@ const editPayment = async (req, res) => {
 };
 
 //retrive payment information
-
 const getSingle = async (req, res) => {
   const { id } = req.params;
   try {

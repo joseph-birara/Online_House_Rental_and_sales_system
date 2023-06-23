@@ -4,17 +4,21 @@ const bcrypt = require("bcrypt");
 const sendEmail = require("./sendEmial");
 const { generateVerificationToken } = require("./saveToken");
 
-async function login(req, res, userModel, useType) {
+async function login(req, res, userModel) {
   console.log(req.body);
-  const { email, password } = req.body;
+  const { email, password, userType } = req.body;
   try {
-    const user = await userModel.findOne({ email });
+    const user = await userModel.findOne({ email: email, userType: userType });
     if (!user) {
-      return res.status(200).send("Invalid Email or password. Enter correct credentials.");
+      return res
+        .status(200)
+        .send("Invalid Email or password. Enter correct credentials.");
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(200).send("Invalid Email or password. Enter correct credentials.");
+      return res
+        .status(200)
+        .send("Invalid Email or password. Enter correct credentials.");
     }
     if (!user.accountStatus) {
       //resend the mail to verify account
@@ -23,10 +27,14 @@ async function login(req, res, userModel, useType) {
       let subject = "Account activation";
       let text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/${useType}/verify-email/${verificationToken}`;
       await sendEmail(email, subject, text);
-      return res.status(201).send("Please check your email to activate your account.");
+      return res
+        .status(201)
+        .send("Please check your email to activate your account.");
     }
     if (user.suspended) {
-      return res.status(201).send("Your account has been suspended. Contact administrators.");
+      return res
+        .status(201)
+        .send("Your account has been suspended. Contact administrators.");
     }
     const token = generateToken(user._id);
     return res.json({ token: token, user: user });

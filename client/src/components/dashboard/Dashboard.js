@@ -2,7 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 // import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
-import { Navbar, Footer, Sidebar } from "./components";
+import { Navbar, Sidebar } from "./components";
 import "./Dashboard.css";
 
 import { useStateContext } from "../../contexts/DashboardContextProvider";
@@ -46,7 +46,6 @@ const Dashboard = ({
             <Outlet />
           </div>
 
-          <Footer />
         </div>
       </div>
     </div>

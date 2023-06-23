@@ -39,6 +39,7 @@ import VerifyEmail from "./pages/Auth/VerifyEmail";
 import ForgotPasswordLandingPage from "./pages/Auth/ForgotPasswordLandingPage";
 import PasswordResetPage from "./pages/Auth/PasswordResetPage";
 import ValidatePayment from "./pages/Auth/ValidatePayment";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -121,7 +122,7 @@ function App() {
                 </Route>
 
               </Routes>
-
+              <Footer />
             </main>
           </div>
         </DashboardContextProvider>

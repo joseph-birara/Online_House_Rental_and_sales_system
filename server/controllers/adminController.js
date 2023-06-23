@@ -13,7 +13,7 @@ const { generateToken } = require("../authController/auth");
 // admin log in
 const adminLogin = async (req, res) => {
   const userType = "admin";
-  await login(req, res, adminModel, userType);
+  await login(req, res, adminModel);
 };
 
 // get all admins

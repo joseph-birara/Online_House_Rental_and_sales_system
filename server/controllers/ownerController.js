@@ -19,8 +19,8 @@ const { generateToken } = require("../authController/auth");
 
 // owner log in
 const ownerLogin = async (req, res) => {
-  const userType = "owner";
-  await login(req, res, ownerModel, userType);
+  // const userType = "owner";
+  await login(req, res, ownerModel);
 };
 
 // get all owners
@@ -72,7 +72,9 @@ const registerOwner = async (req, res) => {
   // Check if email is already taken
   const isTaken = await ownerModel.findOne({ email });
   if (isTaken) {
-    return res.status(401).send("Your email is already taken, use another email");
+    return res
+      .status(401)
+      .send("Your email is already taken, use another email");
   }
 
   // Hash password
@@ -113,7 +115,6 @@ const registerOwner = async (req, res) => {
     // Send email verification email to the newly registered user
     let subject = "Account activation";
     let text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/owner/verify-email/${verificationToken}`;
-
 
     await sendVerificationEmail(email, subject, text);
 

@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 const tenantModel = require("../models/tenantModel");
 const login = require("../authController/login");
-const { initiatePasswordReset, resetPassword } = require("../authController/passwordReset");
+const {
+  initiatePasswordReset,
+  resetPassword,
+} = require("../authController/passwordReset");
 const { hashPassword } = require("../authController/passwordHash");
 const getUser = require("../authController/authorize");
 const { changePassword } = require("../authController/changePassword");
@@ -12,8 +15,8 @@ const { generateToken } = require("../authController/auth");
 
 // tenant log in
 const tenantLogin = async (req, res) => {
-  const useType = "tenant";
-  await login(req, res, tenantModel, useType);
+  // const useType = "tenant";
+  await login(req, res, tenantModel);
 };
 
 // get all tenants
@@ -65,7 +68,9 @@ const registerTenant = async (req, res) => {
   const image = data.image;
   const isTaken = await tenantModel.findOne({ email });
   if (isTaken) {
-    return res.status(200).send("Your email is already taken, use another email");
+    return res
+      .status(200)
+      .send("Your email is already taken, use another email");
   }
   console.log("body", password);
 

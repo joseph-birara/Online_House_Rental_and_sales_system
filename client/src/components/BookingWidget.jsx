@@ -3,6 +3,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContextProvider";
 import axios from "axios";
+import LoadingOverlay from 'react-loading-overlay-ts';
 
 export default function BookingWidget({ place }) {
   const [checkIn, setCheckIn] = useState("");
@@ -10,6 +11,7 @@ export default function BookingWidget({ place }) {
   const [numberOfGuests, setNumberOfGuests] = useState("");
   const [visitRequest, setVisitRequest] = useState("");
   const [redirect, setRedirect] = useState("");
+  let [loading, setLoading] = useState(false);
 
   const { user, token } = useContext(UserContext);
 
@@ -22,6 +24,7 @@ export default function BookingWidget({ place }) {
   }
 
   async function applyHandler() {
+    setLoading(true)
     const applicationData = {
       applicantId: user._id,
       homeId: place._id,
@@ -67,6 +70,8 @@ export default function BookingWidget({ place }) {
       .catch((error) => {
         console.log("-----------------error on applying to home");
         console.log(error);
+        setLoading(false)
+
       });
   }
 
@@ -74,8 +79,8 @@ export default function BookingWidget({ place }) {
     place.homeType === "sale"
       ? "total"
       : place.homeType === "regular"
-      ? "per month"
-      : "per night";
+        ? "per month"
+        : "per night";
 
   if (redirect) {
     return <Navigate to={redirect} />;
@@ -122,10 +127,11 @@ export default function BookingWidget({ place }) {
             onChange={(ev) => setNumberOfGuests(ev.target.value)}
           />
         </div>
-        <div className="py-3 px-4 border-t">
+        <div className="py-3 px-4 border-t ">
           <label>Pick a date for visit request(Optional):</label>
           <input
             type="date"
+            className="outline outline-[1px] px-1 rounded"
             value={visitRequest}
             onChange={(ev) => setVisitRequest(ev.target.value)}
           />
@@ -135,7 +141,22 @@ export default function BookingWidget({ place }) {
         onClick={applyHandler}
         className="primary  bg-lightBlue hover:bg-lbHover mt-4"
       >
-        Apply to {place.homeType === "sale" ? "buy" : "rent"}
+        <LoadingOverlay
+          active={loading}
+          spinner
+          className="loading-overlay"
+          spinnerClassName="w-12 h-12"
+          contentClassName="opacity-50 pointer-events-none"
+          spinnerProps={{
+            style: {
+              borderTopColor: 'lightblue',
+              borderLeftColor: 'lightblue',
+            },
+          }}
+        >
+        </LoadingOverlay>
+        {loading ? "Processing..." : <span> Apply to {place.homeType === "sale" ? "buy" : "rent"} </span>}
+
         {numberOfNights > 0 && <span> ${numberOfNights * place.price}</span>}
       </button>
     </div>

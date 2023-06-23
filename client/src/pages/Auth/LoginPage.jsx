@@ -9,16 +9,10 @@ export default function LoginPage({ isAdmin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [currentUserChoice, setCurrentUserChoice] = useState("");
-  const { setUser, setToken, token, user } = useContext(UserContext);
+  const { setUser, setToken} = useContext(UserContext);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('')
   let [loading, setLoading] = useState(false);
-
-  // save user info on local storage
-  useEffect(() => {
-    if (token) window.localStorage.setItem("user-token", JSON.stringify(token));
-    if (user) window.localStorage.setItem("user-data", JSON.stringify(user));
-  }, [token, user]);
 
   // for admin purpose
   const { setOwnersList, setTenatList, setHousesList, setBuyerList, setAdminList, } = useContext(UtilityContext);
@@ -80,7 +74,6 @@ export default function LoginPage({ isAdmin }) {
       });
   }, []);
 
-
   // for error message
   useEffect(() => {
     if (errorMessage) {
@@ -101,33 +94,37 @@ export default function LoginPage({ isAdmin }) {
       setCurrentUserChoice("admin");
     }
 
-    let backendRoutingPath = currentUserChoice
+    let routingLink = currentUserChoice
+    const USERTYPE = currentUserChoice
 
     // user types are only two so
     // all buyers should be tenants
     if (currentUserChoice === 'buyer') {
-      backendRoutingPath = 'tenant'
+      routingLink = 'tenant'
     }
 
     console.log(" email : " + email);
     console.log(" password : " + password);
-    console.log(" userType : " + currentUserChoice);
-    console.log('routing link ' + backendRoutingPath);
+    console.log(" userType : " + USERTYPE);
+    console.log('routing link ' + routingLink);
 
     axios
-      .post(`http://localhost:4000/${backendRoutingPath}/login`, {
-        email,
-        password
+      .post(`http://localhost:4000/${routingLink}/login`, {
+        email: email,
+        password: password,
+        userType: USERTYPE
       })
       .then((response) => {
         if (response.data.token) {
 
+          // grab the data and assign user type too.
           let userData = response.data.user;
-          userData.userType = currentUserChoice;
+          userData.userType = USERTYPE;
 
           console.log("success logged in");
           console.log("token is " + response.data.token);
 
+          // save token and user data
           setToken(response.data.token);
           setUser(userData);
 
@@ -135,7 +132,6 @@ export default function LoginPage({ isAdmin }) {
           window.localStorage.setItem("user-token", JSON.stringify(response.data.token));
           window.localStorage.setItem("user-data", JSON.stringify(userData));
           navigate("/");
-          console.log("directed the page");
         } else {
           setErrorMessage(response.data);
           setLoading(false);

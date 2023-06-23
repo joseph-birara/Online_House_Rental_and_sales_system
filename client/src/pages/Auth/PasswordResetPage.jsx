@@ -7,7 +7,7 @@ export default function PasswordResetPage({ isAdmin }) {
     const { accountType } = useParams('')
     const [email, setEmail] = useState("");
     const [token, setToken] = useState("");
-    const [password, setPassword] = useState("");
+    const [newpassword, setnewPassword] = useState("");
     const [currentUserChoice, setCurrentUserChoice] = useState("");
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('')
@@ -37,7 +37,7 @@ export default function PasswordResetPage({ isAdmin }) {
 
         axios
             .post(`http://localhost:4000/${accountType}/newPassword`, {
-                email: email, token: token, password: password
+                email: email, token: token, password: newpassword
             })
             .then((response) => {
 
@@ -93,8 +93,8 @@ export default function PasswordResetPage({ isAdmin }) {
                     <input
                         type="text"
                         placeholder="new password"
-                        value={password}
-                        onChange={(ev) => setPassword(ev.target.value)}
+                        value={newpassword}
+                        onChange={(ev) => setnewPassword(ev.target.value)}
                         required
                     />
 

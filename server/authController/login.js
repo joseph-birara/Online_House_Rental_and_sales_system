@@ -7,8 +7,18 @@ const { generateVerificationToken } = require("./saveToken");
 async function login(req, res, userModel) {
   console.log(req.body);
   const { email, password, userType } = req.body;
+  var user;
   try {
-    const user = await userModel.findOne({ email: email, userType: userType });
+    if (userType == "owner" || userType == "admin") {
+      user = await userModel.findOne({
+        email: email,
+      });
+    } else {
+      user = await userModel.findOne({
+        email: email,
+        userType: userType,
+      });
+    }
     if (!user) {
       return res
         .status(200)

@@ -33,7 +33,7 @@ const TenantDashboard = () => {
       links: [
         {
           name: "View Maintenance Requests",
-          link: "tenant/mRequests",
+          link: "tenant/mRequest",
           icon: <RiContactsLine />,
         },
         {

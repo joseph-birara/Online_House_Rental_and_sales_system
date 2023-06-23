@@ -2,6 +2,7 @@ const paymentModel = require("../models/paymentModel");
 var request = require("request");
 const generateRandomCharacterSet = require("../authController/randomCharater");
 const applicationModel = require("../models/applicantModel");
+const smsService = require("../authController/smsService");
 
 //functions to process pyment
 // application id from front end is used as unique character her
@@ -61,6 +62,12 @@ const pay = async (req, res) => {
     if (responseBody.status == "failed") {
       return res.status(201).json({ status: "failed", data: null });
     }
+    try {
+      smsService.sendSMS("+2510977439777", "rent has been completed");
+    } catch (error) {
+      console.log(error);
+    }
+
     return res.status(200).json({
       status: "success",
       data: responseBody.data.checkout_url,

@@ -205,10 +205,7 @@ const updateApplication = async (req, res) => {
         isRented: false,
       });
       try {
-        await smsService.sendSMS(
-          "+2510977439777",
-          "application has been complted"
-        );
+        await smsService.sendSMS("+2510977439777", "rent has been completed");
       } catch (error) {
         console.log(error);
       }

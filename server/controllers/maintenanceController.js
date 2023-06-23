@@ -107,7 +107,9 @@ const deleteMaintenance = async (req, res) => {
 // get mentanace by tenant
 const getByTenant = async (req, res) => {
   const { id } = req.params;
-  const requests = await maintenanceModel.find({ tenantId: id });
+  const requests = await maintenanceModel
+    .find({ tenantId: id })
+    .populate("ownerId", "name");
   if (requests) {
     return res.status(201).send({
       status: "success",
@@ -121,7 +123,9 @@ const getByTenant = async (req, res) => {
 
 const getByHouseOwner = async (req, res) => {
   const { id } = req.params;
-  const requests = await maintenanceModel.find({ ownerId: id });
+  const requests = await maintenanceModel
+    .find({ ownerId: id })
+    .populate("ownerId", "name");
   if (requests) {
     return res.status(201).send({
       status: "success",

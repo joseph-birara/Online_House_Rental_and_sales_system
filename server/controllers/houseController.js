@@ -59,8 +59,8 @@ const getAnalysis = async (req, res) => {
 
     // Return the price suggestion as an object
     return {
-      minPrice,
-      maxPrice
+      minPrice: Math.floor(minPrice),
+      maxPrice: Math.floor(maxPrice)
     };
   }
   try {

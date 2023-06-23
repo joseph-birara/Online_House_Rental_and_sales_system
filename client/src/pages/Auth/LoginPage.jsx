@@ -9,7 +9,7 @@ export default function LoginPage({ isAdmin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [currentUserChoice, setCurrentUserChoice] = useState("");
-  const { setUser, setToken} = useContext(UserContext);
+  const { setUser, setToken } = useContext(UserContext);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('')
   let [loading, setLoading] = useState(false);
@@ -97,23 +97,23 @@ export default function LoginPage({ isAdmin }) {
     let routingLink = currentUserChoice
     const USERTYPE = currentUserChoice
 
-    // user types are only two so
-    // all buyers should be tenants
-    if (currentUserChoice === 'buyer') {
+    let payload = {
+      email: email,
+      password: password,
+    }
+    // tenant and buyer have same route and userType is needed in the payload
+    if (currentUserChoice === 'buyer' || currentUserChoice === 'tenant') {
       routingLink = 'tenant'
+      payload.userType = USERTYPE
     }
 
     console.log(" email : " + email);
-    console.log(" password : " + password);
-    console.log(" userType : " + USERTYPE);
+    console.log(" password : " + payload.password);
+    console.log(" userType : " + payload.userType);
     console.log('routing link ' + routingLink);
 
     axios
-      .post(`http://localhost:4000/${routingLink}/login`, {
-        email: email,
-        password: password,
-        userType: USERTYPE
-      })
+      .post(`http://localhost:4000/${routingLink}/login`, payload)
       .then((response) => {
         if (response.data.token) {
 

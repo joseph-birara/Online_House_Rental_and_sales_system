@@ -9,7 +9,7 @@ const homeModel = require("../models/homeModel");
 // recive number of bed rooms and location and search from home collection
 // calculate avarage price , maximun and mininum price
 const getAnalysis = async (req, res) => {
-  const { bedRoom, subCity } = req.body;
+  const { bedRoom, subCity, bathRoom, homeType, area } = req.body;
 
   try {
     // Filter homes based on the provided parameters
@@ -19,6 +19,9 @@ const getAnalysis = async (req, res) => {
     }
     if (subCity) {
       filter.subCity = subCity;
+    }
+    if (homeType) {
+      filter.homeType = homeType;
     }
 
     // Retrieve homes from the home collection based on the filter
@@ -37,7 +40,7 @@ const getAnalysis = async (req, res) => {
     const maximumPrice = Math.max(...prices);
     const minimumPrice = Math.min(...prices);
 
-    res.json({ averagePrice, maximumPrice, minimumPrice, homes });
+    return res.json({ averagePrice, maximumPrice, minimumPrice, homes });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

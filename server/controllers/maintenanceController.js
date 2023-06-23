@@ -109,7 +109,7 @@ const getByTenant = async (req, res) => {
   const { id } = req.params;
   const requests = await maintenanceModel
     .find({ tenantId: id })
-    .populate("ownerId", "name");
+    .populate("ownerId", "name lastName");
   if (requests) {
     return res.status(201).send({
       status: "success",
@@ -125,7 +125,7 @@ const getByHouseOwner = async (req, res) => {
   const { id } = req.params;
   const requests = await maintenanceModel
     .find({ ownerId: id })
-    .populate("ownerId", "name");
+    .populate("tenantId", "name lastName");
   if (requests) {
     return res.status(201).send({
       status: "success",

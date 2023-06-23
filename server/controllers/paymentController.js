@@ -46,7 +46,7 @@ const pay = async (req, res) => {
       phone_number: "0908080808",
       tx_ref: applicationId + randomChar,
       callback_url: "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
-      return_url: `http://localhost:3000/tenant/verify/${applicationId}`,
+      return_url: `http://localhost:3000/payment/verify/${applicationId}`,
       "customization[title]": "Payment for my favourite merchant",
       "customization[description]": "I love online payments",
     }),

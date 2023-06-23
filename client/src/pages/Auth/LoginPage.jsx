@@ -9,16 +9,10 @@ export default function LoginPage({ isAdmin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [currentUserChoice, setCurrentUserChoice] = useState("");
-  const { setUser, setToken, token, user } = useContext(UserContext);
+  const { setUser, setToken } = useContext(UserContext);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   let [loading, setLoading] = useState(false);
-
-  // save user info on local storage
-  useEffect(() => {
-    if (token) window.localStorage.setItem("user-token", JSON.stringify(token));
-    if (user) window.localStorage.setItem("user-data", JSON.stringify(user));
-  }, [token, user]);
 
   // for admin purpose
   const {
@@ -106,32 +100,36 @@ export default function LoginPage({ isAdmin }) {
       setCurrentUserChoice("admin");
     }
 
-    let backendRoutingPath = currentUserChoice;
+    let routingLink = currentUserChoice;
+    const USERTYPE = currentUserChoice;
 
     // user types are only two so
     // all buyers should be tenants
     if (currentUserChoice === "buyer") {
-      backendRoutingPath = "tenant";
+      routingLink = "tenant";
     }
 
     console.log(" email : " + email);
     console.log(" password : " + password);
-    console.log(" userType : " + currentUserChoice);
-    console.log("routing link " + backendRoutingPath);
+    console.log(" userType : " + USERTYPE);
+    console.log("routing link " + routingLink);
 
     axios
-      .post(`https://house-rental.onrender.com/${backendRoutingPath}/login`, {
-        email,
-        password,
+      .post(`https://house-rental.onrender.com/${routingLink}/login`, {
+        email: email,
+        password: password,
+        userType: USERTYPE,
       })
       .then((response) => {
         if (response.data.token) {
+          // grab the data and assign user type too.
           let userData = response.data.user;
-          userData.userType = currentUserChoice;
+          userData.userType = USERTYPE;
 
           console.log("success logged in");
           console.log("token is " + response.data.token);
 
+          // save token and user data
           setToken(response.data.token);
           setUser(userData);
 
@@ -142,7 +140,6 @@ export default function LoginPage({ isAdmin }) {
           );
           window.localStorage.setItem("user-data", JSON.stringify(userData));
           navigate("/");
-          console.log("directed the page");
         } else {
           setErrorMessage(response.data);
           setLoading(false);
@@ -230,7 +227,10 @@ export default function LoginPage({ isAdmin }) {
             </div>
           )}
 
-          <Link className="underline text-lightBlue text-black" to={"/forgetpassword"}>
+          <Link
+            className="underline text-lightBlue text-black"
+            to={"/forgetpassword"}
+          >
             Forgot passowrd
           </Link>
 

@@ -48,7 +48,7 @@ export default function ForgotPasswordLandingPage({ isAdmin }) {
       .then((response) => {
         // console.log("the response is--------------------");
         // console.log(response);
-        if (response.data === "success") {
+        if (response.data === 'success') {
           navigate(`/forgetpassword/reset/${backendRoutingPath}`);
           console.log("password reset is done-----------");
         } else {

@@ -31,7 +31,6 @@ import MaintenanceRequests from "./pages/MaintenanceRequests";
 import NewMRequest from "./pages/NewMRequest";
 import UpdateProfilePage from "./pages/Auth/UpdateProfile";
 import TenantRentedHomes from "./pages/TenantRentedHomes";
-// import ValidatePayment from "./pages/Auth/ValidatePayment";
 import PaymentSuccessMessage from "./pages/Auth/PaymentSuccess";
 import PaymentFailedMessage from "./pages/Auth/PaymentFail";
 import ActivateEmail from "./pages/Auth/ActivateEmailMessage";
@@ -39,6 +38,7 @@ import ActivateEmailMessage from "./pages/Auth/ActivateEmailMessage";
 import VerifyEmail from "./pages/Auth/VerifyEmail";
 import ForgotPasswordLandingPage from "./pages/Auth/ForgotPasswordLandingPage";
 import PasswordResetPage from "./pages/Auth/PasswordResetPage";
+import ValidatePayment from "./pages/Auth/ValidatePayment";
 
 function App() {
   return (
@@ -91,6 +91,8 @@ function App() {
                   element={<PaymentSuccessMessage />}
                 />
                 <Route path="payment/fail" element={<PaymentFailedMessage />} />
+                  <Route path="payment/verify/:appli_id" element={<ValidatePayment />} />
+
 
                 {/* HomeOwner Routes */}
                 <Route path="/homeOwner" element={<HomeownerDashboard />}>
@@ -150,7 +152,6 @@ function App() {
                   <Route path="rentedHomes" element={<TenantRentedHomes />} />
                   <Route path="mRequests" element={<MaintenanceRequests />} />
                   <Route path="mRequests/new" element={<NewMRequest />} />
-                  {/* <Route path="pay/:id" element={<ValidatePayment />} /> */}
                 </Route>
 
                 {/*  Buyer page  and there should be a Buyer dashboard*/}

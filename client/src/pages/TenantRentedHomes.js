@@ -1,22 +1,17 @@
-// import { Link, Navigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { IoBedOutline } from "react-icons/io5";
 import { TiDelete } from "react-icons/ti";
 import { FaShower, FaCheck } from "react-icons/fa";
-import { TfiRulerAlt2 } from "react-icons/tfi";
+import { RiRuler2Line } from "react-icons/ri";
 import { UserContext } from "../contexts/UserContextProvider";
 import axios from "axios";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 
-const RenatedHomesList = ({ data, handleSelect, makePayment }) => {
+const RentedHomesList = ({ data, handleSelect, makePayment }) => {
   return (
-    <div className="outline outline-[2px] outline-[lightgray]  flex justify-between items-center  gap-1 p-2 rounded-lg m-4 ">
+    <div className="outline outline-[2px] outline-[lightgray] flex justify-between items-center gap-1 p-2 rounded-lg m-4">
       <div className="w-2/4 bg-gray-300 mx-2">
-        <img
-          className=" rounded-lg"
-          src={data.homeImage}
-          alt="home imag is this"
-        />
+        <img className="rounded-lg" src={data.homeImage} alt="home image" />
       </div>
       <div className="grow-0 shrink px-1 p-1 mr-3">
         <h2 className="text-xl">{data.homeTitle}</h2>
@@ -29,21 +24,21 @@ const RenatedHomesList = ({ data, handleSelect, makePayment }) => {
             <FaShower /> {data.bathRoom}
           </p>
           <p>
-            <TfiRulerAlt2 /> {data.area}m<sup>2</sup>
+            <RiRuler2Line /> {data.area}m<sup>2</sup>
           </p>
           <p className="flex justify-center items-center font-semibold">
             {data.appType}
           </p>
-          <p className="font-semibold"> Owner: {data.ownerName} </p>
-          <p className="flex justify-center items-center font-semibold ">
+          <p className="font-semibold">Owner: {data.ownerName}</p>
+          <p className="flex justify-center items-center font-semibold">
             Payment Status:
-            <p className="flex justify-center items-center">
+            <span className="flex justify-center items-center">
               {data.paymentStatus ? (
                 <FaCheck className="text-[green]" size={20} />
               ) : (
                 <TiDelete className="text-[red]" size={20} />
               )}
-            </p>
+            </span>
           </p>
         </div>
         <button
@@ -52,15 +47,17 @@ const RenatedHomesList = ({ data, handleSelect, makePayment }) => {
             handleSelect(data.applicationId, data.paymentInfo.homeId)
           }
         >
-          cancel Rent
+          Cancel Rent
         </button>
 
-        <button
-          className="outline ml-10 mr-3 mt-4 w-fit bg-[#39bbd2ee] hover:bg-[#32e5f9] text-white py-2 px-2 rounded"
-          onClick={() => makePayment(data.paymentInfo)}
-        >
-          Checkout
-        </button>
+        {!data.paymentStatus && (
+          <button
+            className="outline ml-10 mr-3 mt-4 w-fit bg-[#39bbd2ee] hover:bg-[#32e5f9] text-white py-2 px-2 rounded"
+            onClick={() => makePayment(data.paymentInfo)}
+          >
+            Checkout
+          </button>
+        )}
       </div>
     </div>
   );
@@ -76,12 +73,11 @@ const TenantRentedHomes = () => {
       .get(`${process.env.REACT_APP_baseURL}/application/bytenant/${user._id}`)
       .then((response) => {
         setApplications(response.data);
-        // console.log("ap", applications);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [applications]);
+  }, [setApplications, user._id]);
 
   const handleSelect = (appId, homeId) => {
     axios
@@ -90,23 +86,23 @@ const TenantRentedHomes = () => {
         { id: appId, status: "completed" },
         {
           headers: {
-            Authorization: `Bearer + ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       )
       .then((response) => {
-        console.log(" Applicatioin is accepted successfuly ");
+        console.log("Application is accepted successfully");
 
-        // update applications
-        const updateApplication = applications.map((app) => {
+        // Update applications
+        const updatedApplications = applications.map((app) => {
           if (app._id === appId) {
             return { ...app, status: "completed" };
           }
           return app;
         });
-        setApplications(updateApplication);
+        setApplications(updatedApplications);
 
-        // update homesList
+        // Update homesList
         const updatedHomesList = HousesList.map((house) => {
           if (house._id === homeId) {
             return { ...house, isRented: false };
@@ -123,26 +119,30 @@ const TenantRentedHomes = () => {
 
   const makePayment = (data) => {
     const payload = {
+      email: data.email,
+      name: data.name,
+      phone: data.phone,
       amount: data.price,
-      reciepentId: data.ownerId,
+      recipientId: data.ownerId,
       homeId: data.homeId,
       payerId: data.tenantId,
-      email: data.email,
-      phone: "0908080808",
+      lastName: data.lastName,
+      applicationId: data.applicationId,
     };
-    // console.log('yament method is ');
-    // console.log(payload);
 
     axios
-      .post(`https://house-rental.onrender.com/payment/pay`, payload, {
+      .post(`${process.env.REACT_APP_baseURL}/payment/pay`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        console.log("here is the link");
-        console.log(response.data.link_url);
-        window.location.href = response.data.link_url;
+        if (response.data.status === "success") {
+          window.location.href = response.data.data;
+        } else {
+          alert("Please check your connection and credentials");
+          console.log(response.data);
+        }
       })
       .catch((error) => {
         console.log("Error payment request");
@@ -150,8 +150,7 @@ const TenantRentedHomes = () => {
       });
   };
 
-  // get homesId rented by tenant
-  const fitltedApplication = applications.filter(
+  const filteredApplications = applications.filter(
     (applica) => applica.status === "accepted"
   );
 
@@ -160,43 +159,44 @@ const TenantRentedHomes = () => {
       <p className="text-xl font-semibold mx-4 mb-8 pb-4 border-b-1 border-[#7dd3fc]">
         List of Rented Homes
       </p>
-      {fitltedApplication &&
-        fitltedApplication.map((applic) => {
-          if (!applic.applicantId) {
-            return null; // Skip this application if applicantId is undefined
-          }
+      {filteredApplications.map((applic) => {
+        if (!applic.applicantId) {
+          return null; // Skip this application if applicantId is undefined
+        }
 
-          const data = {
-            homeImage: applic.homeId.images[0],
-            homeTitle: applic.homeId.title,
-            homeDescription: applic.homeId.description,
-            bedRoom: applic.homeId.bedRoom,
-            bathRoom: applic.homeId.bathRoom,
-            area: applic.homeId.area,
-            appType: applic.applicationType,
-            paymentStatus: applic.paymentStatus,
-            ownerName: applic.ownerId.name,
-            // email: a,
-            paymentInfo: {
-              email: applic.applicantId.email,
-              price: applic.homeId.price,
-              homeId: applic.homeId._id,
-              ownerId: applic.ownerId._id,
-              tenantId: applic.applicantId._id,
-              phone: applic.applicantId.phone,
-            },
+        const data = {
+          homeImage: applic.homeId.images[0],
+          homeTitle: applic.homeId.title,
+          homeDescription: applic.homeId.description,
+          bedRoom: applic.homeId.bedRoom,
+          bathRoom: applic.homeId.bathRoom,
+          area: applic.homeId.area,
+          appType: applic.applicationType,
+          paymentStatus: applic.paymentStatus,
+          ownerName: applic.ownerId.name,
+          paymentInfo: {
+            email: applic.applicantId.email,
+            price: applic.homeId.price,
+            homeId: applic.homeId._id,
+            ownerId: applic.ownerId._id,
+            tenantId: applic.applicantId._id,
+            phone: applic.applicantId.phone,
+            applicationId: applic._id,
+            lastName: applic.applicantId.lastName,
+            name: applic.applicantId.name,
+          },
+          applicationId: applic._id,
+        };
 
-            appplicationId: applic._id,
-          };
-          return (
-            <RenatedHomesList
-              key={applic._id}
-              data={data}
-              handleSelect={handleSelect}
-              makePayment={makePayment}
-            />
-          );
-        })}
+        return (
+          <RentedHomesList
+            key={applic._id}
+            data={data}
+            handleSelect={handleSelect}
+            makePayment={makePayment}
+          />
+        );
+      })}
     </div>
   );
 };

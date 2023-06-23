@@ -35,6 +35,7 @@ export default function RegisterPage() {
     setLoading(true); // set teh loading overlay to true
     // console.log(imageFile);
 
+    // upload image and grab the link
     if (imageFile != null) {
       const formdata = new FormData();
       formdata.append("file", imageFile);
@@ -57,10 +58,9 @@ export default function RegisterPage() {
         });
     }
 
-    // register the user to the backend
+    // register the user to the backend and forwared user to activateEmail page
     const backendRoutingPath =
       userData.userType === "buyer" ? "tenant" : userData.userType;
-    // console.log(userData);
     axios
       .post(
         `${process.env.REACT_APP_baseURL}/${backendRoutingPath}/register`,

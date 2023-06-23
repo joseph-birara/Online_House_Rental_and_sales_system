@@ -95,55 +95,57 @@ export default function LoginPage({ isAdmin }) {
     }
 
     let routingLink = currentUserChoice
-    const USERTYPE = currentUserChoice
 
-    let payload = {
-      email: email,
-      password: password,
-    }
-    // tenant and buyer have same route and userType is needed in the payload
-    if (currentUserChoice === 'buyer' || currentUserChoice === 'tenant') {
+    // user types are only two so
+    // all buyers should be tenants
+    if (currentUserChoice === 'buyer') {
       routingLink = 'tenant'
-      payload.userType = USERTYPE
     }
 
-    console.log(" email : " + email);
-    console.log(" password : " + payload.password);
-    console.log(" userType : " + payload.userType);
-    console.log('routing link ' + routingLink);
+    if (currentUserChoice) {
 
-    axios
-      .post(`http://localhost:4000/${routingLink}/login`, payload)
-      .then((response) => {
-        if (response.data.token) {
+      console.log(" email : " + email);
+      console.log(" password : " + password);
+      console.log(" userType : " + currentUserChoice);
+      console.log('routing link ' + routingLink);
 
-          // grab the data and assign user type too.
-          let userData = response.data.user;
-          userData.userType = USERTYPE;
+      axios
+        .post(`http://localhost:4000/${routingLink}/login`, {
+          email: email,
+          password: password,
+          userType: currentUserChoice
+        })
+        .then((response) => {
+          if (response.data.token) {
 
-          console.log("success logged in");
-          console.log("token is " + response.data.token);
+            // grab the data and assign user type too.
+            let userData = response.data.user;
+            userData.userType = currentUserChoice;
 
-          // save token and user data
-          setToken(response.data.token);
-          setUser(userData);
+            console.log("success logged in");
+            console.log("token is " + response.data.token);
 
-          // save the data locally
-          window.localStorage.setItem("user-token", JSON.stringify(response.data.token));
-          window.localStorage.setItem("user-data", JSON.stringify(userData));
-          navigate("/");
-        } else {
-          setErrorMessage(response.data);
+            // save token and user data
+            setToken(response.data.token);
+            setUser(userData);
+
+            // save the data locally
+            window.localStorage.setItem("user-token", JSON.stringify(response.data.token));
+            window.localStorage.setItem("user-data", JSON.stringify(userData));
+            navigate("/");
+          } else {
+            setErrorMessage(response.data);
+            setLoading(false);
+          }
+
+        })
+        .catch((error) => {
+          console.log(" error message ");
+          setErrorMessage("Server error: " + error.message)
           setLoading(false);
-        }
-
-      })
-      .catch((error) => {
-        console.log(" error message ");
-        setErrorMessage("Server error: " + error.message)
-        setLoading(false);
-        console.log(error);
-      });
+          console.log(error);
+        });
+    }
   }
 
   return (

@@ -176,6 +176,8 @@ const {
   deleteMaintenance,
   getMaintenance,
   getSingleMaintenance,
+  getByHouseOwner,
+  getByTenant,
 } = require("../controllers/maintenanceController");
 
 const express = require("express");
@@ -186,5 +188,7 @@ router.put("/edit", editMaintenace);
 router.delete("/delete/:id", deleteMaintenance);
 router.get("/single/:id", getSingleMaintenance);
 router.get("/all", getMaintenance);
+router.get("/houseowner/:id", getByHouseOwner);
+router.get("/tenant/:id", getByTenant);
 
 module.exports = router;

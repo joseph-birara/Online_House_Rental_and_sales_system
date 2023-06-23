@@ -104,6 +104,39 @@ const deleteMaintenance = async (req, res) => {
     return res.status(500).json({ message: error });
   }
 };
+// get mentanace by tenant
+const getByTenant = async (req, res) => {
+  const { id } = req.params;
+  const requests = await maintenanceModel.find({ ownerId: id });
+  if (requests) {
+    return res.status(201).send({
+      status: "success",
+      requests,
+    });
+  }
+
+  return res.status(201).send("failed");
+};
+//get mentanance by owner
+
+const getByHouseOwner = async (req, res) => {
+  const { id } = req.params
+  const requests = await maintenanceModel.find({ ownerId: id })
+  if (requests) {
+    return res
+      .status(201)
+      .send({
+        status: 'success',
+        requests
+      })
+      ;
+  };
+
+  return res
+    .status(201)
+    .send("failed")
+}
+
 
 module.exports = {
   sendMaintenance,
@@ -111,4 +144,6 @@ module.exports = {
   deleteMaintenance,
   getMaintenance,
   getSingleMaintenance,
+  getByHouseOwner,
+  getByTenant
 };

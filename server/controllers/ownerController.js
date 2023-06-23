@@ -112,7 +112,9 @@ const registerOwner = async (req, res) => {
 
     // Send email verification email to the newly registered user
     let subject = "Account activation";
-    let text = `Please click the following link to verify your email address: http://localhost:3000/verifyEmail/${verificationToken}`;
+    let text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/owner/verify-email/${verificationToken}`;
+
+
     await sendVerificationEmail(email, subject, text);
 
     await session.commitTransaction(); // commit the transaction

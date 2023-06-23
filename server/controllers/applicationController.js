@@ -4,11 +4,12 @@ const ownerModel = require("../models/ownerModel");
 const sendEmail = require("../authController/sendEmial");
 const { default: mongoose } = require("mongoose");
 const homeModel = require("../models/homeModel");
+const smsService = require("../authController/smsService");
 
 // send application request
 const addApplicationRequest = async (req, res) => {
   try {
-    console.log("befor distracturin", req.body);
+    // console.log("befor distracturin", req.body);
     const applicantId = req.body.applicantId;
     const ownerId = req.body.ownerId;
     const applicant = await tenantModel.findById(applicantId);
@@ -186,15 +187,31 @@ const updateApplication = async (req, res) => {
     if (!application) {
       return res.status(404).json({ message: "Application not found" });
     }
-    if (req.body.status == "accepted") {
+    if (req.body.status && req.body.status == "accepted") {
       const home = await homeModel.findByIdAndUpdate(application.homeId, {
         isRented: true,
       });
+      try {
+        await smsService.sendSMS(
+          "+2510977439777",
+          "application has been accepted"
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
     if (req.body.status == "completed") {
       const home = await homeModel.findByIdAndUpdate(application.homeId, {
         isRented: false,
       });
+      try {
+        await smsService.sendSMS(
+          "+2510977439777",
+          "application has been complted"
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     return res

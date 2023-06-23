@@ -28,7 +28,7 @@ const pay = async (req, res) => {
     reciepentId: reciepentId,
     homeId: homeId,
     randomChar: randomChar,
-    applicationId: applicationId
+    applicationId: applicationId,
   });
   var options = {
     method: "POST",
@@ -46,7 +46,7 @@ const pay = async (req, res) => {
       phone_number: "0908080808",
       tx_ref: applicationId + randomChar,
       callback_url: "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
-      return_url: `http://localhost:3000/tenant/pay/${applicationId}`,
+      return_url: `http://localhost:3000/tenant/verify/${applicationId}`,
       "customization[title]": "Payment for my favourite merchant",
       "customization[description]": "I love online payments",
     }),
@@ -88,7 +88,7 @@ const pay = async (req, res) => {
 };
 //verfi payment chappa second api
 const verifyPayment = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   // const updatedApplication = applicationModel.findOne({
   //   _id: id,
@@ -101,13 +101,12 @@ const verifyPayment = async (req, res) => {
       { $set: { paymentStatus: true } },
       { new: true }
     );
-    console.log('Application updated successfully:', updatedApplication);
+    console.log("Application updated successfully:", updatedApplication);
   } catch (error) {
-    console.log('Error updating application:', error);
+    console.log("Error updating application:", error);
   }
 
   return res.status(200).json({ status: "saccess", data: null });
-
 };
 const deletePayment = async (req, res) => {
   console.log("delete function called");
@@ -146,7 +145,7 @@ const getSingle = async (req, res) => {
     if (!payment) {
       return res.status(401).json;
     }
-  } catch (error) { }
+  } catch (error) {}
 };
 
 module.exports = {

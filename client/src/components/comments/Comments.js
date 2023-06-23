@@ -2,12 +2,6 @@ import { useState, useEffect } from "react";
 import CommentForm from "./CommentForm";
 import Comment from "./Comment";
 import styles from "./Comments.module.css";
-import {
-  getComments as getCommentsApi,
-  createComment as createCommentApi,
-  updateComment as updateCommentApi,
-  deleteComment as deleteCommentApi,
-} from "./api";
 import axios from "axios";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { useContext } from "react";
@@ -16,6 +10,7 @@ const Comments = ({ houseId, ownerId }) => {
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
   const { user, token } = useContext(UserContext);
+  console.log("user: ",user);
   const rootComments = backendComments.filter(
     (backendComment) => backendComment.parentId === null
   );
@@ -73,30 +68,30 @@ const Comments = ({ houseId, ownerId }) => {
 
     const commentData = {
       id: commentId,
-      message: text
-    }
-    axios.put(`http://localhost:4000/comment/edit`, commentData, {
+      message: text,
+    };
+    axios
+      .put(`http://localhost:4000/comment/edit`, commentData, {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
+        },
       })
-        .then((response) => {
-          console.log("comment edited succesfully");
-          const updatedBackendComments = backendComments.map((backendComment) => {
-            if (backendComment._id === commentId) {
-              return { ...backendComment, message: text };
-            }
-            return backendComment;
-          });
-          setBackendComments(updatedBackendComments);
-          setActiveComment(null);
-
-        })
-        .catch(error => {
-          console.log("Error on updating comment");
-          console.log(commentData)
-          console.log(error);
+      .then((response) => {
+        console.log("comment edited succesfully");
+        const updatedBackendComments = backendComments.map((backendComment) => {
+          if (backendComment._id === commentId) {
+            return { ...backendComment, message: text };
+          }
+          return backendComment;
         });
+        setBackendComments(updatedBackendComments);
+        setActiveComment(null);
+      })
+      .catch((error) => {
+        console.log("Error on updating comment");
+        console.log(commentData);
+        console.log(error);
+      });
   };
   const deleteComment = (commentId) => {
     // if (window.confirm("Are you sure you want to remove comment?")) {
@@ -108,22 +103,23 @@ const Comments = ({ houseId, ownerId }) => {
     //   });
     // }
 
-    axios.delete(`http://localhost:4000/comment/delete/${commentId}`, {
+    axios
+      .delete(`http://localhost:4000/comment/delete/${commentId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
+        },
       })
-        .then(() => {
-          console.log("comment deleted succesfully");
-          const updatedBackendComments = backendComments.filter(
-            (backendComment) => backendComment._id !== commentId
-          );
-          setBackendComments(updatedBackendComments);
-        })
-        .catch(error => {
-          console.log("Error on deleteing comment");
-          console.log(error);
-        });
+      .then(() => {
+        console.log("comment deleted succesfully");
+        const updatedBackendComments = backendComments.filter(
+          (backendComment) => backendComment._id !== commentId
+        );
+        setBackendComments(updatedBackendComments);
+      })
+      .catch((error) => {
+        console.log("Error on deleteing comment");
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -138,7 +134,7 @@ const Comments = ({ houseId, ownerId }) => {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        console.log("resComments: ", response.data);
         setBackendComments(response.data);
         // console.log(houseData);
         // setHousesList([...HousesList, houseData]); //update house list state
@@ -153,12 +149,16 @@ const Comments = ({ houseId, ownerId }) => {
   return (
     <div className={styles.comments}>
       <h3 className={styles["comments-title"]}>Reviews</h3>
-      <div className={styles["comment-form-title"]}>Write a review</div>
-      <CommentForm submitLabel="Write" handleSubmit={addComment} />
+      {user.userType == "tenant" && (
+        <>
+          <div className={styles["comment-form-title"]}>Write a review</div>
+          <CommentForm submitLabel="Write" handleSubmit={addComment} />
+        </>
+      )}
       <div className={styles["comments-container"]}>
         {rootComments.map((rootComment) => (
           <Comment
-            key={rootComment.id}
+            key={rootComment._id}
             comment={rootComment}
             replies={getReplies(rootComment._id)}
             getReplies={getReplies}
@@ -168,6 +168,7 @@ const Comments = ({ houseId, ownerId }) => {
             deleteComment={deleteComment}
             updateComment={updateComment}
             currentUserId={user._id}
+            currentUserType = {user.userType}
           />
         ))}
       </div>

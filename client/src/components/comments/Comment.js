@@ -1,6 +1,8 @@
 import CommentForm from "./CommentForm";
 import avatar from "./avatar.jpg";
 import styles from "./Comments.module.css";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContextProvider";
 
 const Comment = ({
   comment,
@@ -13,7 +15,9 @@ const Comment = ({
   addComment,
   parentId = null,
   currentUserId,
+  currentUserType,
 }) => {
+  const {user} = useContext(UserContext);
   const isEditing =
     activeComment &&
     activeComment.id === comment._id &&
@@ -23,9 +27,9 @@ const Comment = ({
     activeComment.id === comment._id &&
     activeComment.type === "replying";
   const canDelete =
-    currentUserId === comment.reviewerId._id && replies.length === 0;
-  const canReply = Boolean(currentUserId);
-  const canEdit = currentUserId === comment.reviewerId._id;
+    currentUserId === comment.reviewerId._id && replies.length === 0 && currentUserType === "tenant";
+  const canReply = Boolean(currentUserId) && currentUserType === "tenant";
+  const canEdit = currentUserId === comment.reviewerId._id && currentUserType === "tenant";
   const createdAt = new Date(comment.createdAt).toLocaleDateString();
   const dateFormatter = new Intl.DateTimeFormat(undefined, {
     dateStyle: "medium",
@@ -34,7 +38,14 @@ const Comment = ({
   return (
     <div key={comment.id} className={styles.comment}>
       <div className={styles["comment-image-container"]}>
-        <img className="rounded-full w-9 h-9" src={avatar} alt="user-profile" />
+      <img
+          className="rounded-full w-11 h-11"
+          src={user && user.image}
+          onError={(e) => {
+            e.target.src = 'https://media.gettyimages.com/id/1227618807/vector/human-face-avatar-icon-profile-for-social-network-man-vector-illustration.jpg?s=1024x1024&w=gi&k=20&c=-Iz47dY99Hx3S8JAkVLKvzQN65Qn8m7UPFAMbJvfd1Y=';
+          }}
+          alt="user-profile"
+        />
       </div>
       <div className={styles["comment-right-part"]}>
         <div className={styles["comment-content"]}>
@@ -96,16 +107,17 @@ const Comment = ({
             {replies.map((reply) => (
               <Comment
                 comment={reply}
-                key={reply.id}
+                key={reply._id}
                 setActiveComment={setActiveComment}
                 activeComment={activeComment}
                 updateComment={updateComment}
                 deleteComment={deleteComment}
                 addComment={addComment}
-                parentId={comment.id}
+                parentId={comment._id}
                 replies={getReplies(reply._id)}
                 getReplies={getReplies}
                 currentUserId={currentUserId}
+                currentUserType={currentUserType}
               />
             ))}
           </div>

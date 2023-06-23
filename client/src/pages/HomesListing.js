@@ -6,7 +6,7 @@ import { FaShower } from "react-icons/fa";
 import { TfiRulerAlt2 } from "react-icons/tfi";
 import { AiOutlineHeart } from "react-icons/ai";
 import Button from "../UI/Button";
-import { useState, useContext, useEffect, useReducer } from "react";
+import { useContext, useEffect, useReducer } from "react";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 import axios from "axios";
 import Dropdown from "../components/Dropdown";
@@ -74,7 +74,7 @@ const homesReducer = (state, action) => {
       homes: action.payload.houses,
     };
   } else if (action.type === "subcity") {
-    if (Boolean(state.subcity)) {
+    if (state.subcity !== "All subcities") {
       houses = action.payload.allHouses.filter(
         (home) =>
           state.price.min <= home.price &&
@@ -135,7 +135,7 @@ const homesReducer = (state, action) => {
     if (Boolean(state.area.min)) {
       houses = action.payload.allHouses.filter(
         (home) =>
-        state.price.min <= home.price &&
+          state.price.min <= home.price &&
           home.price <= state.price.max &&
           home.area <= state.area.max
       );
@@ -148,14 +148,13 @@ const homesReducer = (state, action) => {
       homes: houses.filter((home) => home.area >= action.payload.minArea),
       area: { ...state.area, min: action.payload.minArea },
     };
-  }
-  else if (action.type === "maxArea") {
+  } else if (action.type === "maxArea") {
     if (state.area.max !== Number.MAX_VALUE) {
       houses = action.payload.allHouses.filter(
         (home) =>
-        state.price.min <= home.price &&
+          state.price.min <= home.price &&
           home.price <= state.price.max &&
-          state.area.min <= home.area 
+          state.area.min <= home.area
       );
       if (state.subcity !== "All subcities") {
         houses = houses.filter((home) => home.subCity === state.subcity);
@@ -173,17 +172,24 @@ const HomesListing = () => {
   const { HousesList, setHousesList } = useContext(UtilityContext);
 
   const [homesState, dispatchHomes] = useReducer(homesReducer, {
-    homes: HousesList,
+    homes: HousesList.filter(
+      (home) => home.isRented === false && home.homeType !== "sale"
+    ),
     subcity: "All subcities",
     price: { min: 0, max: Number.MAX_VALUE },
     area: { min: 0, max: Number.MAX_VALUE },
   });
-  console.log("hs: ", homesState);
+  // console.log("hs: ", homesState);
 
   const subcityHandler = (id, type, selectedSubcity) => {
     dispatchHomes({
       type: "subcity",
-      payload: { selected: selectedSubcity, allHouses: HousesList },
+      payload: {
+        selected: selectedSubcity,
+        allHouses: HousesList.filter(
+          (home) => home.isRented === false && home.homeType !== "sale"
+        ),
+      },
     });
   };
 
@@ -205,11 +211,15 @@ const HomesListing = () => {
     axios
       .get("http://localhost:4000/houses/all")
       .then((response) => {
-        console.log(response.data);
+        // console.log("resData: ", response.data);
         setHousesList(response.data);
         dispatchHomes({
           type: "initialize",
-          payload: { houses: response.data.filter((home) => home.isRented === false) },
+          payload: {
+            houses: response.data.filter(
+              (home) => home.isRented === false && home.homeType !== "sale"
+            ),
+          },
         });
       })
       .catch((error) => {
@@ -224,7 +234,12 @@ const HomesListing = () => {
     }
     dispatchHomes({
       type: "minPrice",
-      payload: { minPrice: enteredNum, allHouses: HousesList },
+      payload: {
+        minPrice: enteredNum,
+        allHouses: HousesList.filter(
+          (home) => home.isRented === false && home.homeType !== "sale"
+        ),
+      },
     });
   };
 
@@ -235,7 +250,12 @@ const HomesListing = () => {
     }
     dispatchHomes({
       type: "maxPrice",
-      payload: { maxPrice: enteredNum, allHouses: HousesList },
+      payload: {
+        maxPrice: enteredNum,
+        allHouses: HousesList.filter(
+          (home) => home.isRented === false && home.homeType !== "sale"
+        ),
+      },
     });
   };
 
@@ -246,7 +266,12 @@ const HomesListing = () => {
     }
     dispatchHomes({
       type: "minArea",
-      payload: { minArea: enteredNum, allHouses: HousesList },
+      payload: {
+        minArea: enteredNum,
+        allHouses: HousesList.filter(
+          (home) => home.isRented === false && home.homeType !== "sale"
+        ),
+      },
     });
   };
 
@@ -257,10 +282,16 @@ const HomesListing = () => {
     }
     dispatchHomes({
       type: "maxArea",
-      payload: { maxArea: enteredNum, allHouses: HousesList },
+      payload: {
+        maxArea: enteredNum,
+        allHouses: HousesList.filter(
+          (home) => home.isRented === false && home.homeType !== "sale"
+        ),
+      },
     });
   };
 
+  // console.log("homesState: ", homesState);
   return (
     <>
       <div className="flex gap-8">
@@ -304,17 +335,20 @@ const HomesListing = () => {
         </div>
       </div>
       <div className="mx-2 p-2 flex gap-4 justify-start flex-wrap">
-        {homesState.homes.map(
-          (house) =>
-            house.homeType !== "sale" && (
-              <NavLink
-                className={styles.navLink}
-                to={`/homeDetails/${house._id}`}
-              >
-                <Home key={house._id} home={house} />
-              </NavLink>
-            )
+        {homesState.homes.length === 0 && (
+          <h2 className="w-full text-center mt-12">
+            No home is available with the specified properties!
+          </h2>
         )}
+        {homesState.homes.map((house) => (
+          <NavLink
+            key={house._id}
+            className={styles.navLink}
+            to={`/homeDetails/${house._id}`}
+          >
+            <Home home={house} />
+          </NavLink>
+        ))}
       </div>
     </>
   );

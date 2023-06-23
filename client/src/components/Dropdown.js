@@ -6,7 +6,7 @@ const Dropdown = ({ actions, onSelect, itemId, itemType, mainText }) => {
 
   const handleSelect = (itemId, option) => {
     setIsOpen(false);
-    onSelect(itemId, option);
+    onSelect(itemId, itemType, option);
   };
 
   if (!Boolean(mainText)) {

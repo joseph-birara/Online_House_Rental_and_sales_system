@@ -18,25 +18,7 @@ const HomeLister = ({ objectList }) => {
 
         // clear selected opton
         setSelectionOption('')
-        if (action === 'delete') {
-            // console.log("delte for " + houseId);
-            axios.delete(`${process.env.REACT_APP_baseURL}/houses/delete/${houseId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }).then((response) => {
-
-                // update the context
-                const filterHome = HousesList.filter((house) => house._id !== houseId);
-                setHousesList(filterHome);
-                console.log("House deleted successfully");
-            }).catch((error) => {
-                console.log("Error on deleting House");
-                console.log(error.message);
-            });
-
-        }
-        else if (action === 'verify') {
+        if (action === 'verify') {
             // update home and state
             const houseUpdatedData = { id: houseId, verified: !homeStatus.verified }
             axios.put(`${process.env.REACT_APP_baseURL}/houses/update`, houseUpdatedData, {
@@ -103,7 +85,7 @@ const HomeLister = ({ objectList }) => {
                     </div>
                     <div className="grow-0 shrink px-1  p-1 mr-3">
                         <h2 className="text-xl">{house.title}</h2>
-                        <p className="text-sm mt-2">{house.description}</p>
+                        <p className="text-sm mt-2 line-clamp-3">{house.description}</p>
                         <div className="flex justify-start gap-8">
                             <p><IoBedOutline /> {house.bedRoom}</p>
                             <p><FaShower /> {house.bathRoom}</p>
@@ -159,7 +141,6 @@ const HomeLister = ({ objectList }) => {
                         }}
                     >
                         <option value="">Select Action</option>
-                        <option value="delete"> Delete</option>
                         <option value="verify">
                             {house.verified ? 'Unverify' : 'verify'}
                         </option>

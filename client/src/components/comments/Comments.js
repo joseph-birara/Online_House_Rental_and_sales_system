@@ -100,9 +100,6 @@ const Comments = ({ houseId, ownerId, setNumeberOfReviews }) => {
   };
 
   useEffect(() => {
-    // getCommentsApi().then((data) => {
-    //   setBackendComments(data);
-    // });
 
     axios
       .get(`http://localhost:4000/comment/getByHouse/${houseId}`)
@@ -121,7 +118,6 @@ const Comments = ({ houseId, ownerId, setNumeberOfReviews }) => {
     if (backendComments) {
       setNumeberOfReviews(backendComments.length)
     }
-
   }, [backendComments])
 
   return (

@@ -60,7 +60,7 @@ export const Home = ({ home }) => {
           </p>
       </div>
       {/* likingpart */}
-      <div className=" font-semibold mx-3 border border-[lightgray] flex justify-between gap-1 items-center p-0.5 ">
+      <div className=" font-semibold mx-3 border border-[lightgray] rounded-lg flex justify-between gap-1 items-center p-0.5 ">
 
         <p className=""> ETB {home.price}/month</p>
 

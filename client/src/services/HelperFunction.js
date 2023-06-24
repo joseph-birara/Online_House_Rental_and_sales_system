@@ -16,7 +16,7 @@ export const FormatDate = (date) => {
 }
 
 // for number formating
-export const NumberFormatter = (number) => {
+export const NumberFormater = (number) => {
     const options = { style: 'currency', currency: 'ETB' };
     return number.toLocaleString('en-ET', options);
 }

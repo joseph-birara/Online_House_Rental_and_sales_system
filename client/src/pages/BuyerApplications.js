@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContextProvider";
-import { capitalizeFirstLetter, FormatDate, NumberFormatter } from '../services/HelperFunction'
+import { FormatDate, NumberFormater } from '../services/HelperFunction'
 
 const Application = ({ data }) => {
   const { token } = useContext(UserContext);
@@ -52,7 +52,7 @@ const Application = ({ data }) => {
 
           <div className="px-2" >
             <p>
-              Total price: {NumberFormatter(data.price)}
+              Total price: {NumberFormater(data.price)}
             </p>
             <p className="px-2">
               App Status:  <span className={` text-white pb-1 mx-3 text-sm px-2 rounded-xl outline  ${data.status === 'accepted' ? 'bg-[green]' : ''} ${data.status === 'completed' ? 'bg-[#4ff23d]' : ''}  ${data.status === 'rejected' ? 'bg-[red]' : ''}  ${data.status === 'pending' ? 'bg-[#dfdf0e]' : ''}`} >{data.appStatus}</span>

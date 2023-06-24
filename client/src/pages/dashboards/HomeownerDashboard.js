@@ -32,8 +32,13 @@ const HomeownerDashboard = () => {
       title: "Applications",
       links: [
         {
-          name: "Applicants",
-          link: "homeOwner/applicants",
+          name: "Rent Applicants",
+          link: "homeOwner/rentapplicants",
+          icon: <RiContactsLine />,
+        },
+        {
+          name: "Buy Applicants",
+          link: "homeOwner/buyapplicants",
           icon: <RiContactsLine />,
         },
       ],

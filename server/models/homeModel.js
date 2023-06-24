@@ -73,8 +73,8 @@ const HomeSchema = new Schema(
       maxGuest: String,
     },
     like: {
-      type: Number,
-      default: 0,
+      type: [mongoose.Schema.Types.ObjectId],
+      default: [],
     },
     amenity: [String],
   },

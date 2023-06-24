@@ -52,9 +52,9 @@ const UpdateProfilePage = () => {
         image: user.image
       });
     }
-  }, [user]);
+  }, []);
 
-// upload imag file
+  // upload imag file
   useEffect(() => {
     if (imageFile != null) {
       const formdata = new FormData();
@@ -160,7 +160,7 @@ const UpdateProfilePage = () => {
                 <img
                   // className="rounded-lg w-auto h-36 "
                   className="rounded-lg w-44 h-44 "
-                  src={profileImage}
+                  src={userData.image}
                   onError={(e) => {
                     e.target.src = 'https://media.gettyimages.com/id/1227618807/vector/human-face-avatar-icon-profile-for-social-network-man-vector-illustration.jpg?s=1024x1024&w=gi&k=20&c=-Iz47dY99Hx3S8JAkVLKvzQN65Qn8m7UPFAMbJvfd1Y=';
                   }}

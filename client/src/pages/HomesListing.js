@@ -64,7 +64,7 @@ export const Home = ({ home }) => {
 
         <p className=""> ETB {home.price}/month</p>
 
-        <p className="border border-[red] px-1">
+        <p className=" px-1">
           <Button className="transform scale-150 ">
             <AiOutlineHeart />
           </Button>

@@ -10,6 +10,7 @@ import { useContext, useEffect, useReducer } from "react";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 import axios from "axios";
 import Dropdown from "../components/Dropdown";
+import { NumberFormater } from "../services/HelperFunction"
 
 export const Home = ({ home }) => {
   const img = {
@@ -29,40 +30,42 @@ export const Home = ({ home }) => {
   return (
     <div className={styles.mainContainer}>
 
-        {/* image part */}
-        <ImageSlider
-          images={pupulatedImagesObject}
-          autoplay={false}
-          sliderContainer={sliderContainer}
-          imgDim={img}
-        />
+      {/* image part */}
+      <ImageSlider
+        images={pupulatedImagesObject}
+        autoplay={false}
+        sliderContainer={sliderContainer}
+        imgDim={img}
+      />
 
-        {/* title part */}
-        <p className={styles.shorten} id={styles.title}>
-          {home.title}
+      {/* title part */}
+      <p className={styles.shorten} id={styles.title}>
+        {home.title}
+      </p>
+
+      {/* kebele, woreda */}
+      <p className={styles.shorten} id={styles.location}>
+        {home.kebele}, {home.woreda}, {home.subCity}, {home.city}
+      </p>
+
+      {/* icons like washer, shower,  */}
+      <div className={styles.icons}>
+        <p>
+          <IoBedOutline id={styles.bed} /> {home.bedRoom}
         </p>
-
-        {/* kebele, woreda */}
-        <p className={styles.shorten} id={styles.location}>
-          {home.kebele}, {home.woreda}, {home.subCity}, {home.city}
+        <p>
+          <FaShower id={styles.shower} /> {home.bathRoom}
         </p>
-
-        {/* icons like washer, shower,  */}
-        <div className={styles.icons}>
-          <p>
-            <IoBedOutline id={styles.bed} /> {home.bedRoom}
-          </p>
-          <p>
-            <FaShower id={styles.shower} /> {home.bathRoom}
-          </p>
-          <p>
-            <TfiRulerAlt2 /> {home.area} m<sup>2</sup>
-          </p>
+        <p>
+          <TfiRulerAlt2 /> {home.area} m<sup>2</sup>
+        </p>
       </div>
       {/* likingpart */}
       <div className=" font-semibold mx-3 border border-[lightgray] rounded-lg flex justify-between gap-1 items-center p-0.5 ">
 
-        <p className=""> ETB {home.price}/month</p>
+        <p className=""> ETB {NumberFormater(home.price)} {home.homeType === 'regularRent' ?( " /Month" ): home.homeType === 'shortTermRent' ? " /Day" : ""}</p>
+
+
 
         <p className=" px-1">
           <Button className="transform scale-150 ">
@@ -240,7 +243,7 @@ const HomesListing = () => {
 
   const handleMinPriceChange = (e) => {
     let enteredNum = parseInt(e.target.value);
-    if (e.target.value.length == 0) {
+    if (e.target.value.length === 0) {
       enteredNum = 0;
     }
     dispatchHomes({
@@ -256,7 +259,7 @@ const HomesListing = () => {
 
   const handleMaxPriceChange = (e) => {
     let enteredNum = parseInt(e.target.value);
-    if (e.target.value.length == 0) {
+    if (e.target.value.length === 0) {
       enteredNum = Number.MAX_VALUE;
     }
     dispatchHomes({
@@ -272,7 +275,7 @@ const HomesListing = () => {
 
   const handleMinAreaChange = (e) => {
     let enteredNum = parseInt(e.target.value);
-    if (e.target.value.length == 0) {
+    if (e.target.value.length === 0) {
       enteredNum = 0;
     }
     dispatchHomes({
@@ -288,7 +291,7 @@ const HomesListing = () => {
 
   const handleMaxAreaChange = (e) => {
     let enteredNum = parseInt(e.target.value);
-    if (e.target.value.length == 0) {
+    if (e.target.value.length === 0) {
       enteredNum = Number.MAX_VALUE;
     }
     dispatchHomes({

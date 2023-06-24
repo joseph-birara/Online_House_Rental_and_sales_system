@@ -58,7 +58,7 @@ const Application = ({ data }) => {
               <span>Checkout date: </span> <span>{data.checkout ? data.checkout : "Not specified"}</span>
             </p>
             <p className="pt-2">
-              <span>App Status: </span> <span className={` text-white mx-3 pb-1 px-2 rounded-xl outline  ${data.status === 'accepted' ? 'bg-[green]' : ''} ${data.status === 'completed' ? 'bg-[#4ff23d]' : ''}  ${data.status === 'rejected' ? 'bg-[red]' : ''}  ${data.status === 'pending' ? 'bg-[#dfdf0e]' : ''}`} >{data.appStatus}</span>
+              <span>App Status: </span> <span className={` text-white pb-1 mx-3 text-sm px-2 rounded-xl outline  ${data.status === 'accepted' ? 'bg-[green]' : ''} ${data.status === 'completed' ? 'bg-[#4ff23d]' : ''}  ${data.status === 'rejected' ? 'bg-[red]' : ''}  ${data.status === 'pending' ? 'bg-[#dfdf0e]' : ''}`} >{data.appStatus}</span>
             </p>
           </div>
         </div>

@@ -128,11 +128,7 @@ const Comments = ({ houseId, ownerId }) => {
     // });
 
     axios
-      .get(`http://localhost:4000/comment/getByHouse/${houseId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(`http://localhost:4000/comment/getByHouse/${houseId}`)
       .then((response) => {
         console.log("resComments: ", response.data);
         setBackendComments(response.data);
@@ -149,7 +145,7 @@ const Comments = ({ houseId, ownerId }) => {
   return (
     <div className={styles.comments}>
       <h3 className={styles["comments-title"]}>Reviews</h3>
-      {user.userType == "tenant" && (
+      {user && user.userType == "tenant" && (
         <>
           <div className={styles["comment-form-title"]}>Write a review</div>
           <CommentForm submitLabel="Write" handleSubmit={addComment} />
@@ -167,8 +163,8 @@ const Comments = ({ houseId, ownerId }) => {
             addComment={addComment}
             deleteComment={deleteComment}
             updateComment={updateComment}
-            currentUserId={user._id}
-            currentUserType = {user.userType}
+            currentUserId={user ? user._id : null}
+            currentUserType = {user ? user.userType : null}
           />
         ))}
       </div>

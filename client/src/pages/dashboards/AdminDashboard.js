@@ -1,13 +1,64 @@
-import React from "react";
+import React, { useContext } from "react";
 import Dashboard from "../../components/dashboard/Dashboard";
 import userProfPic from "./avatar.jpg";
 import { BsCurrencyDollar, BsShield } from "react-icons/bs";
 import { FiShoppingBag, FiCreditCard } from "react-icons/fi";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { RiContactsLine } from "react-icons/ri";
+import { UserContext } from "../../contexts/UserContextProvider";
 
 const AdminDashboard = () => {
-  const sidebarLinks = [
+  const { user } = useContext(UserContext)
+
+  const NonSuperAdmin = [
+    {
+      title: "Homes",
+      links: [
+        {
+          name: "On Listing",
+          link: "admin/homes/onListing",
+          icon: <FiShoppingBag />,
+        },
+        {
+          name: "Rented",
+          link: "admin/homes/rented",
+          icon: <FiShoppingBag />,
+        },
+      ],
+    },
+
+    {
+      title: "Users",
+      links: [
+        {
+          name: "Homeowners",
+          link: "admin/users/homeOwners",
+          icon: <RiContactsLine />,
+        },
+        {
+          name: "Tenants",
+          link: "admin/users/tenants",
+          icon: <RiContactsLine />,
+        },
+        {
+          name: "Buyers",
+          link: "admin/users/buyers",
+          icon: <RiContactsLine />,
+        },
+      ],
+    },
+    {
+      title: "Reports",
+      links: [
+        {
+          name: "User reports",
+          link: "admin/reports",
+          icon: <RiContactsLine />,
+        },
+      ],
+    },
+  ];
+  const SuperAdmin = [
     {
       title: "Homes",
       links: [
@@ -70,6 +121,7 @@ const AdminDashboard = () => {
       ],
     },
   ];
+
   const notificationData = [
     {
       image: userProfPic,
@@ -119,6 +171,15 @@ const AdminDashboard = () => {
       iconBg: "rgb(254, 201, 15)",
     },
   ];
+
+
+  let sidebarLinks = []
+  if (user.superAdmin) {
+    sidebarLinks = SuperAdmin
+  } else {
+    sidebarLinks = NonSuperAdmin;
+  }
+
 
   return (
     <Dashboard

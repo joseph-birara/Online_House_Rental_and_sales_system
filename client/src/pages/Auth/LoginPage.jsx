@@ -13,6 +13,13 @@ export default function LoginPage({ isAdmin }) {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('')
   let [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setCurrentUserChoice("admin");
+  }, [isAdmin])
+
+  // if (isAdmin) {
+  //   setCurrentUserChoice("admin");
+  // }
 
   // for admin purpose
   const { setOwnersList, setTenatList, setHousesList, setBuyerList, setAdminList, } = useContext(UtilityContext);
@@ -90,24 +97,22 @@ export default function LoginPage({ isAdmin }) {
     ev.preventDefault();
     setLoading(true); // set teh loading overlay to true
 
-    if (isAdmin) {
-      setCurrentUserChoice("admin");
-    }
 
     let routingLink = currentUserChoice
 
-    // user types are only two so
     // all buyers should be tenants
-    if (currentUserChoice === 'buyer') {
+    if (currentUserChoice === 'admin') {
+      routingLink = 'admin';
+    } else if (currentUserChoice === 'buyer') {
       routingLink = 'tenant'
     }
 
-    if (currentUserChoice) {
+    console.log(" email : " + email);
+    console.log(" password : " + password);
+    console.log(" userType : " + currentUserChoice);
+    console.log('routing link ' + routingLink);
 
-      console.log(" email : " + email);
-      console.log(" password : " + password);
-      console.log(" userType : " + currentUserChoice);
-      console.log('routing link ' + routingLink);
+    if (currentUserChoice) {
 
       axios
         .post(`http://localhost:4000/${routingLink}/login`, {

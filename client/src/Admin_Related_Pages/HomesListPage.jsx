@@ -77,7 +77,7 @@ const HomeLister = ({ objectList }) => {
         <div>
             {objectList.map((house) => (
 
-                <div className="outline outline-[lightgray]  flex justify-between items-center  gap-1 p-2 rounded-lg m-4 " >
+                <div className="outline outline-[lightgray] outline-[2px]  flex justify-between items-center  gap-1 p-2 rounded-lg m-4 " >
 
                     <div className=" flex w-32 h-32 bg-gray-300 shrink-0 mx-2 ">
                         <img src={house.images[0]} alt="" />

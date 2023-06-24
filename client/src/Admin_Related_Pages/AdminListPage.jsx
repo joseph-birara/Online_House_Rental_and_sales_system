@@ -10,11 +10,17 @@ const AdminListerPage = () => {
     const altenativeImageLink = "https://thumbs.dreamstime.com/b/user-blue-icon-member-service-43464682.jpg"
     const [selectedOption, setSelectionOption] = useState('')
 
-
     useEffect(() => {
-        // remove the super admin from the list
-        const newAdminsList = AdminsList.filter((admin) => admin._id !== user._id)
-        setAdminList(newAdminsList)
+        axios
+            .get("http://localhost:4000/admin/all")
+            .then((response) => {
+                // remove the super admin from the list
+                const newAdminsList = response.data.filter((admin) => admin._id !== user._id)
+                setAdminList(newAdminsList)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }, []);
 
     const handleActionChange = (userId, action, status) => {

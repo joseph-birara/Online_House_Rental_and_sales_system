@@ -13,7 +13,7 @@ export default function AddAdminPage() {
     phone: "",
     image: ""
   })
-  const [profileImage, setProfileImage] = useState('https://res.cloudinary.com/dmegiw31y/image/upload/v1687336585/HomeRental/user_avatr_qmpy1y.png')
+  const [profileImage, setProfileImage] = useState('https://res.cloudinary.com/dmegiw31y/image/upload/v1687634119/HomeRental/alt-image_rn3zbk.webp')
   const [imageFile, setImageFile] = useState(null)
   const navigate = useNavigate();
 

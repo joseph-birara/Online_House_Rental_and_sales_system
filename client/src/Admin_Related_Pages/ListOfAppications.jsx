@@ -7,7 +7,6 @@ const ListOfApplications = () => {
 
     const [applications, setAplications] = useState([])
     useEffect(() => {
-        // get all houses and set to the context
         axios.get('http://localhost:4000/application/visit')
             .then((response) => {
                 setAplications(response.data);
@@ -22,7 +21,7 @@ const ListOfApplications = () => {
         <div>
             {!applications && <div> No applications is added on the site</div>}
             {applications && applications.map((app) => (
-                <div key={app._id} className="outline outline-[lightgray] outline-[3px] p-2 w-11/12 mx-auto  rounded flex items-center mb-3">
+                <div key={app._id} className="outline outline-[lightgray] outline-[2px] p-2 w-11/12 mx-auto  rounded flex items-center mb-3">
 
                     {/* owner */}
                     <div className='w-1/4'>

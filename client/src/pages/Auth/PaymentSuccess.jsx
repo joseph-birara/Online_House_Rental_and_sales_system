@@ -17,7 +17,7 @@ const PaymentSuccessMessage = () => {
       }).catch((error) => {
         console.log(error);
       });
-  })
+  },[])
   return (
     <div className="text-[green] font-extrabold text-center m-10 p-10 pt-15 font-body text-5xl">
       Payment Successfully Paid !!!

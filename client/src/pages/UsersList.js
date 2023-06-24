@@ -65,7 +65,7 @@ const UsersList = () => {
       }).catch((error) => {
         console.log(error);
       });
-  }, [applications]);
+  }, []);
 
 
   const handleSelect = (appId, homeId) => {

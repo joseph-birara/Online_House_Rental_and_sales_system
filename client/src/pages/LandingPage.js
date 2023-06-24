@@ -23,39 +23,6 @@ const LandingPage = () => {
 
   }, [])
 
-  // retrive locally stored user data 
-  // useEffect(() => {
-  //   let { user_token, user_data } = RetriveLocallyStoredData();
-  //   setToken(JSON.parse(user_token))
-
-  //   // console.log('--- user_data', JSON.parse(user_data));
-  //   if (user_data._id) {
-  //     // send request to the server
-  //     let endpoint = ''
-  //     if (user_data.userType === 'admin') {
-  //       endpoint = 'admin'
-  //     }
-  //     else if (user_data.userType === 'owner') {
-  //       endpoint = 'owner'
-  //     } else {
-  //       endpoint = 'tenant'
-  //     }
-
-  //     axios.get(`http://localhost:4000/${endpoint}/profile/:${user_data._id}`)
-  //       .then((response) => {
-  //         console.log('fetching user data on refresh is successful');
-  //         console.log(response.data);
-  //         setUser(response.data)
-  //         window.localStorage.setItem("user-data", JSON.stringify(response.data));
-  //       })
-  //       .catch((error) => {
-  //         console.log('error on fetching user specific data');
-  //         console.log(error);
-  //       });
-  //   }
-
-  // }, [])
-
   const img = {
     width: "100%",
     height: "85vh",

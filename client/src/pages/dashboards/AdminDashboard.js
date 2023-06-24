@@ -46,17 +46,7 @@ const AdminDashboard = () => {
           icon: <RiContactsLine />,
         },
       ],
-    },
-    {
-      title: "Reports",
-      links: [
-        {
-          name: "User reports",
-          link: "admin/reports",
-          icon: <RiContactsLine />,
-        },
-      ],
-    },
+    }
   ];
   const SuperAdmin = [
     {
@@ -109,17 +99,7 @@ const AdminDashboard = () => {
           icon: <RiContactsLine />,
         },
       ],
-    },
-    {
-      title: "Reports",
-      links: [
-        {
-          name: "User reports",
-          link: "admin/reports",
-          icon: <RiContactsLine />,
-        },
-      ],
-    },
+    }
   ];
 
   const notificationData = [
@@ -190,4 +170,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-

@@ -102,12 +102,12 @@ const HomeLister = ({ objectList }) => {
         <div>
             {objectList.map((house) => (
 
-                <div className="outline  flex justify-between items-center cursor-pointer gap-1 p-2 rounded-lg m-4 " >
+                <div className="outline outline-[lightgray]  flex justify-between items-center  gap-1 p-2 rounded-lg m-4 " >
 
                     <div className=" flex w-32 h-32 bg-gray-300 shrink-0 mx-2 ">
                         <img src={house.images[0]} alt="" />
                     </div>
-                    <div className="grow-0 shrink px-1 outline outline-[red] p-1 mr-3">
+                    <div className="grow-0 shrink px-1  p-1 mr-3">
                         <h2 className="text-xl">{house.title}</h2>
                         <p className="text-sm mt-2">{house.description}</p>
                         <div className="flex justify-start gap-8">

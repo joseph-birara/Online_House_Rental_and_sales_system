@@ -33,7 +33,6 @@ import UpdateProfilePage from "./pages/Auth/UpdateProfile";
 import TenantRentedHomes from "./pages/TenantRentedHomes";
 import PaymentSuccessMessage from "./pages/Auth/PaymentSuccess";
 import PaymentFailedMessage from "./pages/Auth/PaymentFail";
-import ActivateEmail from "./pages/Auth/ActivateEmailMessage";
 import ActivateEmailMessage from "./pages/Auth/ActivateEmailMessage";
 import VerifyEmail from "./pages/Auth/VerifyEmail";
 import ForgotPasswordLandingPage from "./pages/Auth/ForgotPasswordLandingPage";
@@ -41,6 +40,9 @@ import PasswordResetPage from "./pages/Auth/PasswordResetPage";
 import ValidatePayment from "./pages/Auth/ValidatePayment";
 import Footer from "./components/Footer";
 import RequestForm from "./pages/RequestForm";
+import Team from "./Mycomponents/Team"
+import Services from "./Mycomponents/Services"
+import TermsOfService from './pages/TermsOfService'
 
 function App() {
   return (
@@ -60,6 +62,9 @@ function App() {
                 <Route path="/rent" element={<HomesListing />} />
                 <Route path="/updateProfile" element={<UpdateProfilePage />} />
                 <Route path="/homeDetails/:id" element={<HomeDetails />} />
+                <Route path="/team" element={<Team />} />
+                <Route path="/service" element={<Services />} />
+                <Route path="/termsofservice" element={<TermsOfService />} />
 
                 {/* activate and verify email */}
                 <Route path="activateEmail" element={<ActivateEmailMessage />} />

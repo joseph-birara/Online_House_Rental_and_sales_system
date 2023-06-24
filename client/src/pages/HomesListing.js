@@ -294,13 +294,17 @@ const HomesListing = () => {
   // console.log("homesState: ", homesState);
   return (
     <>
-      <div className="flex gap-8">
+      {/* <div className="flex gap-8 > */}
+      <div className="flex gap-8 ml-10 ">
+        <div className="rounded outline outline-lightBlue w-fit h-fit bg-lightBlue text-white">
+
         <Dropdown
           actions={dropDownOptions}
           onSelect={subcityHandler}
           itemType="subcity"
           mainText="Select subcity"
         />
+        </div>
 
         <div>
           <label>

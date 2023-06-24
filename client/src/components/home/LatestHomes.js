@@ -4,9 +4,10 @@ import f2 from "./images/featured2.jpg";
 import f3 from "./images/featured3.jpg";
 import f4 from "./images/featured4.jpg";
 import Button from "../../UI/Button";
+import { Link } from "react-router-dom";
 
 const LatestHomes = ({ forRent }) => {
-  const exploreHandler = () => {};
+  const exploreHandler = () => { };
   return (
     <div className={classes.mainContainer}>
       <div>
@@ -36,9 +37,12 @@ const LatestHomes = ({ forRent }) => {
       </div>
 
       <div className={classes.btnContainer}>
-      <Button className={classes.exploreBtn} onClick={exploreHandler}>
-        Explore All
-      </Button>
+        <Link
+        to={forRent?"/rent":"/buy"}>
+          <Button className={classes.exploreBtn} onClick={exploreHandler}>
+            Explore All
+          </Button>
+        </Link>
       </div>
     </div>
   );

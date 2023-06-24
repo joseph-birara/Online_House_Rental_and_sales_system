@@ -1,7 +1,5 @@
-import { Link, Navigate, useParams } from "react-router-dom";
-// import AccountNav from "../AccountNav";
-import { useContext, useEffect, useState } from "react";
-// import axios from "axios";
+import { Link, Navigate } from "react-router-dom";
+import { useContext } from "react";
 import Dropdown from "./Dropdown";
 import { IoBedOutline } from "react-icons/io5";
 import { FaShower } from "react-icons/fa";

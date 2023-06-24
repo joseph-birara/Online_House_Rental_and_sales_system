@@ -41,7 +41,7 @@ const HomeDetails = ({ forAdmin }) => {
   });
 
   console.log("sp: ", specificHouse);
-  const [isLiked, setIsLiked] = useState(specificHouse.like.includes(user._id));
+  const [isLiked, setIsLiked] = useState(specificHouse.like.includes(user && user._id));
   const [numOfLikes, setNumOfLikes] = useState(specificHouse.like.length);
 
   const likeHandler = () => {
@@ -132,7 +132,7 @@ const HomeDetails = ({ forAdmin }) => {
             </span>
           </div>
 
-          <button onClick={likeHandler} className={styles.likeBtn}>
+          <button disabled={!user || (user.userType !== "tenant" && user.userType !== "buyer")} onClick={likeHandler} className={styles.likeBtn}>
             <svg
               stroke="currentColor"
               fill={heartStyle}

@@ -260,6 +260,7 @@ const {
   resetPasswordProcess,
   updatePassword,
   activateAccount,
+  getAllBuyers,
 } = require("../controllers/tenantController");
 const upload = require("../imagesHandler/singleImage");
 
@@ -275,5 +276,6 @@ router.put("/updatePassword", updatePassword);
 router.post("/reset", passwordResetRequest);
 router.post("/newPassword", resetPasswordProcess);
 router.get("/verify-email/:token", activateAccount);
+router.get("/buyers", getAllBuyers);
 
 module.exports = router;

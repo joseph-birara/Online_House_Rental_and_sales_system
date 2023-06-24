@@ -29,6 +29,15 @@ const getAllTenants = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+const getAllBuyers = async (req, res) => {
+  try {
+    const tenants = await tenantModel.find({userType:"buyer"});
+
+    res.status(200).json(tenants);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
 
 // get single tenant
 const getTenant = async (req, res) => {
@@ -184,4 +193,5 @@ module.exports = {
   resetPasswordProcess,
   updatePassword,
   activateAccount,
+  getAllBuyers,
 };

@@ -296,7 +296,7 @@ const HomesListing = () => {
     <>
       {/* <div className="flex gap-8 > */}
       <div className="flex gap-8 ml-10 ">
-        <div className="rounded outline outline-lightBlue w-fit h-fit bg-lightBlue text-white">
+        <div className="rounded outline outline-[2px] outline-lightBlue w-fit h-fit">
 
         <Dropdown
           actions={dropDownOptions}

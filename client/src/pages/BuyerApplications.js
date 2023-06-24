@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContextProvider";
+import { capitalizeFirstLetter, FormatDate, NumberFormatter } from '../services/HelperFunction'
 
 const Application = ({ data }) => {
   const { token } = useContext(UserContext);
@@ -38,29 +39,29 @@ const Application = ({ data }) => {
       </div>
       <div className="grow-0 shrink px-1 p-1 ml-1">
         <h2 className="text-xl">{data.homeTitle}</h2>
-        <div className=" flex justify-start gap-4">
+        <div className=" text-base flex justify-start gap-4">
           <div className="mx-2">
             <p>
-              <span >Application type: </span> <span>{data.appType}</span>
+              Application type: {data.appType}
             </p>
             <p>
-              <span>Owner name: </span> {data.ownerName}
+              Owner name:  {data.ownerName}
             </p>
-            <p>
-              <span>Total price: </span> <span>{data.price}</span>
-            </p>
+
           </div>
+
           <div className="px-2" >
             <p>
-              <span>Checkin date: </span> <span>{data.checkin ? data.checkin : "Not specified"}</span>
+              Total price: {NumberFormatter(data.price)}
             </p>
-            <p>
-              <span>Checkout date: </span> <span>{data.checkout ? data.checkout : "Not specified"}</span>
-            </p>
-            <p className="pt-2">
-              <span>App Status: </span> <span className={` text-white pb-1 mx-3 text-sm px-2 rounded-xl outline  ${data.status === 'accepted' ? 'bg-[green]' : ''} ${data.status === 'completed' ? 'bg-[#4ff23d]' : ''}  ${data.status === 'rejected' ? 'bg-[red]' : ''}  ${data.status === 'pending' ? 'bg-[#dfdf0e]' : ''}`} >{data.appStatus}</span>
+            <p className="px-2">
+              App Status:  <span className={` text-white pb-1 mx-3 text-sm px-2 rounded-xl outline  ${data.status === 'accepted' ? 'bg-[green]' : ''} ${data.status === 'completed' ? 'bg-[#4ff23d]' : ''}  ${data.status === 'rejected' ? 'bg-[red]' : ''}  ${data.status === 'pending' ? 'bg-[#dfdf0e]' : ''}`} >{data.appStatus}</span>
             </p>
           </div>
+        </div>
+
+        <div>
+          <p className="font-semibold">Visit Request Date: {FormatDate(data.visitRequest)} </p>
         </div>
 
       </div>
@@ -92,8 +93,8 @@ const BuyerApplications = () => {
   }, [applications]);
 
   return (
-    <div className="mt-1">
-      <p className="text-xl font-semibold mx-4 mb-8 pb-4 border-b-1 border-[#7dd3fc]">
+    <div className="">
+      <p className="text-xl font-semibold mx-1 mb-8 pb-4 border-b-1 border-[#7dd3fc]">
         List of Applications
       </p>
       {applications && applications.map((singleApp) => {
@@ -112,7 +113,8 @@ const BuyerApplications = () => {
           price: singleApp.homeId.price,
           appStatus: singleApp.status,
           appplicationId: singleApp._id,
-          status: singleApp.status
+          status: singleApp.status,
+          visitRequest: singleApp.visitRequest
         };
         return <Application key={singleApp._id} data={data} />;
       })}

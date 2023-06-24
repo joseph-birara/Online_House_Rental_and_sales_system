@@ -63,7 +63,7 @@ export const Home = ({ home }) => {
       {/* likingpart */}
       <div className=" font-semibold mx-3 border border-[lightgray] rounded-lg flex justify-between gap-1 items-center p-0.5 ">
 
-        <p className=""> ETB {NumberFormater(home.price)} {home.homeType === 'regularRent' ?( " /Month" ): home.homeType === 'shortTermRent' ? " /Day" : ""}</p>
+        <p className=""> {NumberFormater(home.price)} {home.homeType === 'regularRent' ?( " /Month" ): home.homeType === 'shortTermRent' ? " /Day" : ""}</p>
 
 
 

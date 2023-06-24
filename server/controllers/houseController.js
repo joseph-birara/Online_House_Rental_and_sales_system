@@ -17,22 +17,22 @@ const getAnalysis = async (req, res) => {
 
     const subcityScales = {
       "Bole": 1.8,
-      "Arada": 1.4,
-      "Lideta": 1.4,
-      "Kirkos": 1.2,
-      "Yeka": 1.1,
-      "Addis Ketema": 1.07,
-      "Nifas Silk-Lafto": 0.9,
-      "Gullele": 0.6,
-      "Kolfe Keranio": 0.5,
-      "Akaky Kaliti": 0.4,
+      "Arada": 1.1,
+      "Lideta": 7,
+      "Kirkos": 0.6,
+      "Yeka": 0.5,
+      "Addis Ketema": .4,
+      "Nifas Silk-Lafto": 0.3,
+      "Gullele": 0.2,
+      "Kolfe Keranio": 0.15,
+      "Akaky Kaliti": 0.1,
     };
     const cityValue = subcityScales[subCity]
 
     // Define base price per unit area (in your desired currency)
-    const basePricePerArea = 80;
-    const bedroomModifier = 3000; // Additional price per bedroom
-    const bathroomModifier = 1000; // Additional price per bathroom
+    const basePricePerArea = 60;
+    const bedroomModifier = 2000; // Additional price per bedroom
+    const bathroomModifier = 800; // Additional price per bathroom
 
     // Calculate price based on area, bedrooms, and bathrooms
     const areaPrice = area * basePricePerArea;
@@ -43,18 +43,18 @@ const getAnalysis = async (req, res) => {
     let minPrice = areaPrice + bedroomsPrice + bathroomsPrice;
     let maxPrice = minPrice + (areaPrice / bathRoom) / 1.5 * (bedRoom * 1.5);
 
-    if (homeType === 'shortTerm') {
-      minPrice /= 20
-      maxPrice /= 15
+    if (homeType === 'shortTermRent') {
+      minPrice /= 25
+      maxPrice /= 20
     } else if (homeType === 'sale') {
-      minPrice *= 800
-      maxPrice *= 1100
+      minPrice *= 250
+      maxPrice *= 550
     }
 
 
     //  use city factor
     minPrice = minPrice + (minPrice * cityValue) / 2
-    maxPrice = maxPrice + (maxPrice * cityValue) / 1.2
+    maxPrice = maxPrice + (maxPrice * cityValue) / 1.6
 
 
     // Return the price suggestion as an object

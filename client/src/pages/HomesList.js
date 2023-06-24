@@ -24,7 +24,7 @@ const HomesList = ({ rented }) => {
       .catch((error) => {
         console.log(error);
       });
-  }, [HousesList])
+  }, [])
 
 
   if (rented && user.userType === 'owner') {

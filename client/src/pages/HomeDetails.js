@@ -7,7 +7,6 @@ import styles from "./HomeDetails.module.css";
 import HomeProperties from "../components/home/HomeProperties";
 import AmenitiesDisplayer from "../components/home/AmenitiesDisplayer";
 import Comments from "../components/comments/Comments";
-// import Dropdown from "../components/Dropdown";
 import BookingWidget from "../components/BookingWidget";
 import { useContext, useState } from "react";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
@@ -19,6 +18,15 @@ const HomeDetails = ({ forAdmin }) => {
   const { id } = useParams();
   const { HousesList } = useContext(UtilityContext);
   const { user, token } = useContext(UserContext);
+
+  // to show the number of reviews on this page, pass to child component and re-store it
+  // in another state
+  const [numberOfReviewsFromChildComponet, SetnumberOfReviewsFromChildComponet] = useState();
+  const [countReview, setCountReviews] = useState(0)
+
+  useEffect(() => {
+    setCountReviews(numberOfReviewsFromChildComponet)
+  }, [numberOfReviewsFromChildComponet])
 
   const getHouseById = (h_id) => {
     return HousesList.find((house) => house._id === h_id);
@@ -108,17 +116,17 @@ const HomeDetails = ({ forAdmin }) => {
           {" Ethiopia"}
         </p>
         <div className={styles.reviewsAndOwnerContainer}>
-          <div>
-            <a href="#">6 reviews</a>
+          <div className="underline font-medium px-2">
+            {countReview && countReview} reviews
           </div>
           <div id={styles.owner}>
             <span>
               <IoPersonOutline /> Posted by:
             </span>
-            <span className="font-bold">
-              {" "}
+            <span className="underline font-medium px-2">
               {specificHouse.ownerId.name} {specificHouse.ownerId.lastName}{" "}
             </span>
+          </div>
           </div>
 
           <button onClick={likeHandler} className={styles.likeBtn}>
@@ -164,6 +172,7 @@ const HomeDetails = ({ forAdmin }) => {
         <Comments
           houseId={specificHouse._id}
           ownerId={specificHouse.ownerId._id}
+          setNumeberOfReviews={SetnumberOfReviewsFromChildComponet}
         />
       )}
     </div>

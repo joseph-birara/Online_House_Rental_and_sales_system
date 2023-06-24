@@ -2,12 +2,12 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="py-4 mt-16 w-screen bg-half-transparent text-white">
-      <div className="container w-11/12 mx-auto shadow-lightBlue shadow-xl">
+    <footer className="py-15 mt-52 bg-[#1579e1] text-white w-screen ">
+      <div className="container text-justify mt-10   mx-auto ">
         <div className="flex  justify-center flex-wrap">
-          <div className="lg:w-1/4 flex flex-col">
-            <div className="rounded-lg p-6 flex flex-col">
-              <h5 className="text-lg font-bold text-blueBlack mb-4">
+          <div className="w-5/12 flex flex-col">
+            <div className="  border-[black] rounded-lg  p-6   flex flex-col">
+              <h5 className="font-bold text-xl text-[black]  mb-4">
                 About Us
               </h5>
               <p className="text-gray-300">
@@ -19,8 +19,8 @@ const Footer = () => {
               </p>
             </div>
           </div>
-          <div className="lg:w-1/4 flex flex-col">
-            <div className="rounded-lg p-6 flex-grow">
+          <div className=" rounded-lg  w-2.5/12 pt-6 flex flex-col">
+            <div className="rounded-lg p-1 flex-grow">
               <h5 className="text-lg font-bold text-blueBlack mb-4">
                 Contact Us
               </h5>
@@ -28,8 +28,8 @@ const Footer = () => {
               <p className="text-gray-300">Phone: +1 123 456 7890</p>
             </div>
           </div>
-          <div className="lg:w-1/4 flex flex-col">
-            <div className="rounded-lg p-6 flex-grow">
+          <div className=" rounded-lg w-2/12 pt-6 flex flex-col">
+            <div className="rounded-lg flex-grow">
               <h5 className="text-lg font-bold text-blueBlack mb-4">
                 Follow Us
               </h5>
@@ -55,8 +55,8 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="lg:w-1/4 flex flex-col">
-            <div className="rounded-lg p-6 flex-grow">
+          <div className="rounded-lg  w-2.5/12 pt-6 flex flex-col">
+            <div className="rounded-lg flex-grow">
               <h5 className="text-lg font-bold text-blue-400 mb-4 text-blueBlack">
                 Quick Links
               </h5>
@@ -90,8 +90,8 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="text-center mt-8">
-        <p className="text-sm text-gray-300">
+      <div className="text-center mt-10">
+        <p className="text-sm text-[black] ">
           &copy; {new Date().getFullYear()} Hommie. All rights reserved.
         </p>
       </div>

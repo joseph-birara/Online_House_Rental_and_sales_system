@@ -11,36 +11,62 @@ const homeModel = require("../models/homeModel");
 const getAnalysis = async (req, res) => {
   const { bedRoom, subCity, bathRoom, homeType, area } = req.body;
 
+
+  // Generate price suggestion based on area, bedrooms, and bathrooms
+  function generatePriceSuggestion(area, bedrooms, bathrooms, homeType, subCity) {
+
+    const subcityScales = {
+      "Bole": 1.8,
+      "Arada": 1.4,
+      "Lideta": 1.4,
+      "Kirkos": 1.2,
+      "Yeka": 1.1,
+      "Addis Ketema": 1.07,
+      "Nifas Silk-Lafto": 0.9,
+      "Gullele": 0.6,
+      "Kolfe Keranio": 0.5,
+      "Akaky Kaliti": 0.4,
+    };
+    const cityValue = subcityScales[subCity]
+
+    // Define base price per unit area (in your desired currency)
+    const basePricePerArea = 80;
+    const bedroomModifier = 3000; // Additional price per bedroom
+    const bathroomModifier = 1000; // Additional price per bathroom
+
+    // Calculate price based on area, bedrooms, and bathrooms
+    const areaPrice = area * basePricePerArea;
+    const bedroomsPrice = bedrooms * bedroomModifier;
+    const bathroomsPrice = bathrooms * bathroomModifier;
+
+    // Calculate the minimum and maximum prices
+    let minPrice = areaPrice + bedroomsPrice + bathroomsPrice;
+    let maxPrice = minPrice + (areaPrice / bathRoom) / 1.5 * (bedRoom * 1.5);
+
+    if (homeType === 'shortTerm') {
+      minPrice /= 20
+      maxPrice /= 15
+    } else if (homeType === 'sale') {
+      minPrice *= 800
+      maxPrice *= 1100
+    }
+
+
+    //  use city factor
+    minPrice = minPrice + (minPrice * cityValue) / 2
+    maxPrice = maxPrice + (maxPrice * cityValue) / 1.2
+
+
+    // Return the price suggestion as an object
+    return {
+      minPrice: Math.floor(minPrice),
+      maxPrice: Math.floor(maxPrice)
+    };
+  }
   try {
-    // Filter homes based on the provided parameters
-    const filter = {};
-    if (bedRoom) {
-      filter.bedRoom = bedRoom;
-    }
-    if (subCity) {
-      filter.subCity = subCity;
-    }
-    if (homeType) {
-      filter.homeType = homeType;
-    }
+    const data = generatePriceSuggestion(area, bedRoom, bathRoom, homeType, subCity)
 
-    // Retrieve homes from the home collection based on the filter
-    const homes = await homeModel.find(filter);
-
-    if (homes.length === 0) {
-      return res
-        .status(404)
-        .json({ error: "No homes found with the given parameters" });
-    }
-
-    // Calculate average, maximum, and minimum prices
-    const prices = homes.map((home) => home.price);
-    const averagePrice =
-      prices.reduce((total, price) => total + price, 0) / prices.length;
-    const maximumPrice = Math.max(...prices);
-    const minimumPrice = Math.min(...prices);
-
-    return res.json({ averagePrice, maximumPrice, minimumPrice, homes });
+    return res.status(200).json(data);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

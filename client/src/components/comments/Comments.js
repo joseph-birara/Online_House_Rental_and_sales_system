@@ -6,11 +6,11 @@ import axios from "axios";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { useContext } from "react";
 
-const Comments = ({ houseId, ownerId }) => {
+const Comments = ({ houseId, ownerId, setNumeberOfReviews }) => {
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
   const { user, token } = useContext(UserContext);
-  console.log("user: ", user);
+
   const rootComments = backendComments.filter(
     (backendComment) => backendComment.parentId === null
   );
@@ -22,10 +22,6 @@ const Comments = ({ houseId, ownerId }) => {
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
   const addComment = (text, parentId = null) => {
-    // createCommentApi(text, parentId).then((comment) => {
-    //   setBackendComments([comment, ...backendComments]);
-    //   setActiveComment(null);
-    // });
 
     const commentData = {
       reviewerId: user._id,
@@ -55,16 +51,6 @@ const Comments = ({ houseId, ownerId }) => {
   };
 
   const updateComment = (text, commentId) => {
-    // updateCommentApi(text).then(() => {
-    //   const updatedBackendComments = backendComments.map((backendComment) => {
-    //     if (backendComment.id === commentId) {
-    //       return { ...backendComment, body: text };
-    //     }
-    //     return backendComment;
-    //   });
-    //   setBackendComments(updatedBackendComments);
-    //   setActiveComment(null);
-    // });
 
     const commentData = {
       id: commentId,
@@ -94,14 +80,6 @@ const Comments = ({ houseId, ownerId }) => {
       });
   };
   const deleteComment = (commentId) => {
-    // if (window.confirm("Are you sure you want to remove comment?")) {
-    //   deleteCommentApi().then(() => {
-    //     const updatedBackendComments = backendComments.filter(
-    //       (backendComment) => backendComment.id !== commentId
-    //     );
-    //     setBackendComments(updatedBackendComments);
-    //   });
-    // }
 
     axios
       .delete(`http://localhost:4000/comment/delete/${commentId}`, {
@@ -132,15 +110,20 @@ const Comments = ({ houseId, ownerId }) => {
       .then((response) => {
         console.log("resComments: ", response.data);
         setBackendComments(response.data);
-        // console.log(houseData);
-        // setHousesList([...HousesList, houseData]); //update house list state
-        // setRedirect(true); // redirect to house list page
       })
       .catch((error) => {
         console.log("Error saving comment");
         console.log(error);
       });
   }, []);
+
+  // set the number of comments
+  useEffect(() => {
+    if (backendComments) {
+      setNumeberOfReviews(backendComments.length)
+    }
+
+  }, [backendComments])
 
   return (
     <div className={styles.comments}>

@@ -34,7 +34,7 @@ const Request = ({ request }) => {
       </div>
       <div className="flex gap-6 pb-4 border-b-1 border-b-[#dce0e0] m-2">
         <p>Status:</p>
-        <p>{request.fixStatus}</p>
+        <p className={`font-semibold ${request.fixStatus ==='Seen'? " text-[green] ": " text-[#aabb38] "}`} >{request.fixStatus}</p>
       </div>
       {/* <div className="flex justify-end mr-4">
           <Dropdown

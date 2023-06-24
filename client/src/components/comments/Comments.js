@@ -10,7 +10,7 @@ const Comments = ({ houseId, ownerId }) => {
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
   const { user, token } = useContext(UserContext);
-  console.log("user: ",user);
+  console.log("user: ", user);
   const rootComments = backendComments.filter(
     (backendComment) => backendComment.parentId === null
   );
@@ -145,7 +145,7 @@ const Comments = ({ houseId, ownerId }) => {
   return (
     <div className={styles.comments}>
       <h3 className={styles["comments-title"]}>Reviews</h3>
-      {user && user.userType == "tenant" && (
+      {user && (user.userType === "tenant" || user.userType === "buyer") && (
         <>
           <div className={styles["comment-form-title"]}>Write a review</div>
           <CommentForm submitLabel="Write" handleSubmit={addComment} />
@@ -164,7 +164,7 @@ const Comments = ({ houseId, ownerId }) => {
             deleteComment={deleteComment}
             updateComment={updateComment}
             currentUserId={user ? user._id : null}
-            currentUserType = {user ? user.userType : null}
+            currentUserType={user ? user.userType : null}
           />
         ))}
       </div>

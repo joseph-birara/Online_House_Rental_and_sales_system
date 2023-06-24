@@ -6,7 +6,7 @@ const getByOwner = async (req, res) => {
   const { id } = req.params;
   const comments = await commentModel
     .find({ ownerId: id })
-    .populate({ path: "reviewerId", select: "name _id" });
+    .populate({ path: "reviewerId", select: "name _id lastName image" });
   if (!comments) {
     return res
       .status(200)
@@ -19,7 +19,7 @@ const getByHouse = async (req, res) => {
   console.log(id);
   const comments = await commentModel
     .find({ houseId: id })
-    .populate({ path: "reviewerId", select: "name _id" });
+    .populate({ path: "reviewerId", select: "name _id lastName image" });
   if (!comments) {
     return res
       .status(200)
@@ -33,7 +33,7 @@ const addComment = async (req, res) => {
     const comment = await commentModel.create(req.body);
     const newComment = await commentModel
       .findById(comment._id)
-      .populate({ path: "reviewerId", select: "name _id" });
+      .populate({ path: "reviewerId", select: "name _id lastName image" });
     return res.status(200).json({ message: "comment added", newComment });
   } catch (error) {
     return res.status(400).json({ error: error });
@@ -77,7 +77,7 @@ const getAllComments = async (req, res) => {
   console.log("get all comments");
   const comments = await commentModel
     .find()
-    .populate({ path: "reviewerId", select: "name _id" });
+    .populate({ path: "reviewerId", select: "name _id lastName image" });
   if (!comments) {
     return res.status(401).send("no comment s found");
   }

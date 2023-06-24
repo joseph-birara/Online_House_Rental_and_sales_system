@@ -40,6 +40,7 @@ import ForgotPasswordLandingPage from "./pages/Auth/ForgotPasswordLandingPage";
 import PasswordResetPage from "./pages/Auth/PasswordResetPage";
 import ValidatePayment from "./pages/Auth/ValidatePayment";
 import Footer from "./components/Footer";
+import RequestForm from "./pages/RequestForm";
 
 function App() {
   return (
@@ -115,6 +116,7 @@ function App() {
                   <Route path="rentedHomes" element={<TenantRentedHomes />} />
                   <Route path="mRequest" element={<MaintenanceRequests />} />
                   <Route path="mRequests/new" element={<NewMRequest />} />
+                  <Route path="mRequests/new/:appId" element={<RequestForm />} />
                 </Route>
 
                 {/*  Buyer page  and there should be a Buyer dashboard*/}

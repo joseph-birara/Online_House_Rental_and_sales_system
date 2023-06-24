@@ -25,12 +25,12 @@ const RequestListPage = ({ data, handleSelect }) => {
           <p><TfiRulerAlt2 /> {data.area}m<sup>2</sup></p>
           <p className="flex justify-center items-center font-semibold">{data.appType}</p>
           <p className="font-semibold"> Owner: {data.ownerName} </p>
-          <p className="flex justify-center items-center font-semibold ">Payment Status:
+          <div className="flex justify-center items-center font-semibold ">Payment Status:
 
             <p className="flex justify-center items-center">
               {data.paymentStatus ? (<FaCheck className="text-[green]" size={20} />) : (<TiDelete className="text-[red]" size={20} />)}
             </p>
-          </p>
+          </div>
         </div>
 
       </div>
@@ -38,71 +38,7 @@ const RequestListPage = ({ data, handleSelect }) => {
   )
 };
 
-export const RequestForm = ({ payload }) => {
-  const { user, token } = useContext(UserContext);
-  const { navigate } = useNavigate()
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // data payload to be sent
-    payload.title = title
-    payload.description = description
-    // const mRequestData = {
-    //   homeId: houseId,
-    //   ownerId: ownerId,
-    //   tenantId: user._id,
-    //   title: title,
-    //   description: description,
-    // };
-    const mRequestData = {}
-    axios
-      .post(`http://localhost:4000/maintenance/send`, mRequestData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        console.log("House saved successfully");
-        navigate('/tenant/mRequest') // navigate to after sending request
-        setTitle("");
-        setDescription("");
-      })
-      .catch((error) => {
-        console.log("Error saving house");
-        console.log(error);
-      });
-    console.log("Title:", title);
-    console.log("Description:", description);
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="title">Title:</label>
-        <input
-          type="text"
-          id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="description">Description:</label>
-        <textarea
-          id="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </div>
-      <button className="bg-lightBlue p-2 rounded" type="submit">
-        Submit
-      </button>
-    </form>
-  );
-};
 
 const NewMRequest = () => {
   const { applications, setApplications } = useContext(UtilityContext);
@@ -160,7 +96,7 @@ const NewMRequest = () => {
         };
 
         return (
-          <Link>
+          <Link to={`${applic._id}`} key={applic._id}>
             <RequestListPage key={applic._id} data={data} />
           </Link>)
       })}

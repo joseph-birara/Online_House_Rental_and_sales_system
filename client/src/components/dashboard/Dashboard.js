@@ -17,7 +17,7 @@ const Dashboard = ({
 
   return (
     <div>
-      <div className="flex outline mx-1 dark:bg-main-dark-bg">
+      <div className="flex  mx-1 dark:bg-main-dark-bg">
         {activeMenu ? (
           <div className="w-72 sidebar mt-2 dark:bg-secondary-dark-bg bg-white ">
             <Sidebar links={sidebarLinks} />

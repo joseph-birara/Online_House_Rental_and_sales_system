@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { capitalizeFirstLetter } from "../../services/HelperFunction";
+import LoadingOverlay from 'react-loading-overlay-ts';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +9,7 @@ const UpdateProfilePage = () => {
   // return <div className="my-20 px-8 -2 py-4 shadow-xl rounded-xl mx-3"> Update profile page is this </div>
   const { user, setUser, token } = useContext(UserContext);
   const navigate = useNavigate();
+  let [loading, setLoading] = useState(false);
 
   const [userData, setUserData] = useState({
     id: "", //user._id,
@@ -40,7 +42,7 @@ const UpdateProfilePage = () => {
   }, [user]);
 
   // const [isSubmited, setSubmited] = useState(false);
-  var accountDescription = "";
+  var accountDescription = "Buyer";
   if (user && user.userType === "admin") {
     accountDescription = "Administrator";
     if (user.superAdmin) {
@@ -53,6 +55,7 @@ const UpdateProfilePage = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true)
 
     let userRoute = "";
     let payload = userData;
@@ -80,7 +83,7 @@ const UpdateProfilePage = () => {
       })
       .then((response) => {
         console.log("user updated and its data is ********************");
-        
+
         // console.log(response.data);
         let updatedUserData = response.data
         updatedUserData.userType = user.userType
@@ -95,6 +98,8 @@ const UpdateProfilePage = () => {
         console.log("toek " + token);
         console.log("paylod is " + JSON.stringify(payload));
         console.log(error);
+        setLoading(false)
+
       });
   };
 
@@ -130,7 +135,22 @@ const UpdateProfilePage = () => {
                 className="primary bg-lightBlue hover:bg-lbHover text-xl"
                 onClick={handleSubmit}
               >
-                Update Profile
+                <LoadingOverlay
+                  active={loading}
+                  spinner
+                  className="loading-overlay"
+                  spinnerClassName="w-12 h-12"
+                  contentClassName="opacity-50 pointer-events-none"
+                  spinnerProps={{
+                    style: {
+                      borderTopColor: 'lightblue',
+                      borderLeftColor: 'lightblue',
+                    },
+                  }}
+                >
+                </LoadingOverlay>
+                {loading ? "Processing..." : "Update Profile"}
+
               </button>
             </div>
           </div>
@@ -243,7 +263,7 @@ const UpdateProfilePage = () => {
             </div>
           </div>
         </div>
-      </form>
+      </form >
     )
   );
 };

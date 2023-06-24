@@ -1,15 +1,11 @@
 import PhotosUploader from "../components/PhotosUploader";
 import AmenitiesInput from "../components/AmenitiesInput";
 import { useEffect, useContext, useRef, useState } from "react";
-//import axios from "axios";
-//import AccountNav from "../AccountNav";
+import LoadingOverlay from 'react-loading-overlay-ts';
 import { Navigate, useParams } from "react-router-dom";
 import { UserContext } from "../contexts/UserContextProvider";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 import axios from "axios";
-
-
-
 
 export default function PlacesFormPage() {
   const { user, token } = useContext(UserContext)
@@ -24,8 +20,8 @@ export default function PlacesFormPage() {
   const [area, setArea] = useState("");
   const [bedRoom, setBedrooms] = useState("");
   const [bathRoom, setBathrooms] = useState("");
+  let [loading, setLoading] = useState(false);
 
-  // const [status, setStatus] = useState("");
   // const [addedPhotos, setAddedPhotos] = useState([]);
   const [description, setDescription] = useState("");
   const [perks, setPerks] = useState([]);
@@ -33,6 +29,8 @@ export default function PlacesFormPage() {
   const [homeType, setHomeType] = useState("regularRent");
   const [houseImageFiles, setHouseImageFiles] = useState([])
   const [forHomeUpdate, setForHomeUpdate] = useState({}) // store info when house update is need
+  const [suggestion, setSuggestion] = useState('')
+  const [waitingSuggestion, setWaitingSuggestion] = useState(false)
 
   const priceRef = useRef();
   const checkInRef = useRef();
@@ -74,6 +72,18 @@ export default function PlacesFormPage() {
       setForHomeUpdate(currHouse)
     }
   }, [currHouse]);
+
+  // for error message
+  useEffect(() => {
+    if (suggestion) {
+      const timer = setTimeout(() => {
+        setSuggestion('')
+      }, 4000);
+
+      // Clean up the timer when the component unmounts or when the dependency changes
+      return () => clearTimeout(timer);
+    }
+  }, [suggestion]); // Empty dependency array ensures it only runs once
 
   function inputHeader(text) {
     return <h2 className="text-2xl mt-4">{text}</h2>;
@@ -154,6 +164,7 @@ export default function PlacesFormPage() {
 
   const savePlaceHandler = async (ev) => {
     ev.preventDefault();
+    setLoading(true)
     // to update the existing one
     if (Object.keys(forHomeUpdate).length > 0) {
 
@@ -181,8 +192,6 @@ export default function PlacesFormPage() {
           "maxGuest": maxGuestsRef.current.value
         }
       }
-      // console.log('on update ---');
-      // console.log(houseData);
       // console.log('and the currhouse i s');
       // console.log(currHouse);
 
@@ -207,6 +216,8 @@ export default function PlacesFormPage() {
         .catch(error => {
           console.log("Error on updating house");
           console.log(error);
+          setLoading(false)
+
         });
     }
 
@@ -272,14 +283,15 @@ export default function PlacesFormPage() {
             .catch(error => {
               console.log("Error saving house");
               console.log(error);
+              setLoading(false)
             });
         }
         )
         .catch(error => {
           console.log("Error uploading house images");
           console.log(error);
+          setLoading(false)
         });
-
     }
   }
 
@@ -290,10 +302,35 @@ export default function PlacesFormPage() {
   const homeTypeHandler = (type) => {
     setHomeType(type);
   };
+
+
+  const suggestionHandler = () => {
+    setWaitingSuggestion(true);
+
+    const payload = {
+      homeType: homeType,
+      area: area,
+      bedRoom: bedRoom,
+      bathRoom: bathRoom,
+      subCity: subCity
+    }
+
+    axios.post(`http://localhost:4000/houses/getSimilar`, payload)
+      .then((response) => {
+        setSuggestion(response.data);
+        setWaitingSuggestion(false)
+
+      }).catch((err) => {
+        setWaitingSuggestion(false)
+        console.log(err)
+      })
+
+  }
   const unselectedBtnStyle = "primary bg-lightBlue my-4 hover:bg-lbHover";
   const selectedBtnStyle = "primary bg-blueBlack my-4";
   return (
     <div>
+
       {/* <AccountNav /> */}
       <div>
         <p>Please choose the home type:</p>
@@ -411,10 +448,53 @@ export default function PlacesFormPage() {
         {homeType === "regularRent" && <RegularRent />}
         {homeType === "shortTermRent" && <ShortTerm />}
         {homeType === "sale" && <Sale />}
-        <button className="primary bg-lightBlue my-4 hover:bg-lbHover">
-          Save
-        </button>
+
+        <div className="flex justify-between  gap-10 ">
+
+          <button type="submit" style={{ width: "40%", borderRadius: "2px" }}
+            className="primary mx-6 bg-lightBlue my-4 hover:bg-lbHover">
+            <LoadingOverlay
+              active={loading}
+              spinner
+              className="loading-overlay"
+              spinnerClassName="w-12 h-12"
+              contentClassName="opacity-50 pointer-events-none"
+              spinnerProps={{
+                style: {
+                  borderTopColor: 'lightblue',
+                  borderLeftColor: 'lightblue',
+                },
+              }}
+            >
+            </LoadingOverlay>
+            {loading ? "Processing..." : "Save"}
+          </button>
+
+          <div onClick={suggestionHandler} className=" w-5/12 flex justify-center items-center text-white primary cursor-pointer rounded-lg bg-lightBlue my-4  hover:bg-lbHover">
+            <LoadingOverlay
+              active={waitingSuggestion}
+              spinner
+              className="loading-overlay"
+              spinnerClassName="w-12 h-12"
+              contentClassName="opacity-50 pointer-events-none"
+              spinnerProps={{
+                style: {
+                  borderTopColor: 'lightblue',
+                  borderLeftColor: 'lightblue',
+                },
+              }}
+            >
+            </LoadingOverlay>
+            {waitingSuggestion ? "Processing..." : "Get Price Suggestions"}
+          </div>
+        </div>
       </form>
+      {suggestion && <div className=" rounded-lg outline font-semibold my-2 mb-5 p-2" >
+        {console.log(suggestion)}
+        <p>price suggestion for you, </p>
+        <p>Min price for the house is : {suggestion.minPrice} </p>
+        <p>Max price for the house is : {suggestion.maxPrice} </p>
+      </div>}
     </div>
   );
 }

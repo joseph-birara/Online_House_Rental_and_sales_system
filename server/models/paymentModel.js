@@ -13,6 +13,7 @@ const paymentSchema = new mongoose.Schema(
     email: String,
     applicationId: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "Application",
     },
     randomChar: {
       type: String,

@@ -3,6 +3,8 @@ const express = require("express");
 const { default: mongoose } = require("mongoose");
 const cors = require("cors");
 
+const checkPayment = require("./controllers/checkPayment");
+
 //import routes one by one
 const paymentRouter = require("./routes/paymentRoute");
 const adminRouts = require("./routes/adminRoutes");
@@ -48,6 +50,10 @@ app.use("/tenant", tenantRoutes);
 app.use("/maintenance", maintenanceRoutes);
 app.use("/rent", rentRoutes);
 app.use("/application", applicationRoutes);
+
+// triger check payment
+
+checkPayment.updateExpiredPayments();
 
 // conslo swagger
 // console.log(JSON.stringify(swaggerDocument, null, 2));

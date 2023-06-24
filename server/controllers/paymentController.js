@@ -3,6 +3,7 @@ var request = require("request");
 const generateRandomCharacterSet = require("../authController/randomCharater");
 const applicationModel = require("../models/applicantModel");
 const smsService = require("../authController/smsService");
+const moment = require("moment");
 
 //functions to process pyment
 // application id from front end is used as unique character her
@@ -63,7 +64,7 @@ const pay = async (req, res) => {
       return res.status(201).json({ status: "failed", data: null });
     }
     try {
-      smsService.sendSMS("+2510977439777", "rent has been completed");
+      smsService.sendSMS("+2510977439777", "payment has been made");
     } catch (error) {
       console.log(error);
     }
@@ -96,18 +97,30 @@ const pay = async (req, res) => {
 //verfi payment chappa second api
 const verifyPayment = async (req, res) => {
   const { id } = req.params;
-
   // const updatedApplication = applicationModel.findOne({
   //   _id: id,
   // });
   // updatedApplication.paymentStatus = true;
   // updatedApplication.save();
+
+  // change status to paid
   try {
-    const updatedApplication = await applicationModel.findOneAndUpdate(
-      { _id: id },
-      { $set: { paymentStatus: true } },
+    const moment = require("moment");
+
+    const application = await applicationModel.findByIdAndUpdate(
+      application._id,
+      { expiryDate: moment(application.expiryDate).add(30, "days").toDate() },
       { new: true }
     );
+
+    if (moment(application.expiryDate).isAfter(moment())) {
+      application.status = true;
+    } else {
+      application.status = false;
+    }
+
+    await application.save();
+
     console.log("Application updated successfully:", updatedApplication);
   } catch (error) {
     console.log("Error updating application:", error);
@@ -115,6 +128,8 @@ const verifyPayment = async (req, res) => {
 
   return res.status(200).json({ status: "success", data: null });
 };
+
+// delete payment object by id
 const deletePayment = async (req, res) => {
   console.log("delete function called");
   //console.log(req);

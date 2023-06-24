@@ -12,7 +12,7 @@ const applicationsWithVisitRequest = async (req, res) => {
   try {
     var result = [];
     const applications = await applicationModel
-      .find({ visitRequest: { $ne: null } })
+      .find({ visitRequest: { $ne: null }, status: "pending" })
       .populate({ path: "homeId", select: "title" })
       .populate({ path: "applicantId", select: "name phone" })
       .populate({ path: "ownerId", select: "name phone" });
@@ -207,6 +207,16 @@ const updateApplication = async (req, res) => {
       const home = await homeModel.findByIdAndUpdate(application.homeId, {
         isRented: true,
       });
+
+      // when accepted make the payment exprey date to know
+      try {
+        const applicationUpdate = await applicationModel.findByIdAndUpdate(
+          application._id,
+          { paymentExpiryDate: Date.now() }
+        );
+      } catch (error) {
+        console.log(error);
+      }
       try {
         await smsService.sendSMS(
           "+2510977439777",

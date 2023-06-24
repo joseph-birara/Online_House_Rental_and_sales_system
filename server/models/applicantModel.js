@@ -43,6 +43,10 @@ const applicationSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  paymentExpiryDate: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model("Application", applicationSchema);

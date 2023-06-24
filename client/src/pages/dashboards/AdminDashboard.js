@@ -3,7 +3,6 @@ import Dashboard from "../../components/dashboard/Dashboard";
 import userProfPic from "./avatar.jpg";
 import { BsCurrencyDollar, BsShield } from "react-icons/bs";
 import { FiShoppingBag, FiCreditCard } from "react-icons/fi";
-import { AiOutlineCalendar } from "react-icons/ai";
 import { RiContactsLine } from "react-icons/ri";
 import { UserContext } from "../../contexts/UserContextProvider";
 
@@ -45,6 +44,16 @@ const AdminDashboard = () => {
           link: "admin/users/buyers",
           icon: <RiContactsLine />,
         },
+      ],
+    },
+    {
+      title: "Applications",
+      links: [
+        {
+          name: "List of applications",
+          link: "admin/homes/applications",
+          icon: <RiContactsLine />,
+        }
       ],
     }
   ];
@@ -98,6 +107,16 @@ const AdminDashboard = () => {
           link: "admin/users/addAdmin",
           icon: <RiContactsLine />,
         },
+      ],
+    },
+    {
+      title: "Applications",
+      links: [
+        {
+          name: "List of applications",
+          link: "admin/homes/applications",
+          icon: <RiContactsLine />,
+        }
       ],
     }
   ];

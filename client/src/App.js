@@ -47,6 +47,7 @@ import BuyerDashBoard from "./pages/dashboards/BuyerDashBoard";
 import BuyerApplications from "./pages/BuyerApplications";
 import OwnerRentApplication from "./pages/Applicants-Rent";
 import OwnerBuyApplications from "./pages/Applicants-Buy";
+import ListOfApplications from "./Admin_Related_Pages/ListOfAppications";
 
 function App() {
   return (
@@ -106,6 +107,7 @@ function App() {
                     <Route path="onListing" element={<HomesListPage />} />
                     <Route path="rented" element={<HomesListPage DisplayRented={true} />} />
                     <Route path="home" element={<HomeDetails forAdmin={true} />} />
+                    <Route path="applications" element={<ListOfApplications />} />
                   </Route>
 
                   <Route path="users">

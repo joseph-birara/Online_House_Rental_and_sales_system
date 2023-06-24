@@ -7,11 +7,10 @@ import { UserContext } from "../contexts/UserContextProvider";
 import axios from "axios";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 
-
 const HomeLister = ({ objectList }) => {
 
     const { token } = useContext(UserContext);
-    const { HousesList, setHousesList } = useContext(UtilityContext);
+    const { setHousesList } = useContext(UtilityContext);
     const [selectedOption, setSelectionOption] = useState('')
 
     const handleSelect = (action, houseId, homeStatus) => {
@@ -161,7 +160,6 @@ const HomeLister = ({ objectList }) => {
 
 const HomesListPage = ({ DisplayRented }) => {
     const { HousesList } = useContext(UtilityContext);
-
     const RentedList = HousesList.filter(house => house.isRented === true)
 
     return (

@@ -43,6 +43,8 @@ import RequestForm from "./pages/RequestForm";
 import Team from "./Mycomponents/Team"
 import Services from "./Mycomponents/Services"
 import TermsOfService from './pages/TermsOfService'
+import BuyerDashBoard from "./pages/dashboards/BuyerDashBoard";
+import BuyerApplications from "./pages/BuyerApplications";
 
 function App() {
   return (
@@ -125,7 +127,8 @@ function App() {
                 </Route>
 
                 {/*  Buyer page  and there should be a Buyer dashboard*/}
-                <Route path="/buyer" element={<Test />} >
+                <Route path="/buyer" element={<BuyerDashBoard />} >
+                  <Route path="applications" element={<BuyerApplications />} />
                 </Route>
 
               </Routes>

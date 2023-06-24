@@ -60,11 +60,17 @@ export default function BookingWidget({ place }) {
           // set applicaton list and make request
           console.log("successyly sent ********************");
           // first redirect for first
-          setRedirect(`/tenant/applications`);
+
+          if (user.userType === 'tenant') {
+            setRedirect(`/tenant/applications`);
+          } else {
+            setRedirect(`/buyer/applications`);
+          }
           // setApplications();
         } else {
           alert(response.data);
           console.log("alert message");
+          setLoading(false)
         }
       })
       .catch((error) => {

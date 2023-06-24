@@ -173,11 +173,9 @@ const AdminDashboard = () => {
   ];
 
 
-  let sidebarLinks = []
-  if (user.superAdmin) {
+  let sidebarLinks = NonSuperAdmin
+  if (user && user.superAdmin) {
     sidebarLinks = SuperAdmin
-  } else {
-    sidebarLinks = NonSuperAdmin;
   }
 
 

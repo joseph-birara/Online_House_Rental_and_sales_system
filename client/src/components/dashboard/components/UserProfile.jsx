@@ -38,10 +38,11 @@ const UserProfile = () => {
   ];
 
   var accountDescription = "Buyer"
-  if (user.userType === 'admin')
+  if (user.userType === 'admin') {
     accountDescription = 'Administrator'
-  else if (user.superAdmin)
-    accountDescription = 'Super Administrator'
+    if (user.superAdmin)
+      accountDescription = 'Super Administrator'
+  }
   else if (user.userType === 'owner')
     accountDescription = "Home Owner"
   else if (user.userType === 'tenant')

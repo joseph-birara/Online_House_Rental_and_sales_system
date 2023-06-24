@@ -36,6 +36,9 @@ export default function PlacesFormPage() {
   const checkInRef = useRef();
   const checkOutRef = useRef();
   const maxGuestsRef = useRef();
+  const options = { style: 'currency', currency: 'USD' };
+
+
 
   let currHouse = null
   if (id) {
@@ -492,8 +495,8 @@ export default function PlacesFormPage() {
       {suggestion && <div className=" rounded-lg outline font-semibold my-2 mb-5 p-2" >
         {console.log(suggestion)}
         <p>price suggestion for you, </p>
-        <p>Min price for the house is : {suggestion.minPrice} </p>
-        <p>Max price for the house is : {suggestion.maxPrice} </p>
+        <p>Min price for the house is : {suggestion.minPrice.toLocaleString('en-US', options)} </p>
+        <p>Max price for the house is : {suggestion.maxPrice.toLocaleString('en-US', options)} </p>
       </div>}
     </div>
   );

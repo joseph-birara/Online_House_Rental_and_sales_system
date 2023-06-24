@@ -99,6 +99,7 @@ export default function LoginPage({ isAdmin }) {
 
 
     let routingLink = currentUserChoice
+    let USERTYPE = currentUserChoice
 
     // all buyers should be tenants
     if (currentUserChoice === 'admin') {
@@ -109,7 +110,7 @@ export default function LoginPage({ isAdmin }) {
 
     console.log(" email : " + email);
     console.log(" password : " + password);
-    console.log(" userType : " + currentUserChoice);
+    console.log(" userType : " + USERTYPE);
     console.log('routing link ' + routingLink);
 
     if (currentUserChoice) {
@@ -118,7 +119,7 @@ export default function LoginPage({ isAdmin }) {
         .post(`http://localhost:4000/${routingLink}/login`, {
           email: email,
           password: password,
-          userType: currentUserChoice
+          userType: USERTYPE
         })
         .then((response) => {
           if (response.data.token) {

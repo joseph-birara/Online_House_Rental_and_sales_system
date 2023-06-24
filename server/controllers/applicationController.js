@@ -10,12 +10,11 @@ const smsService = require("../authController/smsService");
 //how to populate query from mongodb ?
 const applicationsWithVisitRequest = async (req, res) => {
   try {
-    var result = [];
     const applications = await applicationModel
       .find({ visitRequest: { $ne: null }, status: "pending" })
-      .populate({ path: "homeId", select: "title" })
-      .populate({ path: "applicantId", select: "name phone" })
-      .populate({ path: "ownerId", select: "name phone" });
+      .populate({ path: "homeId", select: "title city subCity" })
+      .populate({ path: "applicantId", select: "name phone eamil lastName" })
+      .populate({ path: "ownerId", select: "name phone eamil lastName" });
     return res.status(200).json({ status: "succes", applications });
   } catch (error) {
     console.log(error);

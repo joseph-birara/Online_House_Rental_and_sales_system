@@ -24,7 +24,7 @@ const Team = () => {
       name: "Dawit Andargachew",
       role: "--",
       description:
-        "Dawit Andargachew is a talented front-end developer with a specialization in React. With his strong passion for creating intuitive and visually appealing user interfaces, Dawit crafts immersive web experiences that captivate users. He has extensive experience in building responsive and mobile-friendly websites using modern web technologies. Dawit is always up-to-date with the latest front-end trends and best practices, allowing him to deliver cutting-edge solutions. His attention to detail and dedication to creating exceptional user experiences make him a valuable asset to any development team.",
+        "Dawit Andargachew is a talented front-end developer with a specialization in React and Nodejs. With his strong passion for creating intuitive and visually appealing user interfaces, Dawit crafts immersive web experiences that captivate users. He has extensive experience in building responsive and mobile-friendly websites using modern web technologies. Dawit is always up-to-date with the latest front-end trends and best practices, allowing him to deliver cutting-edge solutions. His attention to detail and dedication to creating exceptional user experiences make him a valuable asset to any development team.",
       imageUrl: DawitImage,
     },
     // Add more team members as needed

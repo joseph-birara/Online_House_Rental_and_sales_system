@@ -33,7 +33,6 @@ const Comments = ({ houseId, ownerId }) => {
       houseId: houseId,
       ownerId: ownerId,
       parentId: parentId,
-      createdAt: new Date().toISOString(),
     };
     axios
       .post(`http://localhost:4000/comment/add`, commentData, {

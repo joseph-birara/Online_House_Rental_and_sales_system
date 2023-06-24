@@ -6,6 +6,22 @@ const { default: mongoose } = require("mongoose");
 const homeModel = require("../models/homeModel");
 const smsService = require("../authController/smsService");
 
+// get all applications that do have non null visitRequest ?
+//how to populate query from mongodb ?
+const applicationsWithVisitRequest = async (req, res) => {
+  try {
+    var result = [];
+    const applications = await applicationModel
+      .find({ visitRequest: { $ne: null } })
+      .populate({ path: "homeId", select: "title" })
+      .populate({ path: "applicantId", select: "name phone" })
+      .populate({ path: "ownerId", select: "name phone" });
+    return res.status(200).json({ status: "succes", applications });
+  } catch (error) {
+    console.log(error);
+    return res.status(201).send("failed");
+  }
+};
 // send application request
 const addApplicationRequest = async (req, res) => {
   try {
@@ -228,4 +244,5 @@ module.exports = {
   getSingleApplication,
   updateApplication,
   deleteApplication,
+  applicationsWithVisitRequest,
 };

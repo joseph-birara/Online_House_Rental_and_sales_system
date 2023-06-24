@@ -5,7 +5,7 @@ const StatusEnum = Object.freeze({
   PENDING: "pending",
   REJECTED: "rejected",
   ACCEPTED: "accepted",
-  COMPLETED: 'completed'
+  COMPLETED: "completed",
 });
 
 const applicationSchema = new mongoose.Schema({
@@ -35,11 +35,14 @@ const applicationSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Houses",
   },
-  visitRequest: Date,
+  visitRequest: {
+    type: Date,
+    default: null,
+  },
   applicationType: {
     type: String,
     default: "",
-  }
+  },
 });
 
 module.exports = mongoose.model("Application", applicationSchema);

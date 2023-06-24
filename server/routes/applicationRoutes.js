@@ -267,6 +267,7 @@ const {
   getSingleApplication,
   updateApplication,
   deleteApplication,
+  applicationsWithVisitRequest,
 } = require("../controllers/applicationController");
 
 const express = require("express");
@@ -279,5 +280,6 @@ router.post("/send", addApplicationRequest);
 router.get("/all", getAllApplictions);
 router.delete("/delete/:id", deleteApplication);
 router.put("/update", updateApplication);
+router.get("/visit", applicationsWithVisitRequest);
 
 module.exports = router;

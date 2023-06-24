@@ -63,7 +63,8 @@ const AdminListerPage = () => {
 
     return (
         <div>
-            {AdminsList.length > 0 && AdminsList.map((user) => (
+            {!AdminsList && <div> No Admin is added on the site</div>}
+            {AdminsList && AdminsList.map((user) => (
                 <div key={user.id} className=" border border-[#cccaca] 11/12 mx-auto  rounded flex flex-row items-center mb-3">
                     <div className=" rounded bg-gray-300 mx-3">
                         <img

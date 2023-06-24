@@ -93,12 +93,6 @@ const HomeLister = ({ objectList }) => {
 
 
     return <>
-        {/* <Link
-            to={linkUrl}
-            className="flex justify-between items-center cursor-pointer gap-1 p-4 rounded-lg m-4"
-            style={{ boxShadow: "0 0 1px #091240" }}
-        > */}
-
         <div>
             {objectList.map((house) => (
 
@@ -179,7 +173,6 @@ const HomeLister = ({ objectList }) => {
             )
             )}
         </div>
-        {/* </Link> */}
     </>
 
 

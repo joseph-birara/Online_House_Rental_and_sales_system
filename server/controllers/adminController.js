@@ -12,7 +12,6 @@ const { generateToken } = require("../authController/auth");
 
 // admin log in
 const adminLogin = async (req, res) => {
-  const userType = "admin";
   await login(req, res, adminModel);
 };
 
@@ -57,7 +56,9 @@ const addAdmin = async (req, res) => {
   const image = data.image;
   const isTaken = await adminModel.findOne({ email });
   if (isTaken) {
-    return res.status(200).send("Your email is already taken, use another email.");
+    return res
+      .status(200)
+      .send("Your email is already taken, use another email.");
   }
 
   console.log("body", password);

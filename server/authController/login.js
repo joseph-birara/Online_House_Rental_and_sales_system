@@ -31,21 +31,21 @@ async function login(req, res, userModel) {
         .status(200)
         .send("Invalid Email or password. Enter correct credentials.");
     }
+    if (user.suspended) {
+      return res
+        .status(201)
+        .send("Your account has been suspended. Contact administrators.");
+    }
     if (!user.accountStatus) {
       //resend the mail to verify account
       const verificationToken = await generateVerificationToken(user.email);
       // Send email verification email to the newly registered user
       let subject = "Account activation";
-      let text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/${useType}/verify-email/${verificationToken}`;
+      let text = `Please click the following link to verify your email address: ${process.env.BASE_URL}/${userType}/verify-email/${verificationToken}`;
       await sendEmail(email, subject, text);
       return res
         .status(201)
         .send("Please check your email to activate your account.");
-    }
-    if (user.suspended) {
-      return res
-        .status(201)
-        .send("Your account has been suspended. Contact administrators.");
     }
     const token = generateToken(user._id);
     return res.json({ token: token, user: user });

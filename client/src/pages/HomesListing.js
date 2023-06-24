@@ -15,7 +15,7 @@ export const Home = ({ home }) => {
   const img = {
     width: "100%",
     height: "15rem",
-    borderRadius: "15px",
+    borderRadius: "10px",
   };
   const sliderContainer = {
     width: "100%",
@@ -28,30 +28,40 @@ export const Home = ({ home }) => {
   });
   return (
     <div className={styles.mainContainer}>
-      <ImageSlider
-        images={pupulatedImagesObject}
-        autoplay={false}
-        sliderContainer={sliderContainer}
-        imgDim={img}
-      />
-      <p className={styles.shorten} id={styles.title}>
-        {home.title}
-      </p>
-      <p className={styles.shorten} id={styles.location}>
-        {home.kebele}, {home.woreda}, {home.subCity}, {home.city}
-      </p>
-      <div className={styles.icons}>
-        <p>
-          <IoBedOutline id={styles.bed} /> {home.bedRoom}
+
+        {/* image part */}
+        <ImageSlider
+          images={pupulatedImagesObject}
+          autoplay={false}
+          sliderContainer={sliderContainer}
+          imgDim={img}
+        />
+
+        {/* title part */}
+        <p className={styles.shorten} id={styles.title}>
+          {home.title}
         </p>
-        <p>
-          <FaShower id={styles.shower} /> {home.bathRoom}
+
+        {/* kebele, woreda */}
+        <p className={styles.shorten} id={styles.location}>
+          {home.kebele}, {home.woreda}, {home.subCity}, {home.city}
         </p>
-        <p>
-          <TfiRulerAlt2 /> {home.area} m<sup>2</sup>
-        </p>
+
+        {/* icons like washer, shower,  */}
+        <div className={styles.icons}>
+          <p>
+            <IoBedOutline id={styles.bed} /> {home.bedRoom}
+          </p>
+          <p>
+            <FaShower id={styles.shower} /> {home.bathRoom}
+          </p>
+          <p>
+            <TfiRulerAlt2 /> {home.area} m<sup>2</sup>
+          </p>
       </div>
-      <div className="font-semibold mx-3 border border-[lightgray] flex justify-between gap-1 items-center p-0.5 ">
+      {/* likingpart */}
+      <div className=" font-semibold mx-3 border border-[lightgray] flex justify-between gap-1 items-center p-0.5 ">
+
         <p className=""> ETB {home.price}/month</p>
 
         <p className="border border-[red] px-1">
@@ -61,6 +71,7 @@ export const Home = ({ home }) => {
           <span> Likes</span>
         </p>
       </div>
+
     </div>
   );
 };
@@ -298,12 +309,12 @@ const HomesListing = () => {
       <div className="flex gap-8 ml-10 ">
         <div className="rounded outline outline-[2px] outline-lightBlue w-fit h-fit">
 
-        <Dropdown
-          actions={dropDownOptions}
-          onSelect={subcityHandler}
-          itemType="subcity"
-          mainText="Select subcity"
-        />
+          <Dropdown
+            actions={dropDownOptions}
+            onSelect={subcityHandler}
+            itemType="subcity"
+            mainText="Select subcity"
+          />
         </div>
 
         <div>

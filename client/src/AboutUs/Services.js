@@ -1,8 +1,8 @@
 import React from "react";
 import ServiceCard from "./ServiceCard";
-import rentalIcon from "./jossy/rent.jpg";
-import salesIcon from "./jossy/Sale.jpg";
-import managementIcon from "./jossy/manage.jpg";
+import rentalIcon from "./Images/rent.jpg";
+import salesIcon from "./Images/Sale.jpg";
+import managementIcon from "./Images/manage.jpg";
 
 const Services = () => {
   const services = [

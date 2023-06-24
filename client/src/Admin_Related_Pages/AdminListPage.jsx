@@ -10,11 +10,17 @@ const AdminListerPage = () => {
     const altenativeImageLink = "https://thumbs.dreamstime.com/b/user-blue-icon-member-service-43464682.jpg"
     const [selectedOption, setSelectionOption] = useState('')
 
-
     useEffect(() => {
-        // remove the super admin from the list
-        const newAdminsList = AdminsList.filter((admin) => admin._id !== user._id)
-        setAdminList(newAdminsList)
+        axios
+            .get("http://localhost:4000/admin/all")
+            .then((response) => {
+                // remove the super admin from the list
+                const newAdminsList = response.data.filter((admin) => admin._id !== user._id)
+                setAdminList(newAdminsList)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }, []);
 
     const handleActionChange = (userId, action, status) => {
@@ -63,7 +69,8 @@ const AdminListerPage = () => {
 
     return (
         <div>
-            {AdminsList.length > 0 && AdminsList.map((user) => (
+            {!AdminsList && <div> No Admin is added on the site</div>}
+            {AdminsList && AdminsList.map((user) => (
                 <div key={user.id} className=" border border-[#cccaca] 11/12 mx-auto  rounded flex flex-row items-center mb-3">
                     <div className=" rounded bg-gray-300 mx-3">
                         <img

@@ -3,6 +3,8 @@ import { UtilityContext } from "../contexts/UtilityContextProvide";
 import axios from "axios";
 import Dropdown from "../components/Dropdown";
 import { UserContext } from "../contexts/UserContextProvider";
+import { FormatDate } from "../services/HelperFunction"
+
 
 const Applicant = ({ data, selectHandler }) => {
 
@@ -36,13 +38,13 @@ const Applicant = ({ data, selectHandler }) => {
       <p>
         Checkin Date:{" "}
         <span className="text-base font-semibold">
-          {data.checkin ? (data.checkin) : ("Not Specified")}
+          {data.checkin ? FormatDate(data.checkin) : ("Not Specified")}
         </span>
       </p>
       <p>
         Checkout Date:{" "}
         <span className="text-base font-semibold">
-          {data.checkout ? (data.checkout) : ("Not Specified")}
+          {data.checkout ? FormatDate(data.checkout) : ("Not Specified")}
         </span>
       </p>
       <p>
@@ -57,7 +59,7 @@ const Applicant = ({ data, selectHandler }) => {
       <p>
         Visit Request Date:{" "}
         <span className="text-base font-semibold">
-          {data.visitRequest ? (data.visitRequest) : ("Not Specified")}
+          {data.visitRequest ? FormatDate(data.visitRequest) : ("Not Specified")}
         </span>
 
       </p>
@@ -79,7 +81,7 @@ const Applicant = ({ data, selectHandler }) => {
   );
 };
 
-const Applicants = () => {
+const OwnerBuyApplications = () => {
   const { applications, setApplications } = useContext(UtilityContext);
   const { user, token } = useContext(UserContext);
 
@@ -147,6 +149,9 @@ const Applicants = () => {
           if (!app.applicantId) {
             return null; // Skip this application if applicantId is undefined
           }
+          if (app.applicationType !== 'sale') {
+            return null; // Skip non sale applications
+          }
 
           const data = {
             applicantName: app.applicantId.name,
@@ -168,4 +173,4 @@ const Applicants = () => {
   );
 };
 
-export default Applicants;
+export default OwnerBuyApplications;

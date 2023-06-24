@@ -7,36 +7,17 @@ import { UserContext } from "../contexts/UserContextProvider";
 import axios from "axios";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 
-
 const HomeLister = ({ objectList }) => {
 
     const { token } = useContext(UserContext);
-    const { HousesList, setHousesList } = useContext(UtilityContext);
+    const { setHousesList } = useContext(UtilityContext);
     const [selectedOption, setSelectionOption] = useState('')
 
     const handleSelect = (action, houseId, homeStatus) => {
 
         // clear selected opton
         setSelectionOption('')
-        if (action === 'delete') {
-            // console.log("delte for " + houseId);
-            axios.delete(`${process.env.REACT_APP_baseURL}/houses/delete/${houseId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }).then((response) => {
-
-                // update the context
-                const filterHome = HousesList.filter((house) => house._id !== houseId);
-                setHousesList(filterHome);
-                console.log("House deleted successfully");
-            }).catch((error) => {
-                console.log("Error on deleting House");
-                console.log(error.message);
-            });
-
-        }
-        else if (action === 'verify') {
+        if (action === 'verify') {
             // update home and state
             const houseUpdatedData = { id: houseId, verified: !homeStatus.verified }
             axios.put(`${process.env.REACT_APP_baseURL}/houses/update`, houseUpdatedData, {
@@ -93,23 +74,17 @@ const HomeLister = ({ objectList }) => {
 
 
     return <>
-        {/* <Link
-            to={linkUrl}
-            className="flex justify-between items-center cursor-pointer gap-1 p-4 rounded-lg m-4"
-            style={{ boxShadow: "0 0 1px #091240" }}
-        > */}
-
         <div>
             {objectList.map((house) => (
 
-                <div className="outline outline-[lightgray]  flex justify-between items-center  gap-1 p-2 rounded-lg m-4 " >
+                <div className="outline outline-[lightgray] outline-[2px]  flex justify-between items-center  gap-1 p-2 rounded-lg m-4 " >
 
                     <div className=" flex w-32 h-32 bg-gray-300 shrink-0 mx-2 ">
                         <img src={house.images[0]} alt="" />
                     </div>
                     <div className="grow-0 shrink px-1  p-1 mr-3">
                         <h2 className="text-xl">{house.title}</h2>
-                        <p className="text-sm mt-2">{house.description}</p>
+                        <p className="text-sm mt-2 line-clamp-3">{house.description}</p>
                         <div className="flex justify-start gap-8">
                             <p><IoBedOutline /> {house.bedRoom}</p>
                             <p><FaShower /> {house.bathRoom}</p>
@@ -165,7 +140,6 @@ const HomeLister = ({ objectList }) => {
                         }}
                     >
                         <option value="">Select Action</option>
-                        <option value="delete"> Delete</option>
                         <option value="verify">
                             {house.verified ? 'Unverify' : 'verify'}
                         </option>
@@ -179,7 +153,6 @@ const HomeLister = ({ objectList }) => {
             )
             )}
         </div>
-        {/* </Link> */}
     </>
 
 
@@ -187,7 +160,6 @@ const HomeLister = ({ objectList }) => {
 
 const HomesListPage = ({ DisplayRented }) => {
     const { HousesList } = useContext(UtilityContext);
-
     const RentedList = HousesList.filter(house => house.isRented === true)
 
     return (

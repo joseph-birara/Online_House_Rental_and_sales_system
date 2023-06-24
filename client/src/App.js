@@ -18,7 +18,7 @@ import { UserContextProvider } from "./contexts/UserContextProvider";
 import LoginPage from "./pages/Auth/LoginPage";
 import RegisterPage from "./pages/Auth/Register";
 import UtilityContextProvider from "./contexts/UtilityContextProvide";
-import Applicants from "./pages/Applicants";
+import Applicants from "./pages/Applicants-Rent";
 import OwnerListerPage from "./Admin_Related_Pages/OwnerListerPage";
 import BuyerListerPage from "./Admin_Related_Pages/BuyerListerPage";
 import TenantListerPage from "./Admin_Related_Pages/TenantListerPage";
@@ -40,9 +40,14 @@ import PasswordResetPage from "./pages/Auth/PasswordResetPage";
 import ValidatePayment from "./pages/Auth/ValidatePayment";
 import Footer from "./components/Footer";
 import RequestForm from "./pages/RequestForm";
-import Team from "./Mycomponents/Team"
-import Services from "./Mycomponents/Services"
+import Team from "./AboutUs/Team"
+import Services from "./AboutUs/Services"
 import TermsOfService from './pages/TermsOfService'
+import BuyerDashBoard from "./pages/dashboards/BuyerDashBoard";
+import BuyerApplications from "./pages/BuyerApplications";
+import OwnerRentApplication from "./pages/Applicants-Rent";
+import OwnerBuyApplications from "./pages/Applicants-Buy";
+import ListOfApplications from "./Admin_Related_Pages/ListOfAppications";
 
 function App() {
   return (
@@ -90,7 +95,8 @@ function App() {
                     <Route path="new" element={<PlacesFormPage />} />
                   </Route>
 
-                  <Route path="applicants" element={<Applicants />} />
+                  <Route path="rentapplicants" element={<OwnerRentApplication />} />
+                  <Route path="buyapplicants" element={<OwnerBuyApplications />} />
                   <Route path="tenants" element={<UsersList />} />
                   <Route path="maintenanceRequests" element={<RequestsPage />} />
                 </Route>
@@ -101,6 +107,7 @@ function App() {
                     <Route path="onListing" element={<HomesListPage />} />
                     <Route path="rented" element={<HomesListPage DisplayRented={true} />} />
                     <Route path="home" element={<HomeDetails forAdmin={true} />} />
+                    <Route path="applications" element={<ListOfApplications />} />
                   </Route>
 
                   <Route path="users">
@@ -125,7 +132,8 @@ function App() {
                 </Route>
 
                 {/*  Buyer page  and there should be a Buyer dashboard*/}
-                <Route path="/buyer" element={<Test />} >
+                <Route path="/buyer" element={<BuyerDashBoard />} >
+                  <Route path="applications" element={<BuyerApplications />} />
                 </Route>
 
               </Routes>

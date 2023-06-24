@@ -13,7 +13,7 @@ export default function AddAdminPage() {
     phone: "",
     image: ""
   })
-  const [profileImage, setProfileImage] = useState('https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector-PNG.png')
+  const [profileImage, setProfileImage] = useState('https://res.cloudinary.com/dmegiw31y/image/upload/v1687634119/HomeRental/alt-image_rn3zbk.webp')
   const [imageFile, setImageFile] = useState(null)
   const navigate = useNavigate();
 
@@ -22,9 +22,6 @@ export default function AddAdminPage() {
   const imageHanlder = (e) => {
     setImageFile(e.target.files[0])// grab image file
     setProfileImage(URL.createObjectURL(e.target.files[0])) // create a url for locall rendering
-    // console.log(e.target.files[0]);
-    // console.log(" user profile par : ");
-    // console.log(profileImage);
   }
 
   async function registerUser(e) {
@@ -72,17 +69,17 @@ export default function AddAdminPage() {
 
   return (
     <>
-      <div className=" outline grow flex items-center justify-around">
+      <div className=" grow flex items-center justify-around">
         <div className="mb-20">
           <h1 className="text-4xl text-center mb-4">Register Admin</h1>
 
 
           {/* for image upload part  */}
-          <div className="flex flex-col items-center justify-center outline py-2">
+          <div className="flex flex-col items-center justify-center  py-2">
             <img
               src={profileImage}
               alt="Selected"
-              className="h-32 object-fill outline rounded-lg "
+              className="h-52 object-fill outline outline-lightBlue outline-[2px] rounded-lg "
             />
 
             <label htmlFor="image-input" className="  cursor-pointer bg-lightBlue mt-2 text-white p-1.5 hover:bg-lbHover  rounded-md">

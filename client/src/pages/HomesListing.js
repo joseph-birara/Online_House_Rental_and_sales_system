@@ -10,12 +10,13 @@ import { useContext, useEffect, useReducer } from "react";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 import axios from "axios";
 import Dropdown from "../components/Dropdown";
+import { NumberFormater } from "../services/HelperFunction"
 
 export const Home = ({ home }) => {
   const img = {
     width: "100%",
     height: "15rem",
-    borderRadius: "15px",
+    borderRadius: "10px",
   };
   const sliderContainer = {
     width: "100%",
@@ -28,18 +29,26 @@ export const Home = ({ home }) => {
   });
   return (
     <div className={styles.mainContainer}>
+
+      {/* image part */}
       <ImageSlider
         images={pupulatedImagesObject}
         autoplay={false}
         sliderContainer={sliderContainer}
         imgDim={img}
       />
+
+      {/* title part */}
       <p className={styles.shorten} id={styles.title}>
         {home.title}
       </p>
+
+      {/* kebele, woreda */}
       <p className={styles.shorten} id={styles.location}>
         {home.kebele}, {home.woreda}, {home.subCity}, {home.city}
       </p>
+
+      {/* icons like washer, shower,  */}
       <div className={styles.icons}>
         <p>
           <IoBedOutline id={styles.bed} /> {home.bedRoom}
@@ -51,16 +60,21 @@ export const Home = ({ home }) => {
           <TfiRulerAlt2 /> {home.area} m<sup>2</sup>
         </p>
       </div>
-      <div className="font-semibold mx-3 border border-[lightgray] flex justify-between gap-1 items-center p-0.5 ">
-        <p className=""> ETB {home.price}/month</p>
+      {/* likingpart */}
+      <div className=" font-semibold mx-3 border border-[lightgray] rounded-lg flex justify-between gap-1 items-center p-0.5 ">
 
-        <p className="border border-[red] px-1">
+        <p className=""> {NumberFormater(home.price)} {home.homeType === 'regularRent' ?( " /Month" ): home.homeType === 'shortTermRent' ? " /Day" : ""}</p>
+
+
+
+        <p className=" px-1">
           <Button className="transform scale-150 ">
             <AiOutlineHeart />
           </Button>
           <span> Likes</span>
         </p>
       </div>
+
     </div>
   );
 };
@@ -229,7 +243,7 @@ const HomesListing = () => {
 
   const handleMinPriceChange = (e) => {
     let enteredNum = parseInt(e.target.value);
-    if (e.target.value.length == 0) {
+    if (e.target.value.length === 0) {
       enteredNum = 0;
     }
     dispatchHomes({
@@ -245,7 +259,7 @@ const HomesListing = () => {
 
   const handleMaxPriceChange = (e) => {
     let enteredNum = parseInt(e.target.value);
-    if (e.target.value.length == 0) {
+    if (e.target.value.length === 0) {
       enteredNum = Number.MAX_VALUE;
     }
     dispatchHomes({
@@ -261,7 +275,7 @@ const HomesListing = () => {
 
   const handleMinAreaChange = (e) => {
     let enteredNum = parseInt(e.target.value);
-    if (e.target.value.length == 0) {
+    if (e.target.value.length === 0) {
       enteredNum = 0;
     }
     dispatchHomes({
@@ -277,7 +291,7 @@ const HomesListing = () => {
 
   const handleMaxAreaChange = (e) => {
     let enteredNum = parseInt(e.target.value);
-    if (e.target.value.length == 0) {
+    if (e.target.value.length === 0) {
       enteredNum = Number.MAX_VALUE;
     }
     dispatchHomes({
@@ -296,14 +310,14 @@ const HomesListing = () => {
     <>
       {/* <div className="flex gap-8 > */}
       <div className="flex gap-8 ml-10 ">
-        <div className="rounded outline outline-lightBlue w-fit h-fit bg-lightBlue text-white">
+        <div className="rounded outline outline-[2px] outline-lightBlue w-fit h-fit">
 
-        <Dropdown
-          actions={dropDownOptions}
-          onSelect={subcityHandler}
-          itemType="subcity"
-          mainText="Select subcity"
-        />
+          <Dropdown
+            actions={dropDownOptions}
+            onSelect={subcityHandler}
+            itemType="subcity"
+            mainText="Select subcity"
+          />
         </div>
 
         <div>

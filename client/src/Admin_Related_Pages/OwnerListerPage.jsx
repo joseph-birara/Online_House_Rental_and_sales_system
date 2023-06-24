@@ -92,7 +92,8 @@ const OwnerListerPage = () => {
 
     return (
         <div>
-            {OwnersList.length > 0 && OwnersList.map((user) => (
+            {!OwnersList && <div> No buyer is added on the site</div>}
+            {OwnersList && OwnersList.map((user) => (
                 <div key={user.id} className="border border-[#cccaca] 11/12 mx-auto rounded flex flex-row items-center mb-3">
                     <div className="rounded bg-gray-300 mx-3">
                         <img

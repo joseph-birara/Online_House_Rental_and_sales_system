@@ -3,7 +3,6 @@ import Dashboard from "../../components/dashboard/Dashboard";
 import userProfPic from "./avatar.jpg";
 import { BsCurrencyDollar, BsShield } from "react-icons/bs";
 import { FiShoppingBag, FiCreditCard } from "react-icons/fi";
-import { AiOutlineCalendar } from "react-icons/ai";
 import { RiContactsLine } from "react-icons/ri";
 import { UserContext } from "../../contexts/UserContextProvider";
 
@@ -48,15 +47,15 @@ const AdminDashboard = () => {
       ],
     },
     {
-      title: "Reports",
+      title: "Applications",
       links: [
         {
-          name: "User reports",
-          link: "admin/reports",
+          name: "List of applications",
+          link: "admin/homes/applications",
           icon: <RiContactsLine />,
-        },
+        }
       ],
-    },
+    }
   ];
   const SuperAdmin = [
     {
@@ -111,15 +110,15 @@ const AdminDashboard = () => {
       ],
     },
     {
-      title: "Reports",
+      title: "Applications",
       links: [
         {
-          name: "User reports",
-          link: "admin/reports",
+          name: "List of applications",
+          link: "admin/homes/applications",
           icon: <RiContactsLine />,
-        },
+        }
       ],
-    },
+    }
   ];
 
   const notificationData = [
@@ -190,4 +189,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-

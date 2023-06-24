@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContextProvider";
 import axios from "axios";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
-import { useState } from "react";
+import { NumberFormater } from "../services/HelperFunction"
 
 const RentedTenantList = ({ data, handleSelect }) => {
   return (
@@ -31,7 +31,7 @@ const RentedTenantList = ({ data, handleSelect }) => {
           </div>
 
           <div className="mt-1">
-            <p>Price: {data.price} </p>
+            <p >Price: <strong> {NumberFormater(data.price)} </strong>  </p>
             <p>Payment Status:
               <span className={` text-white text-lg  m-2 px-2 p-1 rounded-lg  ${data.paymentStatus ? 'bg-[green]' : 'bg-[#bcbf20]'}`} >{data.paymentStatus ? 'Paid' : 'Waiting'}</span>
             </p>

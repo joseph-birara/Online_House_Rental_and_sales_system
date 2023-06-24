@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { MdOutlineCancel } from "react-icons/md";
 
 import { useStateContext } from "../../../contexts/DashboardContextProvider";
+import { UserContext } from "../../../contexts/UserContextProvider";
 
 const Sidebar = ({ links }) => {
+  const { user } = useContext(UserContext)
   const { activeMenu, setActiveMenu, screenSize } =
     useStateContext();
 
@@ -30,7 +32,7 @@ const Sidebar = ({ links }) => {
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
             >
               <p>
-                <span>Hi,</span> <span>Michael</span>
+                <span>Hi,</span> <span>{user && user.name}</span>
               </p>
             </Link>
             <button

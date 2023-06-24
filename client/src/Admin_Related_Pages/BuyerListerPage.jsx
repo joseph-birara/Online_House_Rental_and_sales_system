@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { UserContext } from '../contexts/UserContextProvider';
 import { UtilityContext } from '../contexts/UtilityContextProvide';
 import axios from 'axios';
@@ -9,6 +9,18 @@ const BuyerListerPage = () => {
     const { BuyersList, setBuyerList } = useContext(UtilityContext)
     const altenativeImageLink = "https://thumbs.dreamstime.com/b/user-blue-icon-member-service-43464682.jpg"
     const selectRef = useRef(null);
+
+    useEffect(() => {
+        // get all houses and set to the context
+        axios.get('http://localhost:4000/tenant/buyers')
+            .then((response) => {
+                console.log(' admin is on the tenant list pages ');
+                setBuyerList(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
     const handleActionChange = (userId, action, status) => {
         selectRef.current.value = ''
@@ -56,13 +68,13 @@ const BuyerListerPage = () => {
 
     return (
         <div>
-            {BuyersList.length === 0 && <div> No buyer is added on the site</div>}
-            {BuyersList.length > 0 && BuyersList.map((user) => (
+            {!BuyersList && <div> No buyer is added on the site</div>}
+            {BuyersList && BuyersList.map((user) => (
                 <div key={user.id} className=" border border-[#cccaca] 11/12 mx-auto  rounded flex flex-row items-center mb-3">
                     <div className=" rounded bg-gray-300 mx-3">
                         <img
                             src={user.image || altenativeImageLink}
-                            alt={"user image"}
+                            alt={""}
                             className="w-28 h-28 rounded object-cover"
                         />
                     </div>

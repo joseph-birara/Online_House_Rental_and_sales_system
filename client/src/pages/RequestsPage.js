@@ -44,10 +44,10 @@ const Request = ({ request, updateHandler }) => {
       </div>
       <div className="flex gap-6 pb-4 border-b-1 border-b-[#dce0e0] m-2">
         <p>Status:</p>
-        <p>{request.fixStatus}</p>
+        <p className={`font-semibold text-lg ${request.fixStatus === 'Seen' ? " text-[green] " : " text-[#c8c821] "}`} >{request.fixStatus}</p>
       </div>
       {request.fixStatus && request.fixStatus.toLowerCase() !== "seen" && (
-        <div className="flex justify-end mr-4">
+        <div className="flex w-fit justify-end ml-auto  outline outline-lightBlue">
           <Dropdown
             mainText="Respond"
             actions={dropdownActions}

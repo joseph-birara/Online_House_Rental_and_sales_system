@@ -160,7 +160,7 @@ const HomeDetails = ({ forAdmin }) => {
       </div>
       <HomeProperties specificHouse={specificHouse} />
       <AmenitiesDisplayer amenities={specificHouse.amenity} />
-      {!forAdmin && (
+      {!forAdmin && specificHouse && specificHouse._id && (
         <Comments
           houseId={specificHouse._id}
           ownerId={specificHouse.ownerId._id}

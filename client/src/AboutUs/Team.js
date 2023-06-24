@@ -1,8 +1,8 @@
 import React from "react";
 import TeamCard from "./TeamCard";
-import JosephImage from "./jossy/Jossy.png";
-import DawitImage from "./jossy/Dawit.png";
-import FistumIamge from "./jossy/Fitsum.jpg";
+import JosephImage from "./Images/Jossy.png";
+import DawitImage from "./Images/Dawit.png";
+import FistumIamge from "./Images/Fitsum.jpg";
 
 const Team = () => {
   const teamMembers = [

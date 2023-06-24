@@ -84,7 +84,7 @@ const TenantListerPage = () => {
 
     return (
         <div>
-            {TenantList.length > 0 && TenantList.map((user) => (
+            {TenantList && TenantList.map((user) => (
                 <div key={user.id} className="border border-[#cccaca] 11/12 mx-auto rounded flex flex-row items-center mb-3">
                     <div className="rounded bg-gray-300 mx-3">
                         <img

@@ -56,7 +56,7 @@ const getAnalysis = async (req, res) => {
     minPrice = minPrice + (minPrice * cityValue) / 2
     maxPrice = maxPrice + (maxPrice * cityValue) / 1.6
     const minAverage = minPrice + (minPrice * 0.25)
-    const maxAvergae = maxPrice - (maxPrice * 0.3)
+    const maxAverage = maxPrice - (maxPrice * 0.3)
 
 
     // Return the price suggestion as an object
@@ -64,7 +64,7 @@ const getAnalysis = async (req, res) => {
       minPrice: Math.floor(minPrice),
       maxPrice: Math.floor(maxPrice),
       minAverage: Math.floor(minAverage),
-      maxAvergae: Math.floor(maxAverage)
+      maxAverage: Math.floor(maxAverage)
     };
   }
   try {

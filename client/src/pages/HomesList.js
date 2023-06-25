@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 import { UserContext } from "../contexts/UserContextProvider";
 import axios from "axios";
+import NoHomesAreAddedYet from "./NoHomesAreAddedYet";
 
 
 const HomesList = ({ rented }) => {
@@ -17,6 +18,9 @@ const HomesList = ({ rented }) => {
     // get all houses and set to the context
     axios.get('http://localhost:4000/houses/all')
       .then((response) => {
+        // console.log("list of house is ");
+        // console.log(response.data);
+        console.log(HousesList);
         setHousesList(response.data)
       })
       .catch((error) => {
@@ -24,11 +28,10 @@ const HomesList = ({ rented }) => {
       });
   }, [])
 
-
-  if (rented && user.userType === 'owner') {
+  if (rented && user.userType === 'owner' && HousesList) {
 
     let homeLists = HousesList.filter(house => {
-      return house.ownerId._id === user._id && house.isRented === true
+      return house.ownerId && house.ownerId._id && house.ownerId._id === user._id && house.isRented === true
     })
 
     console.log('ower is clikded to view al homes --- rented is clicked');
@@ -43,8 +46,8 @@ const HomesList = ({ rented }) => {
       </>
     )
 
-  } else if (rented && user.userType === 'admin') {
-    let homeLists = HousesList.filter(house => house.isRented === true)
+  } else if (rented && user.userType === 'admin' && HousesList) {
+    let homeLists = HousesList.filter(house => house.ownerId && house.ownerId._id && house.isRented === true)
 
     // for admin rented
     return (
@@ -57,7 +60,7 @@ const HomesList = ({ rented }) => {
     )
 
 
-  } else if (user.userType === 'admin') {
+  } else if (user.userType === 'admin' && HousesList) {
 
     console.log("admin list all homes");
     // for admin all homes
@@ -71,9 +74,8 @@ const HomesList = ({ rented }) => {
     )
 
   }
-  else if (user.userType === 'owner') {
-    const homeLists = HousesList.filter(house => house.ownerId._id === user._id
-    )
+  else if (user.userType === 'owner' && HousesList) {
+    let homeLists = HousesList.filter(house => house.ownerId && house.ownerId._id && house.ownerId._id === user._id)
 
     console.log('ower is clikded to view homes --- here are the list');
     console.log(homeLists);
@@ -86,7 +88,6 @@ const HomesList = ({ rented }) => {
         <PlacesLister houses={homeLists} />
       </>
     )
-
   }
 
 };

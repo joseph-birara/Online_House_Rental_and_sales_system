@@ -50,7 +50,7 @@ const AdminDashboard = () => {
       title: "Applications",
       links: [
         {
-          name: "List of applications",
+          name: "Active Applications",
           link: "admin/homes/applications",
           icon: <RiContactsLine />,
         }
@@ -113,7 +113,7 @@ const AdminDashboard = () => {
       title: "Applications",
       links: [
         {
-          name: "List of applications",
+          name: "Active Applications",
           link: "admin/homes/applications",
           icon: <RiContactsLine />,
         }

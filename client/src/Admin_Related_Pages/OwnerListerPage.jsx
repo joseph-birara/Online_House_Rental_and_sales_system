@@ -146,15 +146,15 @@ const OwnerListerPage = () => {
 
                     <select
                         value={selectedOption}
-                        className="outline ml-auto mr-10 bg-lightBlue hover:bg-lbHover text-white py-2 px-2 rounded"
+                        className="outline outline-[3px] outline-lightBlue cursor-pointer  ml-auto mr-10 py-2 px-2 rounded"
                         onChange={(e) => {
                             handleActionChange(user._id, e.target.value, user.accountStatus, user.suspended);
                         }}
                     >
                         <option value="">Select Action</option>
                         <option value="delete">Delete</option>
-                        <option value="activate">{user.accountStatus ? 'Deactivate' : 'Activate'}</option>
-                        <option value="suspend">{user.accountStatus ? 'Unsuspend' : 'Suspend'}</option>
+                        <option value="activate">{user.accountStatus ? 'De-activate' : 'Activate'}</option>
+                        <option value="suspend">{user.suspended ? 'Un-Suspend' : 'Suspend'}</option>
                     </select>
                 </div>
             ))}

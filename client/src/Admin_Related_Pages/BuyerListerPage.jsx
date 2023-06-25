@@ -22,7 +22,7 @@ const BuyerListerPage = () => {
             });
     }, [BuyersList]);
 
-    const handleActionChange = (userId, action, status) => {
+    const handleActionChange = (userId, action, status, suspend__) => {
         selectRef.current.value = ''
         if (action === 'delete') {
             axios.delete(`${process.env.REACT_APP_baseURL}/tenant/delete/${userId}`, {
@@ -39,8 +39,7 @@ const BuyerListerPage = () => {
                 console.log("Error on deleting buyer");
                 console.log(error.message);
             });
-        }
-        else if (action === 'activate') {
+        } else if (action === 'activate') {
             const updatedData = { id: userId, accountStatus: !status }
             axios.put(`${process.env.REACT_APP_baseURL}/tenant/update`, updatedData, {
                 headers: {
@@ -53,6 +52,29 @@ const BuyerListerPage = () => {
                     return prev.map(user => {
                         if (user._id === userId) {
                             return { ...user, accountStatus: updatedData.accountStatus };
+                        }
+                        return user;
+                    })
+                });
+                console.log('BUyer updated successfully');
+                // return <Navigate to={"/homeOwner/homes/onListing"} />;
+            }).catch((error) => {
+                console.log("Error on updating buyer");
+                console.log(error.message);
+            });
+        } else if (action === 'suspend') {
+            const updatedData = { id: userId, suspended: !suspend__ }
+            axios.put(`${process.env.REACT_APP_baseURL}/tenant/update`, updatedData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((response) => {
+
+                // update the context
+                setBuyerList(prev => {
+                    return prev.map(user => {
+                        if (user._id === userId) {
+                            return { ...user, suspended: updatedData.suspended };
                         }
                         return user;
                     })
@@ -126,8 +148,8 @@ const BuyerListerPage = () => {
 
 
                         <div className='mx-2'>
-                            <p>
-                                Kebele: <span className="ml-1 text-base font-semibold">{user.kebele}</span>
+                            <p className={`flex w-fit  px-1 outline outline-[2px] ${user.suspended ? 'outline-[#de1414] text-[#de1414]' : 'outline-[008000] text-[#008000]'} justify-center rounded-lg`}>
+                                {user.suspended ? 'Suspended' : 'Not-suspended'}
                             </p>
                             <p>
                                 Phone: <span className="ml-1 text-base font-semibold">{user.phone}</span>
@@ -137,18 +159,18 @@ const BuyerListerPage = () => {
                     </div>
 
                     <select
-                        className=" outline ml-auto mr-10 bg-lightBlue hover:bg-lbHover text-white py-2 px-2 rounded"
+                        className="outline outline-[3px] outline-lightBlue cursor-pointer  ml-auto mr-10 py-2 px-2 rounded"
+                        // className=" outline ml-auto mr-10 bg-lightBlue hover:bg-lbHover text-white py-2 px-2 rounded"
                         ref={selectRef}
                         onChange={(e) => {
                             // user.accountStatus = e.target.value === 'activate' ? !user.accountStatus : user.accountStatus
-                            handleActionChange(user._id, e.target.value, user.accountStatus)
+                            handleActionChange(user._id, e.target.value, user.accountStatus, user.suspended)
                         }}
                     >
                         <option value="">Select Action</option>
-                        <option value="delete"> Delete</option>
-                        <option value="activate">
-                            {user.accountStatus ? 'Deactivate' : 'Activate'}
-                        </option>
+                        <option value="delete">Delete</option>
+                        <option value="activate">{user.accountStatus ? 'Deactivate' : 'Activate'}</option>
+                        <option value="suspend">{user.suspended ? 'Un-Suspend' : 'Suspend'}</option>
 
                     </select>
                 </div>

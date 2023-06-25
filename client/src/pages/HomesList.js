@@ -17,8 +17,6 @@ const HomesList = ({ rented }) => {
     // get all houses and set to the context
     axios.get('http://localhost:4000/houses/all')
       .then((response) => {
-        console.log(' admin is logged in and houses is ');
-        console.log(response.data);
         setHousesList(response.data)
       })
       .catch((error) => {

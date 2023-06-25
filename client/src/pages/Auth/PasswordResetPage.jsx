@@ -54,7 +54,7 @@ export default function PasswordResetPage({ isAdmin }) {
             })
             .catch((error) => {
                 console.log(" error message ");
-                setErrorMessage("Server error: " + error.message)
+                setErrorMessage( error.message)
                 setLoading(false);
                 console.log(error);
             });

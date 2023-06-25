@@ -50,7 +50,7 @@ const VerifyEmail = () => {
                     .catch((error) => {
                         console.log("Error verifying email");
                         console.log(error);
-                        setErrorMessage("Server Error " + error.message);
+                        setErrorMessage(error.message);
                         setLoading(false);
                     });
             }

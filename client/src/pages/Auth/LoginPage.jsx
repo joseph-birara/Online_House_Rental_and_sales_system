@@ -147,7 +147,7 @@ export default function LoginPage({ isAdmin }) {
         })
         .catch((error) => {
           console.log(" error message ");
-          setErrorMessage("Server error: " + error.message)
+          setErrorMessage( error.message)
           setLoading(false);
           console.log(error);
         });

@@ -75,7 +75,7 @@ export default function RegisterPage() {
       }).catch((error) => {
         console.log("user registion Error-----------------");
         console.log(error);
-        setErrorMessage("Server error: " + error.message)
+        setErrorMessage(error.message)
         setLoading(false)
       });
   }

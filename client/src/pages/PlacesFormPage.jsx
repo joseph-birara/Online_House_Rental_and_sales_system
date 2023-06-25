@@ -37,19 +37,19 @@ export default function PlacesFormPage() {
   const checkInRef = useRef();
   const checkOutRef = useRef();
   const maxGuestsRef = useRef();
-  const options = { style: 'currency', currency: 'USD' };
+  const [suggestError, setSugestErro] = useState('')
 
-
-
+  // store the house for updaete
+  // when id is set currhouse holdes that house detail
   let currHouse = null
   useEffect(() => {
     if (id) {
       currHouse = HousesList.filter((house) => house._id === id)
       currHouse = currHouse[0]
     }
-
   }, [id])
 
+  // holds the data when the user enters data
   useEffect(() => {
     if (!currHouse) {
       return;
@@ -57,11 +57,11 @@ export default function PlacesFormPage() {
 
     if (currHouse) {
 
-      // if (currHouse.shortTerm) { // shortTermRent
-      //   checkInRef.current.value = currHouse.shortTerm.checkin !== undefined ? currHouse.shortTerm.checkin : checkInRef.current.value // checkin
-      //   checkOutRef.current.value = currHouse.shortTerm.checkout !== undefined ? currHouse.shortTerm.checkout : checkOutRef.current.value//checkout
-      //   maxGuestsRef.current.value = currHouse.shortTerm.maxGuest !== undefined ? currHouse.shortTerm.maxGuest : maxGuestsRef.current.value // maxGuest
-      // }
+      if (currHouse.homeType === "shortTermRent") { // shortTermRent
+        checkInRef.current.value = currHouse.shortTerm.checkin ?? checkInRef.current.value // checkin
+        checkOutRef.current.value = currHouse.shortTerm.checkout ?? checkOutRef.current.value//checkout
+        maxGuestsRef.current.value = currHouse.shortTerm.maxGuest ?? maxGuestsRef.current.value // maxGuest
+      }
 
       // priceRef.current.value = currHouse.price ?? priceRef.current.value;
       priceRef.current.value = currHouse.price !== undefined ? currHouse.price : priceRef.current.value;
@@ -80,24 +80,17 @@ export default function PlacesFormPage() {
     }
   }, [currHouse]);
 
-  // for error message
-  useEffect(() => {
-    if (suggestion) {
-      const timer = setTimeout(() => {
-        setSuggestion('')
-      }, 4000);
-
-      // Clean up the timer when the component unmounts or when the dependency changes
-      return () => clearTimeout(timer);
-    }
-  }, [suggestion]); // Empty dependency array ensures it only runs once
-
+  // holds html element
   function inputHeader(text) {
     return <h2 className="text-2xl mt-4">{text}</h2>;
   }
+
+  // holds html element
   function inputDescription(text) {
     return <p className="text-gray-500 text-sm">{text}</p>;
   }
+
+  // holds html element
   function preInput(header, description) {
     return (
       <>
@@ -107,6 +100,7 @@ export default function PlacesFormPage() {
     );
   }
 
+  // for shortTerm checkin, checkout, number of guest and price user input part
   const ShortTerm = () => {
     return (
       <>
@@ -141,6 +135,7 @@ export default function PlacesFormPage() {
     );
   };
 
+  // for regular rent price input part
   const RegularRent = () => {
     return (
       <>
@@ -155,6 +150,7 @@ export default function PlacesFormPage() {
     );
   };
 
+  // for sale price input part
   const Sale = () => {
     return (
       <>
@@ -169,6 +165,7 @@ export default function PlacesFormPage() {
     );
   };
 
+  // saves place to the backend and send a reqeust
   const savePlaceHandler = async (ev) => {
     ev.preventDefault();
     setLoading(true)
@@ -302,41 +299,53 @@ export default function PlacesFormPage() {
     }
   }
 
+  // redirect to homes list page
   if (redirect) {
     return <Navigate to={"/homeOwner/homes/onListing"} />;
   }
 
+  // handle home type
   const homeTypeHandler = (type) => {
     setHomeType(type);
   };
 
-
+  // Suggestion Handler
   const suggestionHandler = () => {
     setWaitingSuggestion(true);
 
-    const payload = {
-      homeType: homeType,
-      area: area,
-      bedRoom: bedRoom,
-      bathRoom: bathRoom,
-      subCity: subCity
+    if (!area || !bedRoom || !bathRoom || !subCity) {
+      setSugestErro('Please Enter Bedroom, Area, Bathroom and subCity to get price suggestion')
+      setWaitingSuggestion(false);
+    } else {
+
+      const payload = {
+        homeType: homeType,
+        area: area,
+        bedRoom: bedRoom,
+        bathRoom: bathRoom,
+        subCity: subCity
+      }
+
+      axios.post(`http://localhost:4000/houses/getSimilar`, payload)
+        .then((response) => {
+          setSuggestion(response.data);
+          setWaitingSuggestion(false)
+          setSugestErro('')
+
+        }).catch((err) => {
+          setWaitingSuggestion(false)
+          suggestError('Please check your internte connection')
+          console.log(err)
+        })
     }
-
-    axios.post(`http://localhost:4000/houses/getSimilar`, payload)
-      .then((response) => {
-        setSuggestion(response.data);
-        setWaitingSuggestion(false)
-
-      }).catch((err) => {
-        setWaitingSuggestion(false)
-        console.log(err)
-      })
-
   }
+
+  // styling for selected and unselected options
   const unselectedBtnStyle = "primary bg-lightBlue my-4 hover:bg-lbHover";
   const selectedBtnStyle = "primary bg-blueBlack my-4";
+
   return (
-    <div className="outline mx-8 px-6">
+    <div className="outline mx-8 px-6 pb-7">
 
       {/* <AccountNav /> */}
       <div>
@@ -368,6 +377,8 @@ export default function PlacesFormPage() {
           </button>
         </div>
       </div>
+
+      {/* form page part  */}
       <form onSubmit={savePlaceHandler}>
         {preInput(
           "Title",
@@ -378,7 +389,7 @@ export default function PlacesFormPage() {
           required
           value={title}
           onChange={(ev) => setTitle(ev.target.value)}
-          placeholder="title, for example: My lovely apt"
+          placeholder="title, for example: My lovely apartment"
         />
         {preInput("Address", "Address to this house")}
         <div className="flex gap-3">
@@ -477,7 +488,9 @@ export default function PlacesFormPage() {
             {loading ? "Processing..." : !id ? "Save" : "Update Home"}
           </button>
 
-          <div onClick={suggestionHandler} className=" w-5/12 flex justify-center items-center text-white primary cursor-pointer rounded-sm bg-lightBlue my-4  hover:bg-lbHover">
+          <div
+            onClick={suggestionHandler}
+            className={`w-5/12 outline outline-[red] flex justify-center items-center text-white primary cursor-pointer rounded-sm bg-lightBlue my-4  hover:bg-lbHover`}>
             <LoadingOverlay
               active={waitingSuggestion}
               spinner
@@ -496,12 +509,18 @@ export default function PlacesFormPage() {
           </div>
         </div>
       </form>
-      {suggestion && <div className=" rounded-lg outline font-semibold my-2 mb-5 p-2" >
+
+      {/* Suggestion output */}
+      {<div className="outline outline-lightBlue outline-[3px] rounded-lg text-lg m-8 p-8 mb-12" >
         {console.log(suggestion)}
-        <p>price suggestion for you, </p>
-        <p>Min price for the house is : {NumberFormater(suggestion.minPrice)} </p>
-        <p>Max price for the house is : {NumberFormater(suggestion.maxPrice)} </p>
+        {suggestion && < p >
+          <p>price suggestion for you, </p>
+          <p>Min price for the house is : <span className=" font-semibold">  {NumberFormater(suggestion.minPrice)} </span> </p>
+          <p>Average price the house is : <span className=" font-semibold">  from {NumberFormater(suggestion.minAverage)}  <p className="font-normal inline px-1"> to </p> {NumberFormater(suggestion.maxAverage)} </span> </p>
+          <p>Max price for the house is : <span className=" font-semibold">  {NumberFormater(suggestion.maxPrice)} </span> </p>
+        </p>}
+        {!suggestion && suggestError && <p className="text-xl font-light">{suggestError}</p>}
       </div>}
-    </div>
+    </div >
   );
 }

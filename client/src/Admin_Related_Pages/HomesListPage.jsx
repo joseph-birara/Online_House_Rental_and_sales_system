@@ -95,7 +95,7 @@ const HomeLister = ({ objectList }) => {
                             <p className='flex'>
                                 <div className="ml-3 flex justify-center items-center">
                                     <svg
-                                        className={`w-4 h-4 mr-1.5 ${house.verified ? 'text-[#38A169]' : 'text-[#DC2626]'}   dark:text-green-400 flex-shrink-0`}
+                                        className={`w-4 h-4 mr-1.5 ${house.verified ? 'text-[green]' : 'text-[red]'}   dark:text-green-400 flex-shrink-0`}
                                         fill="currentColor"
                                         viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +106,7 @@ const HomeLister = ({ objectList }) => {
                                             clipRule="evenodd"
                                         ></path>
                                     </svg>
-                                    <p> {house.verified ? 'Verified' : 'Not Verified'} </p>
+                                    <p> {house.verified ? 'Verified' : 'Not-Verified'} </p>
                                 </div>
                             </p>
 
@@ -114,7 +114,7 @@ const HomeLister = ({ objectList }) => {
                             <p className='flex'>
                                 <div className="ml-3 flex justify-center items-center">
                                     <svg
-                                        className={`w-4 h-4 mr-1.5 ${house.suspended ? 'text-[#38A169]' : 'text-[#DC2626]'}   dark:text-green-400 flex-shrink-0`}
+                                        className={`w-4 h-4 mr-1.5 ${house.suspended ? 'text-[red]' : 'text-[green]'}   dark:text-green-400 flex-shrink-0`}
                                         fill="currentColor"
                                         viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +125,7 @@ const HomeLister = ({ objectList }) => {
                                             clipRule="evenodd"
                                         ></path>
                                     </svg>
-                                    <p> {house.suspended ? 'Suspended' : 'Not Suspended'} </p>
+                                    <p> {house.suspended ? 'Suspended' : 'Not-Suspended'} </p>
                                 </div>
                             </p>
                         </div>
@@ -173,12 +173,9 @@ const HomesListPage = ({ DisplayRented }) => {
                 console.log(error);
             });
 
-    }, [])
+    }, [HousesList])
 
-    let RentedList = []
-    useEffect(() => {
-        RentedList = HousesList.filter(house => house.isRented === true)
-    }, [RentedList, HousesList])
+    const RentedList = HousesList.filter(house => house.isRented === true)
 
     return (
         <>

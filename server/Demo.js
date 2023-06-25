@@ -18,7 +18,7 @@ class PaymentControl {
       console.log("********************************************** : " + this.applicationId + "******************************************");
       console.log("********************************************** : " + this.applicationId + "******************************************");
       console.log("********************************************** : " + this.applicationId + "******************************************");
-    }, 1000); // Delayed execution after 1 minute (60 seconds * 1000 milliseconds)
+    }, 1000 * 60 * 60 * 24); // Delayed execution after 1 minute (60 seconds * 1000 milliseconds)
   }
 }
 

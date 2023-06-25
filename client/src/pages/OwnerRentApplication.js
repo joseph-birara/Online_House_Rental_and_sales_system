@@ -7,7 +7,7 @@ import { FormatDate } from "../services/HelperFunction"
 
 const Applicant = ({ data, selectHandler }) => {
 
-  const actionOptions = ["Accept", "Reject"];
+  const actionOptions = ["Accept", ""];
   return (data && <div
     className="outline outline-2 outline-[lightgray] flex justify-between items-center gap-1 p-4 rounded-lg m-4 mr-0"
     style={{ boxShadow: "0 0 1px #091240" }}
@@ -83,7 +83,7 @@ const OwnerRentApplication = () => {
   const { applications, setApplications } = useContext(UtilityContext);
   const { user, token } = useContext(UserContext);
 
-  const selectHandler = (appId, option) => {
+  const selectHandler = (appId, option, itm) => {
     // get home price
     if (option === 'Accept') {
       axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'accepted' }, {
@@ -104,9 +104,8 @@ const OwnerRentApplication = () => {
         .catch((error) => {
           console.log(error);
         });
-    } else {
-
-      axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'rejected' }, {
+    } else if(option ==='Reject') {
+      axios.put(`${process.env.REACT_APP_RejectbaseURL}/application/update`, { id: appId, status: 'rejected' }, {
         headers: {
           Authorization: `Bearer + ${token}`,
         }

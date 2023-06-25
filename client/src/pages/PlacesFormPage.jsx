@@ -5,6 +5,7 @@ import LoadingOverlay from 'react-loading-overlay-ts';
 import { Navigate, useParams } from "react-router-dom";
 import { UserContext } from "../contexts/UserContextProvider";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
+import { NumberFormater } from "../services/HelperFunction"
 import axios from "axios";
 
 export default function PlacesFormPage() {
@@ -41,23 +42,26 @@ export default function PlacesFormPage() {
 
 
   let currHouse = null
-  if (id) {
-    currHouse = HousesList.filter((house) => house._id === id)
-    currHouse = currHouse[0]
-  }
+  useEffect(() => {
+    if (id) {
+      currHouse = HousesList.filter((house) => house._id === id)
+      currHouse = currHouse[0]
+    }
+
+  }, [id])
 
   useEffect(() => {
-    if (!id) {
+    if (!currHouse) {
       return;
     }
 
     if (currHouse) {
 
-      if (currHouse.homeType === "shortTermRent") { // shortTermRent
-        checkInRef.current.value = currHouse.shortTerm.checkin ?? checkInRef.current.value // checkin
-        checkOutRef.current.value = currHouse.shortTerm.checkout ?? checkOutRef.current.value//checkout
-        maxGuestsRef.current.value = currHouse.shortTerm.maxGuest ?? maxGuestsRef.current.value // maxGuest
-      }
+      // if (currHouse.shortTerm) { // shortTermRent
+      //   checkInRef.current.value = currHouse.shortTerm.checkin !== undefined ? currHouse.shortTerm.checkin : checkInRef.current.value // checkin
+      //   checkOutRef.current.value = currHouse.shortTerm.checkout !== undefined ? currHouse.shortTerm.checkout : checkOutRef.current.value//checkout
+      //   maxGuestsRef.current.value = currHouse.shortTerm.maxGuest !== undefined ? currHouse.shortTerm.maxGuest : maxGuestsRef.current.value // maxGuest
+      // }
 
       // priceRef.current.value = currHouse.price ?? priceRef.current.value;
       priceRef.current.value = currHouse.price !== undefined ? currHouse.price : priceRef.current.value;
@@ -107,17 +111,17 @@ export default function PlacesFormPage() {
     return (
       <>
         {preInput(
-          "Check in&out times",
+          "Check in & out times",
           "add check in and out times, remember to have some time window for cleaning the room between guests"
         )}
         <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
           <div>
             <h3 className="mt-2 -mb-1">Check in time</h3>
-            <input type="number" required ref={checkInRef} placeholder="14" />
+            <input className="outline outline-[1px] rounded m-1 px-1 " type="date" required ref={checkInRef} placeholder="14" />
           </div>
           <div>
             <h3 className="mt-2 -mb-1">Check out time</h3>
-            <input type="number" required ref={checkOutRef} placeholder="11" />
+            <input className="outline outline-[1px] rounded m-1 px-1 " type="date" required ref={checkOutRef} placeholder="11" />
           </div>
           <div>
             <h3 className="mt-2 -mb-1">Max number of guests</h3>
@@ -332,7 +336,7 @@ export default function PlacesFormPage() {
   const unselectedBtnStyle = "primary bg-lightBlue my-4 hover:bg-lbHover";
   const selectedBtnStyle = "primary bg-blueBlack my-4";
   return (
-    <div>
+    <div className="outline mx-8 px-6">
 
       {/* <AccountNav /> */}
       <div>
@@ -470,10 +474,10 @@ export default function PlacesFormPage() {
               }}
             >
             </LoadingOverlay>
-            {loading ? "Processing..." : "Save"}
+            {loading ? "Processing..." : !id ? "Save" : "Update Home"}
           </button>
 
-          <div onClick={suggestionHandler} className=" w-5/12 flex justify-center items-center text-white primary cursor-pointer rounded-lg bg-lightBlue my-4  hover:bg-lbHover">
+          <div onClick={suggestionHandler} className=" w-5/12 flex justify-center items-center text-white primary cursor-pointer rounded-sm bg-lightBlue my-4  hover:bg-lbHover">
             <LoadingOverlay
               active={waitingSuggestion}
               spinner
@@ -495,8 +499,8 @@ export default function PlacesFormPage() {
       {suggestion && <div className=" rounded-lg outline font-semibold my-2 mb-5 p-2" >
         {console.log(suggestion)}
         <p>price suggestion for you, </p>
-        <p>Min price for the house is : {suggestion.minPrice.toLocaleString('en-US', options)} </p>
-        <p>Max price for the house is : {suggestion.maxPrice.toLocaleString('en-US', options)} </p>
+        <p>Min price for the house is : {NumberFormater(suggestion.minPrice)} </p>
+        <p>Max price for the house is : {NumberFormater(suggestion.maxPrice)} </p>
       </div>}
     </div>
   );

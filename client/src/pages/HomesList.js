@@ -40,7 +40,7 @@ const HomesList = ({ rented }) => {
     return (
       <>
         <p className="text-xl font-semibold mx-4 mb-8 pb-4 border-b-1 border-[#7dd3fc]">
-          List of homes
+          List of Rented homes
         </p>
         <PlacesLister houses={homeLists} />
       </>
@@ -81,7 +81,7 @@ const HomesList = ({ rented }) => {
     return (
       <>
         <p className="text-xl font-semibold mx-4 mb-8 pb-4 border-b-1 border-[#7dd3fc]">
-          List of homes
+          List of Homes
         </p>
         <PlacesLister houses={homeLists} />
       </>

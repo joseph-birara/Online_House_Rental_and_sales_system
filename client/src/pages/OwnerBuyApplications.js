@@ -114,7 +114,7 @@ const Applicant = ({ data }) => {
       </p>
       <p className="pt-2">
         Status:{" "}
-        <span className={`text-base text-white p-1 rounded-lg font-semibold px-2 ${data.status === 'completed' ? 'bg-[#4ff23d]' : ''} ${data.status === 'accepted' ? 'bg-[green]' : ''}  ${data.status === 'rejected' ? 'bg-[red]' : ''}  ${data.status === 'pending' ? 'bg-[#dfdf0e]' : ''} font-semibold`}>{data.status}</span>
+        <span className={`text-base text-white rounded-lg  px-1 font-semibold pb-1 ${data.status === 'completed' ? 'bg-[#4ff23d]' : ''} ${data.status === 'accepted' ? 'bg-[green]' : ''}  ${data.status === 'rejected' ? 'bg-[red]' : ''}  ${data.status === 'pending' ? 'bg-[#dfdf0e]' : ''} font-semibold`}>{data.status}</span>
       </p>
     </div>
 

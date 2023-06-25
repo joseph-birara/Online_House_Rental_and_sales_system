@@ -176,10 +176,11 @@ const HomesListPage = ({ DisplayRented }) => {
     }, [HousesList])
 
     const RentedList = HousesList.filter(house => house.isRented === true)
+    const NotRentedList = HousesList.filter(house => house.isRented !== true)
 
     return (
         <>
-            {DisplayRented ? <HomeLister objectList={RentedList} /> : <HomeLister objectList={HousesList} />}
+            {DisplayRented ? <HomeLister objectList={RentedList} /> : <HomeLister objectList={NotRentedList} />}
         </>
     );
 };

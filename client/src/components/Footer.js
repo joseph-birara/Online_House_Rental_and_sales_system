@@ -28,7 +28,7 @@ const Footer = () => {
                 target="_blank"
                 className="bg-blueBlack p-2 rounded-md hover:bg-main-dark-bg"
               >
-                Contact admins
+                Email admins
               </a>
 
               <p className="text-gray-300 mt-4">Phone: +1 123 456 7890</p>

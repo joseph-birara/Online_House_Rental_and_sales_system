@@ -83,7 +83,7 @@ const UserProfile = () => {
           className="rounded h-auto w-24"
           src={user && user.image}
           onError={(e) => {
-            e.target.src = 'https://media.gettyimages.com/id/1227618807/vector/human-face-avatar-icon-profile-for-social-network-man-vector-illustration.jpg?s=1024x1024&w=gi&k=20&c=-Iz47dY99Hx3S8JAkVLKvzQN65Qn8m7UPFAMbJvfd1Y=';
+            e.target.src = 'https://res.cloudinary.com/dmegiw31y/image/upload/v1687634119/HomeRental/alt-image_rn3zbk.webp';
           }}
           alt="user-profile"
         />

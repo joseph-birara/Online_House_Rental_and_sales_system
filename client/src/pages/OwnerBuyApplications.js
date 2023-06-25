@@ -1,14 +1,63 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 import axios from "axios";
-import Dropdown from "../components/Dropdown";
 import { UserContext } from "../contexts/UserContextProvider";
 import { FormatDate } from "../services/HelperFunction"
 
 
-const Applicant = ({ data, selectHandler }) => {
+const Applicant = ({ data }) => {
+  const { token } = useContext(UserContext)
+  const { applications, setApplications } = useContext(UserContext)
+  const [selectedOption, setSelectionOption] = useState('')
 
-  const actionOptions = ["Accept", "Reject"];
+
+  const handleSelect = (action, appId) => {
+
+    setSelectionOption('')
+    // get home price
+    console.log("selected " + action);
+    // if (action === 'Accept') {
+    //   axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'accepted' }, {
+    //     headers: {
+    //       Authorization: `Bearer + ${token}`,
+    //     }
+    //   }).then((response) => {
+    //     console.log(' Applicatioin is accepted successfuly ');
+    //     const updateApplication = applications.map(app => {
+    //       if (app._id === appId) {
+    //         return { app, statu: 'accepted' };
+    //       }
+    //       return app;
+    //     });
+    //     setApplications(updateApplication)
+
+    //   })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // } else if (action === 'Reject') {
+
+    //   axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'rejected' }, {
+    //     headers: {
+    //       Authorization: `Bearer + ${token}`,
+    //     }
+    //   }).then((response) => {
+    //     // console.log(response.data);
+    //     console.log('Application is canceled successfully');
+    //     const updateApplication = applications.map(app => {
+    //       if (app._id === appId) {
+    //         return { app, statu: 'rejected' };
+    //       }
+    //       return app;
+    //     });
+    //     setApplications(updateApplication)
+    //   }).catch((error) => {
+    //     console.log(error);
+    //   });
+    // };
+
+  }
+
   return (data && <div
     className="outline outline-2 outline-[lightgray] flex justify-between items-center gap-1 p-4 rounded-lg m-4 mr-0"
     style={{ boxShadow: "0 0 1px #091240" }}
@@ -70,12 +119,18 @@ const Applicant = ({ data, selectHandler }) => {
     </div>
 
     <div className={`${data.status !== 'pending' ? 'hidden' : ''} text-white bg-lightBlue mr-3`}>
-      <Dropdown
-        actions={actionOptions}
-        onSelect={selectHandler}
-        itemId={data.appplicationId}
-        itemType="applicant"
-      />
+      <select
+        className=" outline ml-auto pr-10 bg-lightBlue hover:bg-lbHover text-white py-2 px-2 rounded"
+        value={selectedOption}
+        onChange={(e) => {
+          // user.accountStatus = e.target.value === 'activate' ? !user.accountStatus : user.accountStatus
+          handleSelect(e.target.value, data.appplicationId)
+        }}
+      >
+        <option value="">Select Action</option>
+        <option value="Accept"> Accept</option>
+        <option value="Reject"> Reject</option>
+      </select>
     </div>
   </div>
   );
@@ -83,51 +138,8 @@ const Applicant = ({ data, selectHandler }) => {
 
 const OwnerBuyApplications = () => {
   const { applications, setApplications } = useContext(UtilityContext);
-  const { user, token } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
-  const selectHandler = (appId, option,itm) => {
-    // get home price
-    if (option === 'Accept') {
-      axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'accepted' }, {
-        headers: {
-          Authorization: `Bearer + ${token}`,
-        }
-      }).then((response) => {
-        console.log(' Applicatioin is accepted successfuly ');
-        const updateApplication = applications.map(app => {
-          if (app._id === appId) {
-            return { app, statu: 'accepted' };
-          }
-          return app;
-        });
-        setApplications(updateApplication)
-
-      })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else if(option ==='Reject') {
-
-      axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'rejected' }, {
-        headers: {
-          Authorization: `Bearer + ${token}`,
-        }
-      }).then((response) => {
-        // console.log(response.data);
-        console.log('Application is canceled successfully');
-        const updateApplication = applications.map(app => {
-          if (app._id === appId) {
-            return { app, statu: 'rejected' };
-          }
-          return app;
-        });
-        setApplications(updateApplication)
-      }).catch((error) => {
-        console.log(error);
-      });
-    };
-
-  }
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_baseURL}/application/byOwner/${user._id}`)
@@ -165,7 +177,7 @@ const OwnerBuyApplications = () => {
             appplicationId: app._id,
 
           };
-          return <Applicant key={app._id} data={data} selectHandler={selectHandler} />
+          return <Applicant key={app._id} data={data} />
         })
 
       }

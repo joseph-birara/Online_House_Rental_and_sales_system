@@ -10,8 +10,8 @@ const Application = ({ data }) => {
   const hadleClick = (app_id) => {
 
     // update the state here to make it faster for updating state
-    const updatedAppplications = applications.filter((AAA) => AAA._id !== app_id);
-    setApplications(updatedAppplications)
+    // const updatedAppplications = applications.filter((AAA) => AAA._id !== app_id);
+    // setApplications(updatedAppplications)
 
     axios.delete(`http://localhost:4000/application/delete/${app_id}`, {
       headers: {

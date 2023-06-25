@@ -18,7 +18,7 @@ import { UserContextProvider } from "./contexts/UserContextProvider";
 import LoginPage from "./pages/Auth/LoginPage";
 import RegisterPage from "./pages/Auth/Register";
 import UtilityContextProvider from "./contexts/UtilityContextProvide";
-import Applicants from "./pages/Applicants-Rent";
+import Applicants from "./pages/OwnerRentApplication";
 import OwnerListerPage from "./Admin_Related_Pages/OwnerListerPage";
 import BuyerListerPage from "./Admin_Related_Pages/BuyerListerPage";
 import TenantListerPage from "./Admin_Related_Pages/TenantListerPage";
@@ -45,8 +45,8 @@ import Services from "./AboutUs/Services"
 import TermsOfService from './pages/TermsOfService'
 import BuyerDashBoard from "./pages/dashboards/BuyerDashBoard";
 import BuyerApplications from "./pages/BuyerApplications";
-import OwnerRentApplication from "./pages/Applicants-Rent";
-import OwnerBuyApplications from "./pages/Applicants-Buy";
+import OwnerRentApplication from "./pages/OwnerRentApplication";
+import OwnerBuyApplications from "./pages/OwnerBuyApplications";
 import ListOfApplications from "./Admin_Related_Pages/ListOfAppications";
 
 function App() {

@@ -62,65 +62,8 @@ const Request = ({ request, updateHandler }) => {
 };
 
 const RequestsPage = () => {
-  // const maintenanceRequests = [
-  //   {
-  //     id: "0011",
-  //     tenantName: "Biniyam",
-  //     tenantLastName: "Hailu",
-  //     requestDate: "Thu, 21 Jan, 2023",
-  //     title: "The shower sink not working",
-  //     description:
-  //       "Bole, House or Office for Rent, Addis Ababa. The total area is 500\
-  //     square meters. It has living and dining room with working fire-place,\
-  //     kitchen, master bedroom with it's own bathroom, and two bedrooms with\
-  //     common shower room. There are four service rooms with shower room,\
-  //     garden and parking for 3 cars. The rate is 2,500 USD for residential\
-  //     rent and 3,000 USD for office rent per month and fixed.",
-  //   },
-  //   {
-  //     id: "0012",
-  //     tenantName: "Biniyam",
-  //     tenantLastName: "Hailu",
-  //     requestDate: "Thu, 21 Jan, 2023",
-  //     title: "The shower sink not working",
-  //     description:
-  //       "Bole, House or Office for Rent, Addis Ababa. The total area is 500\
-  //     square meters. It has living and dining room with working fire-place,\
-  //     kitchen, master bedroom with it's own bathroom, and two bedrooms with\
-  //     common shower room. There are four service rooms with shower room,\
-  //     garden and parking for 3 cars. The rate is 2,500 USD for residential\
-  //     rent and 3,000 USD for office rent per month and fixed.",
-  //   },
-  //   {
-  //     id: "0013",
-  //     tenantName: "Biniyam",
-  //     tenantLastName: "Hailu",
-  //     requestDate: "Thu, 21 Jan, 2023",
-  //     title: "The shower sink not working",
-  //     description:
-  //       "Bole, House or Office for Rent, Addis Ababa. The total area is 500\
-  //     square meters. It has living and dining room with working fire-place,\
-  //     kitchen, master bedroom with it's own bathroom, and two bedrooms with\
-  //     common shower room. There are four service rooms with shower room,\
-  //     garden and parking for 3 cars. The rate is 2,500 USD for residential\
-  //     rent and 3,000 USD for office rent per month and fixed.",
-  //   },
-  //   {
-  //     id: "0014",
-  //     tenantName: "Biniyam",
-  //     tenantLastName: "Hailu",
-  //     requestDate: "Thu, 21 Jan, 2023",
-  //     title: "The shower sink not working",
-  //     description:
-  //       "Bole, House or Office for Rent, Addis Ababa. The total area is 500\
-  //     square meters. It has living and dining room with working fire-place,\
-  //     kitchen, master bedroom with it's own bathroom, and two bedrooms with\
-  //     common shower room. There are four service rooms with shower room,\
-  //     garden and parking for 3 cars. The rate is 2,500 USD for residential\
-  //     rent and 3,000 USD for office rent per month and fixed.",
-  //   },
-  // ];
-  const { user, token } = useContext(UserContext);
+
+  const { user } = useContext(UserContext);
   let [maintenanceRequests, setMRequests] = useState([]);
 
   useEffect(() => {

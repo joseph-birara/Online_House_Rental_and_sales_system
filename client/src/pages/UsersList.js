@@ -59,8 +59,8 @@ const UsersList = () => {
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_baseURL}/application/byOwner/${user._id}`)
       .then((response) => {
-        console.log("onwer list of applicatons are");
-        console.log(response.data);
+        // console.log("onwer list of applicatons are");
+        // console.log(response.data);
         setApplications(response.data);
       }).catch((error) => {
         console.log(error);

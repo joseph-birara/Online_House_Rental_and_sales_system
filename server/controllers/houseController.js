@@ -16,16 +16,16 @@ const getAnalysis = async (req, res) => {
   function generatePriceSuggestion(area, bedrooms, bathrooms, homeType, subCity) {
 
     const subcityScales = {
-      "bole": 1.8,
-      "arada": 1.1,
-      "lideta": 7,
-      "kirkos": 0.6,
-      "yeka": 0.5,
-      "addis ketema": .4,
-      "nifas silk-safto": 0.3,
-      "gullele": 0.2,
-      "dolfe keranio": 0.15,
-      "akaky kaliti": 0.1,
+      "bole": 3.8,
+      "arada": 3.5,
+      "lideta": 3.1,
+      "kirkos": 2.8,
+      "yeka": 2.1,
+      "addis ketema": 1.5,
+      "nifas silk-safto": 1.1,
+      "gullele": 0.8,
+      "kolfe keranio": 0.6,
+      "akaky kaliti": 0.3,
     };
     const cityValue = subcityScales[subCity.toLowerCase()]
 
@@ -42,6 +42,8 @@ const getAnalysis = async (req, res) => {
     // Calculate the minimum and maximum prices
     let minPrice = areaPrice + bedroomsPrice + bathroomsPrice;
     let maxPrice = minPrice + (areaPrice / bathRoom) / 1.5 * (bedRoom * 1.5);
+    let minAverage = 0
+    let maxAverage = 0
 
     if (homeType === 'shortTermRent') {
       minPrice /= 25
@@ -55,8 +57,8 @@ const getAnalysis = async (req, res) => {
     //  use city factor
     minPrice = minPrice + (minPrice * cityValue) / 2
     maxPrice = maxPrice + (maxPrice * cityValue) / 1.6
-    const minAverage = minPrice + (minPrice * 0.25)
-    const maxAverage = maxPrice - (maxPrice * 0.3)
+    minAverage = minPrice + (minPrice * 0.25)
+    maxAverage = maxPrice - (maxPrice * 0.3)
 
 
     // Return the price suggestion as an object

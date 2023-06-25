@@ -20,7 +20,7 @@ const BuyerListerPage = () => {
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+    }, [BuyersList]);
 
     const handleActionChange = (userId, action, status) => {
         selectRef.current.value = ''

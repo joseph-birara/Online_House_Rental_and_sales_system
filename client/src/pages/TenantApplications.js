@@ -89,7 +89,7 @@ const TenantApplications = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [applications]);
 
   return (
     <div className="mt-1">

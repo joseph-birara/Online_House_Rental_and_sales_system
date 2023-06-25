@@ -64,7 +64,7 @@ const MaintenanceRequests = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [maintenanceRequests]);
 
   return (
     <div>

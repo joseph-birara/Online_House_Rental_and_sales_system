@@ -85,7 +85,7 @@ const OwnerBuyApplications = () => {
   const { applications, setApplications } = useContext(UtilityContext);
   const { user, token } = useContext(UserContext);
 
-  const selectHandler = (appId, option) => {
+  const selectHandler = (appId, option,itm) => {
     // get home price
     if (option === 'Accept') {
       axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'accepted' }, {
@@ -106,7 +106,7 @@ const OwnerBuyApplications = () => {
         .catch((error) => {
           console.log(error);
         });
-    } else {
+    } else if(option ==='Reject') {
 
       axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'rejected' }, {
         headers: {

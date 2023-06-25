@@ -19,7 +19,7 @@ const TenantListerPage = () => {
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+    }, [TenantList]);
 
     function handleActionChange(userId, action, status, isSuspended) {
         setSelectionOption('');

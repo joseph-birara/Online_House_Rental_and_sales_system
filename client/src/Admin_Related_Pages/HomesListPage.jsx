@@ -6,6 +6,7 @@ import { TfiRulerAlt2 } from "react-icons/tfi";
 import { UserContext } from "../contexts/UserContextProvider";
 import axios from "axios";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
+import { useEffect } from "react";
 
 const HomeLister = ({ objectList }) => {
 
@@ -71,7 +72,6 @@ const HomeLister = ({ objectList }) => {
         }
 
     }
-
 
     return <>
         <div>
@@ -159,8 +159,26 @@ const HomeLister = ({ objectList }) => {
 }
 
 const HomesListPage = ({ DisplayRented }) => {
-    const { HousesList } = useContext(UtilityContext);
-    const RentedList = HousesList.filter(house => house.isRented === true)
+    const { HousesList, setHousesList } = useContext(UtilityContext);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:4000/houses/all")
+            .then((response) => {
+                console.log(" admin is logged in and houses is ");
+                console.log(response.data);
+                setHousesList(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    }, [])
+
+    let RentedList = []
+    useEffect(() => {
+        RentedList = HousesList.filter(house => house.isRented === true)
+    }, [RentedList, HousesList])
 
     return (
         <>

@@ -53,13 +53,11 @@ const HomesList = ({ rented }) => {
     return (
       <>
         <p className="text-xl font-semibold mx-4 mb-8 pb-4 border-b-1 border-[#7dd3fc]">
-          List of homes
+          List of Rented homes
         </p>
         <PlacesLister houses={homeLists} />
       </>
     )
-
-
   } else if (user.userType === 'admin' && HousesList) {
 
     console.log("admin list all homes");
@@ -75,7 +73,7 @@ const HomesList = ({ rented }) => {
 
   }
   else if (user.userType === 'owner' && HousesList) {
-    let homeLists = HousesList.filter(house => house.ownerId && house.ownerId._id && house.ownerId._id === user._id)
+    let homeLists = HousesList.filter(house => house.ownerId && house.ownerId._id && house.ownerId._id === user._id && house.isRented !== true)
 
     console.log('ower is clikded to view homes --- here are the list');
     console.log(homeLists);
@@ -89,7 +87,6 @@ const HomesList = ({ rented }) => {
       </>
     )
   }
-
 };
 
 export default HomesList;

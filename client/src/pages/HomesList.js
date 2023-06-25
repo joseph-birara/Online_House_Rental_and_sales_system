@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
 import { UserContext } from "../contexts/UserContextProvider";
 import axios from "axios";
-import NoHomesAreAddedYet from "./NoHomesAreAddedYet";
+// import NoHomesAreAddedYet from "./NoHomesAreAddedYet";
 
 
 const HomesList = ({ rented }) => {

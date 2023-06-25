@@ -11,8 +11,11 @@ import { UtilityContext } from "../contexts/UtilityContextProvide";
 import axios from "axios";
 import Dropdown from "../components/Dropdown";
 import { NumberFormater } from "../services/HelperFunction"
+import { UserContext } from "../contexts/UserContextProvider";
 
 export const Home = ({ home }) => {
+  const { user } = useContext(UserContext)
+
   const img = {
     width: "100%",
     height: "15rem",
@@ -63,15 +66,13 @@ export const Home = ({ home }) => {
       {/* likingpart */}
       <div className=" font-semibold mx-3 border border-[lightgray] rounded-lg flex justify-between gap-1 items-center p-0.5 ">
 
-        <p className=""> {NumberFormater(home.price)} {home.homeType === 'regularRent' ?( " /Month" ): home.homeType === 'shortTermRent' ? " /Day" : ""}</p>
-
-
+        <p className=""> {NumberFormater(home.price)} {home.homeType === 'regularRent' ? (" /Month") : home.homeType === 'shortTermRent' ? " /Day" : ""}</p>
 
         <p className=" px-1">
-          <Button className="transform scale-150 ">
+          <Button className={`transform scale-150 ${user && user._id && home.like.includes(user._id) ? 'text-lightBlue' : ''} `}>
             <AiOutlineHeart />
           </Button>
-          <span> Likes</span>
+          <span>{home.like && home.like.length} Likes</span>
         </p>
       </div>
 

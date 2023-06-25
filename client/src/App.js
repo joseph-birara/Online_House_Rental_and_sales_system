@@ -10,7 +10,6 @@ import PlacesFormPage from "./pages/PlacesFormPage";
 import AdminDashboard from "./pages/dashboards/AdminDashboard";
 import HomesList from "./pages/HomesList";
 import styles from "./App.module.css";
-import DetailsPage from "./pages/DetailsPage";
 import UsersList from "./pages/UsersList";
 import RequestsPage from "./pages/RequestsPage";
 import HomesListing from "./pages/HomesListing";
@@ -112,7 +111,6 @@ function App() {
 
                   <Route path="users">
                     <Route path="homeOwners" element={<OwnerListerPage />} />
-                    <Route path="homeOwners/homeOwner" element={<DetailsPage />} />
                     <Route path="tenants" element={<TenantListerPage />} />
                     <Route path="buyers" element={<BuyerListerPage />} />
                     <Route path="admins" element={<AdminListerPage />} />

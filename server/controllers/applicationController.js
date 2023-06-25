@@ -15,7 +15,7 @@ const applicationsWithVisitRequest = async (req, res) => {
       .populate({ path: "homeId", select: "title woreda subCity" })
       .populate({ path: "applicantId", select: "name phone email lastName" })
       .populate({ path: "ownerId", select: "name phone email lastName" });
-    return res.status(200).json( applications);
+    return res.status(200).json(applications);
   } catch (error) {
     console.log(error);
     return res.status(201).send("failed");
@@ -197,6 +197,11 @@ const deleteApplication = async (req, res) => {
 // update an appliction
 const updateApplication = async (req, res) => {
   const id = req.body.id;
+
+  if (req.body.status && req.body.status === "accepted") {
+    // const ppp = instantiate
+  }
+
   try {
     const application = await applicationModel.findOneAndUpdate(
       { _id: id },

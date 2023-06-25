@@ -63,11 +63,6 @@ const pay = async (req, res) => {
     if (responseBody.status == "failed") {
       return res.status(201).json({ status: "failed", data: null });
     }
-    try {
-      smsService.sendSMS("+2510977439777", "payment has been made");
-    } catch (error) {
-      console.log(error);
-    }
 
     return res.status(200).json({
       status: "success",
@@ -97,33 +92,38 @@ const pay = async (req, res) => {
 //verfi payment chappa second api
 const verifyPayment = async (req, res) => {
   const { id } = req.params;
-  // const updatedApplication = applicationModel.findOne({
-  //   _id: id,
-  // });
-  // updatedApplication.paymentStatus = true;
-  // updatedApplication.save();
 
-  // change status to paid
   try {
     const moment = require("moment");
+    console.log("updating payment status");
 
-    const application = await applicationModel.findByIdAndUpdate(
-      application._id,
-      { expiryDate: moment(application.expiryDate).add(30, "days").toDate() },
-      { new: true }
-    );
+    const application = await applicationModel.findById(id);
 
-    if (moment(application.expiryDate).isAfter(moment())) {
-      application.status = true;
+    // Add 30 days to the existing payment expiry date
+    const newPaymentExpiryDate = moment(application.paymentExpiryDate)
+      .add(30, "days")
+      .toDate();
+
+    // Update the payment expiry date in the application model
+    application.paymentExpiryDate = newPaymentExpiryDate;
+
+    console.log("date", application.paymentExpiryDate);
+    if (moment(application.paymentExpiryDate).isAfter(moment())) {
+      application.paymentStatus = true;
     } else {
-      application.status = false;
+      application.paymentStatus = false;
     }
 
     await application.save();
 
-    console.log("Application updated successfully:", updatedApplication);
+    console.log("Application updated successfully:", application);
   } catch (error) {
     console.log("Error updating application:", error);
+  }
+  try {
+    smsService.sendSMS("+2510977439777", "payment has been made");
+  } catch (error) {
+    console.log(error);
   }
 
   return res.status(200).json({ status: "success", data: null });

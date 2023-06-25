@@ -225,7 +225,7 @@ export default function LoginPage({ isAdmin }) {
           )}
 
           <Link className="underline text-lightBlue text-black" to={"/forgetpassword"}>
-            Forgot passowrd
+            Forgot passoword
           </Link>
 
           <button

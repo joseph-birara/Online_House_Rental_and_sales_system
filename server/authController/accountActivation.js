@@ -20,7 +20,7 @@ const verifyEmail = async (req, res, userModel) => {
     await user.save();
     const linkText = "Log in ";
     const linkUrl = "http://localhost:3000/login";
-    const message = "click the bottun below to log in to your account";
+    const message = "Your accoutn is succesfully verified. <br/> click the button below to log in to your account";
 
     const htmlElementWithLink = `
 <style>

@@ -1,23 +1,17 @@
 class PaymentControl {
-  // constructor(name, age) {
-  //     this.name = name;
-  //     this.age = age;
-  // }
+  constructor(applicationId) {
+    this.applicationId = applicationId
 
-  checkPaymentStatus(name) {
     setTimeout(() => {
-      console.log("Name is : " + name);
-      this.RUN_THIS_After_SOME_TIME();
-    }, 3000); // Delayed execution after 1 minute (60 seconds * 1000 milliseconds)
-  }
+      console.log("The id is : " + this.applicationId);
+      
+    }, 2000); // Delayed execution after 1 minute (60 seconds * 1000 milliseconds)
 
-  RUN_THIS_After_SOME_TIME() {
-    console.log("part of this code is run ----------- doen.");
   }
 }
 
+
 // Creating an instance of the Person class
-const pay = new PaymentControl();
-pay.checkPaymentStatus("Dawit andargachew and jossy are here.");
-// pay.RUN_THIS_After_SOME_TIME()
-//npm install node-cron
+const pay = new PaymentControl("11111111111111111111111")
+console.log('here is out side the class')
+const pay3 = new PaymentControl("444444444444444444444")

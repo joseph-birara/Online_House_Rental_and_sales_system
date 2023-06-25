@@ -14,7 +14,7 @@ const ListOfApplications = () => {
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+    }, [applications]);
 
 
     return (

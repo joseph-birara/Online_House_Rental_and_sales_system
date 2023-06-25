@@ -73,7 +73,9 @@ const getAllApplictions = async (req, res) => {
       .find()
       .populate("ownerId")
       .populate("applicantId")
-      .populate("homeId");
+      .populate("homeId")
+      .sort({ createdAt: -1 });
+
     if (!applications) {
       return res.status(404).json({ message: "empty list" });
     }
@@ -92,7 +94,8 @@ const getTenantApplications = async (req, res) => {
       .find({ applicantId: id })
       .populate("ownerId")
       .populate("applicantId")
-      .populate("homeId");
+      .populate("homeId")
+      .sort({ createdAt: -1 });
     if (!applications) {
       return res.status(404).json({ message: "empty list" });
     }
@@ -110,7 +113,8 @@ const getOwnerApplications = async (req, res) => {
       .find({ ownerId: id })
       .populate("ownerId")
       .populate("applicantId")
-      .populate("homeId");
+      .populate("homeId")
+      .sort({ createdAt: -1 });
     if (!applications) {
       return res.status(404).json({ message: "empty list" });
     }
@@ -128,7 +132,8 @@ const getHouseApplications = async (req, res) => {
       .find({ homeId: id })
       .populate("ownerId")
       .populate("applicantId")
-      .populate("homeId");
+      .populate("homeId")
+      .sort({ createdAt: -1 });
     if (!applications) {
       return res.status(404).json({ message: "empty list" });
     }

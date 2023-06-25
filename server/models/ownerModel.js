@@ -5,11 +5,11 @@ const OwnerSchema = new Schema(
   {
     name: {
       type: String,
-      default: "",
+      required: true,
     },
     lastName: {
       type: String,
-      default: "",
+      required: true,
     },
     image: {
       type: String,
@@ -17,11 +17,11 @@ const OwnerSchema = new Schema(
     },
     email: {
       type: String,
-      default: "",
+      required: true,
     },
     password: {
       type: String,
-      Required: true,
+      required: true,
     },
     city: {
       type: String,

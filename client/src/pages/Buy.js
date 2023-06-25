@@ -153,7 +153,7 @@ const Buy = () => {
         dispatchHomes({
           type: "initialize",
           payload: {
-            houses: response.data.filter((home) => home.homeType === "sale"),
+            houses: response.data.filter((home) => home.homeType === "sale" && home.suspended === false),
           },
         });
       })
@@ -171,7 +171,7 @@ const Buy = () => {
       type: "minPrice",
       payload: {
         minPrice: enteredNum,
-        allHouses: HousesList.filter((home) => home.homeType === "sale"),
+        allHouses: HousesList.filter((home) => home.homeType === "sale" && home.suspended === false),
       },
     });
   };
@@ -185,7 +185,7 @@ const Buy = () => {
       type: "maxPrice",
       payload: {
         maxPrice: enteredNum,
-        allHouses: HousesList.filter((home) => home.homeType === "sale"),
+        allHouses: HousesList.filter((home) => home.homeType === "sale" && home.suspended === false),
       },
     });
   };
@@ -199,7 +199,7 @@ const Buy = () => {
       type: "minArea",
       payload: {
         minArea: enteredNum,
-        allHouses: HousesList.filter((home) => home.homeType === "sale"),
+        allHouses: HousesList.filter((home) => home.homeType === "sale" && home.suspended === false),
       },
     });
   };
@@ -213,7 +213,7 @@ const Buy = () => {
       type: "maxArea",
       payload: {
         maxArea: enteredNum,
-        allHouses: HousesList.filter((home) => home.homeType === "sale"),
+        allHouses: HousesList.filter((home) => home.homeType === "sale" && home.suspended === false),
       },
     });
   };

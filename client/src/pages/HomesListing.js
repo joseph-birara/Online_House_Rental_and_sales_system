@@ -232,7 +232,7 @@ const HomesListing = () => {
           type: "initialize",
           payload: {
             houses: response.data.filter(
-              (home) => home.isRented === false && home.homeType !== "sale"
+              (home) => home.isRented === false && home.homeType !== "sale" && home.suspended === false
             ),
           },
         });
@@ -252,7 +252,7 @@ const HomesListing = () => {
       payload: {
         minPrice: enteredNum,
         allHouses: HousesList.filter(
-          (home) => home.isRented === false && home.homeType !== "sale"
+          (home) => home.isRented === false && home.homeType !== "sale" && home.suspended === false
         ),
       },
     });
@@ -268,7 +268,7 @@ const HomesListing = () => {
       payload: {
         maxPrice: enteredNum,
         allHouses: HousesList.filter(
-          (home) => home.isRented === false && home.homeType !== "sale"
+          (home) => home.isRented === false && home.homeType !== "sale" && home.suspended === false
         ),
       },
     });
@@ -284,7 +284,7 @@ const HomesListing = () => {
       payload: {
         minArea: enteredNum,
         allHouses: HousesList.filter(
-          (home) => home.isRented === false && home.homeType !== "sale"
+          (home) => home.isRented === false && home.homeType !== "sale" && home.suspended === false
         ),
       },
     });
@@ -300,7 +300,7 @@ const HomesListing = () => {
       payload: {
         maxArea: enteredNum,
         allHouses: HousesList.filter(
-          (home) => home.isRented === false && home.homeType !== "sale"
+          (home) => home.isRented === false && home.homeType !== "sale" && home.suspended === false
         ),
       },
     });

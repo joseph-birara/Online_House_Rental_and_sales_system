@@ -47,8 +47,8 @@ const getAnalysis = async (req, res) => {
       minPrice /= 25
       maxPrice /= 20
     } else if (homeType === 'sale') {
-      minPrice *= 250
-      maxPrice *= 550
+      minPrice *= 350
+      maxPrice *= 850
     }
 
 

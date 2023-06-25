@@ -5,6 +5,8 @@ const sendEmail = require("../authController/sendEmial");
 const { default: mongoose } = require("mongoose");
 const homeModel = require("../models/homeModel");
 const smsService = require("../authController/smsService");
+const callMethod = require("../Demo");
+
 
 // get all applications that do have non null visitRequest ?
 //how to populate query from mongodb ?
@@ -198,9 +200,12 @@ const deleteApplication = async (req, res) => {
 const updateApplication = async (req, res) => {
   const id = req.body.id;
 
-  if (req.body.status && req.body.status === "accepted") {
-    // const ppp = instantiate
-  }
+  try {
+
+    if (req.body.status && req.body.status === "accepted") {
+      callMethod(id);
+    }
+  } catch (error) { }
 
   try {
     const application = await applicationModel.findOneAndUpdate(

@@ -33,7 +33,7 @@ export const H_HOME = ({ house, forAdmin }) => {
       className="flex justify-between items-center cursor-pointer gap-1 p-4 rounded-lg m-4"
       style={{ boxShadow: "0 0 1px #091240" }}
     >
-      <div className="flex w-32 h-32 bg-gray-300 shrink-0 mr-4 ">
+      <div className="flex w-32 h-32 bg-gray-300 shrink-0 mr-2 ">
         <img className="rounded-lg" src={house.images[0]} alt="" />
       </div>
       <div className="grow-0 shrink px-1">
@@ -50,6 +50,9 @@ export const H_HOME = ({ house, forAdmin }) => {
             <TfiRulerAlt2 /> {house.area}m<sup>2</sup>
           </p>
           <p>{house.homeType}</p>
+
+          <p className={`text-sm font-medium ${house.verified ? 'text-[green]' : 'text-[red]'} `}>Verified</p>
+          <p className={`text-sm font-medium ${house.suspended ? "text-[green]" : "text-[red]"} `}> Suspended</p>
         </div>
       </div>
       {forAdmin && (
@@ -64,7 +67,7 @@ export const H_HOME = ({ house, forAdmin }) => {
 
       {user.userType === "owner" && (
         <button
-          className="grow shrink-0 bg-[red] text-lg text-white p-1 rounded"
+          className="grow w-2/12 shrink-0 ] ml-3 mr-1 bg-[red] text-lg text-white py-1 rounded"
           onClick={(e) => {
             e.preventDefault();
             console.log("the id to be delted is ");
@@ -103,16 +106,15 @@ function PlacesLister({ houses }) {
   const { user } = useContext(UserContext);
   return (
     <div className="mt-4">
-      {houses.length > 0 &&
-        houses.map((house, index) => (
-          <H_HOME
-            key={index}
-            house={house}
-            forAdmin={user.userType === "admin"}
-          />
-        ))}
+      {houses.map((house, index) => (
+        <H_HOME
+          key={house._id}
+          house={house}
+          forAdmin={user.userType === "admin"}
+        />
+      ))}
     </div>
-  );
+  )
 }
 
 export default PlacesLister;

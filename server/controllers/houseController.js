@@ -16,18 +16,18 @@ const getAnalysis = async (req, res) => {
   function generatePriceSuggestion(area, bedrooms, bathrooms, homeType, subCity) {
 
     const subcityScales = {
-      "Bole": 1.8,
-      "Arada": 1.1,
-      "Lideta": 7,
-      "Kirkos": 0.6,
-      "Yeka": 0.5,
-      "Addis Ketema": .4,
-      "Nifas Silk-Lafto": 0.3,
-      "Gullele": 0.2,
-      "Kolfe Keranio": 0.15,
-      "Akaky Kaliti": 0.1,
+      "bole": 1.8,
+      "arada": 1.1,
+      "lideta": 7,
+      "kirkos": 0.6,
+      "yeka": 0.5,
+      "addis ketema": .4,
+      "nifas silk-safto": 0.3,
+      "gullele": 0.2,
+      "dolfe keranio": 0.15,
+      "akaky kaliti": 0.1,
     };
-    const cityValue = subcityScales[subCity]
+    const cityValue = subcityScales[subCity.toLowerCase()]
 
     // Define base price per unit area (in your desired currency)
     const basePricePerArea = 60;

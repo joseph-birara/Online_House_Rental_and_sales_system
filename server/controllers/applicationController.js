@@ -12,10 +12,10 @@ const applicationsWithVisitRequest = async (req, res) => {
   try {
     const applications = await applicationModel
       .find({ visitRequest: { $ne: null }, status: "pending" })
-      .populate({ path: "homeId", select: "title city subCity" })
-      .populate({ path: "applicantId", select: "name phone eamil lastName" })
-      .populate({ path: "ownerId", select: "name phone eamil lastName" });
-    return res.status(200).json({ status: "succes", applications });
+      .populate({ path: "homeId", select: "title woreda subCity" })
+      .populate({ path: "applicantId", select: "name phone email lastName" })
+      .populate({ path: "ownerId", select: "name phone email lastName" });
+    return res.status(200).json( applications);
   } catch (error) {
     console.log(error);
     return res.status(201).send("failed");

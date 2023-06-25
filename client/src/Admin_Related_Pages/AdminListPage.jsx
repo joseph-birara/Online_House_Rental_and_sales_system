@@ -7,7 +7,7 @@ const AdminListerPage = () => {
 
     const { token, user } = useContext(UserContext)
     const { AdminsList, setAdminList } = useContext(UtilityContext)
-    const altenativeImageLink = "https://thumbs.dreamstime.com/b/user-blue-icon-member-service-43464682.jpg"
+    const altenativeImageLink = "https://res.cloudinary.com/dmegiw31y/image/upload/v1687634119/HomeRental/alt-image_rn3zbk.webp"
     const [selectedOption, setSelectionOption] = useState('')
 
     useEffect(() => {

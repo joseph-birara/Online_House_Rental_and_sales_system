@@ -74,16 +74,6 @@ const Navbar = ({ notificationData, userProfileData, userProfPic }) => {
           color="#1890db"
           icon={<RiNotification3Line />}
         />
-        {/* <div
-          className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
-          onClick={() => handleClick("userProfile")}
-        >
-          <img
-            className="rounded-full w-8 h-8"
-            src={"https://cdn.stocksnap.io/img-thumbs/960w/woman-portrait_HVMC9QETXW.jpg"}
-            alt="user-profile"
-          />
-        </div> */}
 
         {isClicked.chat && <Chat chatData={notificationData} />}
         {isClicked.notification && <Notification notificationData={notificationData} />}

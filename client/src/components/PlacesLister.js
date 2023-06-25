@@ -51,8 +51,8 @@ export const H_HOME = ({ house, forAdmin }) => {
           </p>
           <p>{house.homeType}</p>
 
-          <p className={`text-sm font-medium ${house.verified ? 'text-[green]' : 'text-[red]'} `}>Verified</p>
-          <p className={`text-sm font-medium ${house.suspended ? "text-[green]" : "text-[red]"} `}> Suspended</p>
+          <p className={`text-sm font-medium ${house.verified ? 'text-[green]' : 'text-[red]'} `}>{house.verified ? 'Verified' : "Not-Verified"}</p>
+          <p className={`text-sm font-medium ${house.suspended ? "text-[red]" : "text-[green]"} `}> {house.suspended ? "Suspended" : "Not-Suspended"}</p>
         </div>
       </div>
       {forAdmin && (

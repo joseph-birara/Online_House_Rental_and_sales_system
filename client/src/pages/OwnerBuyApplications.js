@@ -16,45 +16,45 @@ const Applicant = ({ data }) => {
     setSelectionOption('')
     // get home price
     console.log("selected " + action);
-    // if (action === 'Accept') {
-    //   axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'accepted' }, {
-    //     headers: {
-    //       Authorization: `Bearer + ${token}`,
-    //     }
-    //   }).then((response) => {
-    //     console.log(' Applicatioin is accepted successfuly ');
-    //     const updateApplication = applications.map(app => {
-    //       if (app._id === appId) {
-    //         return { app, statu: 'accepted' };
-    //       }
-    //       return app;
-    //     });
-    //     setApplications(updateApplication)
+    if (action === 'Accept') {
+      axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'accepted' }, {
+        headers: {
+          Authorization: `Bearer + ${token}`,
+        }
+      }).then((response) => {
+        console.log(' Applicatioin is accepted successfuly ');
+        const updateApplication = applications.map(app => {
+          if (app._id === appId) {
+            return { app, statu: 'accepted' };
+          }
+          return app;
+        });
+        setApplications(updateApplication)
 
-    //   })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // } else if (action === 'Reject') {
+      })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else if (action === 'Reject') {
 
-    //   axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'rejected' }, {
-    //     headers: {
-    //       Authorization: `Bearer + ${token}`,
-    //     }
-    //   }).then((response) => {
-    //     // console.log(response.data);
-    //     console.log('Application is canceled successfully');
-    //     const updateApplication = applications.map(app => {
-    //       if (app._id === appId) {
-    //         return { app, statu: 'rejected' };
-    //       }
-    //       return app;
-    //     });
-    //     setApplications(updateApplication)
-    //   }).catch((error) => {
-    //     console.log(error);
-    //   });
-    // };
+      axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'rejected' }, {
+        headers: {
+          Authorization: `Bearer + ${token}`,
+        }
+      }).then((response) => {
+        // console.log(response.data);
+        console.log('Application is canceled successfully');
+        const updateApplication = applications.map(app => {
+          if (app._id === appId) {
+            return { app, statu: 'rejected' };
+          }
+          return app;
+        });
+        setApplications(updateApplication)
+      }).catch((error) => {
+        console.log(error);
+      });
+    };
 
   }
 

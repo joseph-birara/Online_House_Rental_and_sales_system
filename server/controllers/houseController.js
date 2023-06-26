@@ -30,7 +30,7 @@ const getAnalysis = async (req, res) => {
     const cityValue = subcityScales[subCity.toLowerCase()]
 
     // Define base price per unit area (in your desired currency)
-    const basePricePerArea = 60;
+    const basePricePerArea = 40;
     const bedroomModifier = 2000; // Additional price per bedroom
     const bathroomModifier = 800; // Additional price per bathroom
 
@@ -40,8 +40,8 @@ const getAnalysis = async (req, res) => {
     const bathroomsPrice = bathrooms * bathroomModifier;
 
     // Calculate the minimum and maximum prices
-    let minPrice = areaPrice + bedroomsPrice + bathroomsPrice;
-    let maxPrice = minPrice + (areaPrice / bathRoom) / 1.5 * (bedRoom * 1.5);
+    let minPrice = areaPrice/2 + bedroomsPrice + bathroomsPrice;
+    let maxPrice = minPrice + (areaPrice / bathRoom)/3 * (bedRoom * 0.5);
     let minAverage = 0
     let maxAverage = 0
 
@@ -50,15 +50,14 @@ const getAnalysis = async (req, res) => {
       maxPrice /= 20
     } else if (homeType === 'sale') {
       minPrice *= 350
-      maxPrice *= 850
+      maxPrice *= 650
     }
-
 
     //  use city factor
     minPrice = minPrice + (minPrice * cityValue) / 2
     maxPrice = maxPrice + (maxPrice * cityValue) / 1.6
     minAverage = minPrice + (minPrice * 0.25)
-    maxAverage = maxPrice - (maxPrice * 0.3)
+    maxAverage = maxPrice - (maxPrice * 0.4)
 
 
     // Return the price suggestion as an object

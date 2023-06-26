@@ -44,8 +44,10 @@ export default function PlacesFormPage() {
   let currHouse = null
   useEffect(() => {
     if (id) {
-      currHouse = HousesList.filter((house) => house._id === id)
-      currHouse = currHouse[0]
+      currHouse = HousesList.find((house) => house._id === id)
+      // currHouse = currHouse[0]
+      console.log('the curr house is');
+      console.log(currHouse);
     }
   }, [id])
 
@@ -173,14 +175,13 @@ export default function PlacesFormPage() {
     if (Object.keys(forHomeUpdate).length > 0) {
 
       const houseData = {
-        'id': currHouse._id,
+        'id':id,
         title,
         city,
         subCity,
         woreda,
         kebele,
         "price": priceRef.current.value,
-        "images": currHouse.images,
         area,
         "shortTerm": {},
         description,
@@ -206,7 +207,7 @@ export default function PlacesFormPage() {
       })
         .then(response => {
           setHousesList(prevHouseList => prevHouseList.map(home => {
-            if (home.id === currHouse._id) {
+            if (home.id === id) {
               houseData.ownerId = currHouse.ownerId
               return houseData;
             } else {

@@ -35,7 +35,7 @@ const RenatedHomesList = ({ data, handleSelect, makePayment }) => {
         </div>
         <button
           className="outline mr-3 mt-4 w-fit bg-[#fc4a4a] hover:bg-[red] text-white py-2 px-2 rounded"
-          onClick={() => handleSelect(data.applicationId, data.paymentInfo.homeId)}
+          onClick={() => handleSelect(data.appplicationId, data.paymentInfo.homeId)}
         >
           cancel Rent
         </button>
@@ -70,6 +70,8 @@ const TenantRentedHomes = () => {
 
   const handleSelect = (appId, homeId) => {
 
+    console.log(appId);
+    console.log(homeId);
     axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'completed' }, {
       headers: {
         Authorization: `Bearer + ${token}`,
@@ -180,7 +182,6 @@ const TenantRentedHomes = () => {
             lastName: applic.applicantId.lastName,
             name: applic.applicantId.name,
           },
-
           appplicationId: applic._id,
         };
         return <RenatedHomesList key={applic._id} data={data} handleSelect={handleSelect} makePayment={makePayment} />;

@@ -346,7 +346,7 @@ export default function PlacesFormPage() {
   const selectedBtnStyle = "primary bg-blueBlack my-4";
 
   return (
-    <div className="outline mx-8 px-6 pb-7">
+    <div className="mx-8 px-6 pb-7">
 
       {/* <AccountNav /> */}
       <div>
@@ -491,7 +491,7 @@ export default function PlacesFormPage() {
 
           <div
             onClick={suggestionHandler}
-            className={`w-5/12 outline outline-[red] flex justify-center items-center text-white primary cursor-pointer rounded-sm bg-lightBlue my-4  hover:bg-lbHover`}>
+            className={`w-5/12 flex justify-center items-center text-white primary cursor-pointer rounded-sm bg-lightBlue my-4  hover:bg-lbHover`}>
             <LoadingOverlay
               active={waitingSuggestion}
               spinner

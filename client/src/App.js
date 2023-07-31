@@ -17,7 +17,7 @@ import { UserContextProvider } from "./contexts/UserContextProvider";
 import LoginPage from "./pages/Auth/LoginPage";
 import RegisterPage from "./pages/Auth/Register";
 import UtilityContextProvider from "./contexts/UtilityContextProvide";
-import Applicants from "./pages/OwnerRentApplication";
+// import Applicants from "./pages/OwnerRentApplication";
 import OwnerListerPage from "./Admin_Related_Pages/OwnerListerPage";
 import BuyerListerPage from "./Admin_Related_Pages/BuyerListerPage";
 import TenantListerPage from "./Admin_Related_Pages/TenantListerPage";
@@ -94,7 +94,7 @@ function App() {
                     <Route path="new" element={<PlacesFormPage />} />
                   </Route>
 
-                  <Route path="rentapplicants" element={<OwnerRentApplication />} />
+                  {/* <Route path="rentapplicants" element={<OwnerRentApplication />} /> */}
                   <Route path="buyapplicants" element={<OwnerBuyApplications />} />
                   <Route path="tenants" element={<UsersList />} />
                   <Route path="maintenanceRequests" element={<RequestsPage />} />

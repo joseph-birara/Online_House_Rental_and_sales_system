@@ -94,7 +94,7 @@ function App() {
                     <Route path="new" element={<PlacesFormPage />} />
                   </Route>
 
-                  {/* <Route path="rentapplicants" element={<OwnerRentApplication />} /> */}
+                  <Route path="rentapplicants" element={<OwnerRentApplication />} />
                   <Route path="buyapplicants" element={<OwnerBuyApplications />} />
                   <Route path="tenants" element={<UsersList />} />
                   <Route path="maintenanceRequests" element={<RequestsPage />} />

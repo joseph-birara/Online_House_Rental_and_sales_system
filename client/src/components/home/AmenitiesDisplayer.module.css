@@ -1,0 +1,22 @@
+.mainContainer {
+  margin: 5rem 0;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 8px #091240;
+  border-radius: 5px;
+}
+.title {
+  border-bottom: 1px solid #dce0e0;
+  padding-bottom: 1rem;
+}
+.amenitiesContainer{
+  display: flex;
+  flex-wrap: wrap;
+}
+.amenitiesContainer p {
+  margin-inline-end: 2rem;
+}
+@media only screen and (max-width: 450px) {
+  .amenitiesContainer{
+      flex-direction: column;
+  }
+}

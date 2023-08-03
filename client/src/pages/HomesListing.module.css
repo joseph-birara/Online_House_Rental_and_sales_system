@@ -1,0 +1,67 @@
+.navLink {
+  text-decoration: none;
+  color: #091240;
+  display: block;
+  width: 20rem;
+}
+.mainContainer {
+  text-decoration: none;
+  width: 100%;
+  transition: all 0.3s ease;
+  padding-bottom: 5px;
+}
+
+.mainContainer:hover {
+  outline: 2px solid #2891ffe3;
+  border-radius: 10px;
+  transform: scale(1.05);
+}
+.shorten {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  margin: 0.2rem 0;
+  padding-left: 8px;
+}
+#title {
+  font-weight: 400;
+  padding-left: 8px;
+}
+#location {
+  font-weight: 200;
+}
+.icons {
+  width: 60%;
+  margin-block: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 8px;
+}
+#bed {
+  position: relative;
+  top: 2px;
+}
+#shower {
+  position: relative;
+  top: 2px;
+}
+
+#price {
+  font-weight: 500;
+  outline: 2px solid red;
+}
+#like {
+  text-align: end;
+  margin-top: -2rem;
+}
+.likebtn {
+  border-width: 0;
+  font-size: 23px;
+  background-color: white;
+  margin-right: -0.9rem;
+}
+/* .icons, #price{
+    margin-top: -0.5rem;
+  } */

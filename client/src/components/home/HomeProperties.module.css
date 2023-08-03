@@ -1,0 +1,41 @@
+.mainContainer {
+  margin: 5rem 0;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 8px #091240;
+  border-radius: 5px;
+}
+.innerContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.col1 {
+  margin-inline-end: 7.5rem;
+}
+.houseProp {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #dce0e0;
+  padding-bottom: 0.3rem;
+  margin-block: 1rem;
+}
+.prop {
+  margin-inline-end: 3rem;
+  font-weight: bold;
+}
+
+.detailsTitle {
+  border-bottom: 1px solid #dce0e0;
+  padding-bottom: 1rem;
+}
+@media only screen and (max-width: 570px) {
+  .innerContainer {
+    flex-direction: column;
+  }
+  .col1 {
+    margin-inline-end: 1.5rem;
+  }
+  .col2 {
+    margin-inline-end: 1.5rem;
+  }
+}

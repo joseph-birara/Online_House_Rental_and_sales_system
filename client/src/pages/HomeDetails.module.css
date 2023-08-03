@@ -1,0 +1,47 @@
+
+.mainContainer {
+  margin-inline: auto;
+  max-width: 800px;
+}
+@media only screen and (max-width: 800px) {
+  .mainContainer {
+    width: 100%;
+    padding-inline: 1rem;
+  }
+}
+.reviewsAndOwnerContainer {
+  display: flex;
+  align-items: baseline;
+  gap: 2rem;
+}
+.reviewsAndOwnerContainer a {
+  color: #091240;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#owner a {
+  margin-left: 0.5rem;
+}
+.innerContainer {
+  padding-left: 0rem;
+  margin-bottom: 1.5rem;
+}
+.innerContainer p {
+  margin: 0.3rem 0 0.75rem 0;
+}
+
+.description{
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 8px #091240;
+  border-radius: 5px;
+}
+.descriptionTitle{
+border-bottom: 1px solid #dce0e0;
+padding-bottom: 1rem;
+}
+
+.likeBtn{
+  position: relative;
+  bottom: 3px;
+}

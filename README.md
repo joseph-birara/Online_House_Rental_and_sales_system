@@ -21,16 +21,20 @@
 
 
 ##### Login
+
 <img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/995d7092-527f-43db-b711-bd6147f17b24" alt="Image description" width="500" height="250">
 
  
 ##### Register
+
 <img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/f79dfaff-9de7-4491-a2d3-00e703245fc8" alt="Image description" width="800" height="800">
 
 ##### password reset part - 1
+
 <img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/94cdf207-23b9-4708-a172-d95d91e774e3" alt="Image description" width="500" height="300">
 
 ##### password reset part - 2
+
 <img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/646dfdf8-1950-4a14-b7a2-c9d7116fc8f3" alt="Image description" width="500" height="300">
 
 
@@ -43,7 +47,7 @@
 <hr/>
 
 ### Adding homes
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/ba17c632-ac2f-4485-a6ce-82b2bb688cb0" alt="Image description" width="700" height="900">
+<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/ba17c632-ac2f-4485-a6ce-82b2bb688cb0" alt="Image description" width="700" height="900" />
 
 
 ### Get price suggestion

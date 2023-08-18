@@ -1,15 +1,24 @@
-# Online_House_Rental_and_sales_system
-### All In One Home Rental and Sales System with Integraed Payment and price recommendation
-<hr>
-<br>
+# All-in-One Home Rental and Sales Platform
+## Streamlined Home Rental and Sales Solution with Integrated Payments and Price Recommendations
+---
 
-## Our final year project is a web-based platform for home renting, buying, selling, and homeowner-tenant communication. 
-### Our system aims to 
-* #### simplify the process of renting or selling a house for homeowners, while providing the best renting experience for tenants.
-* #### connects home seekers directly with home owners, allowing them to make legally-binding digital contracts and communicate with each other through the website.
-* #### help Tenants so that they can easily pay their monthly fees and submit maintenance requests to their respective home owners.
+## Welcome to our Comprehensive Web-Based Platform
 
-### In addition, our system also facilitates home sellers and buyers to make legally-binding digital contracts, our platform offers an easy and stress-free experience for all parties involved.
+### Project Overview
+
+Welcome to **Online_House_Rental_and_sales_system**, a dynamic web-based solution designed to revolutionize the home rental, buying, and selling experience. Our final-year project aims to simplify processes, enhance communication, and facilitate seamless transactions for all parties involved.
+
+### Key Objectives
+
+Our platform is focused on achieving the following objectives:
+
+- **Simplified Transactions:** We aim to simplify the process of renting or selling a house for homeowners, ensuring a hassle-free experience.
+- **Direct Connections:** By directly connecting home seekers with owners, we enable them to establish legally-binding digital contracts and communicate efficiently.
+- **Tenant Convenience:** Tenants can conveniently make monthly payments and submit maintenance requests through the platform.
+- **Effortless Sales:** Our system also facilitates home sellers and buyers in making legally-binding digital contracts, ensuring a stress-free experience.
+
+Experience a new era of home transactions with **Online_House_Rental_and_sales_system**.
+
 
 <br/>
 

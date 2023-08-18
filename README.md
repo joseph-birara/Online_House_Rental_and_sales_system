@@ -22,20 +22,21 @@
 
 ##### Login
 
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/995d7092-527f-43db-b711-bd6147f17b24" alt="Image description" width="500" height="250">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/a7d3150d-31ca-451d-8fc4-82dad3a53946" alt="Image description" width="500" height="250">
+
 
  
 ##### Register
 
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/f79dfaff-9de7-4491-a2d3-00e703245fc8" alt="Image description" width="800" height="800">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/ec0af861-ba0d-4c46-aebb-844c11d9623c" alt="Image description" width="800" height="800">
 
 ##### password reset part - 1
 
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/94cdf207-23b9-4708-a172-d95d91e774e3" alt="Image description" width="500" height="300">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/d9691c2f-58b6-4549-9d38-31a261b440b4" alt="Image description" width="500" height="300">
 
 ##### password reset part - 2
 
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/646dfdf8-1950-4a14-b7a2-c9d7116fc8f3" alt="Image description" width="500" height="300">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/14642410-ccd7-45a4-bcbb-f03f78478cc4" alt="Image description" width="500" height="300">
 
 
 
@@ -47,21 +48,23 @@
 <hr/>
 
 ### Adding homes
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/ba17c632-ac2f-4485-a6ce-82b2bb688cb0" alt="Image description" width="700" height="900" />
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/52cb4f4b-2680-4d4b-91e0-38152762e142" alt="Image description" width="700" height="900" />
 
 
 ### Get price suggestion
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/8c701876-f8a1-4f84-9dea-14d14b6ec593" alt="Image description" width="700" height="900">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/79fad568-a4a1-4c09-93ac-c36c4336bc55" alt="Image description" width="700" height="900">
 
 
 ### Manage maintenance requests
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/e24628ca-5136-49c4-9f75-2c9f0e14a622" alt="Image description" width="600" height="500">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/09ee9702-1971-4ef0-bd8a-1d0e0513c18d" alt="Image description" width="600" height="500">
+
 
 ### Manage rent and buy applications
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/2bbc1234-77fd-4c9f-b44b-96485dcd71ab" alt="Image description" width="500" height="550">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/dd28973a-17e8-4cf1-9d1d-95597e1feb30" alt="Image description" width="500" height="550">
+
 
 ### Manage homes like update, delete
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/da9efeac-bdd1-409a-a072-121a50e8598e" alt="Image description" width="500" height="450">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/ed817a43-f165-4331-8234-f563b26feb47" alt="Image description" width="500" height="450">
 
 
 
@@ -70,29 +73,32 @@
 
 ## Tenant and Buyer Related
 
-
 ### Search and filter homes
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/17adcef3-c3b6-4b2f-98d1-8ef758647f9b)" alt="Image description" width="500" height="450">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/d213f23a-7d6a-4a96-a2da-a497b772ddbc" alt="Image description" width="500" height="450">
 
 
 ### Apply for rent
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/c7c68427-1b9b-4f9f-84b9-bec3c47c188f" alt="Image description" width="500" height="900">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/2f25fbe2-6616-4708-be80-83897f8f4f82" alt="Image description" width="500" height="900">
+
+
 
 ### manage rent and  application
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/abc3a49e-add8-4093-89ac-3cb7b57882a5" alt="Image description" width="600" height="550">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/21a7bf39-1587-4be8-adf4-74032b518871" alt="Image description" width="600" height="550">
+
 
 ### Manage rented homes and make payment - part 1
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/d3660599-5c1e-4e53-98c4-347700ec4098" alt="Image description" width="900" height="650">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/380090d9-201d-42bb-9aae-26106be1aaeb" alt="Image description" width="900" height="650">
 
 
 ### manage rented homes and make payment - part 2
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/c9b3dc55-6d0b-4aa6-a3e2-6579dc383fd6" alt="Image description" width="800" height="450">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/2733bf86-f783-4580-b187-5c5276283757" alt="Image description" width="800" height="450">
+
 
 ### manage rented homes and make payment - part 3
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/7ed63517-1b2f-4278-855d-847634bb5716" alt="Image description" width="800" height="450">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/07402980-a062-47e0-978b-4883d7a145fc" alt="Image description" width="800" height="450">
 
 ### send maintenance request
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/ed3137b7-05ef-417a-a1e4-d68b5d76758b" alt="Image description" width="800" height="450">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/6e644e14-d73a-43d8-9380-4ac922410bc1" alt="Image description" width="800" height="450">
 
 
 <br>
@@ -100,23 +106,23 @@
 ## Admin Related
 
 #### Manage admins
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/b67c8ffa-0432-4310-ad7c-33a231f93a76" alt="Image description" width="500" height="250">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/95ea3675-8143-4744-b1fe-1bf835ef6810" alt="Image description" width="500" height="250">
 
 #### Manage buyers
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/f0d5ac95-15d9-4dd1-90c2-397fe74e7056" alt="Image description" width="500" height="250">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/47f09881-880c-43e5-9895-6958874cfa0b" alt="Image description" width="500" height="250">
+
 
 
 #### Manage homes
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/b8de7b7f-0a28-464e-9d5b-bfb85f83ee39" alt="Image description" width="500" height="250">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/b2214173-9e42-42ce-ae16-e188b5955e43" alt="Image description" width="500" height="250">
 
 #### Manage owners
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/6e84ae5a-d6e1-4e2a-b582-c15fa922a594" alt="Image description" width="500" height="250">
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/0135ed7b-78b5-4d58-b0ab-cf9dbbc0e8d5" alt="Image description" width="500" height="250">
+
 
 
 #### see application details
-<img src="https://github.com/dawit01/Online_House_Rental_and_sales_system/assets/84455217/73afa80e-f7b7-415e-bd1c-7467b972ee1d" alt="Image description" width="500" height="250">
-
-
+<img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/052b4526-1cc4-437e-81a7-e4d7d7ce91d1" alt="Image description" width="500" height="250">
 
 
 

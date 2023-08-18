@@ -1,8 +1,8 @@
 # All-in-One Home Rental and Sales Platform
-## Streamlined Home Rental and Sales Solution with Integrated Payments and Price Recommendations
+### Streamlined Home Rental and Sales Solution with Integrated Payments and Price Recommendations
 ---
 
-## Welcome to our Comprehensive Web-Based Platform
+### Welcome to our Comprehensive Web-Based Platform
 
 ### Project Overview
 

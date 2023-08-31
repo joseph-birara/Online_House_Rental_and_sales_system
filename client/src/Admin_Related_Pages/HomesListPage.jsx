@@ -163,7 +163,7 @@ const HomesListPage = ({ DisplayRented }) => {
 
     useEffect(() => {
         axios
-            .get("http://localhost:4000/houses/all")
+            .get("https://house-rental.onrender.com/houses/all")
             .then((response) => {
                 console.log(" admin is logged in and houses is ");
                 console.log(response.data);

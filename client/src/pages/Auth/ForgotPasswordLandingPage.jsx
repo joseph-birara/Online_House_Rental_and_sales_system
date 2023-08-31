@@ -42,7 +42,7 @@ export default function ForgotPasswordLandingPage({ isAdmin }) {
     console.log('routing link *****' + backendRoutingPath);
 
     axios
-      .post(`http://localhost:4000/${backendRoutingPath}/reset`, {
+      .post(`https://house-rental.onrender.com/${backendRoutingPath}/reset`, {
         email: email
       })
       .then((response) => {

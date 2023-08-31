@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:4000";
+const baseUrl = "https://house-rental.onrender.com";
 
 // Register User
 export const registerUser = (userInfo, userType, token) => {
@@ -126,7 +126,7 @@ export const addHouse = (houseData, token) => {
 export const getAllHouses = () => {
 
     axios
-        .get(`http://localhost:4000/houses/all`)
+        .get(`https://house-rental.onrender.com/houses/all`)
         .then((response) => {
             return response.data;
         })

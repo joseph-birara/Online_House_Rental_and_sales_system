@@ -200,7 +200,7 @@ export default function PlacesFormPage() {
       // console.log('and the currhouse i s');
       // console.log(currHouse);
 
-      axios.put(`http://localhost:4000/houses/update`, houseData, {
+      axios.put(`https://house-rental.onrender.com/houses/update`, houseData, {
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -273,7 +273,7 @@ export default function PlacesFormPage() {
           houseData.images = imageLinks
           // console.log('the added house is here with its this ------');
           // console.log(houseData);
-          axios.post(`http://localhost:4000/houses/add`, houseData, {
+          axios.post(`https://house-rental.onrender.com/houses/add`, houseData, {
             headers: {
               Authorization: `Bearer ${token}`,
             }
@@ -327,7 +327,7 @@ export default function PlacesFormPage() {
         subCity: subCity
       }
 
-      axios.post(`http://localhost:4000/houses/getSimilar`, payload)
+      axios.post(`https://house-rental.onrender.com/houses/getSimilar`, payload)
         .then((response) => {
           setSuggestion(response.data);
           setWaitingSuggestion(false)

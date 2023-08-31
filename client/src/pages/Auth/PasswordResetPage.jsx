@@ -36,7 +36,7 @@ export default function PasswordResetPage({ isAdmin }) {
         console.log(" userType ****: " + accountType);
 
         axios
-            .post(`http://localhost:4000/${accountType}/newPassword`, {
+            .post(`https://house-rental.onrender.com/${accountType}/newPassword`, {
                 email: email, token: token, password: newpassword
             })
             .then((response) => {

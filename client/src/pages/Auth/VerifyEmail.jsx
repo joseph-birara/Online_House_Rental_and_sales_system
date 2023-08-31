@@ -33,9 +33,9 @@ const VerifyEmail = () => {
                 const encodedPath = encodeURIComponent(
                     routingPath.replace(/"/g, "") // Remove double quotes from routingPath
                 );
-                console.log(`http://localhost:4000/${encodedPath}/verify-email/${id}`);
+                console.log(`https://house-rental.onrender.com/${encodedPath}/verify-email/${id}`);
                 axios
-                    .get(`http://localhost:4000/${encodedPath}/verify-email/${id}`)
+                    .get(`https://house-rental.onrender.com/${encodedPath}/verify-email/${id}`)
                     .then((response) => {
                         if (response.data === "Email verified successfully.") {
                             navigate("/login/");

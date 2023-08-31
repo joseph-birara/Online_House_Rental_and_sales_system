@@ -11,7 +11,7 @@ const TenantListerPage = () => {
 
     useEffect(() => {
         // get all houses and set to the context
-        axios.get('http://localhost:4000/tenant/all')
+        axios.get('https://house-rental.onrender.com/tenant/all')
             .then((response) => {
                 console.log(' admin is on the tenant list pages ');
                 setTenatList(response.data);

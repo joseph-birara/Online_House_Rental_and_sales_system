@@ -14,7 +14,7 @@ const Application = ({ data }) => {
     const updatedAppplications = applications.filter((AAA) => AAA._id !== app_id);
     setApplications(updatedAppplications)
 
-    axios.delete(`http://localhost:4000/application/delete/${app_id}`, {
+    axios.delete(`https://house-rental.onrender.com/application/delete/${app_id}`, {
       headers: {
         Authorization: `Bearer + ${token}`,
       },

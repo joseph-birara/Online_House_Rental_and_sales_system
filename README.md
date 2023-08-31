@@ -7,6 +7,7 @@
 ### Project Overview
 
 Welcome to **Online_House_Rental_and_sales_system**, a dynamic web-based solution designed to revolutionize the home rental, buying, and selling experience. Our final-year project aims to simplify processes, enhance communication, and facilitate seamless transactions for all parties involved.
+You can access the application by clicking [here](https://all-in-one-rental.netlify.app/).
 
 ### Key Objectives
 

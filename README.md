@@ -19,14 +19,12 @@ Our platform is focused on achieving the following objectives:
 - **Effortless Sales:** Our system also facilitates home sellers and buyers in making legally-binding digital contracts, ensuring a stress-free experience.
 
 Experience a new era of home transactions with **Online_House_Rental_and_sales_system**.
-
-
 <br/>
 
-# Here are some screen shots of the projects
+# Here are some screenshots of the projects
 <br/>
 
-## Common pages like login, logout, password reset, regiser
+## Common pages like login, logout, password reset, register
 
 
 
@@ -92,22 +90,22 @@ Experience a new era of home transactions with **Online_House_Rental_and_sales_s
 
 
 
-### manage rent and  application
+### Manage rent and  application
 <img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/21a7bf39-1587-4be8-adf4-74032b518871" alt="Image description" width="600" height="550">
 
 
-### Manage rented homes and make payment - part 1
+### Manage rented homes and make payments - part 1
 <img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/380090d9-201d-42bb-9aae-26106be1aaeb" alt="Image description" width="900" height="650">
 
 
-### manage rented homes and make payment - part 2
+### Manage rented homes and make payments - part 2
 <img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/2733bf86-f783-4580-b187-5c5276283757" alt="Image description" width="800" height="450">
 
 
-### manage rented homes and make payment - part 3
+### Manage rented homes and make payments - part 3
 <img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/07402980-a062-47e0-978b-4883d7a145fc" alt="Image description" width="800" height="450">
 
-### send maintenance request
+### send a maintenance request
 <img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/6e644e14-d73a-43d8-9380-4ac922410bc1" alt="Image description" width="800" height="450">
 
 

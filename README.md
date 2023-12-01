@@ -1,22 +1,22 @@
 # Online_House_Rental_and_sales_system
-### All In One Home Rental and Sales System with Integraed Payment and price recommendation
+### All In One Home Rental and Sales System with Integrated Payment and price recommendation
 <hr>
 <br>
 
 ## It is a web-based platform for home renting, buying, selling, and homeowner-tenant communication. 
 ### Our system aims to 
 * #### simplify the process of renting or selling a house for homeowners, while providing the best renting experience for tenants.
-* #### connects home seekers directly with home owners, allowing them to make legally-binding digital contracts and communicate with each other through the website.
-* #### help Tenants so that they can easily pay their monthly fees and submit maintenance requests to their respective home owners.
+* #### connects home seekers directly with homeowners, allowing them to make legally binding digital contracts and communicate with each other through the website.
+* #### help Tenants so that they can easily pay their monthly fees and submit maintenance requests to their respective homeowners.
 
 ### In addition, our system also facilitates home sellers and buyers to make legally-binding digital contracts, our platform offers an easy and stress-free experience for all parties involved.
 
 <br/>
 
-# Here are some screen shots of the projects
+# Here are some screenshots of the projects
 <br/>
 
-## Common pages like login, logout, password reset, regiser
+## Common pages like login, logout, password reset, register
 
 
 
@@ -82,22 +82,22 @@
 
 
 
-### manage rent and  application
+### Manage rent and  application
 <img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/21a7bf39-1587-4be8-adf4-74032b518871" alt="Image description" width="600" height="550">
 
 
-### Manage rented homes and make payment - part 1
+### Manage rented homes and make payments - part 1
 <img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/380090d9-201d-42bb-9aae-26106be1aaeb" alt="Image description" width="900" height="650">
 
 
-### manage rented homes and make payment - part 2
+### Manage rented homes and make payments - part 2
 <img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/2733bf86-f783-4580-b187-5c5276283757" alt="Image description" width="800" height="450">
 
 
-### manage rented homes and make payment - part 3
+### Manage rented homes and make payments - part 3
 <img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/07402980-a062-47e0-978b-4883d7a145fc" alt="Image description" width="800" height="450">
 
-### send maintenance request
+### send a maintenance request
 <img src="https://github.com/dawit-andargachew/Online_House_Rental_and_sales_system/assets/84455217/6e644e14-d73a-43d8-9380-4ac922410bc1" alt="Image description" width="800" height="450">
 
 

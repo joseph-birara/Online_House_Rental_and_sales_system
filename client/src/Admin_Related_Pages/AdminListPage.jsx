@@ -12,7 +12,7 @@ const AdminListerPage = () => {
 
     useEffect(() => {
         axios
-            .get("http://localhost:4000/admin/all")
+            .get("https://house-rental.onrender.com/admin/all")
             .then((response) => {
                 // remove the super admin from the list
                 const newAdminsList = response.data.filter((admin) => admin._id !== user._id)

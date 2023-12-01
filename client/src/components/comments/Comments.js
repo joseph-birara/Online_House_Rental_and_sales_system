@@ -31,7 +31,7 @@ const Comments = ({ houseId, ownerId, setNumeberOfReviews }) => {
       parentId: parentId,
     };
     axios
-      .post(`http://localhost:4000/comment/add`, commentData, {
+      .post(`https://house-rental.onrender.com/comment/add`, commentData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -56,7 +56,7 @@ const Comments = ({ houseId, ownerId, setNumeberOfReviews }) => {
       message: text,
     };
     axios
-      .put(`http://localhost:4000/comment/edit`, commentData, {
+      .put(`https://house-rental.onrender.com/comment/edit`, commentData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -81,7 +81,7 @@ const Comments = ({ houseId, ownerId, setNumeberOfReviews }) => {
   const deleteComment = (commentId) => {
 
     axios
-      .delete(`http://localhost:4000/comment/delete/${commentId}`, {
+      .delete(`https://house-rental.onrender.com/comment/delete/${commentId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -102,7 +102,7 @@ const Comments = ({ houseId, ownerId, setNumeberOfReviews }) => {
   useEffect(() => {
 
     axios
-      .get(`http://localhost:4000/comment/getByHouse/${houseId}`)
+      .get(`https://house-rental.onrender.com/comment/getByHouse/${houseId}`)
       .then((response) => {
         console.log("resComments: ", response.data);
         setBackendComments(response.data);

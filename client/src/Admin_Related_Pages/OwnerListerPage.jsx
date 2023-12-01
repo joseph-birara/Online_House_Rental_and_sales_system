@@ -11,7 +11,7 @@ const OwnerListerPage = () => {
     const [selectedOption, setSelectionOption] = useState('')
     useEffect(() => {
         // get all houses and set to the context
-        axios.get('http://localhost:4000/owner/all')
+        axios.get('https://house-rental.onrender.com/owner/all')
             .then((response) => {
                 console.log(' admin is on the tenant list pages ');
                 setOwnersList(response.data);
@@ -50,7 +50,7 @@ const OwnerListerPage = () => {
                 ownerData.suspended = !isSuspended;
             }
 
-            axios.put(`http://localhost:4000/owner/update`, ownerData, {
+            axios.put(`https://house-rental.onrender.com/owner/update`, ownerData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }

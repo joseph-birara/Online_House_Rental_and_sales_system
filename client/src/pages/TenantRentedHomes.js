@@ -121,7 +121,7 @@ const TenantRentedHomes = () => {
     console.log(payload);
 
     axios
-      .post(`http://localhost:4000/payment/pay`, payload, {
+      .post(`https://house-rental.onrender.com/payment/pay`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

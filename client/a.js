@@ -19,7 +19,7 @@ export default function LoginPage({ isAdmin }) {
   useEffect(() => {
     // get all tenants
     axios
-      .get("http://localhost:4000/tenant/all")
+      .get("https://house-rental.onrender.com/tenant/all")
       .then((response) => {
         console.log(" admin is logged in and tenant is ");
         const both = response.data;
@@ -39,7 +39,7 @@ export default function LoginPage({ isAdmin }) {
 
     // get all ADMINS
     axios
-      .get("http://localhost:4000/admin/all")
+      .get("https://house-rental.onrender.com/admin/all")
       .then((response) => {
         console.log(" list of admins ");
         console.log(response.data);
@@ -51,7 +51,7 @@ export default function LoginPage({ isAdmin }) {
 
     // get all owners
     axios
-      .get("http://localhost:4000/owner/all")
+      .get("https://house-rental.onrender.com/owner/all")
       .then((response) => {
         console.log(" admin is logged in and owner is ");
         console.log(response.data);
@@ -63,7 +63,7 @@ export default function LoginPage({ isAdmin }) {
 
     /// load home data what ever the user is
     axios
-      .get("http://localhost:4000/houses/all")
+      .get("https://house-rental.onrender.com/houses/all")
       .then((response) => {
         console.log(" admin is logged in and houses is ");
         console.log(response.data);
@@ -109,7 +109,7 @@ export default function LoginPage({ isAdmin }) {
     console.log('routing link ' + routingLink);
 
     axios
-      .post(`http://localhost:4000/${routingLink}/login`, {
+      .post(`https://house-rental.onrender.com/${routingLink}/login`, {
         email: email,
         password: password,
         userType: USERTYPE

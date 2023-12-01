@@ -224,7 +224,7 @@ const HomesListing = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/houses/all")
+      .get("https://house-rental.onrender.com/houses/all")
       .then((response) => {
         // console.log("resData: ", response.data);
         setHousesList(response.data);

@@ -12,12 +12,12 @@ const ValidatePayment = () => {
     useEffect(() => {
         if (appli_id) {
 
-            axios.post(`http://localhost:4000/payment/verify/${appli_id}`)
+            axios.post(`https://house-rental.onrender.com/payment/verify/${appli_id}`)
                 .then((response) => {
                     console.log(' admin is on the tenant list pages ');
                     // setOwnersList(response.data);
 
-                    axios.get(`http://localhost:4000/application/bytenant/${user._id}`)
+                    axios.get(`https://house-rental.onrender.com/application/bytenant/${user._id}`)
                         .then((response) => {
                             // set all states
                             setApplications(response.data)

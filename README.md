@@ -3,7 +3,7 @@
 <hr>
 <br>
 
-## Our final year project is a web-based platform for home renting, buying, selling, and homeowner-tenant communication. 
+## It is a web-based platform for home renting, buying, selling, and homeowner-tenant communication. 
 ### Our system aims to 
 * #### simplify the process of renting or selling a house for homeowners, while providing the best renting experience for tenants.
 * #### connects home seekers directly with home owners, allowing them to make legally-binding digital contracts and communicate with each other through the website.

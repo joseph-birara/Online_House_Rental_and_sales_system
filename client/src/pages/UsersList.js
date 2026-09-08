@@ -57,7 +57,7 @@ const UsersList = () => {
   const { token, user } = useContext(UserContext);
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_baseURL}/application/byOwner/${user._id}`)
+    axios.get(`/application/byOwner/${user._id}`)
       .then((response) => {
         // console.log("onwer list of applicatons are");
         // console.log(response.data);
@@ -71,7 +71,7 @@ const UsersList = () => {
   const handleSelect = (appId, homeId) => {
     axios
       .put(
-        `${process.env.REACT_APP_baseURL}/application/update`,
+        `/application/update`,
         { id: appId, status: "completed" },
         {
           headers: {

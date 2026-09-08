@@ -30,7 +30,7 @@ const UserLister = ({ AccountListType }) => {
 
       axios
         .delete(
-          `${process.env.REACT_APP_baseURL}/${userType}/delete/${userId}`,
+          `/${userType}/delete/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

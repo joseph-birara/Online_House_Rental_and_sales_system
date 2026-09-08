@@ -21,7 +21,7 @@ const HomeLister = ({ objectList }) => {
         if (action === 'verify') {
             // update home and state
             const houseUpdatedData = { id: houseId, verified: !homeStatus.verified }
-            axios.put(`${process.env.REACT_APP_baseURL}/houses/update`, houseUpdatedData, {
+            axios.put(`/houses/update`, houseUpdatedData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -47,7 +47,7 @@ const HomeLister = ({ objectList }) => {
         } else if (action === 'suspend') {
 
             const houseUpdatedData = { id: houseId, suspended: !homeStatus.suspended }
-            axios.put(`${process.env.REACT_APP_baseURL}/houses/update`, houseUpdatedData, {
+            axios.put(`/houses/update`, houseUpdatedData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -163,7 +163,7 @@ const HomesListPage = ({ DisplayRented }) => {
 
     useEffect(() => {
         axios
-            .get("https://house-rental.onrender.com/houses/all")
+            .get("/houses/all")
             .then((response) => {
                 console.log(" admin is logged in and houses is ");
                 console.log(response.data);

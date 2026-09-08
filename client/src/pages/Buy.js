@@ -146,7 +146,7 @@ const Buy = () => {
 
   useEffect(() => {
     axios
-      .get("https://house-rental.onrender.com/houses/all")
+      .get("/houses/all")
       .then((response) => {
         // console.log("resData: ", response.data);
         setHousesList(response.data);

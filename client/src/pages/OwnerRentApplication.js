@@ -81,7 +81,7 @@ const Applicant = ({ data, selectHandler }) => {
 
 const OwnerRentApplication = () => {
   const { applications, setApplications } = useContext(UtilityContext);
-  const { user, token } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const selectHandler = (appId, type, option) => {
     // get home price
@@ -91,15 +91,10 @@ const OwnerRentApplication = () => {
     console.log('id, type and option');
     console.log(appId, type, option);
     if (option === 'Accept') {
-      axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'accepted' }, {
-        headers: {
-          Authorization: `Bearer + ${token}`,
-        }
-      }).then((response) => {
-        console.log(' Applicatioin is accepted successfuly ');
+      axios.put(`/application/update`, { id: appId, status: 'accepted' }).then((response) => {
         const updateApplication = applications.map(app => {
           if (app._id === appId) {
-            return { app, statu: 'accepted' };
+            return { ...app, status: 'accepted' };
           }
           return app;
         });
@@ -110,16 +105,10 @@ const OwnerRentApplication = () => {
           console.log(error);
         });
     } else if (option === 'Reject') {
-      axios.put(`${process.env.REACT_APP_RejectbaseURL}/application/update`, { id: appId, status: 'rejected' }, {
-        headers: {
-          Authorization: `Bearer + ${token}`,
-        }
-      }).then((response) => {
-        // console.log(response.data);
-        console.log('Application is canceled successfully');
+      axios.put(`/application/update`, { id: appId, status: 'rejected' }).then((response) => {
         const updateApplication = applications.map(app => {
           if (app._id === appId) {
-            return { app, statu: 'rejected' };
+            return { ...app, status: 'rejected' };
           }
           return app;
         });
@@ -132,7 +121,7 @@ const OwnerRentApplication = () => {
   }
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_baseURL}/application/byOwner/${user._id}`)
+    axios.get(`/application/byOwner/${user._id}`)
       .then((response) => {
         setApplications(response.data);
       }).catch((error) => {

@@ -12,7 +12,7 @@ const AdminListerPage = () => {
 
     useEffect(() => {
         axios
-            .get("https://house-rental.onrender.com/admin/all")
+            .get("/admin/all")
             .then((response) => {
                 // remove the super admin from the list
                 const newAdminsList = response.data.filter((admin) => admin._id !== user._id)
@@ -27,7 +27,7 @@ const AdminListerPage = () => {
 
         setSelectionOption('')
         if (action === 'delete') {
-            axios.delete(`${process.env.REACT_APP_baseURL}/admin/delete/${userId}`, {
+            axios.delete(`/admin/delete/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -44,7 +44,7 @@ const AdminListerPage = () => {
         }
         else if (action === 'activate') {
             const accountStatus = !status
-            axios.put(`${process.env.REACT_APP_baseURL}/admin/update`, { id: userId, accountStatus: accountStatus }, {
+            axios.put(`/admin/update`, { id: userId, accountStatus: accountStatus }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

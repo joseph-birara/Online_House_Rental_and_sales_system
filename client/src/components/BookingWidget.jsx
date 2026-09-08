@@ -46,11 +46,11 @@ export default function BookingWidget({ place }) {
 
     axios
       .post(
-        `${process.env.REACT_APP_baseURL}/application/send`,
+        `/application/send`,
         applicationData,
         {
           headers: {
-            Authorization: `Bearer + ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       )

@@ -46,7 +46,7 @@ const NewMRequest = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_baseURL}/application/bytenant/${user._id}`)
+      .get(`/application/bytenant/${user._id}`)
       .then((response) => {
         setApplications(response.data);
         // console.log("ap", applications);

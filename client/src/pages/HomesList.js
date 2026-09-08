@@ -16,7 +16,7 @@ const HomesList = ({ rented }) => {
   useEffect(() => {
 
     // get all houses and set to the context
-    axios.get('https://house-rental.onrender.com/houses/all')
+    axios.get('/houses/all')
       .then((response) => {
         // console.log("list of house is ");
         // console.log(response.data);

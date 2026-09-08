@@ -12,7 +12,7 @@ const BuyerListerPage = () => {
 
     useEffect(() => {
         // get all houses and set to the context
-        axios.get('https://house-rental.onrender.com/tenant/buyers')
+        axios.get('/tenant/buyers')
             .then((response) => {
                 console.log(' admin is on the tenant list pages ');
                 setBuyerList(response.data);
@@ -25,7 +25,7 @@ const BuyerListerPage = () => {
     const handleActionChange = (userId, action, status, suspend__) => {
         selectRef.current.value = ''
         if (action === 'delete') {
-            axios.delete(`${process.env.REACT_APP_baseURL}/tenant/delete/${userId}`, {
+            axios.delete(`/tenant/delete/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -41,7 +41,7 @@ const BuyerListerPage = () => {
             });
         } else if (action === 'activate') {
             const updatedData = { id: userId, accountStatus: !status }
-            axios.put(`${process.env.REACT_APP_baseURL}/tenant/update`, updatedData, {
+            axios.put(`/tenant/update`, updatedData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -64,7 +64,7 @@ const BuyerListerPage = () => {
             });
         } else if (action === 'suspend') {
             const updatedData = { id: userId, suspended: !suspend__ }
-            axios.put(`${process.env.REACT_APP_baseURL}/tenant/update`, updatedData, {
+            axios.put(`/tenant/update`, updatedData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

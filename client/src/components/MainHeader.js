@@ -1,27 +1,16 @@
 import { NavLink } from "react-router-dom";
 import classes from "./MainHeader.module.css";
 import logo from "../homiee_logo.png";
-import { Fragment, useContext, useEffect } from "react";
+import { Fragment, useContext } from "react";
 import { UserContext } from "../contexts/UserContextProvider";
 import { UserProfile } from "./dashboard/components";
 import { useStateContext } from "../contexts/DashboardContextProvider";
-import RetriveLocallyStoredData from "../pages/Auth/RetriveLocallyStoredData";
 
 
 const MainHeader = () => {
 
-  const { token, user, setToken, setUser } = useContext(UserContext)
+  const { token, user } = useContext(UserContext)
   const { handleClick, isClicked } = useStateContext();
-
-  // retrive locally stored user data 
-  useEffect(() => {
-    const { user_token, user_data } = RetriveLocallyStoredData();
-    console.log('locally stored data is ');
-    console.log('--- user_data', JSON.parse(user_data));
-    setToken(JSON.parse(user_token))
-    setUser(JSON.parse(user_data))
-
-  }, [])
 
   const ProfileSection = () => {
     return (<div className="flex justify-between md:ml-6 md:mr-6 relative">

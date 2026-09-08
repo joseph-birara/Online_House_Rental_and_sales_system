@@ -4,10 +4,14 @@ import { capitalizeFirstLetter } from "../../services/HelperFunction";
 import LoadingOverlay from 'react-loading-overlay-ts';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { persistSession } from "../../utils/auth";
+import { getApiErrorMessage } from "../../utils/apiError";
+import { uploadImageToCloudinary, validateImageFile } from "../../utils/imageUpload";
 
 const UpdateProfilePage = () => {
   // return <div className="my-20 px-8 -2 py-4 shadow-xl rounded-xl mx-3"> Update profile page is this </div>
   const { user, setUser, token } = useContext(UserContext);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   let [loading, setLoading] = useState(false);
 
@@ -30,8 +34,14 @@ const UpdateProfilePage = () => {
   const [imageFile, setImageFile] = useState(null);
 
   const imageHanlder = (e) => {
-    setImageFile(e.target.files[0]); // grab image file
-    setProfileImage(URL.createObjectURL(e.target.files[0])); // create a url for locall rendering
+    const file = e.target.files[0];
+    const validationError = validateImageFile(file);
+    if (validationError) {
+      setErrorMessage(validationError);
+      return;
+    }
+    setImageFile(file);
+    setProfileImage(URL.createObjectURL(file));
   };
 
   useEffect(() => {
@@ -54,26 +64,15 @@ const UpdateProfilePage = () => {
     }
   }, []);
 
-  // upload imag file
   useEffect(() => {
     if (imageFile != null) {
-      const formdata = new FormData();
-      formdata.append("file", imageFile);
-      formdata.append("upload_preset", process.env.REACT_APP_preset_key);
-      axios
-        .post(
-          `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_cloud_name}/image/upload`,
-          formdata
-        )
-        .then((response) => {
-          console.log("image uploaded successfully");
-          setUserData({ ...userData, image: response.data.secure_url });
-          // console.log(response.data.secure_url)
+      uploadImageToCloudinary(imageFile)
+        .then((secureUrl) => {
+          setUserData((prev) => ({ ...prev, image: secureUrl }));
         })
-        .catch((erro) => {
-          console.log("image upload error message ");
+        .catch((error) => {
+          setErrorMessage(getApiErrorMessage(error));
           setLoading(false);
-          console.log(erro);
         });
     }
   }, [imageFile])
@@ -113,30 +112,17 @@ const UpdateProfilePage = () => {
     }
 
     axios
-      .put(`${process.env.REACT_APP_baseURL}/${userRoute}/update`, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .put(`/${userRoute}/update`, payload)
       .then((response) => {
-        console.log("user updated and its data is ********************");
-
-        // console.log(response.data);
         let updatedUserData = response.data
         updatedUserData.userType = user.userType
-
-        // update context and locally stored data on the browser
         setUser(updatedUserData);
-        window.localStorage.setItem("user-data", JSON.stringify(updatedUserData));
+        persistSession(token, updatedUserData);
         navigate("/");
       })
       .catch((error) => {
-        console.log("user update Error-----------------");
-        console.log("toek " + token);
-        console.log("paylod is " + JSON.stringify(payload));
-        console.log(error);
+        setErrorMessage(getApiErrorMessage(error));
         setLoading(false)
-
       });
   };
 
@@ -145,6 +131,11 @@ const UpdateProfilePage = () => {
     user && (
       <div>
         <form onSubmit={handleSubmit}>
+          {errorMessage && (
+            <div className="text-[red] outline outline-[1px] rounded-lg w-4/6 pl-2 mx-auto mt-4">
+              {errorMessage}
+            </div>
+          )}
           <div className="outline-[red] p-3 mx-auto mt-5 flex w-11/12 justify-evenly">
             <div className="  rounded-xl py-2 text-xl outline-[lightgray] w-1/5 my-8 ">
               <label htmlFor="imageselect"

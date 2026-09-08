@@ -1,5 +1,7 @@
-const LogOut = () => {
-     
-}
+import { clearAuth } from "../../utils/auth";
 
-export default LogOut
+const LogOut = () => {
+    clearAuth();
+};
+
+export default LogOut;

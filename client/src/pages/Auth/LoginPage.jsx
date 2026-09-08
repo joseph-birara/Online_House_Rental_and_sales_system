@@ -3,83 +3,19 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import LoadingOverlay from 'react-loading-overlay-ts';
 import { UserContext } from "../../contexts/UserContextProvider";
-import { UtilityContext } from "../../contexts/UtilityContextProvide";
+import { getApiErrorMessage } from "../../utils/apiError";
 
 export default function LoginPage({ isAdmin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [currentUserChoice, setCurrentUserChoice] = useState("");
-  const { setUser, setToken } = useContext(UserContext);
+  const { login } = useContext(UserContext);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('')
   let [loading, setLoading] = useState(false);
   useEffect(() => {
-    setCurrentUserChoice("admin");
+    setCurrentUserChoice(isAdmin ? "admin" : "");
   }, [isAdmin])
-
-  // if (isAdmin) {
-  //   setCurrentUserChoice("admin");
-  // }
-
-  // for admin purpose
-  const { setOwnersList, setTenatList, setHousesList, setBuyerList, setAdminList, } = useContext(UtilityContext);
-  useEffect(() => {
-    // get all tenants
-    axios
-      .get("https://house-rental.onrender.com/tenant/all")
-      .then((response) => {
-        console.log(" admin is logged in and tenant is ");
-        const both = response.data;
-
-        // set tenant
-        const tenant = both.filter((te) => te.userType === "tenant");
-        setTenatList(tenant);
-
-        // set buyer
-        const buyer = both.filter((te) => te.userType === "buyer");
-        setBuyerList(buyer);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    // get all ADMINS
-    axios
-      .get("https://house-rental.onrender.com/admin/all")
-      .then((response) => {
-        console.log(" list of admins ");
-        console.log(response.data);
-        setAdminList(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    // get all owners
-    axios
-      .get("https://house-rental.onrender.com/owner/all")
-      .then((response) => {
-        console.log(" admin is logged in and owner is ");
-        console.log(response.data);
-        setOwnersList(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    /// load home data what ever the user is
-    axios
-      .get("https://house-rental.onrender.com/houses/all")
-      .then((response) => {
-        console.log(" admin is logged in and houses is ");
-        console.log(response.data);
-        setHousesList(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   // for error message
   useEffect(() => {
@@ -108,36 +44,23 @@ export default function LoginPage({ isAdmin }) {
       routingLink = 'tenant'
     }
 
-    console.log(" email : " + email);
-    console.log(" password : " + password);
-    console.log(" userType : " + USERTYPE);
-    console.log('routing link ' + routingLink);
-
-    if (currentUserChoice) {
+    if (!currentUserChoice) {
+      setErrorMessage("Please select your account type.");
+      setLoading(false);
+      return;
+    }
 
       axios
-        .post(`https://house-rental.onrender.com/${routingLink}/login`, {
+        .post(`/${routingLink}/login`, {
           email: email,
           password: password,
           userType: USERTYPE
         })
         .then((response) => {
           if (response.data.token) {
-
-            // grab the data and assign user type too.
             let userData = response.data.user;
             userData.userType = currentUserChoice;
-
-            console.log("success logged in");
-            console.log("token is " + response.data.token);
-
-            // save token and user data
-            setToken(response.data.token);
-            setUser(userData);
-
-            // save the data locally
-            window.localStorage.setItem("user-token", JSON.stringify(response.data.token));
-            window.localStorage.setItem("user-data", JSON.stringify(userData));
+            login(response.data.token, userData);
             navigate("/");
           } else {
             setErrorMessage(response.data);
@@ -146,12 +69,9 @@ export default function LoginPage({ isAdmin }) {
 
         })
         .catch((error) => {
-          console.log(" error message ");
-          setErrorMessage( error.message)
+          setErrorMessage(getApiErrorMessage(error))
           setLoading(false);
-          console.log(error);
         });
-    }
   }
 
   return (

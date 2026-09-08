@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import LoadingOverlay from 'react-loading-overlay-ts';
+import { getApiErrorMessage } from "../../utils/apiError";
 
 export default function PasswordResetPage({ isAdmin }) {
     const { accountType } = useParams('')
@@ -32,20 +33,19 @@ export default function PasswordResetPage({ isAdmin }) {
 
         // user types are only two so
         // all buyers should be tenants
-        console.log(" email ****: " + email);
-        console.log(" userType ****: " + accountType);
+        if (newpassword.length < 8) {
+            setErrorMessage("Password must be at least 8 characters.");
+            setLoading(false);
+            return;
+        }
 
         axios
-            .post(`https://house-rental.onrender.com/${accountType}/newPassword`, {
+            .post(`/${accountType}/newPassword`, {
                 email: email, token: token, password: newpassword
             })
             .then((response) => {
-
-                // console.log("the response is--------------------");
-                // console.log(response);
                 if (response.data === 'Password reset successful') {
                     navigate("/login/");
-                    console.log("password reset is done-----------");
                 } else {
                     setErrorMessage(response.data);
                     setLoading(false);
@@ -53,10 +53,8 @@ export default function PasswordResetPage({ isAdmin }) {
 
             })
             .catch((error) => {
-                console.log(" error message ");
-                setErrorMessage( error.message)
+                setErrorMessage(getApiErrorMessage(error))
                 setLoading(false);
-                console.log(error);
             });
     }
 
@@ -91,8 +89,9 @@ export default function PasswordResetPage({ isAdmin }) {
                         required
                     />
                     <input
-                        type="text"
-                        placeholder="new password"
+                        type="password"
+                        minLength={8}
+                        placeholder="new password (min 8 characters)"
                         value={newpassword}
                         onChange={(ev) => setnewPassword(ev.target.value)}
                         required

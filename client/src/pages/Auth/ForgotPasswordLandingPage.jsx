@@ -2,17 +2,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import LoadingOverlay from 'react-loading-overlay-ts';
+import { getApiErrorMessage } from "../../utils/apiError";
 
 export default function ForgotPasswordLandingPage({ isAdmin }) {
   const [email, setEmail] = useState("");
-  const [currentUserChoice, setCurrentUserChoice] = useState("");
+  const [currentUserChoice, setCurrentUserChoice] = useState(isAdmin ? "admin" : "");
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('')
   let [loading, setLoading] = useState(false);
 
-  // save user info on local storage
-
-  // for admin purpose
+  useEffect(() => {
+    if (isAdmin) {
+      setCurrentUserChoice("admin");
+    }
+  }, [isAdmin]);
 
   // for error message
   useEffect(() => {
@@ -37,33 +40,28 @@ export default function ForgotPasswordLandingPage({ isAdmin }) {
     if (currentUserChoice === 'buyer') {
       backendRoutingPath = 'tenant'
     }
-    console.log(" email ****: " + email);
-    console.log(" userType ****: " + currentUserChoice);
-    console.log('routing link *****' + backendRoutingPath);
+    if (!backendRoutingPath) {
+      setErrorMessage("Please select your account type.");
+      setLoading(false);
+      return;
+    }
 
     axios
-      .post(`https://house-rental.onrender.com/${backendRoutingPath}/reset`, {
+      .post(`/${backendRoutingPath}/reset`, {
         email: email
       })
       .then((response) => {
-
-        // console.log("the response is--------------------");
-        // console.log(response);
         if (response.data === 'success') {
           navigate(`/forgetpassword/reset/${backendRoutingPath}`);
-          console.log("password reset is done-----------");
         } else {
           setErrorMessage(response.data);
-          console.log(response.data);
           setLoading(false);
         }
 
       })
       .catch((error) => {
-        console.log(" error message ");
-        setErrorMessage(error.message)
+        setErrorMessage(getApiErrorMessage(error))
         setLoading(false);
-        console.log(error);
       });
   }
 

@@ -2,6 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import LoadingOverlay from 'react-loading-overlay-ts';
+import { getApiErrorMessage } from "../../utils/apiError";
+import { setEmailVerifyPath } from "../../utils/auth";
+import { uploadImageToCloudinary, validateImageFile } from "../../utils/imageUpload";
 
 export default function RegisterPage() {
   const [userData, setUserData] = useState({
@@ -26,58 +29,47 @@ export default function RegisterPage() {
   let [loading, setLoading] = useState(false);
 
   const imageHanlder = (e) => {
-    setImageFile(e.target.files[0]); // grab image file
-    setProfileImage(URL.createObjectURL(e.target.files[0])); // create a url for locall rendering
+    const file = e.target.files[0];
+    const validationError = validateImageFile(file);
+    if (validationError) {
+      setErrorMessage(validationError);
+      return;
+    }
+    setImageFile(file);
+    setProfileImage(URL.createObjectURL(file));
   };
 
   async function registerUser(e) {
     e.preventDefault();
-    setLoading(true); // set teh loading overlay to true
-    // console.log(imageFile);
+    setLoading(true);
 
-    // upload image and grab the link
-    if (imageFile != null) {
-      const formdata = new FormData();
-      formdata.append("file", imageFile);
-      formdata.append("upload_preset", process.env.REACT_APP_preset_key);
-      axios
-        .post(
-          `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_cloud_name}/image/upload`,
-          formdata
-        )
-        .then((response) => {
-          console.log("image uploaded successfully");
-          setUserData({ ...userData, image: response.data.secure_url });
-          // console.log(response.data.secure_url)
-        })
-        .catch((erro) => {
-          console.log("image upload error message ");
-          setErrorMessage(' Image upload Error.');
-          setLoading(false);
-          console.log(erro);
-        });
+    if (userData.password.length < 8) {
+      setErrorMessage("Password must be at least 8 characters.");
+      setLoading(false);
+      return;
     }
 
-    // register the user to the backend and forwared user to activateEmail page
-    const backendRoutingPath = userData.userType === "buyer" ? "tenant" : userData.userType;
-    axios
-      .post(`${process.env.REACT_APP_baseURL}/${backendRoutingPath}/register`, userData)
-      .then((response) => {
-        // console.log("user register successfully ********************");
+    let payload = { ...userData };
+    try {
+      if (imageFile != null) {
+        payload.image = await uploadImageToCloudinary(imageFile);
+        setUserData(payload);
+      }
 
-        if (response.data === "check your email") {
-          navigate("/activateEmail");
-        } else {
-          setErrorMessage(response.data)
-          setLoading(false);
-        }
+      const backendRoutingPath = payload.userType === "buyer" ? "tenant" : payload.userType;
+      const response = await axios.post(`/${backendRoutingPath}/register`, payload);
 
-      }).catch((error) => {
-        console.log("user registion Error-----------------");
-        console.log(error);
-        setErrorMessage(error.message)
-        setLoading(false)
-      });
+      if (response.data === "check your email") {
+        setEmailVerifyPath(backendRoutingPath);
+        navigate("/activateEmail");
+      } else {
+        setErrorMessage(response.data);
+        setLoading(false);
+      }
+    } catch (error) {
+      setErrorMessage(getApiErrorMessage(error));
+      setLoading(false);
+    }
   }
 
   return (
@@ -103,6 +95,7 @@ export default function RegisterPage() {
             required
             type="file"
             id="image-input"
+            accept="image/png,image/jpeg"
             className="hidden"
             onChange={imageHanlder}
           />
@@ -197,7 +190,8 @@ export default function RegisterPage() {
               <input
                 type="password"
                 required
-                placeholder="password"
+                minLength={8}
+                placeholder="password (min 8 characters)"
                 value={userData.password}
                 onChange={(e) =>
                   setUserData({ ...userData, password: e.target.value })

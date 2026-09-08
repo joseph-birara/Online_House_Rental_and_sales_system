@@ -10,7 +10,7 @@ const PaymentSuccessMessage = () => {
   useEffect(() => {
 
     // set applications list 
-    axios.get(`${process.env.REACT_APP_baseURL}/application/bytenant/${user._id}`)
+    axios.get(`/application/bytenant/${user._id}`)
       .then((response) => {
         setApplications(response.data);
         // console.log("ap", applications);

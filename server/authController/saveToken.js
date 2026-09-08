@@ -1,10 +1,8 @@
-// In tokenService.js module
+const crypto = require("crypto");
 const tokenModel = require("../models/authModel");
 
 async function generateVerificationToken(email) {
-  // random token
-  const verificationToken =
-    Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+  const verificationToken = crypto.randomInt(100000, 1000000);
 
   const expiryDate = new Date(Date.now() + 3600000); // set expiry to 1 hour from now
   const newToken = new tokenModel({

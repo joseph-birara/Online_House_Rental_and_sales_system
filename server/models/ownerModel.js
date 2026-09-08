@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const hidePassword = require("../utils/hidePassword");
 const Schema = mongoose.Schema;
 
 const OwnerSchema = new Schema(
@@ -84,5 +85,7 @@ const OwnerSchema = new Schema(
   },
   { timestamps: true }
 );
+
+hidePassword(OwnerSchema);
 
 module.exports = mongoose.model("HomeOwner", OwnerSchema);

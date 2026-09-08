@@ -8,8 +8,9 @@ const { generateVerificationToken, verifyToken } = require("./saveToken");
 const initiatePasswordReset = async (req, res, userModel) => {
   const { email } = req.body;
   const user = await userModel.findOne({ email });
-  console.log("emial", email);
-  console.log("user", user);
+  if (!user) {
+    return res.status(200).send("success");
+  }
 
   try {
     // save the token

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const hidePassword = require("../utils/hidePassword");
 const Schema = mongoose.Schema;
 
 const AdminSchema = new Schema(
@@ -42,5 +43,7 @@ const AdminSchema = new Schema(
   },
   { timestamps: true }
 );
+
+hidePassword(AdminSchema);
 
 module.exports = mongoose.model("Admin", AdminSchema);

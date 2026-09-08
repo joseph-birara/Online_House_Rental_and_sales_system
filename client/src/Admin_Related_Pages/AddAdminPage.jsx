@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import axios from "axios";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
+import { getApiErrorMessage } from "../utils/apiError";
+import { uploadImageToCloudinary, validateImageFile } from "../utils/imageUpload";
 
 export default function AddAdminPage() {
 
@@ -15,56 +17,43 @@ export default function AddAdminPage() {
   })
   const [profileImage, setProfileImage] = useState('https://res.cloudinary.com/dmegiw31y/image/upload/v1687634119/HomeRental/alt-image_rn3zbk.webp')
   const [imageFile, setImageFile] = useState(null)
+  const [errorMessage, setErrorMessage] = useState("")
   const navigate = useNavigate();
 
   const { AdminsList, setAdminList } = useContext(UtilityContext)
 
   const imageHanlder = (e) => {
-    setImageFile(e.target.files[0])// grab image file
-    setProfileImage(URL.createObjectURL(e.target.files[0])) // create a url for locall rendering
+    const file = e.target.files[0]
+    const validationError = validateImageFile(file)
+    if (validationError) {
+      setErrorMessage(validationError)
+      return
+    }
+    setImageFile(file)
+    setProfileImage(URL.createObjectURL(file))
   }
 
   async function registerUser(e) {
     e.preventDefault();
+    setErrorMessage("")
 
-    let adminAddedData = userData
-    if (imageFile != null) {
-      const formdata = new FormData();
-      formdata.append('file', imageFile);
-      formdata.append('upload_preset', process.env.REACT_APP_preset_key);
-      axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_cloud_name}/image/upload`, formdata)
-        .then(response => {
-          console.log("Image uploaded successfully");
-          console.log('added data is all about this');
-          adminAddedData.image = response.data.secure_url
-
-          // Register the user after image upload
-          registerUser(adminAddedData);
-        })
-        .catch(erro => {
-          console.log("Image upload error message");
-          console.log(erro);
-        });
-    } else {
-      // No image selected, directly register the user
-      registerUser(userData);
+    if (userData.password.length < 8) {
+      setErrorMessage("Password must be at least 8 characters.")
+      return
     }
 
-    // register user method
-    function registerUser(updatedUserData) {
-      axios.post(`${process.env.REACT_APP_baseURL}/admin/add`, updatedUserData)
-        .then((response) => {
-          console.log("Admin added successfully");
-          console.log(response.data.user);
-          setAdminList([...AdminsList, response.data.user]);
-          navigate('/admin/users/admins');
-        })
-        .catch((error) => {
-          console.log("Error on registering admin");
-          console.log(error);
-        });
-    }
+    try {
+      const payload = { ...userData }
+      if (imageFile != null) {
+        payload.image = await uploadImageToCloudinary(imageFile)
+      }
 
+      const response = await axios.post(`/admin/add`, payload)
+      setAdminList([...(AdminsList || []), response.data.user])
+      navigate('/admin/users/admins')
+    } catch (error) {
+      setErrorMessage(getApiErrorMessage(error))
+    }
   }
 
   return (
@@ -85,20 +74,27 @@ export default function AddAdminPage() {
             <label htmlFor="image-input" className="  cursor-pointer bg-lightBlue mt-2 text-white p-1.5 hover:bg-lbHover  rounded-md">
               set Profile Picture
             </label>
-            <input type="file" id="image-input" className="hidden" onChange={imageHanlder} />
+            <input type="file" id="image-input" accept="image/png,image/jpeg" className="hidden" onChange={imageHanlder} />
 
           </div>
 
 
           <form className="max-w-md mx-auto" onSubmit={registerUser}>
+            {errorMessage && (
+              <div className="text-[red] outline outline-[1px] rounded-lg pl-2 mb-3">
+                {errorMessage}
+              </div>
+            )}
             <input
               type="text"
+              required
               placeholder="first name"
               value={userData.name}
               onChange={e => setUserData({ ...userData, name: e.target.value })}
             />
             <input
               type="text"
+              required
               placeholder="last name"
               value={userData.lastName}
               onChange={(e) => setUserData({ ...userData, lastName: e.target.value })}
@@ -106,63 +102,29 @@ export default function AddAdminPage() {
 
             <input
               type="number"
+              required
               placeholder="phone"
               value={userData.phone}
               onChange={(e) => setUserData({ ...userData, phone: e.target.value })}
             />
             <input
               type="email"
+              required
               placeholder="example@email.com"
               value={userData.email}
               onChange={(e) => setUserData({ ...userData, email: e.target.value })}
             />
             <input
               type="password"
-              placeholder="password"
+              required
+              minLength={8}
+              placeholder="password (min 8 characters)"
               value={userData.password}
               onChange={(e) => setUserData({ ...userData, password: e.target.value })}
             />
-            {/* <div className="my-4">
-            <p className="font-medium">Who are you?</p>
-            <div className="flex gap-4">
-              <label>
-                <input
-                  type="radio"
-                  name="owner"
-                  checked={userData.userType === "owner"}
-                  onChange={(e) => setUserData({ ...userData, userType: "owner" })}
-                />
-                <span>Homeowner</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="tenant"
-                  checked={userData.userType === "tenant"}
-                  onChange={(e) => setUserData({ ...userData, userType: "tenant" })}
-                />
-                <span>Tenant</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="buyer"
-                  checked={userData.userType === "buyer"}
-                  onChange={(e) => setUserData({ ...userData, userType: "buyer" })}
-                />
-                <span>Buyer</span>
-              </label>
-            </div>
-          </div> */}
             <button className="primary bg-lightBlue hover:bg-lbHover mt-4">
               Add Admin
             </button>
-            {/* <div className="text-center py-2 text-gray-500">
-            Already a member?{" "}
-            <Link className="underline text-black" to={"/login"}>
-              Login
-            </Link>
-          </div> */}
           </form>
         </div>
       </div>

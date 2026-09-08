@@ -74,7 +74,7 @@ export const H_HOME = ({ house, forAdmin }) => {
             console.log(house._id);
             axios
               .delete(
-                `${process.env.REACT_APP_baseURL}/houses/delete/${house._id}`,
+                `/houses/delete/${house._id}`,
                 {
                   headers: {
                     Authorization: `Bearer ${token}`,

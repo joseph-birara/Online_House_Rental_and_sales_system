@@ -1,14 +1,10 @@
-let user_token = ''
-let user_data = ''
+import { getStoredSession } from "../../utils/auth";
+
 const RetriveLocallyStoredData = () => {
-
-    // Retrieve data from local storage
-    user_token = window.localStorage.getItem('user-token')
-    user_data = window.localStorage.getItem('user-data')
-
-    // Return any values or functions you want to expose to the component
+    const { token, user } = getStoredSession();
     return {
-        user_token, user_data
+        user_token: token ? JSON.stringify(token) : null,
+        user_data: user ? JSON.stringify(user) : null,
     };
 };
 

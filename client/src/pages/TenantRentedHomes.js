@@ -58,7 +58,7 @@ const TenantRentedHomes = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_baseURL}/application/bytenant/${user._id}`)
+      .get(`/application/bytenant/${user._id}`)
       .then((response) => {
         setApplications(response.data);
         // console.log("ap", applications);
@@ -72,9 +72,9 @@ const TenantRentedHomes = () => {
 
     console.log(appId);
     console.log(homeId);
-    axios.put(`${process.env.REACT_APP_baseURL}/application/update`, { id: appId, status: 'completed' }, {
+    axios.put(`/application/update`, { id: appId, status: 'completed' }, {
       headers: {
-        Authorization: `Bearer + ${token}`,
+        Authorization: `Bearer ${token}`,
       }
     }).then((response) => {
       console.log(' Applicatioin is accepted successfuly ');
@@ -121,7 +121,7 @@ const TenantRentedHomes = () => {
     console.log(payload);
 
     axios
-      .post(`https://house-rental.onrender.com/payment/pay`, payload, {
+      .post(`/payment/pay`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

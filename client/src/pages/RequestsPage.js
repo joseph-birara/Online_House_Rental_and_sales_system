@@ -68,7 +68,7 @@ const RequestsPage = () => {
 
   useEffect(() => {
     axios
-      .get("https://house-rental.onrender.com/maintenance/houseowner/" + user._id)
+      .get("/maintenance/houseowner/" + user._id)
       .then((response) => {
         setMRequests(response.data.requests);
       })
@@ -81,7 +81,7 @@ const RequestsPage = () => {
     console.log(requestData);
 
     axios
-      .put(`https://house-rental.onrender.com/maintenance/edit`, requestData)
+      .put(`/maintenance/edit`, requestData)
       .then((response) => {
         console.log("Request edited succesfully");
         const updatedMReqs = maintenanceRequests.map((mReq) => {

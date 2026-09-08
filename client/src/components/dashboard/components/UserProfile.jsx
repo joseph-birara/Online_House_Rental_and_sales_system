@@ -1,16 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { MdOutlineCancel } from "react-icons/md";
 import { useStateContext } from "../../../contexts/DashboardContextProvider";
 import { BsCurrencyDollar, BsShield } from "react-icons/bs";
 import { UserContext } from "../../../contexts/UserContextProvider";
 import { MdLogout } from 'react-icons/md';
-import { Navigate, useNavigate } from "react-router-dom";
-import LogOut from "../../../pages/Auth/LogOutSession";
+import { useNavigate } from "react-router-dom";
 
 
 const UserProfile = () => {
   const { setIsClicked, initialState } = useStateContext();
-  const { user, setToken, setUser } = useContext(UserContext)
+  const { user, logout } = useContext(UserContext)
   const navigate = useNavigate();
 
   const userProfileData = [
@@ -51,13 +50,9 @@ const UserProfile = () => {
   const HandleClick = (title) => {
 
     if (title === 'Log Out') {
-      window.localStorage.clear()
-      setIsClicked(initialState) // remove the profile icon menu
+      logout()
+      setIsClicked(initialState)
       navigate('/')
-
-      // clear the states saved before
-      setToken('')
-      setUser('')
     } else if (title === 'My Profile') {
       navigate('/updateProfile')
       setIsClicked(initialState) // remove the profile icon menu

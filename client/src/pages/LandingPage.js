@@ -7,21 +7,7 @@ import img5 from "./images/hp5.webp";
 import img6 from "./images/hp3.webp";
 import LatestHomes from "../components/home/LatestHomes";
 import ImageSlider from "../components/ImageSlider";
-import { useContext, useEffect } from "react";
-import RetriveLocallyStoredData from "./Auth/RetriveLocallyStoredData";
-import { UserContext } from "../contexts/UserContextProvider";
-
 const LandingPage = () => {
-
-  const { setToken, setUser } = useContext(UserContext)
-  useEffect(() => {
-    const { user_token, user_data } = RetriveLocallyStoredData();
-    console.log('locally stored data is ');
-    console.log('--- user_data', JSON.parse(user_data));
-    setToken(JSON.parse(user_token))
-    setUser(JSON.parse(user_data))
-
-  }, [])
 
   const img = {
     width: "100%",

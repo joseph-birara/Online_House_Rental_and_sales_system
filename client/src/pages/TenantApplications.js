@@ -13,9 +13,9 @@ const Application = ({ data }) => {
     // const updatedAppplications = applications.filter((AAA) => AAA._id !== app_id);
     // setApplications(updatedAppplications)
 
-    axios.delete(`https://house-rental.onrender.com/application/delete/${app_id}`, {
+    axios.delete(`/application/delete/${app_id}`, {
       headers: {
-        Authorization: `Bearer + ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {
@@ -80,7 +80,7 @@ const TenantApplications = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_baseURL}/application/bytenant/${user._id}`)
+      .get(`/application/bytenant/${user._id}`)
       .then((response) => {
 
         setApplications(response.data);

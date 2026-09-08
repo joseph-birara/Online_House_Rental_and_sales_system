@@ -7,7 +7,7 @@ const ListOfApplications = () => {
 
     const [applications, setAplications] = useState([])
     useEffect(() => {
-        axios.get('https://house-rental.onrender.com/application/visit')
+        axios.get('/application/visit')
             .then((response) => {
                 setAplications(response.data);
             })

@@ -55,7 +55,7 @@ const HomeDetails = ({ forAdmin }) => {
 
       axios
         .put(
-          `${process.env.REACT_APP_baseURL}/houses/update`,
+          `/houses/update`,
           houseUpdatedData,
           {
             headers: {
@@ -82,7 +82,7 @@ const HomeDetails = ({ forAdmin }) => {
 
       axios
         .put(
-          `${process.env.REACT_APP_baseURL}/houses/update`,
+          `/houses/update`,
           houseUpdatedData,
           {
             headers: {

@@ -26,6 +26,7 @@ const Footer = () => {
               <a
                 href="mailto:house.rental.et@gmail.com?subject=User%20FeedBack&body=Hi%20there,%0D%0A%0D%0AHow%20can%20we%20help%20you?."
                 target="_blank"
+                rel="noopener noreferrer"
                 className="bg-blueBlack p-2 rounded-md hover:bg-main-dark-bg"
               >
                 Email admins

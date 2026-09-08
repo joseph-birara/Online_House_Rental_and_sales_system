@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingOverlay from "react-loading-overlay-ts";
+import { clearEmailVerifyPath, getEmailVerifyPath } from "../../utils/auth";
+import { getApiErrorMessage } from "../../utils/apiError";
 
 const VerifyEmail = () => {
     const { id } = useParams();
@@ -21,39 +23,33 @@ const VerifyEmail = () => {
         }
     }, [errorMessage]);
 
-    const handleClick = () => {
+    const handleClick = async () => {
         setLoading(true);
-        console.log("button is clicked");
-        console.log(" the id is " + id);
-        if (id) {
-            const routingPath = window.localStorage.getItem('email-verify-path');
-            console.log('-----------------------');
-            console.log(routingPath);
-            if (routingPath) {
-                const encodedPath = encodeURIComponent(
-                    routingPath.replace(/"/g, "") // Remove double quotes from routingPath
-                );
-                console.log(`https://house-rental.onrender.com/${encodedPath}/verify-email/${id}`);
-                axios
-                    .get(`https://house-rental.onrender.com/${encodedPath}/verify-email/${id}`)
-                    .then((response) => {
-                        if (response.data === "Email verified successfully.") {
-                            navigate("/login/");
-                            window.localStorage.setItem('email-verify-path', JSON.stringify(''));
+        if (!id) {
+            setErrorMessage("Verification link is invalid.");
+            setLoading(false);
+            return;
+        }
 
-                        } else {
-                            setErrorMessage(response.data);
-                            setLoading(false);
-                        }
-                        console.log(response);
-                    })
-                    .catch((error) => {
-                        console.log("Error verifying email");
-                        console.log(error);
-                        setErrorMessage(error.message);
-                        setLoading(false);
-                    });
+        const storedPath = getEmailVerifyPath();
+        const paths = storedPath ? [storedPath] : ["tenant", "owner"];
+
+        try {
+            let lastMessage = "Unable to verify email.";
+            for (const path of paths) {
+                const response = await axios.get(`/${path}/verify-email/${id}`);
+                if (response.data === "Email verified successfully.") {
+                    clearEmailVerifyPath();
+                    navigate("/login/");
+                    return;
+                }
+                lastMessage = response.data;
             }
+            setErrorMessage(lastMessage);
+        } catch (error) {
+            setErrorMessage(getApiErrorMessage(error));
+        } finally {
+            setLoading(false);
         }
     };
 

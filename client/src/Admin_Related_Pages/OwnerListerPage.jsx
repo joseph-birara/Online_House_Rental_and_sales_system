@@ -11,7 +11,7 @@ const OwnerListerPage = () => {
     const [selectedOption, setSelectionOption] = useState('')
     useEffect(() => {
         // get all houses and set to the context
-        axios.get('https://house-rental.onrender.com/owner/all')
+        axios.get('/owner/all')
             .then((response) => {
                 console.log(' admin is on the tenant list pages ');
                 setOwnersList(response.data);
@@ -25,7 +25,7 @@ const OwnerListerPage = () => {
 
         setSelectionOption('')
         if (action === 'delete') {
-            axios.delete(`${process.env.REACT_APP_baseURL}/owner/delete/${USERID}`, {
+            axios.delete(`/owner/delete/${USERID}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
@@ -50,7 +50,7 @@ const OwnerListerPage = () => {
                 ownerData.suspended = !isSuspended;
             }
 
-            axios.put(`https://house-rental.onrender.com/owner/update`, ownerData, {
+            axios.put(`/owner/update`, ownerData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }

@@ -47,6 +47,7 @@ import BuyerApplications from "./pages/BuyerApplications";
 import OwnerRentApplication from "./pages/OwnerRentApplication";
 import OwnerBuyApplications from "./pages/OwnerBuyApplications";
 import ListOfApplications from "./Admin_Related_Pages/ListOfAppications";
+import { GuestRoute, ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -59,12 +60,12 @@ function App() {
 
               <Routes>
                 <Route path="/" element={<LandingPage />} />
-                <Route path="/adminlogin" element={<LoginPage isAdmin={true} />} />
-                <Route path="/login" element={<LoginPage isAdmin={false} />} />
-                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/adminlogin" element={<GuestRoute><LoginPage isAdmin={true} /></GuestRoute>} />
+                <Route path="/login" element={<GuestRoute><LoginPage isAdmin={false} /></GuestRoute>} />
+                <Route path="/register" element={<GuestRoute><RegisterPage /></GuestRoute>} />
                 <Route path="/buy" element={<Buy />} />
                 <Route path="/rent" element={<HomesListing />} />
-                <Route path="/updateProfile" element={<UpdateProfilePage />} />
+                <Route path="/updateProfile" element={<ProtectedRoute><UpdateProfilePage /></ProtectedRoute>} />
                 <Route path="/homeDetails/:id" element={<HomeDetails />} />
                 <Route path="/team" element={<Team />} />
                 <Route path="/service" element={<Services />} />
@@ -80,13 +81,13 @@ function App() {
                 <Route path="/forgetpassword/reset/:accountType" element={<PasswordResetPage />} />
 
                 {/* for payment  */}
-                <Route path="payment/success" element={<PaymentSuccessMessage />} />
+                <Route path="payment/success" element={<ProtectedRoute roles={['tenant', 'buyer']}><PaymentSuccessMessage /></ProtectedRoute>} />
                 <Route path="payment/fail" element={<PaymentFailedMessage />} />
-                <Route path="payment/verify/:appli_id" element={<ValidatePayment />} />
+                <Route path="payment/verify/:appli_id" element={<ProtectedRoute roles={['tenant', 'buyer']}><ValidatePayment /></ProtectedRoute>} />
 
 
                 {/* HomeOwner Routes */}
-                <Route path="/homeOwner" element={<HomeownerDashboard />} >
+                <Route path="/homeOwner" element={<ProtectedRoute roles={['owner']}><HomeownerDashboard /></ProtectedRoute>} >
                   <Route path="homes">
                     <Route path="onListing" element={<HomesList rented={false} />} />
                     <Route path="onListing/:id" element={<PlacesFormPage />} />
@@ -101,7 +102,7 @@ function App() {
                 </Route>
 
                 {/* Admin Routes */}
-                <Route path="/admin" element={<AdminDashboard />} >
+                <Route path="/admin" element={<ProtectedRoute roles={['admin']}><AdminDashboard /></ProtectedRoute>} >
                   <Route path="homes">
                     <Route path="onListing" element={<HomesListPage />} />
                     <Route path="rented" element={<HomesListPage DisplayRented={true} />} />
@@ -113,15 +114,15 @@ function App() {
                     <Route path="homeOwners" element={<OwnerListerPage />} />
                     <Route path="tenants" element={<TenantListerPage />} />
                     <Route path="buyers" element={<BuyerListerPage />} />
-                    <Route path="admins" element={<AdminListerPage />} />
-                    <Route path="addAdmin" element={<AddAdminPage />} />
+                    <Route path="admins" element={<ProtectedRoute roles={['admin']} requireSuperAdmin><AdminListerPage /></ProtectedRoute>} />
+                    <Route path="addAdmin" element={<ProtectedRoute roles={['admin']} requireSuperAdmin><AddAdminPage /></ProtectedRoute>} />
                   </Route>
 
                   <Route path="reports" element={<Test />} />
                 </Route>
 
                 {/* Tenant Routes */}
-                <Route path="/tenant" element={<TenantDashboard />} >
+                <Route path="/tenant" element={<ProtectedRoute roles={['tenant']}><TenantDashboard /></ProtectedRoute>} >
                   <Route path="applications" element={<TenantApplications />} />
                   <Route path="rentedHomes" element={<TenantRentedHomes />} />
                   <Route path="mRequest" element={<MaintenanceRequests />} />
@@ -130,7 +131,7 @@ function App() {
                 </Route>
 
                 {/*  Buyer page  and there should be a Buyer dashboard*/}
-                <Route path="/buyer" element={<BuyerDashBoard />} >
+                <Route path="/buyer" element={<ProtectedRoute roles={['buyer']}><BuyerDashBoard /></ProtectedRoute>} >
                   <Route path="applications" element={<BuyerApplications />} />
                 </Route>
 

@@ -29,7 +29,7 @@ const RequestForm = () => {
       };
       // const mRequestData = {}
       axios
-        .post(`https://house-rental.onrender.com/maintenance/send`, mRequestData, {
+        .post(`/maintenance/send`, mRequestData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -56,7 +56,7 @@ const MaintenanceRequests = () => {
 
   useEffect(() => {
     axios
-      .get("https://house-rental.onrender.com/maintenance/tenant/" + user._id)
+      .get("/maintenance/tenant/" + user._id)
       .then((response) => {
         console.log("retrieve succesful");
         setMRequests(response.data.requests);

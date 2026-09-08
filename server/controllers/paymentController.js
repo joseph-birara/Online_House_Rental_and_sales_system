@@ -1,9 +1,10 @@
 const paymentModel = require("../models/paymentModel");
-var request = require("request");
+const axios = require("axios");
 const generateRandomCharacterSet = require("../authController/randomCharater");
 const applicationModel = require("../models/applicantModel");
 const smsService = require("../authController/smsService");
 const moment = require("moment");
+const safeUpdate = require("../utils/safeUpdate");
 
 //functions to process pyment
 // application id from front end is used as unique character her
@@ -32,33 +33,30 @@ const pay = async (req, res) => {
     randomChar: randomChar,
     applicationId: applicationId,
   });
-  var options = {
-    method: "POST",
-    url: "https://api.chapa.co/v1/transaction/initialize",
-    headers: {
-      Authorization: "Bearer CHASECK_TEST-1wysCA5FZesSOAlsuCc9bHiNzFU7Y9bp",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      amount: amount,
-      currency: "ETB",
-      email: email,
-      first_name: name,
-      last_name: lastName,
-      phone_number: "0908080808",
-      tx_ref: applicationId + randomChar,
-      callback_url: "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
-      return_url: `http://localhost:3000/payment/verify/${applicationId}`,
-      "customization[title]": "Payment for my favourite merchant",
-      "customization[description]": "I love online payments",
-    }),
-  };
-  request(options, function (error, response) {
-    if (error) {
-      console.log(error);
-      return res.status(500).json({ status: "failed", data: null });
-    }
-    const responseBody = JSON.parse(response.body);
+  try {
+    const response = await axios.post(
+      "https://api.chapa.co/v1/transaction/initialize",
+      {
+        amount: amount,
+        currency: "ETB",
+        email: email,
+        first_name: name,
+        last_name: lastName,
+        phone_number: "0908080808",
+        tx_ref: applicationId + randomChar,
+        callback_url: "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
+        return_url: `http://localhost:3000/payment/verify/${applicationId}`,
+        "customization[title]": "Payment for my favourite merchant",
+        "customization[description]": "I love online payments",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.CHAPA_SECRET_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const responseBody = response.data;
     console.log(responseBody);
     if (responseBody.status == "failed") {
       return res.status(201).json({ status: "failed", data: null });
@@ -69,7 +67,10 @@ const pay = async (req, res) => {
       data: responseBody.data.checkout_url,
       applicationId: applicationId,
     });
-  });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ status: "failed", data: null });
+  }
 
   // user identify by the cookie
 
@@ -148,7 +149,7 @@ const editPayment = async (req, res) => {
   try {
     const updateResult = await paymentModel.updateOne(
       { _id: id },
-      { ...req.body }
+      safeUpdate(req.body)
     );
     if (!updateResult) {
       return res.status(401).json({ message: "information not found " });

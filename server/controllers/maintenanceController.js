@@ -1,6 +1,7 @@
 const maintenanceModel = require("../models/maintenanceModel");
 const ownerModel = require("../models/ownerModel");
 const tenantModel = require("../models/tenantModel");
+const safeUpdate = require("../utils/safeUpdate");
 
 //send request
 
@@ -35,9 +36,7 @@ const editMaintenace = async (req, res) => {
   try {
     const request_ = await maintenanceModel.findOneAndUpdate(
       { _id: id },
-      {
-        ...req.body,
-      }
+      safeUpdate(req.body)
     );
 
     if (!request_) {

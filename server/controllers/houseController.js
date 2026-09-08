@@ -4,6 +4,7 @@ const getUser = require("../authController/authorize");
 const ownerModel = require("../models/ownerModel");
 const util = require("util");
 const homeModel = require("../models/homeModel");
+const safeUpdate = require("../utils/safeUpdate");
 
 // get all houses and filter by the given parametr for analaysis
 // recive number of bed rooms and location and search from home collection
@@ -193,7 +194,7 @@ const updateHouse = async (req, res) => {
   try {
     const updated = await houseModel.findOneAndUpdate(
       { _id: houseId },
-      { ...req.body },
+      safeUpdate(req.body),
       { new: true, runValidators: true } // set `runValidators` to true to validate the updated data
     );
     if (!updated) {

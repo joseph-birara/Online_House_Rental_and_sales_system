@@ -6,6 +6,7 @@ const { default: mongoose } = require("mongoose");
 const homeModel = require("../models/homeModel");
 const smsService = require("../authController/smsService");
 const callMethod = require("../Demo");
+const safeUpdate = require("../utils/safeUpdate");
 
 
 // get all applications that do have non null visitRequest ?
@@ -210,7 +211,7 @@ const updateApplication = async (req, res) => {
   try {
     const application = await applicationModel.findOneAndUpdate(
       { _id: id },
-      { ...req.body },
+      safeUpdate(req.body),
       { new: true } // Return the updated document
     );
 

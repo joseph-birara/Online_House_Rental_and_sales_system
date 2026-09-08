@@ -16,6 +16,7 @@ const { text } = require("body-parser");
 
 const { generateVerificationToken } = require("../authController/saveToken");
 const { generateToken } = require("../authController/auth");
+const safeUpdate = require("../utils/safeUpdate");
 
 // owner log in
 const ownerLogin = async (req, res) => {
@@ -52,7 +53,6 @@ const getOwner = async (req, res) => {
 };
 // register owner
 const registerOwner = async (req, res) => {
-  console.log("this is body", req.body);
   const data = req.body;
   const name = data.name;
   const lastName = data.lastName;
@@ -77,8 +77,12 @@ const registerOwner = async (req, res) => {
       .send("Your email is already taken, use another email");
   }
 
-  // Hash password
-  const hashedPassword = await hashPassword(password);
+  let hashedPassword;
+  try {
+    hashedPassword = await hashPassword(password);
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
 
   let session;
   try {
@@ -191,7 +195,7 @@ const updateOwner = async (req, res) => {
     }
     const owner = await ownerModel.findOneAndUpdate(
       { _id: id },
-      { ...req.body },
+      safeUpdate(req.body),
       { new: true }
     );
     if (!owner) {

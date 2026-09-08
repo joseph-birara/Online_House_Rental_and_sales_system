@@ -6,7 +6,6 @@ const { generateVerificationToken } = require("./saveToken");
 const { hashPassword } = require("./passwordHash");
 
 async function login(req, res, userModel) {
-  console.log(req.body);
   const { email, password, userType } = req.body;
   var user;
   try {

@@ -3,6 +3,7 @@ const rentModel = require("../models/rentModel");
 const tenantModel = require("../models/tenantModel");
 const ownerModel = require("../models/ownerModel");
 const homeModel = require("../models/homeModel");
+const safeUpdate = require("../utils/safeUpdate");
 
 // add rent information to database
 const addRentInformation = async (req, res) => {
@@ -92,7 +93,7 @@ const getAllRent = async (req, res) => {
 const updateRent = async (req, res) => {
   const { id } = req.body;
   try {
-    const rent = await rentModel.findByIdAndUpdate(id, { ...req.body });
+    const rent = await rentModel.findByIdAndUpdate(id, safeUpdate(req.body));
     return res.status(201).send("Updated successfully");
   } catch (error) {
     console.log(error);

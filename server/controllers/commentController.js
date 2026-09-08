@@ -2,6 +2,7 @@ const getUser = require("../authController/authorize");
 const commentModel = require("../models/commentModel");
 
 const mongoose = require("mongoose");
+const safeUpdate = require("../utils/safeUpdate");
 const getByOwner = async (req, res) => {
   const { id } = req.params;
   const comments = await commentModel
@@ -48,7 +49,7 @@ const editComment = async (req, res) => {
   try {
     const comment = await commentModel.findByIdAndUpdate(
       id,
-      { ...req.body },
+      safeUpdate(req.body),
       { new: true }
     );
     if (!comment) {

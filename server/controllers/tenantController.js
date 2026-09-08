@@ -12,6 +12,7 @@ const verifyEmail = require("../authController/accountActivation");
 const { generateVerificationToken } = require("../authController/saveToken");
 const sendVerificationEmail = require("../authController/sendEmial");
 const { generateToken } = require("../authController/auth");
+const safeUpdate = require("../utils/safeUpdate");
 
 // tenant log in
 const tenantLogin = async (req, res) => {
@@ -81,10 +82,12 @@ const registerTenant = async (req, res) => {
       .status(200)
       .send("Your email is already taken, use another email");
   }
-  console.log("body", password);
-
-  // Hash password
-  const hashedPassword = await hashPassword(password);
+  let hashedPassword;
+  try {
+    hashedPassword = await hashPassword(password);
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
 
   try {
     const tenant = await tenantModel.create({
@@ -160,7 +163,7 @@ const updateTenant = async (req, res) => {
   }
   const tenant = await tenantModel.findOneAndUpdate(
     { _id: id },
-    { ...req.body },
+    safeUpdate(req.body),
     { new: true }
   );
 

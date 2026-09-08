@@ -9,6 +9,7 @@ const { hashPassword } = require("../authController/passwordHash");
 const getUser = require("../authController/authorize");
 const { changePassword } = require("../authController/changePassword");
 const { generateToken } = require("../authController/auth");
+const safeUpdate = require("../utils/safeUpdate");
 
 // admin log in
 const adminLogin = async (req, res) => {
@@ -61,9 +62,12 @@ const addAdmin = async (req, res) => {
       .send("Your email is already taken, use another email.");
   }
 
-  console.log("body", password);
-  // Hash password
-  const hashedPassword = await hashPassword(password);
+  let hashedPassword;
+  try {
+    hashedPassword = await hashPassword(password);
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
 
   try {
     const admin = await adminModel.create({
@@ -123,9 +127,7 @@ const updateAdmin = async (req, res) => {
   }
   const admin = await adminModel.findOneAndUpdate(
     { _id: id },
-    {
-      ...req.body,
-    }
+    safeUpdate(req.body)
   );
   if (!admin) {
     return res.status(400).json({ error: "No such admin" });

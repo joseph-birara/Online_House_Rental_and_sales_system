@@ -11,6 +11,8 @@ async function sendEmail(to, subject, text) {
       user: process.env.EMAIL,
       pass: process.env.PASSWORD,
     },
+    disableFileAccess: true,
+    disableUrlAccess: true,
   });
 
   // set up the email message

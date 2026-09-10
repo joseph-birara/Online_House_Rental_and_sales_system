@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import LoadingOverlay from "react-loading-overlay-ts";
 import { clearEmailVerifyPath, getEmailVerifyPath } from "../../utils/auth";
 import { getApiErrorMessage } from "../../utils/apiError";
+import AuthLayout from "../../components/auth/AuthLayout";
+import AuthButton from "../../components/auth/AuthButton";
+import FormAlert from "../../components/auth/FormAlert";
 
 const VerifyEmail = () => {
     const { id } = useParams();
@@ -54,36 +56,25 @@ const VerifyEmail = () => {
     };
 
     return (
-        <>
-            {/* for error message */}
-            <div className={` text-[red]  text-center mb-1  mt-16 outline outline-[1px] rounded-lg pl-2 mx-auto ${errorMessage ? "" : "invisible"
-                }`}>
-                {errorMessage ? <span> {errorMessage}</span> : <span> == </span>}
-            </div>
-            <div className="outline flex justify-center w-3/4 mt-3  mx-auto">
-                <div className="p-3 ">
-                    <button
-                        onClick={handleClick}
-                        className="bg-lightBlue text-white py-2 px-4 rounded-sm"
-                    >
-                        <LoadingOverlay
-                            active={loading}
-                            spinner
-                            className="loading-overlay"
-                            spinnerClassName="w-12 h-12"
-                            contentClassName="opacity-50 pointer-events-none"
-                            spinnerProps={{
-                                style: {
-                                    borderTopColor: "lightblue",
-                                    borderLeftColor: "lightblue",
-                                },
-                            }}
-                        ></LoadingOverlay>
-                        {loading ? "verifying..." : "Verify Email"}
-                    </button>
-                </div>
-            </div>
-        </>
+        <AuthLayout
+            title="Verify your email"
+            subtitle="Confirm your address to finish setting up your Homiee account."
+        >
+            <FormAlert message={errorMessage} />
+            <p className="mb-6 text-slate-500">
+                Click the button below to verify this email link and continue to login.
+            </p>
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    handleClick();
+                }}
+            >
+                <AuthButton loading={loading} loadingText="Verifying...">
+                    Verify email
+                </AuthButton>
+            </form>
+        </AuthLayout>
     );
 };
 

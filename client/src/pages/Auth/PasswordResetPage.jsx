@@ -1,15 +1,16 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import LoadingOverlay from 'react-loading-overlay-ts';
 import { getApiErrorMessage } from "../../utils/apiError";
+import AuthLayout from "../../components/auth/AuthLayout";
+import AuthButton from "../../components/auth/AuthButton";
+import FormAlert from "../../components/auth/FormAlert";
 
 export default function PasswordResetPage({ isAdmin }) {
     const { accountType } = useParams('')
     const [email, setEmail] = useState("");
     const [token, setToken] = useState("");
     const [newpassword, setnewPassword] = useState("");
-    const [currentUserChoice, setCurrentUserChoice] = useState("");
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('')
     let [loading, setLoading] = useState(false);
@@ -59,75 +60,45 @@ export default function PasswordResetPage({ isAdmin }) {
     }
 
     return (
-        <div className=" mt-4 grow flex items-center justify-around">
-            <div className="mb-64 w-2/4 ">
-                <h1 className="text-xl font-normal text-center mb-4">
-                    We have sent a verification code to your email address. <br />
-                    Enter the code below to proceed with password reset
-                </h1>
+        <AuthLayout
+            title="Create a new password"
+            subtitle="We sent a verification code to your email. Enter it below to continue."
+        >
+            <FormAlert message={errorMessage} />
 
-                {/* for error message */}
-                <div className={` text-[red]  outline outline-[1px] rounded-lg w-4/6 pl-2 mx-auto ${errorMessage ? '' : 'invisible'}`}>
-                    {errorMessage ? (<span> {errorMessage}</span>) : (<span> == </span>)}
-                </div>
+            <form className="auth-form max-w-md" onSubmit={handleLoginSubmit}>
+                <input
+                    type="email"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(ev) => setEmail(ev.target.value)}
+                    required
+                />
 
-                {/* user input form */}
-                <form className="max-w-md mx-auto" onSubmit={handleLoginSubmit}>
-                    <input
-                        type="email"
-                        placeholder="your@email.com"
-                        value={email}
-                        onChange={(ev) => setEmail(ev.target.value)}
-                        required
-                    />
+                <input
+                    type="text"
+                    placeholder="code"
+                    value={token}
+                    onChange={(ev) => setToken(ev.target.value)}
+                    required
+                />
+                <input
+                    type="password"
+                    minLength={8}
+                    placeholder="new password (min 8 characters)"
+                    value={newpassword}
+                    onChange={(ev) => setnewPassword(ev.target.value)}
+                    required
+                />
 
-                    <input
-                        type="text"
-                        placeholder="code"
-                        value={token}
-                        onChange={(ev) => setToken(ev.target.value)}
-                        required
-                    />
-                    <input
-                        type="password"
-                        minLength={8}
-                        placeholder="new password (min 8 characters)"
-                        value={newpassword}
-                        onChange={(ev) => setnewPassword(ev.target.value)}
-                        required
-                    />
+                <Link className="text-sm font-medium text-lightBlue hover:underline" to={"/login"}>
+                    Back to login
+                </Link>
 
-
-
-                    <Link className="underline text-lightBlue text-black" to={"/login"}>
-                        back to login
-                    </Link>
-
-                    {/* clicked button */}
-                    <button
-                        type="submit"
-                        // onClick={() => setLoading(!loading)}
-                        className="primary bg-lightBlue hover:bg-lbHover Hover mt-4 relative"
-                    >
-                        <LoadingOverlay
-                            active={loading}
-                            spinner
-                            className="loading-overlay"
-                            spinnerClassName="w-12 h-12"
-                            contentClassName="opacity-50 pointer-events-none"
-                            spinnerProps={{
-                                style: {
-                                    borderTopColor: 'lightblue',
-                                    borderLeftColor: 'lightblue',
-                                },
-                            }}
-                        >
-                        </LoadingOverlay>
-                        {loading ? "Checking..." : " Send "}
-                    </button>
-                </form>
-
-            </div>
-        </div>
+                <AuthButton loading={loading} loadingText="Checking...">
+                    Reset password
+                </AuthButton>
+            </form>
+        </AuthLayout>
     );
 }

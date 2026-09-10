@@ -19,7 +19,7 @@ const OwnerListerPage = () => {
             .catch((error) => {
                 console.log(error);
             });
-    }, [OwnersList]);
+    }, [OwnersList, setOwnersList]);
 
     const handleActionChange = (USERID, action, status, isSuspended) => {
 

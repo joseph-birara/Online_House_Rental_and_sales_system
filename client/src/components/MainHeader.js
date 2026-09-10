@@ -70,9 +70,14 @@ const MainHeader = () => {
 
           <li>
             {token ? <ProfileSection /> :
-              <NavLink className={classes.loginSignup} to="/login" >
-                <Fragment > Login/Signup </Fragment>
-              </NavLink>
+              <div className="flex items-center gap-4">
+                <NavLink className={({ isActive }) => isActive ? classes.active : classes.navLink} to="/register">
+                  Register
+                </NavLink>
+                <NavLink className={classes.loginSignup} to="/login" >
+                  <Fragment> Log in </Fragment>
+                </NavLink>
+              </div>
             }
           </li>
 

@@ -5,7 +5,6 @@ import { UserContext } from "../contexts/UserContextProvider";
 
 const Application = ({ data }) => {
   const { token } = useContext(UserContext);
-  const { applications, setApplications } = useContext(UtilityContext);
 
   const hadleClick = (app_id) => {
 
@@ -89,7 +88,7 @@ const TenantApplications = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [applications]);
+  }, [applications, setApplications, user._id]);
 
   return (
     <div className="mt-1">

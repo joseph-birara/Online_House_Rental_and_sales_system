@@ -240,7 +240,7 @@ const HomesListing = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [setHousesList]);
 
   const handleMinPriceChange = (e) => {
     let enteredNum = parseInt(e.target.value);

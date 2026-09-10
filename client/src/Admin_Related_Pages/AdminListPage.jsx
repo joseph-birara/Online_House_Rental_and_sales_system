@@ -21,7 +21,7 @@ const AdminListerPage = () => {
             .catch((error) => {
                 console.log(error);
             });
-    }, [AdminsList]);
+    }, [AdminsList, setAdminList, user._id]);
 
     const handleActionChange = (userId, action, status) => {
 

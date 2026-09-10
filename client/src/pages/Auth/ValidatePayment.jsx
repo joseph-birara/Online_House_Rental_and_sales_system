@@ -27,7 +27,7 @@ const ValidatePayment = () => {
                     console.log(error);
                 });
         }
-    }, [appli_id]);
+    }, [appli_id, setApplications, user._id]);
 
 
     return <div></div>;

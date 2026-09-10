@@ -1,11 +1,250 @@
-main{
-    display: flex;
-    flex-direction: column;
+.hero {
+  position: relative;
+  width: 100%;
+  height: min(82vh, 760px);
+  min-height: 520px;
+  overflow: hidden;
+  background: #091240;
 }
 
-.moto{
-    margin-top: 4rem;
-    margin-bottom: 4rem;
-    font-size: large;
-    text-align: center;
+.hero :global(.react-slideshow-container),
+.hero :global(.react-slideshow-wrapper),
+.hero :global(.images-wrap),
+.hero :global(.images-wrap > div),
+.hero :global(.react-slideshow-container .images-wrap > div > div) {
+  height: 100%;
+}
+
+.hero img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero :global(.nav),
+.hero :global(.indicators) {
+  display: none;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 0 8%;
+  background: linear-gradient(
+    100deg,
+    rgba(9, 18, 64, 0.88) 0%,
+    rgba(9, 18, 64, 0.55) 52%,
+    rgba(9, 18, 64, 0.18) 100%
+  );
+  pointer-events: none;
+}
+
+.heroContent {
+  max-width: 640px;
+  color: #ffffff;
+  pointer-events: auto;
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #1786fa;
+}
+
+.heroContent h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
+  line-height: 1.1;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+
+.heroCopy {
+  margin: 1.1rem 0 0;
+  max-width: 34rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.primaryCta,
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 10rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.primaryCta {
+  background: #1786fa;
+  color: #ffffff;
+}
+
+.secondaryCta {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.primaryCta:hover,
+.secondaryCta:hover {
+  transform: translateY(-1px);
+}
+
+.primaryCta:hover {
+  background: #1890db;
+}
+
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  width: min(1120px, 92%);
+  margin: -3.5rem auto 0;
+  position: relative;
+  z-index: 3;
+  padding: 1.75rem;
+  border-radius: 1.5rem;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(9, 18, 64, 0.1);
+}
+
+.highlights h3 {
+  margin: 0 0 0.4rem;
+  color: #091240;
+  font-size: 1.05rem;
+}
+
+.highlights p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.howItWorks {
+  width: min(1120px, 92%);
+  margin: 5rem auto;
+  text-align: center;
+}
+
+.howItWorks h2 {
+  margin: 0.4rem 0 2.5rem;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  letter-spacing: -0.03em;
+  color: #091240;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.steps article {
+  padding: 1.6rem;
+  border-radius: 1.25rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+}
+
+.steps span {
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  color: #1786fa;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.steps h3 {
+  margin: 0 0 0.5rem;
+  color: #091240;
+}
+
+.steps p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.bottomCta {
+  width: min(1120px, 92%);
+  margin: 0 auto 5rem;
+  padding: 2.5rem 2.75rem;
+  border-radius: 1.75rem;
+  background: #091240;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.bottomCta h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.8rem;
+  letter-spacing: -0.03em;
+}
+
+.bottomCta p {
+  margin: 0;
+  color: #cbd5e1;
+}
+
+.bottomCta a {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  background: #1786fa;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.bottomCta a:hover {
+  background: #1890db;
+}
+
+@media only screen and (max-width: 900px) {
+  .heroOverlay {
+    padding: 0 6%;
+    align-items: flex-end;
+    padding-bottom: 5.5rem;
+  }
+
+  .highlights,
+  .steps,
+  .bottomCta {
+    grid-template-columns: 1fr;
+  }
+
+  .bottomCta {
+    display: block;
+  }
+
+  .bottomCta a {
+    margin-top: 1.25rem;
+  }
 }

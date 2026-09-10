@@ -1,9 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import LoadingOverlay from 'react-loading-overlay-ts';
 import { UserContext } from "../../contexts/UserContextProvider";
 import { getApiErrorMessage } from "../../utils/apiError";
+import AuthLayout from "../../components/auth/AuthLayout";
+import AuthButton from "../../components/auth/AuthButton";
+import FormAlert from "../../components/auth/FormAlert";
+import RoleSelector from "../../components/auth/RoleSelector";
 
 export default function LoginPage({ isAdmin }) {
   const [email, setEmail] = useState("");
@@ -75,112 +78,54 @@ export default function LoginPage({ isAdmin }) {
   }
 
   return (
-    <div className=" mt-4 grow flex items-center justify-around">
-      <div className="mb-64 w-2/4 ">
-        <h1 className="text-4xl text-center mb-4">
-          {" "}
-          {isAdmin && <span> Admin </span>} Login
-        </h1>
+    <AuthLayout
+      title={isAdmin ? "Admin login" : "Welcome back"}
+      subtitle={isAdmin ? "Sign in to manage Homiee." : "Sign in to continue your search."}
+    >
+      <FormAlert message={errorMessage} />
 
-        {/* for error message */}
-        <div className={` text-[red]  outline outline-[1px] rounded-lg w-4/6 pl-2 mx-auto ${errorMessage ? '' : 'invisible'}`}>
-          {errorMessage ? (<span> {errorMessage}</span>) : (<span> == </span>)}
+      <form className="auth-form max-w-md" onSubmit={handleLoginSubmit}>
+        <input
+          type="email"
+          placeholder="your@email.com"
+          value={email}
+          onChange={(ev) => setEmail(ev.target.value)}
+          required
+        />
+        <input
+          type="password"
+          required
+          placeholder="password"
+          value={password}
+          onChange={(ev) => setPassword(ev.target.value)}
+        />
+
+        {!isAdmin && (
+          <RoleSelector
+            value={currentUserChoice}
+            onChange={(e) => setCurrentUserChoice(e.target.value)}
+          />
+        )}
+
+        <div className="flex justify-end">
+          <Link className="text-sm font-medium text-lightBlue hover:underline" to={"/forgetpassword"}>
+            Forgot password
+          </Link>
         </div>
 
-        <form className="max-w-md mx-auto" onSubmit={handleLoginSubmit}>
-          <input
-            type="email"
-            placeholder="your@email.com"
-            value={email}
-            onChange={(ev) => setEmail(ev.target.value)}
-            required
-          />
-          <input
-            type="password"
-            required
-            placeholder="password"
-            value={password}
-            onChange={(ev) => setPassword(ev.target.value)}
-          />
+        <AuthButton loading={loading} loadingText="Checking...">
+          Sign in
+        </AuthButton>
 
-          {/* for user choice */}
-          {!isAdmin && (
-            <div className="my-4">
-              <p className="font-medium">Who are you?</p>
-
-              <fieldset className="flex gap-6">
-                <label>
-                  <input
-                    type="radio"
-                    name="userType"
-                    value="owner"
-                    checked={currentUserChoice === "owner"} // Bound to userType state
-                    onChange={(e) => setCurrentUserChoice(e.target.value)} // Update userType state
-                    required
-                  />
-                  <span>Homeowner</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="userType"
-                    value="tenant"
-                    checked={currentUserChoice === "tenant"} // Bound to userType state
-                    onChange={(e) => setCurrentUserChoice(e.target.value)} // Update userType state
-                  />
-                  <span>Tenant</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="userType"
-                    value="buyer"
-                    checked={currentUserChoice === "buyer"} // Bound to userType state
-                    onChange={(e) => setCurrentUserChoice(e.target.value)} // Update userType state
-                  />
-                  <span>Buyer</span>
-                </label>
-              </fieldset>
-            </div>
-          )}
-
-          <Link className="underline text-lightBlue text-black" to={"/forgetpassword"}>
-            Forgot Password
-          </Link>
-
-          <button
-            type="submit"
-            // onClick={() => setLoading(!loading)}
-            className="primary bg-lightBlue hover:bg-lbHover Hover mt-4 relative"
-          >
-            <LoadingOverlay
-              active={loading}
-              spinner
-              className="loading-overlay"
-              spinnerClassName="w-12 h-12"
-              contentClassName="opacity-50 pointer-events-none"
-              spinnerProps={{
-                style: {
-                  borderTopColor: 'lightblue',
-                  borderLeftColor: 'lightblue',
-                },
-              }}
-            >
-            </LoadingOverlay>
-            {loading ? "Checking..." : "SignIn"}
-          </button>
-
-          {!isAdmin && (
-            <div className="text-center py-2 text-gray-500">
-              Don't have an account yet?{" "}
-              <Link className="underline text-black" to={"/register"}>
-                Register now
-              </Link>
-            </div>
-          )}
-        </form>
-
-      </div>
-    </div>
+        {!isAdmin && (
+          <p className="pt-5 text-center text-sm text-slate-500">
+            Don't have an account yet?{" "}
+            <Link className="font-medium text-blueBlack hover:text-lightBlue" to={"/register"}>
+              Register now
+            </Link>
+          </p>
+        )}
+      </form>
+    </AuthLayout>
   );
 }

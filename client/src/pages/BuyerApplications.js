@@ -90,7 +90,7 @@ const BuyerApplications = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [setApplications, user._id]);
 
   return (
     <div className="">

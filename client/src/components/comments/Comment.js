@@ -1,8 +1,5 @@
 import CommentForm from "./CommentForm";
-import avatar from "./avatar.jpg";
 import styles from "./Comments.module.css";
-import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContextProvider";
 
 const Comment = ({
   comment,
@@ -17,7 +14,6 @@ const Comment = ({
   currentUserId,
   currentUserType,
 }) => {
-  const {user} = useContext(UserContext);
   const isEditing =
     activeComment &&
     activeComment.id === comment._id &&
@@ -30,7 +26,6 @@ const Comment = ({
     currentUserId === comment.reviewerId._id && replies.length === 0 && currentUserType === "tenant";
   const canReply = Boolean(currentUserId) && currentUserType === "tenant";
   const canEdit = currentUserId === comment.reviewerId._id && currentUserType === "tenant";
-  const createdAt = new Date(comment.createdAt).toLocaleDateString();
   const dateFormatter = new Intl.DateTimeFormat(undefined, {
     dateStyle: "medium",
     timeStyle: "short",

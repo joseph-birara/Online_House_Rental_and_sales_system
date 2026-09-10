@@ -1,58 +1,113 @@
 .mainContainer {
-  width: 100%;
-  padding: 3rem 3rem;
-  background-color: #091240;
+  width: min(1120px, 92%);
+  margin: 4.5rem auto 0;
+  padding: 0;
   font-size: large;
   font-weight: 500;
-  color: #1786fa;
 }
-p span {
-  margin-left: 1rem;
-  font-size: larger;
+
+.heading p {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
-#saleRentText{
-    color: white;
-    font-weight: bold;
-    font-size: x-large;
-    text-align: center;
+
+.heading p span {
+  display: none;
 }
-.imagesContainer{
-  display: flex;
-  justify-content: space-between;
+
+#saleRentText {
+  margin-top: 0.4rem;
+  color: #091240;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 2.5vw, 2.1rem);
+  letter-spacing: -0.03em;
+  text-align: left;
 }
-.img{
-  margin: 1rem;
-  width: 25%;
-  object-fit: contain;
+
+.imagesContainer {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
-.img img{
+
+.img {
+  position: relative;
+  margin: 0;
   width: 100%;
-  height: 15rem;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background: #e2e8f0;
 }
 
-@media only screen and (max-width: 900px){
-.imagesContainer{
-  flex-direction: column;
-}
-.img{
-  width: 80%;
-}
-}
-
-
-
-/* .homePic {
+.img img,
+.homePic {
+  display: block;
   width: 100%;
-  height: auto;
-} */
-.btnContainer{
+  height: 16.5rem;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.img:hover img {
+  transform: scale(1.06);
+}
+
+.cardMeta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.1rem 1rem 0.95rem;
+  background: linear-gradient(180deg, transparent, rgba(9, 18, 64, 0.82));
+  color: #ffffff;
+}
+
+.cardMeta span {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: #1786fa;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.cardMeta p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+@media only screen and (max-width: 900px) {
+  .imagesContainer {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .imagesContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btnContainer {
   text-align: center;
 }
+
 .exploreBtn {
   color: white;
   background-color: #1786fa;
-  padding: 0.6rem 1.5rem;
-  border-color: #1786fa;
-  margin-top: 3rem;
+  padding: 0.75rem 1.6rem;
+  border: none;
+  border-radius: 999px;
+  margin-top: 2rem;
 }
 
+.exploreBtn:hover {
+  background-color: #1890db;
+}

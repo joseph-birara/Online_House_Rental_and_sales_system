@@ -18,15 +18,12 @@ const HomesList = ({ rented }) => {
     // get all houses and set to the context
     axios.get('/houses/all')
       .then((response) => {
-        // console.log("list of house is ");
-        // console.log(response.data);
-        console.log(HousesList);
         setHousesList(response.data)
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [])
+  }, [setHousesList])
 
   if (rented && user.userType === 'owner' && HousesList) {
 

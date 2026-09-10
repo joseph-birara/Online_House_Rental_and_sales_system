@@ -160,11 +160,11 @@ const Buy = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [setHousesList]);
 
   const handleMinPriceChange = (e) => {
     let enteredNum = parseInt(e.target.value);
-    if (e.target.value.length == 0) {
+    if (e.target.value.length === 0) {
       enteredNum = 0;
     }
     dispatchHomes({
@@ -178,7 +178,7 @@ const Buy = () => {
 
   const handleMaxPriceChange = (e) => {
     let enteredNum = parseInt(e.target.value);
-    if (e.target.value.length == 0) {
+    if (e.target.value.length === 0) {
       enteredNum = Number.MAX_VALUE;
     }
     dispatchHomes({
@@ -192,7 +192,7 @@ const Buy = () => {
 
   const handleMinAreaChange = (e) => {
     let enteredNum = parseInt(e.target.value);
-    if (e.target.value.length == 0) {
+    if (e.target.value.length === 0) {
       enteredNum = 0;
     }
     dispatchHomes({
@@ -206,7 +206,7 @@ const Buy = () => {
 
   const handleMaxAreaChange = (e) => {
     let enteredNum = parseInt(e.target.value);
-    if (e.target.value.length == 0) {
+    if (e.target.value.length === 0) {
       enteredNum = Number.MAX_VALUE;
     }
     dispatchHomes({

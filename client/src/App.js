@@ -9,7 +9,6 @@ import HomeownerDashboard from "./pages/dashboards/HomeownerDashboard";
 import PlacesFormPage from "./pages/PlacesFormPage";
 import AdminDashboard from "./pages/dashboards/AdminDashboard";
 import HomesList from "./pages/HomesList";
-import styles from "./App.module.css";
 import UsersList from "./pages/UsersList";
 import RequestsPage from "./pages/RequestsPage";
 import HomesListing from "./pages/HomesListing";

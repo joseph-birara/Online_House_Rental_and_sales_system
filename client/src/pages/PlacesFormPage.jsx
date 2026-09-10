@@ -39,17 +39,7 @@ export default function PlacesFormPage() {
   const maxGuestsRef = useRef();
   const [suggestError, setSugestErro] = useState('')
 
-  // store the house for updaete
-  // when id is set currhouse holdes that house detail
-  let currHouse = null
-  useEffect(() => {
-    if (id) {
-      currHouse = HousesList.find((house) => house._id === id)
-      // currHouse = currHouse[0]
-      console.log('the curr house is');
-      console.log(currHouse);
-    }
-  }, [id])
+  const currHouse = id ? HousesList.find((house) => house._id === id) : null;
 
   // holds the data when the user enters data
   useEffect(() => {

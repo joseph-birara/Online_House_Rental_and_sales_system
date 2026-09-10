@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContextProvider";
 import { UtilityContext } from "../contexts/UtilityContextProvide";
@@ -6,9 +6,9 @@ import { IoBedOutline } from "react-icons/io5";
 import { FaCheck, FaShower } from "react-icons/fa";
 import { TfiRulerAlt2 } from "react-icons/tfi";
 import { TiDelete } from "react-icons/ti";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const RequestListPage = ({ data, handleSelect }) => {
+const RequestListPage = ({ data }) => {
 
   return (
     <div className="outline outline-[2px] outline-[lightgray]  flex justify-between items-center  gap-1 p-2 rounded-lg m-4 " >
@@ -54,13 +54,10 @@ const NewMRequest = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [setApplications, user._id]);
 
   // get homesId rented by tenant
   const fitltedApplication = applications.filter(applica => applica.status === 'accepted');
-  const handleSelect = () => {
-    console.log("button is clicked");
-  }
 
   return (
 

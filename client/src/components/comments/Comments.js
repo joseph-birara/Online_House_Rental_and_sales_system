@@ -111,14 +111,14 @@ const Comments = ({ houseId, ownerId, setNumeberOfReviews }) => {
         console.log("Error saving comment");
         console.log(error);
       });
-  }, []);
+  }, [houseId]);
 
   // set the number of comments
   useEffect(() => {
     if (backendComments) {
       setNumeberOfReviews(backendComments.length)
     }
-  }, [backendComments])
+  }, [backendComments, setNumeberOfReviews])
 
   return (
     <div className={styles.comments}>

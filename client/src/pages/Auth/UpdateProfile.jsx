@@ -28,9 +28,6 @@ const UpdateProfilePage = () => {
     image: ""
   });
 
-  const [profileImage, setProfileImage] = useState(
-    "https://res.cloudinary.com/dmegiw31y/image/upload/v1687336585/HomeRental/user_avatr_qmpy1y.png"
-  );
   const [imageFile, setImageFile] = useState(null);
 
   const imageHanlder = (e) => {
@@ -41,14 +38,12 @@ const UpdateProfilePage = () => {
       return;
     }
     setImageFile(file);
-    setProfileImage(URL.createObjectURL(file));
   };
 
   useEffect(() => {
     if (!user) return;
 
     if (user) {
-      setProfileImage(user.image)
       setUserData({
         id: user._id,
         name: user.name,
@@ -62,7 +57,7 @@ const UpdateProfilePage = () => {
         image: user.image
       });
     }
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (imageFile != null) {

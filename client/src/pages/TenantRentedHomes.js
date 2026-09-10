@@ -1,5 +1,5 @@
 // import { Link, Navigate, useParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { IoBedOutline } from "react-icons/io5";
 import { TiDelete } from "react-icons/ti";
 import { FaShower, FaCheck } from "react-icons/fa";
@@ -66,7 +66,7 @@ const TenantRentedHomes = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [applications]);
+  }, [applications, setApplications, user._id]);
 
   const handleSelect = (appId, homeId) => {
 

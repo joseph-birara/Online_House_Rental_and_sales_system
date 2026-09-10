@@ -173,7 +173,7 @@ const HomesListPage = ({ DisplayRented }) => {
                 console.log(error);
             });
 
-    }, [HousesList])
+    }, [HousesList, setHousesList])
 
     const RentedList = HousesList.filter(house => house.isRented === true)
     const NotRentedList = HousesList.filter(house => house.isRented !== true)

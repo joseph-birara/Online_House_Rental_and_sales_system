@@ -3,7 +3,6 @@ import Dashboard from "../../components/dashboard/Dashboard";
 import userProfPic from "./avatar.jpg";
 import { BsCurrencyDollar, BsShield } from "react-icons/bs";
 import { FiShoppingBag, FiCreditCard } from "react-icons/fi";
-import { AiOutlineCalendar } from "react-icons/ai";
 import { RiContactsLine } from "react-icons/ri";
 
 const TenantDashboard = () => {

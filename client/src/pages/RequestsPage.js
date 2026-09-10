@@ -75,7 +75,7 @@ const RequestsPage = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [user._id]);
 
   const updateMReq = (requestData) => {
     console.log(requestData);

@@ -127,7 +127,7 @@ const OwnerRentApplication = () => {
       }).catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [setApplications, user._id]);
 
   return (
     <div className="mt-1">

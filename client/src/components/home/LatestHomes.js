@@ -8,11 +8,18 @@ import { Link } from "react-router-dom";
 
 const LatestHomes = ({ forRent }) => {
   const exploreHandler = () => { };
+  const homes = [
+    { src: f1, label: "Featured home" },
+    { src: f2, label: "Featured home" },
+    { src: f3, label: "Featured home" },
+    { src: f4, label: "Featured home" },
+  ];
+
   return (
     <div className={classes.mainContainer}>
-      <div>
+      <div className={classes.heading}>
         <p>
-          Featured <span>_______</span>
+          Featured
         </p>
         <p id={classes.saleRentText}>
           Latest houses for {`${forRent ? "rent" : "sale"}`}
@@ -20,27 +27,22 @@ const LatestHomes = ({ forRent }) => {
       </div>
 
       <div className={classes.imagesContainer}>
-        <div className={classes.img}>
-          <img src={f1} className={classes.homePic} alt="" />
-        </div>
-
-        <div className={classes.img}>
-          <img src={f2} className={classes.homePic} alt="" />
-        </div>
-
-        <div className={classes.img}>
-          <img src={f3} className={classes.homePic} alt="" />
-        </div>
-        <div className={classes.img}>
-          <img src={f4} className={classes.homePic} alt="" />
-        </div>
+        {homes.map((home) => (
+          <div className={classes.img} key={home.src}>
+            <img src={home.src} className={classes.homePic} alt="" />
+            <div className={classes.cardMeta}>
+              <span>{forRent ? "For rent" : "For sale"}</span>
+              <p>{home.label}</p>
+            </div>
+          </div>
+        ))}
       </div>
 
       <div className={classes.btnContainer}>
         <Link
         to={forRent?"/rent":"/buy"}>
           <Button className={classes.exploreBtn} onClick={exploreHandler}>
-            Explore All
+            Explore all
           </Button>
         </Link>
       </div>

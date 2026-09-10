@@ -3,113 +3,110 @@ import { BsTwitter, BsFacebook, BsLinkedin, BsYoutube } from "react-icons/bs";
 
 const Footer = () => {
   return (
-    <footer className="py-15 mt-52 bg-[#1579e1] text-white w-screen ">
-      <div className="container text-justify mt-10">
-        <div className="flex justify-around flex-wrap px-4">
-          <div className="w-5/12 flex flex-col">
-            <div className="  border-[black] rounded-lg  p-6   flex flex-col">
-              <h5 className="font-bold text-xl text-[black]  mb-4">About Us</h5>
-              <p className="text-gray-300">
-                Welcome to our premier online house rental and sales system. We
-                simplify finding your dream home or selling your property. With
-                personalized solutions and exceptional service, we'll guide you
-                every step of the way. Trust us to make your real estate journey
-                seamless and rewarding. Contact us today and unlock your future
-              </p>
-            </div>
+    <footer className="mt-16 bg-blueBlack text-white">
+      <div className="mx-auto w-full max-w-[1120px] px-6 pt-14">
+        <div className="flex flex-wrap justify-between gap-10">
+          <div className="max-w-md">
+            <h5 className="mb-4 text-xl font-semibold text-white">About us</h5>
+            <p className="leading-7 text-slate-300">
+              Welcome to Homiee, a premier online house rental and sales system.
+              We simplify finding your dream home or selling your property, with
+              personalized solutions and a calmer experience every step of the way.
+            </p>
           </div>
-          <div className=" rounded-lg pt-6 flex flex-col">
-            <div className="rounded-lg p-1 flex-grow">
-              <h5 className="text-lg font-bold text-blueBlack mb-4">
-                Contact Us
-              </h5>
+          <div>
+            <h5 className="mb-4 text-lg font-semibold text-white">
+              Contact us
+            </h5>
+            <a
+              href="mailto:house.rental.et@gmail.com?subject=User%20FeedBack&body=Hi%20there,%0D%0A%0D%0AHow%20can%20we%20help%20you?."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex rounded-full bg-lightBlue px-4 py-2 text-sm font-medium text-white hover:bg-lbHover"
+            >
+              Email admins
+            </a>
+            <p className="mt-4 text-slate-300">Phone: +1 123 456 7890</p>
+          </div>
+          <div>
+            <h5 className="mb-4 text-lg font-semibold text-white">
+              Follow us
+            </h5>
+            <div className="flex">
               <a
-                href="mailto:house.rental.et@gmail.com?subject=User%20FeedBack&body=Hi%20there,%0D%0A%0D%0AHow%20can%20we%20help%20you?."
+                href="https://www.linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-blueBlack p-2 rounded-md hover:bg-main-dark-bg"
+                aria-label="LinkedIn"
+                className="text-slate-300 hover:text-white transition-colors duration-200"
               >
-                Email admins
+                <BsLinkedin />
               </a>
-
-              <p className="text-gray-300 mt-4">Phone: +1 123 456 7890</p>
+              <a
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="ml-3 text-slate-300 hover:text-white transition-colors duration-200"
+              >
+                <BsFacebook />
+              </a>
+              <a
+                href="https://www.youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className="ml-3 text-slate-300 hover:text-white transition-colors duration-200"
+              >
+                <BsYoutube />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter"
+                className="ml-3 text-slate-300 hover:text-white transition-colors duration-200"
+              >
+                <BsTwitter />
+              </a>
             </div>
           </div>
-          <div className=" rounded-lg pt-6 flex flex-col">
-            <div className="rounded-lg">
-              <h5 className="text-lg font-bold text-blueBlack mb-4">
-                Follow Us
-              </h5>
-              <div className="flex justify-center md:justify-start">
+          <div>
+            <h5 className="mb-4 text-lg font-semibold text-white">
+              Quick links
+            </h5>
+            <ul>
+              <li className="mb-2">
                 <a
-                  href="#"
-                  className="text-gray-300 hover:text-white transition-colors duration-200"
+                  href="/team"
+                  className="text-slate-300 hover:text-white hover:underline transition-colors duration-200"
                 >
-                  {/* Insert the SVG path for the Facebook icon */}
-                  <BsLinkedin />
+                  Team
                 </a>
+              </li>
+              <li className="mb-2">
                 <a
-                  href="#"
-                  className="ml-3 text-gray-300 hover:text-white transition-colors duration-200"
+                  href="/service"
+                  className="text-slate-300 hover:text-white hover:underline transition-colors duration-200"
                 >
-                  {/* Insert the SVG path for the Twitter icon */}
-                  <BsFacebook />
+                  Services
                 </a>
+              </li>
+              <li className="mb-2">
                 <a
-                  href="#"
-                  className="ml-3 text-gray-300 hover:text-white transition-colors duration-200"
+                  href="/termsofservice"
+                  className="text-slate-300 hover:text-white hover:underline transition-colors duration-200"
                 >
-                  {/* Insert the SVG path for the Instagram icon */}
-                  <BsYoutube />
+                  Terms of Services
                 </a>
-                <a
-                  href="#"
-                  className="ml-3 text-gray-300 hover:text-white transition-colors duration-200"
-                >
-                  {/* Insert the SVG path for the Instagram icon */}
-                  <BsTwitter />
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="rounded-lg  w-2.5/12 pt-6 flex flex-col">
-            <div className="rounded-lg">
-              <h5 className="text-lg font-bold text-blue-400 mb-4 text-blueBlack">
-                Quick Links
-              </h5>
-              <ul className="">
-                <li className="mb-2">
-                  <a
-                    href="/team"
-                    className="hover:underline transition-colors duration-200"
-                  >
-                    Team
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a
-                    href="/service"
-                    className="hover:underline transition-colors duration-200"
-                  >
-                    Services
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a
-                    href="/termsofservice"
-                    className="hover:underline transition-colors duration-200"
-                  >
-                    Terms of Services
-                  </a>
-                </li>
-              </ul>
-            </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-      <div className="text-center mt-10">
-        <p className="text-sm text-[black] ">
-          &copy; {new Date().getFullYear()} Hommie. All rights reserved.
+      <div className="mt-10 border-t border-white/10 py-5 text-center">
+        <p className="text-sm text-slate-400">
+          &copy; {new Date().getFullYear()} Homiee. All rights reserved.
         </p>
       </div>
     </footer>

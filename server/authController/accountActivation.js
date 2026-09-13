@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const tokenModel = require("../models/authModel");
 
 const verifyEmail = async (req, res, userModel) => {
@@ -7,7 +8,7 @@ const verifyEmail = async (req, res, userModel) => {
     // Check if the token is valid and remove the verification token
     const userToken = await tokenModel.findOneAndDelete({
       token: token,
-      expiresAt: { $gt: Date.now() },
+      expiresAt: mongoose.trusted({ $gt: Date.now() }),
     });
     console.log(userToken);
     if (!userToken) {

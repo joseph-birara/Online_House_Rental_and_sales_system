@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const mongoose = require("mongoose");
 const tokenModel = require("../models/authModel");
 
 async function generateVerificationToken(email) {
@@ -21,7 +22,7 @@ const verifyToken = async (email, token, userModel) => {
   const userToken = await tokenModel.findOneAndDelete({
     email,
     token: token,
-    expiresAt: { $gt: Date.now() },
+    expiresAt: mongoose.trusted({ $gt: Date.now() }),
   });
   if (!userToken) {
     throw new Error("Invalid or expired token");

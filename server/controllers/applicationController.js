@@ -14,7 +14,7 @@ const safeUpdate = require("../utils/safeUpdate");
 const applicationsWithVisitRequest = async (req, res) => {
   try {
     const applications = await applicationModel
-      .find({ visitRequest: { $ne: null }, status: "pending" })
+      .find({ visitRequest: mongoose.trusted({ $ne: null }), status: "pending" })
       .populate({ path: "homeId", select: "title woreda subCity" })
       .populate({ path: "applicantId", select: "name phone email lastName" })
       .populate({ path: "ownerId", select: "name phone email lastName" });

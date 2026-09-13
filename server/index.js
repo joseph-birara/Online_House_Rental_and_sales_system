@@ -99,8 +99,6 @@ app.use("/maintenance", maintenanceRoutes);
 app.use("/rent", rentRoutes);
 app.use("/application", applicationRoutes);
 
-checkPayment.updateExpiredPayments();
-
 app.use((err, req, res, next) => {
   console.error(err);
   const status = err.status || 500;
@@ -116,7 +114,12 @@ mongoose
     app.listen(port, () => {
       console.log("listening to port", port);
     });
+    checkPayment.updateExpiredPayments();
   })
   .catch((err) => {
-    console.log(err);
+    console.error("MongoDB connection failed:", err.message);
+    console.error(
+      "Check DB_URL and Atlas Network Access (allow 0.0.0.0/0 so Render can connect)."
+    );
+    process.exit(1);
   });

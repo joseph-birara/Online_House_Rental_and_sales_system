@@ -1,15 +1,19 @@
-import React from "react";
+import { Link } from "react-router-dom";
+import styles from "./AboutUs.module.css";
 
-const ServiceCard = ({ title, description, icon }) => {
-  return (
-    <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:scale-105">
-      <img className="w-full h-48 object-cover" src={icon} alt={title} />
-      <div className="py-4 px-6">
-        <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
-        <p className="text-gray-700 text-base">{description}</p>
-      </div>
+const ServiceCard = ({ title, description, icon, href, actionLabel }) => (
+  <article className={styles.service}>
+    <img src={icon} alt="" />
+    <div className={styles.serviceBody}>
+      <h2>{title}</h2>
+      <p>{description}</p>
+      {href && (
+        <Link className={styles.serviceLink} to={href}>
+          {actionLabel || "Learn more"}
+        </Link>
+      )}
     </div>
-  );
-};
+  </article>
+);
 
 export default ServiceCard;

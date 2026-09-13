@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const application = require("../models/applicantModel"); // Assuming you have a Payment model defined
 
 // Function to update the payment status for expired payments
@@ -6,7 +7,7 @@ async function updateExpiredPayments() {
   try {
     await application.updateMany(
       {
-        paymentExpiryDate: { $lte: currentDate },
+        paymentExpiryDate: mongoose.trusted({ $lte: currentDate }),
         paymentStatus: true,
         status: "accepted",
       },

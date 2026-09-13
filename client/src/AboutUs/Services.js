@@ -1,5 +1,6 @@
-import React from "react";
 import ServiceCard from "./ServiceCard";
+import AboutLayout from "./AboutLayout";
+import styles from "./AboutUs.module.css";
 import rentalIcon from "./Images/rent.jpg";
 import salesIcon from "./Images/Sale.jpg";
 import managementIcon from "./Images/manage.jpg";
@@ -7,37 +8,43 @@ import managementIcon from "./Images/manage.jpg";
 const Services = () => {
   const services = [
     {
-      title: "House Rental",
+      title: "House rental",
       description:
-        "Find the perfect rental property for your needs and budget...",
+        "Browse monthly and short-stay homes, filter by neighborhood and budget, and apply to rent in a few steps.",
       icon: rentalIcon,
+      href: "/rent",
+      actionLabel: "Browse rentals",
     },
     {
-      title: "House Sales",
+      title: "House sales",
       description:
-        "Buy or sell your dream home with the help of our expert realtors...",
+        "Discover homes for sale or list your own property. Buyers can review details and send an application to the owner.",
       icon: salesIcon,
+      href: "/buy",
+      actionLabel: "Homes for sale",
     },
     {
-      title: "Home Management",
+      title: "Home management",
       description:
-        "Ensure your property is well-maintained and taken care of...",
+        "Owners can keep listings, applications, and tenant requests in one place so properties stay organized after they go live.",
       icon: managementIcon,
+      href: "/register",
+      actionLabel: "Get started",
     },
-    // Add more services as needed
   ];
 
   return (
-    <div>
-      <h1 className="text-3xl font-semibold text-gray-800 text-center mb-6">
-        Our Services
-      </h1>
-      <div className="flex  flex-wrap gap-3 justify-center">
-        {services.map((service, index) => (
-          <ServiceCard key={index} {...service} />
+    <AboutLayout
+      eyebrow="About us"
+      title="What Homiee offers"
+      subtitle="One platform for renting, buying, and managing homes — without the noise."
+    >
+      <div className={styles.serviceGrid}>
+        {services.map((service) => (
+          <ServiceCard key={service.title} {...service} />
         ))}
       </div>
-    </div>
+    </AboutLayout>
   );
 };
 

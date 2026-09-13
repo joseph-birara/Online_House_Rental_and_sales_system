@@ -1,16 +1,14 @@
-import React from "react";
+import styles from "./AboutUs.module.css";
 
-const TeamMemberCard = ({ name, role, description, imageUrl }) => {
-  return (
-    <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:scale-105">
-      <img className="h-1/4  block rounded-lg mx-auto object-cover" src={imageUrl} alt={name} />
-      <div className="py-4 px-6">
-        <h2 className="text-lg font-semibold text-gray-800">{name}</h2>
-        <p className="text-sm text-gray-600 my-3 pr-4"><hr /></p>
-        <p className="text-gray-700 text-base">{description}</p>
-      </div>
+const TeamMemberCard = ({ name, role, description, imageUrl }) => (
+  <article className={styles.member}>
+    <img className={styles.photo} src={imageUrl} alt={name} />
+    <div className={styles.memberBody}>
+      <h2>{name}</h2>
+      {role && <span className={styles.role}>{role}</span>}
+      <p>{description}</p>
     </div>
-  );
-};
+  </article>
+);
 
 export default TeamMemberCard;

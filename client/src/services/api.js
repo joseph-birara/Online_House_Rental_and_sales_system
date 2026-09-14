@@ -5,7 +5,9 @@ import { getApiErrorMessage } from "../utils/apiError";
 export const API_URL =
   process.env.REACT_APP_API_URL ||
   process.env.REACT_APP_baseURL ||
-  "https://house-rental.onrender.com";
+  (process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://house-rental.onrender.com");
 
 const PUBLIC_AUTH_PATH =
   /\/(login|register|reset|newPassword|verify-email)(?:\/|$|\?)/i;
